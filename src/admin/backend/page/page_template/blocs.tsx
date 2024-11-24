@@ -17,6 +17,7 @@ interface BlocData {
   blocs: Array<any>;
   setDragBegin: any;
   dragBegin: number;
+  getAllBlocsPage: any;
   drag: boolean;
   toggle: boolean;
   setBlocs: any;
@@ -28,6 +29,7 @@ function Blocs({
   blocs,
   setDragBegin,
   dragBegin,
+  getAllBlocsPage,
   drag,
   toggle,
   setBlocs,
@@ -58,10 +60,8 @@ function Blocs({
     input_bloc: TextPicture,
     index: number
   ) => {
-    const new_Bloc = input_bloc.update(e, field, input);
-    //console.log(new_Bloc);
-    //blocs[input_bloc.bloc_number - 1] = new_Bloc;
-    //console.log(blocs);
+    input_bloc.update(e, field, input);
+
     setBlocs(blocs);
     setToggle(!toggle);
   };
@@ -79,9 +79,20 @@ function Blocs({
     setToggle(!toggle);
   };
   const removeBloc = async (bloc: Carousel | TextPicture) => {
-    await bloc.delete_bloc();
-
+    /* blocs.map(async (bloc, index) => {
+      bloc.update(index, "bloc_number");
+      await bloc.save_bloc();
+    });*/
+    blocs.splice(blocs.indexOf(bloc), 1);
+    setBlocs(blocs);
+    blocs.map(async (bloc, index) => {
+      bloc.update(index + 1, "bloc_number");
+      await bloc.save_bloc();
+    });
+    await bloc.remove();
     setRefresh(!refresh);
+
+    // setRefresh(!refresh);
   };
   /* const updateBlocs = async (lastKey: number) => {
     const new_blocs = updateBlocs(lastKey, dragBegin, blocs);
@@ -112,9 +123,10 @@ function Blocs({
     bloc.save_bloc();
     setRefresh(!refresh);
   };
+  useEffect(() => {}, [blocs]);
   useEffect(() => {
-    console.log("blocs", blocs);
-  }, [blocs]);
+    getAllBlocsPage();
+  }, [refresh]);
   return (
     <div className={s.blocs_container}>
       {blocs.map((value, index) => {

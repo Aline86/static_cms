@@ -132,6 +132,7 @@ function Visualization({}: PageParams) {
         </div>
         <Blocs
           blocs={blocs}
+          getAllBlocsPage={getAllBlocsPage}
           setDragBegin={setDragBegin}
           dragBegin={dragBegin}
           drag={drag}

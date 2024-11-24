@@ -1,4 +1,4 @@
-import Card from "../../../admin/classes/Card";
+import CarouselData from "../../../backend/bloc/components/carousel/class/CarouselData";
 import InsideCardDataShow from "./InsideCardDataShow";
 import s from "./styles/style.module.css";
 import { useEffect } from "react";
@@ -12,7 +12,7 @@ interface CardDatas {
   width: number;
   height: number;
   gap: number;
-  value: Card;
+  value: CarouselData;
   trigger: boolean;
   resize: number;
   toggle: boolean;
