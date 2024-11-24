@@ -1,0 +1,70 @@
+.side_menu {
+  position: absolute;
+  top: -20px !important;
+  right: -20px !important;
+
+  height: 100vh;
+  width: 300px;
+  background-color: white;
+  display: none;
+  margin: 0;
+  padding: 0;
+  padding-top: 150px;
+  transition: all 0.5s ease-in-out;
+}
+
+.ul_menu {
+  margin: 0;
+  padding: 0;
+}
+
+.ul_menu a li div {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+.ul_menu a li {
+  list-style-type: none;
+  height: 55px;
+  line-height: 55px;
+  border-bottom: 1px solid gray;
+  margin: 0;
+  padding: 0;
+  padding-left: 25px;
+}
+
+.ul_menu a li:hover span {
+  position: relative;
+  top: -10px;
+  border: 1px solid black;
+}
+.ul_menu a li:hover span {
+  animation-duration: 0.3s;
+  animation-name: slidein;
+}
+
+.ul_menu a {
+  text-decoration: none;
+  color: gray;
+  font-size: 28px;
+}
+
+.open_side_bar {
+  display: block;
+  position: absolute;
+  top: -20px !important;
+  right: -20px !important;
+  opacity: 1;
+}
+
+@keyframes slidein {
+  from {
+    border-bottom: 1px solid transparent;
+    width: 0px;
+  }
+
+  to {
+    border-bottom: 1px solid black;
+    width: 100%;
+  }
+}

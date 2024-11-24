@@ -1,0 +1,14 @@
+.show_more {
+  font-size: 18px;
+  color: gray;
+}
+
+.show_more:hover {
+  color: black;
+  background-color: lightgray;
+}
+
+.button {
+  display: block;
+  text-align: center;
+}

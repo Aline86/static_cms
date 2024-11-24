@@ -1,0 +1,25 @@
+.card_app_bouton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid gray;
+  color: gray;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.button_bloc {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+.button_bloc img {
+  width: auto;
+  max-height: 40vh;
+}

@@ -1,0 +1,176 @@
+.bloc {
+  z-index: -5;
+  height: 100%;
+}
+.body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: fit-content;
+  overflow-x: scroll;
+}
+.container_class {
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  vertical-align: center;
+}
+@media screen and (max-width: 700px) {
+  .container_class {
+    overflow-x: scroll;
+    margin: 0;
+    padding: 0;
+  }
+}
+.card-container {
+  position: absolute;
+  z-index: -1;
+}
+.cards {
+  position: relative;
+  display: flex;
+}
+.card_app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: end;
+  position: relative;
+  border: 1px solid lightgray;
+  box-shadow: 3px 2px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  object-fit: fit-content;
+  display: flex;
+  justify-content: start;
+  cursor: pointer;
+  padding-bottom: 15px;
+}
+
+.left {
+  margin-left: 50px;
+  transform: scale(5);
+  display: block;
+  height: 100%;
+  line-height: 100%;
+  color: black;
+  margin-top: -10px;
+}
+
+.right {
+  margin-right: 50px;
+  transform: scale(5);
+  display: block;
+  height: 100%;
+  line-height: 100%;
+  color: black;
+  margin-top: -10px;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.card_app img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.card_app .title {
+  width: 100%;
+  display: flex;
+  height: 50px;
+  position: relative;
+  justify-content: center;
+
+  background-color: black;
+  opacity: 0.3;
+  color: white;
+  line-height: 50px;
+  text-align: center;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card_app input {
+  height: 30px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.carousel_container {
+  /* position: fixed;*/
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.remove_visualization {
+  border-radius: 50%;
+  margin: 60px;
+  width: 30px;
+  height: 30px;
+  color: black;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.backdrop {
+  position: fixed;
+  text-align: right;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.3;
+  z-index: 0;
+}
+.corousel_input {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.3;
+  z-index: 10;
+}
+.carousel {
+  margin-bottom: 50px;
+}
+
+.visualize {
+  width: fit-content;
+  height: 35px;
+  border: 1px solid gray;
+  background-color: rgb(172, 224, 252);
+  color: black;
+  text-transform: uppercase;
+  margin-top: 30px;
+
+  border-radius: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  cursor: pointer;
+}
+.visualize:hover {
+  color: white;
+  background-color: rgb(106, 202, 253);
+}
+.card_text {
+  display: block;
+  width: 80%;
+
+  margin: 0 auto;
+  height: 40px;
+}
