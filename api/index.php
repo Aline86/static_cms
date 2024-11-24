@@ -27,7 +27,7 @@ $crud = ['get_', 'add_', 'update_', 'delete_', 'delete_child', 'all_'];
 $method = isset($_GET['method']) ? $_GET['method'] : null; //return GET, POST, PUT, DELETE
 $type = isset($_GET['type']) ? $_GET['type'] : null;
 $id = isset($_GET['id']) ? $_GET['id'] : null;
-
+$id_component = isset($_GET['id_component']) ? $_GET['id_component'] : null;
 $associated_method_for_delete = isset($_GET['associated_table']) ? $_GET['associated_table'] : null;
 
 if(isset($_POST['BASE_URL'])) {
@@ -73,7 +73,17 @@ foreach($crud as $method_to_call) {
         echo json_encode($model->$method_to_call($method_params));
         exit();
     }
-
+    if($method === 'delete' && $method_to_call === 'delete_' ) {
+        $method_params['id'] = $id;
+        $method_params['id_component'] = $id_component;
+        $method_params['associated_table'] = $associated_method_for_delete;
+        $method_name_to_call = $method_to_call . $type;
+     
+        $class = ucfirst($type);
+        $model = new $class($type);
+        echo json_encode($model->$method_name_to_call($method_params));
+        exit();
+    }
     if($method === $method_to_call . $type) {
    
         $class = ucfirst($type);

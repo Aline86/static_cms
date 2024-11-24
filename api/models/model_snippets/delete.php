@@ -1,14 +1,29 @@
 <?php
 
     $id = -1;
-    $associated_table = null;
+    $id_component = null;
     foreach($parameters as $parameter => $data_value) {
         if($parameter === 'id') {
             $id = $data_value;
         }  
+        if($parameter === 'id_component') {
+            $id_component = $data_value;
+        }  
+        if($parameter === 'associated_table') {
+            $associated_table = $data_value;
+        }
     }
-    $q = self::$db->prepare('DELETE FROM ' . $this->type . ' WHERE id=:id');
+
+    $query = 'DELETE FROM ' . $this->type . ' WHERE id=:id';
+    if(!is_null($id_component)) {
+        $query .= ' AND :' . $associated_table . '_id =' . $associated_table . '_id';
+    }
+    echo "<pre>";
+        print_r($id);
+    echo "</pre>";
+    $q = self::$db->prepare($query);
     $q->bindValue(':id', $id);
+    $q->bindValue(':' . $associated_table . '_id', $id_component);
     $SQL_result = $q->execute();   
 
     return $SQL_result;  

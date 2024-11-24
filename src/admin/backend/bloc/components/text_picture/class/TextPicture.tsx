@@ -69,6 +69,9 @@ export class TextPicture extends Container {
       case "bloc_column":
         this.set_bloc_column(!this.bloc_column);
         break;
+      case "bloc_number":
+        this.set_bloc_number(e);
+        break;
       case "image_right":
         this.set_image_right(!this.image_right);
         break;
@@ -112,7 +115,15 @@ export class TextPicture extends Container {
   }
 
   public async remove() {
-    this.set_parameters("delete&id=" + this.id + "&type=" + this.type);
+    this.set_parameters(
+      "delete&id=" +
+        this.id +
+        "&type=" +
+        this.type +
+        "&id_component=" +
+        this.page_id +
+        "&associated_table=page"
+    );
 
     let new_bloc = await this.delete_bloc();
     return new_bloc;
