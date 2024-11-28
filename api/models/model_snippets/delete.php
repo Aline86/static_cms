@@ -18,9 +18,7 @@
     if(!is_null($id_component)) {
         $query .= ' AND :' . $associated_table . '_id =' . $associated_table . '_id';
     }
-    echo "<pre>";
-        print_r($id);
-    echo "</pre>";
+   
     $q = self::$db->prepare($query);
     $q->bindValue(':id', $id);
     $q->bindValue(':' . $associated_table . '_id', $id_component);
