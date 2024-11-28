@@ -1,16 +1,18 @@
-import Card from "../../../../classes/Card";
 import s from "./style/style.module.css";
-import { useEffect } from "react";
 import remove from "./../../../../../../assets/remove.png";
+import CarouselData from "../class/CarouselData";
+import { Carousel } from "../class/Carousel";
+import DropdownData from "../dropdown/Dropdown";
 
 interface CardDatas {
   width: number;
   height: number;
   gap: number;
-  data: Card;
+  bloc: Carousel;
+  data: CarouselData;
   toggle: boolean;
   index: number;
-  updateBloc: any;
+  updateCarousel: any;
   type: string;
   show_remove: boolean;
 }
@@ -20,9 +22,10 @@ function CardData({
   height,
   gap,
   data,
+  bloc,
   toggle,
   index,
-  updateBloc,
+  updateCarousel,
   type,
   show_remove,
 }: CardDatas) {
@@ -32,10 +35,10 @@ function CardData({
     <div
       className={s.card_app}
       style={{
-        width: `calc(${width}vw)`,
-        height: `165px`,
-        marginRight: `30px`,
-        marginBottom: `5px`,
+        width: "300px",
+        minWidth: "300px",
+        height: `fit-content`,
+        marginRight: `${gap}px`,
       }}
     >
       <div className="button_remove_container">
@@ -44,21 +47,35 @@ function CardData({
             src={remove}
             alt="suppression box"
             onClick={(e) => {
-              updateBloc(e, "carousel", "remove", index);
+              updateCarousel(e, "remove", bloc, index);
             }}
           />
         ) : (
-          <img src={""} style={{ color: "transparent", border: "none" }} />
+          <div
+            style={{
+              color: "transparent",
+              border: "none",
+              height: "15px",
+              width: "15px",
+            }}
+          ></div>
         )}
       </div>
-      <input
-        className={s.href_url}
-        value={data.href_url}
-        placeholder="Url de redirection"
-        onChange={(e) => {
-          updateBloc(e, type, "href_url", index);
-        }}
+      <DropdownData
+        bloc={bloc}
+        data={data}
+        type={"carousel"}
+        index={index}
+        updateCarousel={updateCarousel}
       />
+      <div
+        style={{
+          display: `flex`,
+          flexDirection: `column`,
+          alignItems: `center`,
+          width: "100%",
+        }}
+      ></div>
 
       <div
         style={{
@@ -75,17 +92,18 @@ function CardData({
             className={s.image_url}
             placeholder="Url de l'image"
             onChange={(e) => {
-              updateBloc(e, type, "image_url", index);
+              updateCarousel(e, "image_url", bloc, index);
             }}
           />
         </label>
       </div>
-      <textarea
+
+      <input
         className={s.card_text}
         value={data.text}
         placeholder="texte de la carte"
         onChange={(e) => {
-          updateBloc(e, type, "text", index);
+          updateCarousel(e, "text", bloc, index);
         }}
       />
     </div>

@@ -7,7 +7,7 @@ import CarouselData from "../../../backend/bloc/components/carousel/class/Carous
 
 interface CardDatas {
   value: CarouselData;
-  width: number;
+  width: number | string;
   height: number;
   full: boolean;
   result: any;
@@ -28,15 +28,7 @@ function InsideCardDataShow({
   const { id } = useParams();
   const style_data = {
     background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v2/api/uploadfile/${value.image_url}") no-repeat center / cover`,
-    width: `${
-      !result.matches
-        ? full
-          ? isResponsive
-            ? `360px`
-            : `${width}vw`
-          : `${width * 0.5}vw`
-        : `80vw`
-    }`,
+    width: `${!result.matches ? `${width}vw` : `80vw`}`,
     height: full ? `${height}vh` : `${height}vh`,
   };
   const checkExternal = async (url: string) => {
@@ -70,14 +62,8 @@ function InsideCardDataShow({
       className={s.card_app}
       style={{
         background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v2/api/uploadfile/${value.image_url}") no-repeat center / cover`,
-        width: `${
-          !result.matches
-            ? isResponsive
-              ? `360px`
-              : `calc(${width}vw)`
-            : `80vw`
-        }`,
-        height: `${height}vh`,
+        width: `${!result.matches ? `${width}vw` : `80vw`}`,
+        height: full ? `${height}vh` : `${height * 0.5}vh`,
       }}
     >
       {value.text.length > 0 && <div className={s.text}></div>}

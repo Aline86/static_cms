@@ -11,9 +11,10 @@ export default class CarouselData {
   text_color: string;
 
   constructor(
-    carousel_id: number,
-    card_number: number,
     id: number = -1,
+
+    card_number: number,
+    carousel_id: number,
     href_url: string = "",
     image_url: string = "",
     text: string = "",

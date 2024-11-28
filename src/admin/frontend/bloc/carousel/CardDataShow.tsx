@@ -9,7 +9,7 @@ interface CardDatas {
   transitionFinished: boolean;
   trasnsType: string;
   transX: number;
-  width: number;
+  width: number | string;
   height: number;
   gap: number;
   value: CarouselData;
@@ -41,28 +41,28 @@ function CardDataShow({
 
   const style_data_transition_finished_auto = {
     background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v2/api/uploadfile/${value.image_url}") no-repeat center / cover`,
-    width: full ? (isResponsive ? `380px` : `100vw`) : `45vw`,
+    width: width,
     height: `${height}vh`,
     transition: `${trasnsType}`,
-    transform: `translateX(${transX}px)`,
+    transform: `translateX(${width})`,
     fontSize: isResponsive ? `18px` : `24px`,
   };
   const style_data_transition_start_auto = {
     background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v2/api/uploadfile/${value.image_url}") no-repeat center / cover`,
-    width: full ? (isResponsive ? `380px` : `100vw`) : `45vw`,
+    width: width,
     height: `${height}vh`,
     fontSize: isResponsive ? `18px` : `24px`,
   };
   const style_data_transition_finished_carousel = {
     marginRight: `${!result.matches ? gap : 10}px`,
-    height: full ? `${height}vh` : `${height}vh`,
+    height: full ? `${height}vh` : `${height * 0.5}vh`,
     transition: `${trasnsType}`,
     transform: `translateX(${transX}px)`,
   };
 
   const style_data_transition_start_carousel = {
     marginRight: `${!result.matches ? gap : 10}px`,
-    height: full ? `${height}vh` : `${height}vh`,
+    height: full ? `${height}vh` : `${height * 0.5}vh`,
   };
   if (type === "auto") {
     if (transitionFinished) {
@@ -73,7 +73,13 @@ function CardDataShow({
           ref={cardRef}
         >
           {value.text.length > 0 && (
-            <div className={s.card_text} style={{ lineHeight: `fit-content` }}>
+            <div
+              className={s.card_text}
+              style={{
+                lineHeight: `fit-content`,
+                color: `${value.image_url ? "white" : "gray"}`,
+              }}
+            >
               {value.text}
             </div>
           )}

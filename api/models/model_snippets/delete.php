@@ -18,10 +18,12 @@
     if(!is_null($id_component)) {
         $query .= ' AND :' . $associated_table . '_id =' . $associated_table . '_id';
     }
-   
+
     $q = self::$db->prepare($query);
     $q->bindValue(':id', $id);
-    $q->bindValue(':' . $associated_table . '_id', $id_component);
+    if(!is_null($id_component)) {
+        $q->bindValue(':' . $associated_table . '_id', $id_component);
+    }
     $SQL_result = $q->execute();   
 
     return $SQL_result;  

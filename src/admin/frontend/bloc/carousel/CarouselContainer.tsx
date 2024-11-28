@@ -86,9 +86,9 @@ function CarouselContainer({
   }
   function updateTransitionRightA() {
     if (data !== undefined) {
-      const popItem = data.shift();
+      const popItem = data.pop();
       if (popItem !== undefined) {
-        data.push(popItem);
+        data.unshift(popItem);
         updateDataValue(data);
       }
       updateTransitionState(false);
@@ -111,7 +111,7 @@ function CarouselContainer({
   function moveRightA() {
     setTrigger(!trigger);
 
-    setMove(-cardWidth - bloc.gap / 2);
+    setMove(cardWidth + bloc.gap / 2);
 
     updateTransitionState(true);
   }
@@ -200,17 +200,25 @@ function CarouselContainer({
                   minWidth: `${cardWidth}px`,
                   margin: `${bloc.gap}px auto`,
 
-                  height: `${bloc.height}vh`,
+                  height: full
+                    ? `${Number(bloc.height)}vh`
+                    : `${Number(bloc.height) * 0.5}vh`,
 
-                  width: `calc(${bloc.width * cardNumber}vw + ${
-                    bloc.gap * cardNumber
-                  }px)`,
+                  width: full
+                    ? `calc(${bloc.width * cardNumber}vw + ${
+                        bloc.gap * cardNumber
+                      }px)`
+                    : `calc(${bloc.width * 0.5 * cardNumber}vw + ${
+                        bloc.gap * cardNumber
+                      }px)`,
                 }
               : {
                   minWidth: `${cardWidth}px`,
                   margin: `${bloc.gap}px auto`,
                   overflow: `scroll`,
-                  height: `${bloc.height}vh`,
+                  height: full
+                    ? `${Number(bloc.height)}vh`
+                    : `${Number(bloc.height) * 0.5}vh`,
 
                   marginLeft: `15px`,
                   width: `fit-content`,
@@ -226,7 +234,9 @@ function CarouselContainer({
             <div
               className={s.cards}
               style={{
-                height: `${Number(bloc.height)}vh`,
+                height: full
+                  ? `${Number(bloc.height)}vh`
+                  : `${Number(bloc.height) * 0.5}vh`,
               }}
             >
               {data !== undefined &&
@@ -287,7 +297,7 @@ function CarouselContainer({
           minWidth: `${cardWidth}px`,
           margin: !full ? `${bloc.gap}px auto` : `0`,
           height: isResponsive ? `250px` : `fit-content`,
-          width: isResponsive ? `380px` : `100vw`,
+          width: full ? (isResponsive ? `380px` : `100vw`) : `43vw`,
         }}
       >
         <div
@@ -308,13 +318,7 @@ function CarouselContainer({
                     transitionFinished={transitionFinished}
                     trasnsType={"transform 1s ease-in"}
                     transX={move}
-                    width={
-                      full
-                        ? isResponsive
-                          ? 380
-                          : bloc.width
-                        : bloc.width * 0.5
-                    }
+                    width={full ? (isResponsive ? `380px` : `100vw`) : `43vw`}
                     gap={bloc.gap}
                     height={bloc.height}
                     value={value}
