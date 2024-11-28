@@ -1,5 +1,3 @@
-import { Carousel } from "../../bloc/components/carousel/class/Carousel";
-import { TextPicture } from "../../bloc/components/text_picture/class/TextPicture";
 import Container from "../../bloc/Container";
 
 export default class Page extends Container {

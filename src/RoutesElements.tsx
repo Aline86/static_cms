@@ -9,6 +9,7 @@ import Prerequis from "./admin/backend/prerequis/prerequis";
 import Page from "./admin/backend/page/class/Page";
 import Visualization from "./admin/backend/page/page_template/page";
 import Pages from "./admin/backend/page/pages";
+import Voir from "./admin/frontend/page/voir";
 
 export default function ThemeContextProvider({}: { children: any }) {
   const [pages, setPages] = useState<Array<Page>>([]);
@@ -42,7 +43,10 @@ export default function ThemeContextProvider({}: { children: any }) {
         <Route path="/pages" element={<Pages />}>
           Pages
         </Route>
-        <Route path="/page/:id/:name" element={<Visualization />}>
+        <Route path="/page/:name/:id/" element={<Visualization />}>
+          Page
+        </Route>
+        <Route path="/:name/:id/" element={<Voir />}>
           Page
         </Route>
       </Routes>

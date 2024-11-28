@@ -82,7 +82,7 @@ function BlocDisplay({
               onClick={(e) => {
                 e.preventDefault();
 
-                addBlocToBDD(new Carousel(page.id, blocs.length + 1));
+                addBlocToBDD(new Carousel(page.id, blocs.length + 1, -1, true));
 
                 handleScroll();
                 setOpen(!open);

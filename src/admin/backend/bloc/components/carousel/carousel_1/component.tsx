@@ -18,6 +18,7 @@ function CarouselOption1({ toggle, updateCarousel, bloc }: CardDatas) {
   return (
     <div className={s.body}>
       {bloc.carousel_data.map((value: CarouselData, index: number) => {
+        console.log("index", index);
         return (
           <div
             className={s.cards}

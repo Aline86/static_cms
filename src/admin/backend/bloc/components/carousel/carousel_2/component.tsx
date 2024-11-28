@@ -36,9 +36,10 @@ function CarouselOption2({ toggle, updateCarousel, bloc }: CardDatas) {
               data={value}
               toggle={toggle}
               index={index}
-              updateBloc={updateCarousel}
+              updateCarousel={updateCarousel}
               type={"carousel"}
               show_remove={show_remove}
+              bloc={bloc}
             />
           </div>
         );

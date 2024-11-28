@@ -50,8 +50,8 @@ export class Carousel extends Container {
   }
   init_datas() {
     let carousel_data = [];
-    for (let index = 1; index <= this.card_number; index++) {
-      carousel_data.push(new CarouselData(this.id, this.card_number));
+    for (let index = 0; index < this.card_number; index++) {
+      carousel_data.push(new CarouselData(-1, index, this.id));
     }
     return carousel_data;
   }
@@ -114,7 +114,7 @@ export class Carousel extends Container {
   }
   public add_data() {
     this.carousel_data.push(
-      new CarouselData(this.id, this.carousel_data.length - 1)
+      new CarouselData(-1, this.carousel_data.length - 1, this.id)
     );
   }
 
