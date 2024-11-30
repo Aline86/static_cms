@@ -20,22 +20,22 @@
         $id_component = $method_params['id_component'];
         $data_components_to_build = new AllDataComponents($component);
         $data_to_process = $data_components_to_build->get_components($id_component);
-
         foreach($data_to_process as $data_component_array) {
-   
             if(!empty($data_component_array)) {
                 foreach($data_component_array as $data_component) {
                     $all_components_data[] = $data_component;
                 }
             }
-            
         }
+<<<<<<< HEAD
        /* $ordered_data = $data_components_to_build->reorder($all_components_data);
      
+=======
+        $ordered_data = $data_components_to_build->reorder($all_components_data);
+>>>>>>> 6699aca (small changes)
         $all_components_data =  [];
         foreach($ordered_data as $data_component) {
             $method_name_to_call = "";
-            
                 if(isset($data_component['type'])) {
                     $class = ucfirst($data_component['type']);
                     $model = new $class($data_component['type']);
@@ -43,12 +43,14 @@
                     
                     $all_components_data[] = $model->$method_name_to_call($data_component)[0];
                     continue;
-                
-
             }
+<<<<<<< HEAD
          
            // $all_components_data[] = $data_component;
         } */
+=======
+        } 
+>>>>>>> 6699aca (small changes)
     
         echo json_encode($all_components_data);
     }
