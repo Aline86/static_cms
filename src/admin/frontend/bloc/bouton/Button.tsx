@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef, createRef } from "react";
 
-import CarouselContainer from "./CarouselContainer";
+import CarouselContainer from "./ButtonContainer";
 import s from "./styles/style.module.css";
-import { CarouselClass } from "../../../admin/classes/Carousel";
-import Card from "../../../admin/classes/Card";
+import { Button } from "../../../backend/bloc/components/button/class/Button";
+import ButtonCard from "../../../backend/bloc/components/button/class/ButtonCard";
+import ButtonContainer from "./ButtonContainer";
 
 interface CustomCarouselInfo {
-  input_bloc: CarouselClass;
+  input_bloc: Button;
   toggle: boolean;
   refresh: boolean;
   full: boolean;
@@ -19,7 +20,7 @@ function Carousel({
   full,
   isResponsive,
 }: CustomCarouselInfo) {
-  const [dataValue, setData] = useState<Card[]>();
+  const [dataValue, setData] = useState<ButtonCard>();
   const [type, setType] = useState<string>("");
   const [transitionFinished, setTransitionFinished] = useState(false);
   const [cardWidth, setCardWidth] = useState<number>(0);
@@ -37,19 +38,10 @@ function Carousel({
     setTransitionFinished(state);
   }
 
-  function updateDataValue(cards: Card[]) {
+  function updateDataValue(cards: ButtonCard) {
     setData(cards);
   }
-  function updateType(input_bloc: CarouselClass) {
-    const type = input_bloc.isAutomatique
-      ? "auto"
-      : input_bloc.isCarousel
-      ? "carousel"
-      : input_bloc.card_number > 1
-      ? "images_group"
-      : "bouton";
-    setType(type);
-  }
+
   function updateSize() {
     window.location.reload();
   }
@@ -60,29 +52,14 @@ function Carousel({
     }
   }, [result]);
   useEffect(() => {
-    updateType(input_bloc);
-    setData((elRefs) =>
-      Array(input_bloc.data.length)
-        .fill(elRefs)
-        .map((_, i) => input_bloc.data[i] || createRef())
-    );
+    setData(input_bloc.button_data);
   }, [toggle, refresh]);
   useEffect(() => {}, [isResponsive]);
   return (
     <div className={s.body_container}>
       {dataValue !== undefined && (
-        <CarouselContainer
+        <ButtonContainer
           bloc={input_bloc}
-          updateDataValue={updateDataValue}
-          transitionFinished={transitionFinished}
-          updateTransitionState={updateTransitionState}
-          cardWidth={cardWidth}
-          updateCardRef={updateCardRef}
-          cardRef={cardRef}
-          cardNumber={input_bloc.card_number}
-          data={dataValue}
-          resize={resize}
-          type={type}
           toggle={toggle}
           full={full}
           isResponsive={isResponsive}

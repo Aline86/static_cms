@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 
 import s from "./style.module.css";
 import { Link, useParams } from "react-router-dom";
-import Page from "../../../backend/bloc/components/page/class/Page";
+
 import ButtonCard from "../../../backend/bloc/components/button/class/ButtonCard";
+import Page from "../../../backend/page/class/Page";
 
 interface CardDatas {
   data: ButtonCard;
@@ -43,6 +44,7 @@ function InsideButton({
       return page;
     }
   };
+  // adapt text color to chosed color
   const isLightOrDark = (hexcolor: string) => {
     var c = hexcolor.substring(1); // strip #
     var rgb = parseInt(c, 16); // convert rrggbb to decimal

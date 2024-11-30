@@ -51,13 +51,10 @@ function DropdownData({
     return new_page;
   };
   useEffect(() => {
-    console.log("data.href_url", data.href_url);
     checkExternal(data.href_url);
     getPages();
   }, []);
-  useEffect(() => {
-    console.log("choice", choice);
-  }, [choice]);
+  useEffect(() => {}, [choice]);
   return (
     <div className={s.container}>
       {!choice ? <h3>Lien externe</h3> : <h3>Lien interne</h3>}
@@ -84,7 +81,7 @@ function DropdownData({
           <h5>Lien interne :</h5>
           <select
             className={s.select_box}
-            onClick={(e) => updateCarousel(e, "href_url", bloc, index)}
+            onChange={(e) => updateCarousel(e, "href_url", bloc, index)}
             value={
               typeof Number(data.href_url) === "number"
                 ? Number(data.href_url)

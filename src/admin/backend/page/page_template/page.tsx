@@ -4,11 +4,9 @@ import { Link, useParams } from "react-router-dom";
 import ajout from "./../../../../assets/ajouter.png";
 import Footer from "../../bloc/components/footer/Footer";
 import Header from "../../bloc/components/header/Header";
-
 import { TextPicture } from "../../bloc/components/text_picture/class/TextPicture";
 import HeaderVizualization from "../../../frontend/bloc/header/header";
 import FooterVizualization from "../../../frontend/bloc/footer/footer";
-
 import BlocDisplay from "./bloc_display";
 import Page from "../class/Page";
 import Blocs from "./blocs";
@@ -99,8 +97,8 @@ function Visualization({}: PageParams) {
     setBlocs(blocs);
   }, []);
   useEffect(() => {
-    console.log("blocs in page", blocs);
-  }, [blocs]);
+    console.log("drag", drag);
+  }, [blocs, drag]);
   return (
     <div className="page">
       <div className={s.page_container}>
@@ -109,7 +107,7 @@ function Visualization({}: PageParams) {
           toggle={toggle}
           isResponsive={false}
         />
-        <Link to={{ pathname: `/` + name + `/` + id }}>
+        <Link to={{ pathname: `/` + id + `/` + name }}>
           <li>
             <div className={s.navigate}>Visualiser</div>
           </li>

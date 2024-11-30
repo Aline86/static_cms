@@ -15,7 +15,7 @@ interface CarouselData {
   updateTransitionState: any;
 
   cardNumber: number;
-  data: CarouselCard[] | undefined;
+  data: CarouselCard[];
   resize: number;
   type: string;
   toggle: boolean;
@@ -94,24 +94,11 @@ function CarouselContainer({
       updateTransitionState(false);
     }
   }
-  function reorder() {
-    if (data !== undefined) {
-      let reordered_data_datas = [];
-      let i = 0;
-      let first = data[data.length - 1];
-      console.log(data.length - 1);
-      reordered_data_datas.push(first);
-      while (i < data.length - 1) {
-        reordered_data_datas.push(data[i]);
-        i++;
-      }
-      updateDataValue(reordered_data_datas);
-    }
-  }
+
   function moveRightA() {
     setTrigger(!trigger);
 
-    setMove(cardWidth + bloc.gap / 2);
+    setMove(-(cardWidth + bloc.gap / 2));
 
     updateTransitionState(true);
   }
@@ -120,7 +107,6 @@ function CarouselContainer({
     if (data !== undefined) {
       updateCardRef();
       if (type === "auto") {
-        reorder();
         setTrigger(!trigger);
       }
     }
@@ -202,7 +188,7 @@ function CarouselContainer({
 
                   height: full
                     ? `${Number(bloc.height)}vh`
-                    : `${Number(bloc.height) * 0.5}vh`,
+                    : `calc(${Number(bloc.height) * 0.5}vh + 2px)`,
 
                   width: full
                     ? `calc(${bloc.width * cardNumber}vw + ${
@@ -229,6 +215,7 @@ function CarouselContainer({
             className={s.card_container}
             style={{
               height: `fit-content`,
+              transform: `translateX(${-cardWidth - bloc.gap * 0.5}px)`,
             }}
           >
             <div
@@ -249,7 +236,7 @@ function CarouselContainer({
                       transitionFinished={transitionFinished}
                       trasnsType={"transform 0.5s ease-in"}
                       transX={move}
-                      width={bloc.width}
+                      width={full ? bloc.width : bloc.width * 0.5}
                       gap={bloc.gap}
                       height={bloc.height}
                       value={value}

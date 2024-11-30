@@ -127,7 +127,7 @@ function TextReader({
           }
         });
       });
-    Object.entries(contenState.entityMap).map(([key_map_key, value_map]) => {
+    Object.entries(contenState.entityMap).map(([key_map_key]) => {
       if (picture_data_offset[key_map_key] === undefined) {
         delete contenState.entityMap[key_map_key];
       }
@@ -429,7 +429,7 @@ function TextReader({
           );
         })}
       <div className={s.button}>
-        {read_more && stringTexts.length >= 1 && (
+        {read_more && stringTexts.length >= 1 ? (
           <button
             onClick={() => setIsToggle(!isToggle)}
             className={s.show_more}
@@ -442,6 +442,8 @@ function TextReader({
           >
             {isToggle ? "Lire Moins" : "Lire plus"}
           </button>
+        ) : (
+          ""
         )}
       </div>
     </div>

@@ -42,8 +42,8 @@ export default abstract class Container {
    * @param action add or update
    * @returns string with promise status to say if data has been correctly sent
    */
-  public async save_bloc(): Promise<string> {
-    let sent = "";
+  public async save_bloc(): Promise<this> {
+    let sent: this;
     const action = this.id > -1 ? "update" : "add";
     let data_to_send = this._create_form(this);
     await fetch(
@@ -56,12 +56,13 @@ export default abstract class Container {
     )
       .then((response) => response)
       .then((response) => {
-        sent = String(response.status);
+        return this;
       })
       .catch((error: any) => {
         console.error(error.message);
       });
-    return sent;
+
+    return this;
   }
 
   /**
@@ -187,25 +188,8 @@ export default abstract class Container {
    * @param property_list list of keys in json object received from api call
    */
   _property_call(property_list: any) {
-    //console.log("property_list", property_list["carousel_data"]);
     for (const property in property_list) {
       this.setProperty(this, property, property_list[property]);
-
-      /* try {
-        eval("this.set_" + property + "(" + property_list[property] + ")");
-      } catch (error) {
-        try {
-          eval("this.set_" + property + "('" + property_list[property] + "')");
-        } catch (error) {
-          eval(
-            "this.set_" +
-              property +
-              "(" +
-              JSON.stringify(property_list[property]) +
-              ")"
-          );
-        }
-      }*/
     }
   }
   setProperty(instance: any, propName: any, value: any) {
