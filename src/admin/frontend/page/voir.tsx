@@ -115,7 +115,7 @@ function Voir({}: FooterInfo) {
         isResponsive={isReponsive}
       />
       {!isReponsive && (
-        <Link to={{ pathname: `/page/` + name + `/` + id }}>
+        <Link to={{ pathname: `/page/` + id + `/` + name }}>
           <li>
             <div className={s.navigate}>Retour</div>
           </li>

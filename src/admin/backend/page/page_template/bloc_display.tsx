@@ -126,7 +126,7 @@ function BlocDisplay({
               onClick={(e) => {
                 e.preventDefault();
                 setToDrag(!drag);
-                setOpen(!open);
+                setOpen(false);
               }}
             />
           </div>

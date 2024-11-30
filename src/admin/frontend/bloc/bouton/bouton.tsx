@@ -9,7 +9,7 @@ import JSanimationH2 from "../snippets/js_animation_h2";
 interface CustomButtonInfo {
   width: number;
   height: number;
-  data: ButtonCard[];
+  data: ButtonCard;
   toggle: boolean;
   bloc: Button;
   full: boolean;
@@ -35,10 +35,10 @@ function Bouton({
     }
   };
   useEffect(() => {
-    checkExternal(data[0].href_url);
+    checkExternal(data.href_url);
   }, []);
   useEffect(() => {
-    checkExternal(data[0].href_url);
+    checkExternal(data.href_url);
   }, [toggle]);
   useEffect(() => {
     JSanimationH2(".container_data", "disappear_data");
@@ -48,7 +48,7 @@ function Bouton({
     <div
       className={s.button_bloc}
       style={{
-        backgroundColor: data[0].background_color,
+        backgroundColor: data.background_color,
         width: !full ? "43vw" : isResponsive ? "360px" : "90vw",
       }}
     >
@@ -59,8 +59,7 @@ function Bouton({
             width: isResponsive ? "320px" : "100%",
           }}
           src={
-            "http://localhost:80/cms_v2/api/uploadfile/" +
-            `${data[0].image_url}`
+            "http://localhost:80/cms_v2/api/uploadfile/" + `${data.image_url}`
           }
           alt={bloc.title}
         />

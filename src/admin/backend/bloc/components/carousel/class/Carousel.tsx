@@ -18,9 +18,9 @@ export class Carousel extends Container {
     bloc_number: number,
     id: number = -1,
     isAutomatique: boolean = false,
-    card_number: number = 4,
+    card_number: number = 5,
     width: number = 25,
-    height: number = 20,
+    height: number = 32,
     gap: number = 30,
     title: string = "",
     type: string = "carousel",
@@ -63,7 +63,7 @@ export class Carousel extends Container {
     this.set_parameters(this.type + "&id=" + this.id + "&type=" + this.type);
     return new_bloc;
   }
-  public update(e: any, field: string, index: number) {
+  public update(e: any, field: string, index: number | undefined) {
     switch (field) {
       case "href_url":
         index !== undefined &&
@@ -90,7 +90,9 @@ export class Carousel extends Container {
         index !== undefined &&
           (this.carousel_data[index].background_color = e.target.value);
         break;
-
+      case "bloc_number":
+        this.set_bloc_number(e);
+        break;
       case "ajout":
         this.add_data();
         this.card_number++;

@@ -10,7 +10,7 @@ interface ShrinkData {
   bloc: TextPicture | Carousel;
   props: any;
   setDragBegin: any;
-  updateBlocs: any;
+  updateDragBloc: any;
   drag: boolean;
 }
 
@@ -19,22 +19,12 @@ function Shrink({
   bloc,
   index,
   setDragBegin,
-  updateBlocs,
+  updateDragBloc,
   drag,
 }: ShrinkData) {
   const [open, setOpen] = useState(true);
   return (
-    <div
-      className={s.shrink_bloc}
-      key={index}
-      draggable={drag}
-      onDragStart={(e) => e}
-      onDragEnter={(e) => e}
-      onDragLeave={(e) => e}
-      onDragOver={(e) => e.preventDefault()}
-      onDragEnd={() => setDragBegin(bloc.bloc_number)}
-      onDrop={() => updateBlocs(bloc.bloc_number)}
-    >
+    <div className={s.shrink_bloc} key={index}>
       <div
         className={s.container_up}
         onClick={(e) => {

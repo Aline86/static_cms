@@ -43,10 +43,10 @@ export default function ThemeContextProvider({}: { children: any }) {
         <Route path="/pages" element={<Pages />}>
           Pages
         </Route>
-        <Route path="/page/:name/:id/" element={<Visualization />}>
+        <Route path="/page/:id/:name/" element={<Visualization />}>
           Page
         </Route>
-        <Route path="/:name/:id/" element={<Voir />}>
+        <Route path="/:id/:name/" element={<Voir />}>
           Page
         </Route>
       </Routes>

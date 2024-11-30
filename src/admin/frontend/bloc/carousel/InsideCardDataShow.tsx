@@ -70,7 +70,7 @@ function InsideCardDataShow({
     </a>
   ) : (
     <Link
-      to={{ pathname: `/` + page?.title + `/` + page?.id }}
+      to={{ pathname: `/` + page?.id + `/` + page?.title }}
       style={style_data}
       className={s.card_app}
     >
