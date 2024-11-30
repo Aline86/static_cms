@@ -64,22 +64,22 @@ function Visualization({}: PageParams) {
           bloc.bloc_number,
           Number(id)
         );
-        await requeteAsynchrone(text_picture.get_bloc(), data);
+        await AsynchroneRequest(text_picture.get_bloc(), data);
       }
       if (bloc.type === "carousel") {
         let carousel = new Carousel(Number(id), bloc.bloc_number, bloc.id);
-        await requeteAsynchrone(carousel.get_bloc(), data);
+        await AsynchroneRequest(carousel.get_bloc(), data);
       }
     });
   }
-  async function requeteAsynchrone(nom: any, data: any[]) {
+  async function AsynchroneRequest(nom: any, data: any[]) {
     await new Promise((resolve) => {
       setTimeout(() => {
         resolve(nom);
         nom.then((response: any) => {
           data.push(response);
         });
-      }, 100); // Simule une requête qui prend 1 seconde
+      }, 100);
     });
 
     setBlocs(data);
