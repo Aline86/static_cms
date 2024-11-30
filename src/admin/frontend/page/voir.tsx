@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import s from "./styles.module.css";
 
 import { Link, useParams } from "react-router-dom";
@@ -14,6 +14,7 @@ import Bloc from "../bloc/text_picture/bloc";
 import CarouselVisualization from "../bloc/carousel/Carousel";
 import HeaderVizualization from "../bloc/header/header";
 import FooterVizualization from "../bloc/footer/footer";
+import BlocTools from "../../tools/blocs_tools";
 
 interface FooterInfo {}
 function Voir({}: FooterInfo) {
@@ -26,25 +27,21 @@ function Voir({}: FooterInfo) {
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
 
-  const getBlocs = async () => {
-    let new_page = new Page(Number(id));
-    const page = await new_page.get_bloc();
-    getAllRequests(await page.get_blocs_for_component());
-  };
-  const getHeader = async () => {
-    header.set_id(1);
-    const new_bloc = await header.get_bloc();
-    setHeader(new_bloc);
+  let page_type = new Page(Number(id));
+  const tools = new BlocTools(page_type);
+
+  async function asynchronRequestsToPopulateBlocs() {
+    await header.get_bloc();
+
+    await footer.get_bloc();
+
+    let bloc_pages = await tools.getAllBlocsPage();
+    bloc_pages !== undefined && setBlocs(bloc_pages);
     setToggle(!toggle);
-  };
-  const getFooter = async () => {
-    footer.set_id(1);
-    const new_bloc = await footer.get_bloc();
-    setFooter(new_bloc);
-    setToggle(!toggle);
-  };
+  }
+
   const adaptRoot = () => {
-    const root = document.getElementById("root");
+    let root = document.getElementById("root");
     if (root !== null && isReponsive) {
       root.style.width = "380px";
       root.style.paddingTop = "0px";
@@ -55,44 +52,7 @@ function Voir({}: FooterInfo) {
       root.style.paddingBottom = "75px";
     }
   };
-  const getAllBlocsPage = async () => {
-    await getHeader();
-    //await getBlocsPage();
-    await getBlocs();
-    await getFooter();
-    setToggle(!toggle);
-  };
-
-  async function getAllRequests(async_result: any[]) {
-    let data: any[] = [];
-    async_result.forEach(async (bloc) => {
-      if (bloc.type === "text_picture") {
-        let text_picture = new TextPicture(
-          bloc.id,
-          bloc.bloc_number,
-          Number(id)
-        );
-        await requeteAsynchrone(text_picture.get_bloc(), data);
-      }
-      if (bloc.type === "carousel") {
-        let carousel = new Carousel(Number(id), bloc.bloc_number, bloc.id);
-        await requeteAsynchrone(carousel.get_bloc(), data);
-      }
-    });
-  }
-  async function requeteAsynchrone(nom: any, data: any[]) {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(nom);
-        nom.then((response: any) => {
-          data.push(response);
-        });
-      }, 100); // Simule une requête qui prend 1 seconde
-    });
-
-    setBlocs(data);
-  }
-  useEffect(() => {
+  /* useEffect(() => {
     if (
       localStorage.getItem("previous_page_id") !== null &&
       localStorage.getItem("previous_page_id") !== id
@@ -101,12 +61,19 @@ function Voir({}: FooterInfo) {
       window.location.reload();
       console.log(localStorage.getItem("previous_page_id"));
     }
-    getAllBlocsPage();
-  }, [id]);
+  }, [id]);*/
+
   useEffect(() => {
     adaptRoot();
   }, [isReponsive]);
-  useEffect(() => {}, [blocs]);
+
+  useEffect(() => {
+    adaptRoot();
+    if (blocs.length === 0 || blocs === undefined) {
+      asynchronRequestsToPopulateBlocs();
+    }
+  }, []);
+  useEffect(() => {}, [blocs, toggle]);
   return (
     <div className={s.blocs_container}>
       <HeaderVizualization
@@ -129,42 +96,39 @@ function Voir({}: FooterInfo) {
         Mode responsive
       </a>
 
-      {blocs !== undefined &&
-        blocs.map((value, index) => {
-          return value instanceof TextPicture ? (
-            <div
-              className={s.bloc}
-              style={{
-                height: "fit-content",
-              }}
-            >
-              <Bloc
-                index={index}
-                bloc={value}
-                css={value.css}
-                num_bloc={index}
+      {blocs.map((value, index) => {
+        console.log("value", value);
+        return value instanceof TextPicture ? (
+          <div
+            className={s.bloc}
+            style={{
+              height: "fit-content",
+            }}
+          >
+            <Bloc
+              index={index}
+              bloc={value}
+              css={value.css}
+              num_bloc={index}
+              toggle={toggle}
+              full={true}
+              isResponsive={isReponsive}
+            />
+          </div>
+        ) : (
+          value instanceof Carousel && (
+            <div className={s.carousel}>
+              <CarouselVisualization
+                input_bloc={value}
                 toggle={toggle}
-                setToggle={setToggle}
+                refresh={false}
                 full={true}
-                onContentStateChange={undefined}
-                contenstate={contentState}
                 isResponsive={isReponsive}
               />
             </div>
-          ) : (
-            value instanceof Carousel && (
-              <div className={s.carousel}>
-                <CarouselVisualization
-                  input_bloc={value}
-                  toggle={toggle}
-                  refresh={false}
-                  full={true}
-                  isResponsive={isReponsive}
-                />
-              </div>
-            )
-          );
-        })}
+          )
+        );
+      })}
       <FooterVizualization
         input_bloc={footer}
         toggle={toggle}

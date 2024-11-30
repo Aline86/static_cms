@@ -19,8 +19,8 @@ export class Carousel extends Container {
     id: number = -1,
     isAutomatique: boolean = false,
     card_number: number = 5,
-    width: number = 25,
-    height: number = 32,
+    width: number = 15,
+    height: number = 25,
     gap: number = 30,
     title: string = "",
     type: string = "carousel",
@@ -100,7 +100,6 @@ export class Carousel extends Container {
       case "remove":
         index !== undefined &&
           this.carousel_data[index] !== undefined &&
-          this.card_number >= 2 &&
           this.remove_data(index);
         break;
     }
@@ -152,6 +151,7 @@ export class Carousel extends Container {
   remove_data(index: number | undefined) {
     index !== undefined && this.carousel_data.splice(index, 1);
     this.card_number--;
+    index !== undefined && this.remove_link(index);
   }
 
   public get_isAutomatique(): boolean {

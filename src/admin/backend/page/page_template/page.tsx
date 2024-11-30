@@ -11,11 +11,11 @@ import BlocDisplay from "./bloc_display";
 import Page from "../class/Page";
 import Blocs from "./blocs";
 import { Carousel } from "../../bloc/components/carousel/class/Carousel";
+import BlocTools from "../../../tools/blocs_tools";
 
 interface PageParams {}
 
 function Visualization({}: PageParams) {
-  const [blocs, setBlocs] = useState<Array<any>>([]);
   const [toggle, setToggle] = useState(false);
   const [drag, setToDrag] = useState(false);
   const [dragBegin, setDragBegin] = useState(0);
@@ -24,66 +24,22 @@ function Visualization({}: PageParams) {
   const [header, setHeader] = useState<Header>(new Header());
   const { id, name } = useParams();
   let page_type = new Page(Number(id));
+  const tools = new BlocTools(page_type);
 
-  const getHeader = async () => {
-    const new_bloc = await header.get_bloc();
+  const [blocs, setBlocs] = useState<Array<any>>([]);
 
-    if (new_bloc.id === 1) {
-      setHeader(header);
-    }
-  };
-  const getFooter = async () => {
-    const new_bloc = await footer.get_bloc();
+  async function asynchronRequestsToPopulateBlocs() {
+    await header.get_bloc();
 
-    if (new_bloc.id === 1) {
-      setFooter(new_bloc);
-    }
-  };
+    await footer.get_bloc();
 
-  const getAllBlocsPage = async () => {
-    await getHeader();
-    //await getBlocsPage();
-    await getPage();
-    await getFooter();
+    let bloc_pages = await tools.getAllBlocsPage();
+
+    bloc_pages !== undefined && setBlocs(bloc_pages);
+
     setToggle(!toggle);
-  };
-  const getPage = async () => {
-    page_type = await page_type.get_bloc();
-    let async_result = await page_type.get_blocs_for_page();
-
-    if (Array.isArray(async_result) && async_result.length >= 1) {
-      await getAllRequests(async_result);
-    }
-  };
-  async function getAllRequests(async_result: any[]) {
-    let data: any[] = [];
-    async_result.forEach(async (bloc) => {
-      if (bloc.type === "text_picture") {
-        let text_picture = new TextPicture(
-          bloc.id,
-          bloc.bloc_number,
-          Number(id)
-        );
-        await AsynchroneRequest(text_picture.get_bloc(), data);
-      }
-      if (bloc.type === "carousel") {
-        let carousel = new Carousel(Number(id), bloc.bloc_number, bloc.id);
-        await AsynchroneRequest(carousel.get_bloc(), data);
-      }
-    });
   }
-  async function AsynchroneRequest(nom: any, data: any[]) {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(nom);
-        nom.then((response: any) => {
-          data.push(response);
-        });
-      }, 100);
-    });
 
-    setBlocs(data);
-  }
   function handleScroll() {
     window.scrollTo({
       top: 2 * Number(document.body.offsetHeight),
@@ -91,14 +47,13 @@ function Visualization({}: PageParams) {
       behavior: "smooth",
     });
   }
-
   useEffect(() => {
-    getAllBlocsPage();
-    setBlocs(blocs);
+    asynchronRequestsToPopulateBlocs();
   }, []);
-  useEffect(() => {
-    console.log("drag", drag);
-  }, [blocs, drag]);
+  /*useEffect(() => {
+    asynchronRequestsToPopulateBlocs();
+  }, [id]);*/
+  useEffect(() => {}, [toggle, blocs]);
   return (
     <div className="page">
       <div className={s.page_container}>
@@ -112,33 +67,39 @@ function Visualization({}: PageParams) {
             <div className={s.navigate}>Visualiser</div>
           </li>
         </Link>
-        <BlocDisplay
-          getPage={getPage}
-          handleScroll={handleScroll}
-          blocs={blocs}
-          setToDrag={setToDrag}
-          drag={drag}
-          open={open}
-          setOpen={setOpen}
-          page={page_type}
-        />
-        <h1>{name}</h1>
-        <div className={s.bloc_creation_wrapper} onClick={() => setOpen(!open)}>
-          <div className={s.bloc_creation}>
-            <img src={ajout} />
+
+        <div>
+          <BlocDisplay
+            handleScroll={handleScroll}
+            blocs={blocs}
+            setToDrag={setToDrag}
+            drag={drag}
+            open={open}
+            setOpen={setOpen}
+            page={page_type}
+            getPage={asynchronRequestsToPopulateBlocs}
+          />
+          <h1>{name}</h1>
+          <div
+            className={s.bloc_creation_wrapper}
+            onClick={() => setOpen(!open)}
+          >
+            <div className={s.bloc_creation}>
+              <img src={ajout} />
+            </div>
           </div>
+          <Blocs
+            blocs={blocs}
+            setBlocs={setBlocs}
+            setDragBegin={setDragBegin}
+            dragBegin={dragBegin}
+            drag={drag}
+            toggle={toggle}
+            setToggle={setToggle}
+            page_id={Number(id)}
+          />
         </div>
-        <Blocs
-          blocs={blocs}
-          getAllBlocsPage={getAllBlocsPage}
-          setDragBegin={setDragBegin}
-          dragBegin={dragBegin}
-          drag={drag}
-          toggle={toggle}
-          setBlocs={setBlocs}
-          setToggle={setToggle}
-          page_id={Number(id)}
-        />
+
         <FooterVizualization
           input_bloc={footer}
           toggle={toggle}

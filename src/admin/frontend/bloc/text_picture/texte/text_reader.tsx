@@ -297,7 +297,6 @@ function TextReader({
 
   useEffect(() => {
     if (typeof onContentStateChange !== "function") {
-      console.log("contenState", contenState);
       getPictures(contenState.entityMap);
 
       updateConvertToText(contenState.blocks);

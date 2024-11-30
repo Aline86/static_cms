@@ -45,15 +45,7 @@ function CarouselVisualization({
     const type = input_bloc.isAutomatique ? "auto" : "carousel";
     setType(type);
   }
-  function updateSize() {
-    window.location.reload();
-  }
-  useEffect(() => {
-    if (!result.matches) {
-      //window.addEventListener("resize", updateSize);
-      // setResize(window.innerWidth);
-    }
-  }, [result]);
+
   function reorder_automatic() {
     if (dataToProcess !== undefined) {
       let first = dataToProcess.splice(1, 1);
@@ -79,7 +71,12 @@ function CarouselVisualization({
       setData(reordered_data_cards);
     }
   }
-
+  useEffect(() => {
+    if (!result.matches) {
+      //window.addEventListener("resize", updateSize);
+      // setResize(window.innerWidth);
+    }
+  }, [result]);
   useEffect(() => {
     updateType(input_bloc);
     setDataToProcess((elRefs) =>
@@ -94,8 +91,10 @@ function CarouselVisualization({
     } else {
       reorder_carousel();
     }
-  }, [isResponsive, toggle, dataToProcess]);
-  useEffect(() => {}, [isResponsive, dataValue]);
+  }, [isResponsive, input_bloc, toggle, dataToProcess]);
+  useEffect(() => {
+    console.log(input_bloc);
+  }, [isResponsive, input_bloc, dataValue]);
   return (
     <div className={s.body_container}>
       {dataValue !== undefined && (

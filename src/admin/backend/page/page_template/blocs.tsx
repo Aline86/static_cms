@@ -18,7 +18,7 @@ interface BlocData {
   blocs: Array<any>;
   setDragBegin: any;
   dragBegin: number;
-  getAllBlocsPage: any;
+
   drag: boolean;
   toggle: boolean;
   setBlocs: any;
@@ -30,7 +30,7 @@ function Blocs({
   blocs,
   setDragBegin,
   dragBegin,
-  getAllBlocsPage,
+
   drag,
   toggle,
   setBlocs,
@@ -39,18 +39,14 @@ function Blocs({
 }: BlocData) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
   const [refresh, setRefresh] = useState(false);
-
   const onContentStateChange = (
     contentState: any,
     input_bloc: TextPicture,
     index: number
   ) => {
     input_bloc.text = contentState;
-
     blocs[index] = input_bloc;
-
     setBlocs(blocs);
-
     setContentState(contentState);
   };
 
@@ -87,7 +83,7 @@ function Blocs({
       console.log("bloc", bloc_in_blocs);
       await bloc_in_blocs.save_bloc();
     });
-    setRefresh(!refresh);
+    setToggle(!toggle);
   };
 
   const saveBlocAll = async () => {
@@ -103,19 +99,16 @@ function Blocs({
   };
   const updateDragBloc = async (lastKey: number) => {
     const start = dragBegin;
-    const end = lastKey; // Elements to move: [3, 4, 5]
+    const end = lastKey;
     const newPos = lastKey;
     moveElements(start, end, newPos);
   };
   const moveElements = (start: number, end: number, newPos: number) => {
     const newItems = [...blocs];
     const draggedItemValue = newItems[start];
-    // Remove the dragged item from the array
     newItems.splice(start, 1);
-    // Insert the dragged item at the new position
     newItems.splice(end, 0, draggedItemValue);
     let new_bloc_array: any = [];
-    // Reindexation of the bloc numbers
     newItems.map(async (bloc: TextPicture | Carousel, index) => {
       bloc.set_bloc_number(index + 1);
       new_bloc_array.push(bloc);
@@ -134,9 +127,11 @@ function Blocs({
   const handleDragOver = (event: any) => {
     event.preventDefault();
   };
-  useEffect(() => {}, [drag, blocs]);
   useEffect(() => {
-    getAllBlocsPage();
+    // getAllBlocsPage();
+  }, [blocs]);
+  useEffect(() => {
+    // getAllBlocsPage();
   }, [refresh]);
   return (
     <div className={s.blocs_container}>
@@ -193,14 +188,11 @@ function Blocs({
                   <div className={s.bloc}>
                     <Bloc
                       bloc={value}
-                      contenstate={contentState}
                       num_bloc={index}
                       css={value.css}
                       toggle={toggle}
                       full={false}
-                      setToggle={setToggle}
-                      index={0}
-                      onContentStateChange={undefined}
+                      index={index}
                       isResponsive={false}
                     />
                   </div>
