@@ -81,12 +81,14 @@ function CarouselVisualization({
   }
 
   useEffect(() => {
-    updateType(input_bloc);
-    setDataToProcess((elRefs) =>
-      Array(input_bloc.carousel_data.length)
-        .fill(elRefs)
-        .map((_, i) => input_bloc.carousel_data[i] || createRef())
-    );
+    if (input_bloc !== undefined && input_bloc.carousel_data !== undefined) {
+      updateType(input_bloc);
+      setDataToProcess((elRefs) =>
+        Array(input_bloc.carousel_data.length)
+          .fill(elRefs)
+          .map((_, i) => input_bloc.carousel_data[i] || createRef())
+      );
+    }
   }, [toggle, refresh]);
   useEffect(() => {
     if (input_bloc.isAutomatique) {

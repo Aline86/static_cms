@@ -4,13 +4,12 @@ import { Link, useParams } from "react-router-dom";
 import ajout from "./../../../../assets/ajouter.png";
 import Footer from "../../bloc/components/footer/Footer";
 import Header from "../../bloc/components/header/Header";
-import { TextPicture } from "../../bloc/components/text_picture/class/TextPicture";
 import HeaderVizualization from "../../../frontend/bloc/header/header";
 import FooterVizualization from "../../../frontend/bloc/footer/footer";
 import BlocDisplay from "./bloc_display";
 import Page from "../class/Page";
 import Blocs from "./blocs";
-import { Carousel } from "../../bloc/components/carousel/class/Carousel";
+import BlocTools from "../../../tools/blocs_tools";
 
 interface PageParams {}
 
@@ -22,66 +21,28 @@ function Visualization({}: PageParams) {
   const [open, setOpen] = useState(false);
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
+  const [loaded, setLoaded] = useState(false);
   const { id, name } = useParams();
   let page_type = new Page(Number(id));
+  const [tools, setTools] = useState<BlocTools>(
+    new BlocTools(header, footer, page_type)
+  );
 
-  const getHeader = async () => {
-    const new_bloc = await header.get_bloc();
+  async function AsynchronRequestsToPopulateBlocs() {
+    const new_header = await header.get_bloc();
 
-    if (new_bloc.id === 1) {
-      setHeader(header);
+    if (new_header.id === 1) {
+      setHeader(new_header);
     }
-  };
-  const getFooter = async () => {
-    const new_bloc = await footer.get_bloc();
+    const new_footer = await footer.get_bloc();
 
-    if (new_bloc.id === 1) {
-      setFooter(new_bloc);
+    if (new_footer.id === 1) {
+      setFooter(new_footer);
     }
-  };
 
-  const getAllBlocsPage = async () => {
-    await getHeader();
-    //await getBlocsPage();
-    await getPage();
-    await getFooter();
-    setToggle(!toggle);
-  };
-  const getPage = async () => {
-    page_type = await page_type.get_bloc();
-    let async_result = await page_type.get_blocs_for_page();
-
-    if (Array.isArray(async_result) && async_result.length >= 1) {
-      await getAllRequests(async_result);
-    }
-  };
-  async function getAllRequests(async_result: any[]) {
-    let data: any[] = [];
-    async_result.forEach(async (bloc) => {
-      if (bloc.type === "text_picture") {
-        let text_picture = new TextPicture(
-          bloc.id,
-          bloc.bloc_number,
-          Number(id)
-        );
-        await requeteAsynchrone(text_picture.get_bloc(), data);
-      }
-      if (bloc.type === "carousel") {
-        let carousel = new Carousel(Number(id), bloc.bloc_number, bloc.id);
-        await requeteAsynchrone(carousel.get_bloc(), data);
-      }
-    });
-  }
-  async function requeteAsynchrone(nom: any, data: any[]) {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(nom);
-        nom.then((response: any) => {
-          data.push(response);
-        });
-      }, 100); // Simule une requête qui prend 1 seconde
-    });
-
+    setTools(new BlocTools(header, footer, page_type));
+    let data = await tools.getAllBlocsPage();
+    console.log("data", data);
     setBlocs(data);
   }
   function handleScroll() {
@@ -93,12 +54,13 @@ function Visualization({}: PageParams) {
   }
 
   useEffect(() => {
-    getAllBlocsPage();
-    setBlocs(blocs);
-  }, []);
+    AsynchronRequestsToPopulateBlocs();
+  }, [id]);
   useEffect(() => {
-    console.log("drag", drag);
-  }, [blocs, drag]);
+    setLoaded(true);
+  }, [blocs]);
+
+  useEffect(() => {}, [drag]);
   return (
     <div className="page">
       <div className={s.page_container}>
@@ -112,33 +74,41 @@ function Visualization({}: PageParams) {
             <div className={s.navigate}>Visualiser</div>
           </li>
         </Link>
-        <BlocDisplay
-          getPage={getPage}
-          handleScroll={handleScroll}
-          blocs={blocs}
-          setToDrag={setToDrag}
-          drag={drag}
-          open={open}
-          setOpen={setOpen}
-          page={page_type}
-        />
-        <h1>{name}</h1>
-        <div className={s.bloc_creation_wrapper} onClick={() => setOpen(!open)}>
-          <div className={s.bloc_creation}>
-            <img src={ajout} />
+
+        {loaded && tools !== undefined && blocs.length >= 1 && (
+          <div>
+            <BlocDisplay
+              handleScroll={handleScroll}
+              blocs={blocs}
+              setToDrag={setToDrag}
+              drag={drag}
+              open={open}
+              setOpen={setOpen}
+              page={page_type}
+            />
+            <h1>{name}</h1>
+            <div
+              className={s.bloc_creation_wrapper}
+              onClick={() => setOpen(!open)}
+            >
+              <div className={s.bloc_creation}>
+                <img src={ajout} />
+              </div>
+            </div>
+            <Blocs
+              blocs={blocs}
+              getAllBlocsPage={AsynchronRequestsToPopulateBlocs}
+              setDragBegin={setDragBegin}
+              dragBegin={dragBegin}
+              drag={drag}
+              toggle={toggle}
+              setBlocs={setBlocs}
+              setToggle={setToggle}
+              page_id={Number(id)}
+            />{" "}
           </div>
-        </div>
-        <Blocs
-          blocs={blocs}
-          getAllBlocsPage={getAllBlocsPage}
-          setDragBegin={setDragBegin}
-          dragBegin={dragBegin}
-          drag={drag}
-          toggle={toggle}
-          setBlocs={setBlocs}
-          setToggle={setToggle}
-          page_id={Number(id)}
-        />
+        )}
+
         <FooterVizualization
           input_bloc={footer}
           toggle={toggle}

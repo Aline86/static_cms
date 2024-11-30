@@ -17,11 +17,11 @@ interface TextParams {
   onContentStateChange: any | undefined;
   isResponsive: boolean;
 }
-
+// In order to be able to customize user input data, I recreate the visual letter by letter with customer customization input
+// This is algorithm that allows direct customer contentStatate input retranscription on the right side of the screen
 function TextReader({
   index,
   bloc_input,
-
   read_more,
   color,
   toggle,
@@ -52,14 +52,11 @@ function TextReader({
       let picture_data_offset: any = {};
       let i: number = 0;
       blocs.map((bloc: any, index: number) => {
-        /** Arrangement des images en fonction de si elles sont présentes dans l'éditeur donc dans entityRange */
+        /** Isolation of pictures coming from contentState */
         if (bloc.type === "atomic" && pictures[0] !== undefined) {
           head.push(bloc.type);
-
           picture_data_offset[bloc.entityRanges[0].key] = [];
-
           picture_data_offset[bloc.entityRanges[0].key].push(pictures[0][i]);
-
           i++;
         } else {
           head.push(bloc.type);
@@ -94,25 +91,23 @@ function TextReader({
       beginToSetToClassData(data_to_show);
     }
   };
+  // there is a bug in draft-js : when you delete a picture, the entityMap object doesn't reindex the picture indexes after picture deletion
+  // the following code overloads the entityMap section of contentState object and rearranges the indexes after picture deletion.
   const setIndexPictureData = (picture_data_: any) => {
     let picture_data_offset: any = {};
     let picture_data_offset_final: any = {};
     Object.entries(picture_data_).map(([key, picture]) => {
       picture_data_offset[key] = [];
-
       picture_data_offset[key] = picture;
     });
 
     let values: Array<any> = Object.values(picture_data_offset);
     let keys_map: any = Object.keys(picture_data_offset);
-
     let values_map: any = Object.values(contenState.entityMap);
 
     values_map.length > 0 &&
       keys_map.map((key_map: string | number, k: number) => {
         let i = 0;
-        const key_data = key_map;
-        const str = String(key_data);
         headlines.map((head: any, index: number) => {
           if (head === "atomic") {
             if (
@@ -132,6 +127,9 @@ function TextReader({
         delete contenState.entityMap[key_map_key];
       }
     });
+
+    // To improve
+    // Triggers refreshing at the right moment
     if (refresh === 2) {
       setRefresh(1);
     } else if (refresh === 1) {
@@ -144,9 +142,6 @@ function TextReader({
       onContentStateChange !== undefined &&
       typeof onContentStateChange === "function" &&
       onContentStateChange(contenState, bloc_input, index);
-
-    console.log("values_map", values_map);
-
     Object.keys(picture_data_offset_final).length > 0 &&
       setPictureOffset(picture_data_offset_final);
   };
@@ -165,13 +160,15 @@ function TextReader({
     let arr_string_toshow: any = [];
     let letters_str = [];
     textBlocks !== undefined &&
-      Object.entries(textBlocks).map(([key, bloc], i) => {
+      Object.entries(textBlocks).map(([key, bloc]) => {
         letters_str = retrieveDataFromBlock(bloc);
+        // Adds a string from section Blocks on contentState
         arr_string_toshow.push(letters_str);
         letters_str = [];
       });
     setStringTexts(arr_string_toshow);
   };
+  // Sets the right class to the letter in order to have the appropriate rendering
   const retrieveDataFromBlock = (textBlock: BlockTextParams) => {
     const t: number = textBlock.text.length;
     const str_text = textBlock.text;

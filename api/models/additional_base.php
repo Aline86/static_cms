@@ -30,7 +30,7 @@
             }
             
         }
-        $ordered_data = $data_components_to_build->reorder($all_components_data);
+       /* $ordered_data = $data_components_to_build->reorder($all_components_data);
      
         $all_components_data =  [];
         foreach($ordered_data as $data_component) {
@@ -48,7 +48,7 @@
             }
          
            // $all_components_data[] = $data_component;
-        } 
+        } */
     
         echo json_encode($all_components_data);
     }

@@ -12,7 +12,6 @@ import { PictureGroup } from "../../bloc/components/picture_group/class/PictureG
 import Page from "../class/Page";
 
 interface BlocData {
-  getPage: any;
   handleScroll: any;
   blocs: Array<any>;
   setToDrag: any;
@@ -23,7 +22,6 @@ interface BlocData {
 }
 
 function BlocDisplay({
-  getPage,
   handleScroll,
   blocs,
   setToDrag,
@@ -35,7 +33,6 @@ function BlocDisplay({
   const addBlocToBDD = async (bloc: any) => {
     await bloc.save_bloc();
     page.get_blocs();
-    getPage();
   };
 
   useEffect(() => {}, []);

@@ -13,29 +13,36 @@ interface CardDatas {
 
 function CarouselOption1({ toggle, updateCarousel, bloc }: CardDatas) {
   const result = window.matchMedia("(max-width: 1000px)");
-  const show_remove = bloc.carousel_data.length > 4 ? true : false;
-  useEffect(() => {}, []);
+  const show_remove =
+    bloc !== undefined &&
+    bloc.carousel_data !== undefined &&
+    bloc.carousel_data.length > 4
+      ? true
+      : false;
+  useEffect(() => {}, [toggle]);
   return (
     <div className={s.body}>
-      {bloc.carousel_data.map((value: CarouselData, index: number) => {
-        console.log("index", index);
-        return (
-          <div
-            className={s.cards}
-            style={{ paddingBottom: "50px", height: "fit-content" }}
-            key={index}
-          >
-            <CardData
-              bloc={bloc}
-              gap={bloc.gap}
-              data={value}
-              index={index}
-              updateCarousel={updateCarousel}
-              show_remove={show_remove}
-            />
-          </div>
-        );
-      })}
+      {bloc !== undefined &&
+        bloc.carousel_data !== undefined &&
+        bloc.carousel_data.map((value: CarouselData, index: number) => {
+          console.log("index", index);
+          return (
+            <div
+              className={s.cards}
+              style={{ paddingBottom: "50px", height: "fit-content" }}
+              key={index}
+            >
+              <CardData
+                bloc={bloc}
+                gap={bloc.gap}
+                data={value}
+                index={index}
+                updateCarousel={updateCarousel}
+                show_remove={show_remove}
+              />
+            </div>
+          );
+        })}
     </div>
   );
 }
