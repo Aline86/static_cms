@@ -14,37 +14,30 @@ import BlocTools from "../../../tools/blocs_tools";
 interface PageParams {}
 
 function Visualization({}: PageParams) {
-  const [blocs, setBlocs] = useState<Array<any>>([]);
   const [toggle, setToggle] = useState(false);
   const [drag, setToDrag] = useState(false);
   const [dragBegin, setDragBegin] = useState(0);
   const [open, setOpen] = useState(false);
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
-  const [loaded, setLoaded] = useState(false);
   const { id, name } = useParams();
   let page_type = new Page(Number(id));
-  const [tools, setTools] = useState<BlocTools>(
-    new BlocTools(header, footer, page_type)
-  );
+  const tools = new BlocTools(page_type);
 
-  async function AsynchronRequestsToPopulateBlocs() {
-    const new_header = await header.get_bloc();
+  const [blocs, setBlocs] = useState<Array<any>>([]);
 
-    if (new_header.id === 1) {
-      setHeader(new_header);
-    }
-    const new_footer = await footer.get_bloc();
+  async function asynchronRequestsToPopulateBlocs() {
+    await header.get_bloc();
 
-    if (new_footer.id === 1) {
-      setFooter(new_footer);
-    }
+    await footer.get_bloc();
 
-    setTools(new BlocTools(header, footer, page_type));
-    let data = await tools.getAllBlocsPage();
-    console.log("data", data);
-    setBlocs(data);
+    let bloc_pages = await tools.getAllBlocsPage();
+
+    bloc_pages !== undefined && setBlocs(bloc_pages);
+
+    setToggle(!toggle);
   }
+
   function handleScroll() {
     window.scrollTo({
       top: 2 * Number(document.body.offsetHeight),
@@ -52,15 +45,13 @@ function Visualization({}: PageParams) {
       behavior: "smooth",
     });
   }
-
   useEffect(() => {
-    AsynchronRequestsToPopulateBlocs();
-  }, [id]);
-  useEffect(() => {
-    setLoaded(true);
-  }, [blocs]);
-
-  useEffect(() => {}, [drag]);
+    asynchronRequestsToPopulateBlocs();
+  }, []);
+  /*useEffect(() => {
+    asynchronRequestsToPopulateBlocs();
+  }, [id]);*/
+  useEffect(() => {}, [toggle, blocs]);
   return (
     <div className="page">
       <div className={s.page_container}>
@@ -75,39 +66,37 @@ function Visualization({}: PageParams) {
           </li>
         </Link>
 
-        {loaded && tools !== undefined && blocs.length >= 1 && (
-          <div>
-            <BlocDisplay
-              handleScroll={handleScroll}
-              blocs={blocs}
-              setToDrag={setToDrag}
-              drag={drag}
-              open={open}
-              setOpen={setOpen}
-              page={page_type}
-            />
-            <h1>{name}</h1>
-            <div
-              className={s.bloc_creation_wrapper}
-              onClick={() => setOpen(!open)}
-            >
-              <div className={s.bloc_creation}>
-                <img src={ajout} />
-              </div>
+        <div>
+          <BlocDisplay
+            handleScroll={handleScroll}
+            blocs={blocs}
+            setToDrag={setToDrag}
+            drag={drag}
+            open={open}
+            setOpen={setOpen}
+            page={page_type}
+            getPage={asynchronRequestsToPopulateBlocs}
+          />
+          <h1>{name}</h1>
+          <div
+            className={s.bloc_creation_wrapper}
+            onClick={() => setOpen(!open)}
+          >
+            <div className={s.bloc_creation}>
+              <img src={ajout} />
             </div>
-            <Blocs
-              blocs={blocs}
-              getAllBlocsPage={AsynchronRequestsToPopulateBlocs}
-              setDragBegin={setDragBegin}
-              dragBegin={dragBegin}
-              drag={drag}
-              toggle={toggle}
-              setBlocs={setBlocs}
-              setToggle={setToggle}
-              page_id={Number(id)}
-            />{" "}
           </div>
-        )}
+          <Blocs
+            blocs={blocs}
+            setBlocs={setBlocs}
+            setDragBegin={setDragBegin}
+            dragBegin={dragBegin}
+            drag={drag}
+            toggle={toggle}
+            setToggle={setToggle}
+            page_id={Number(id)}
+          />
+        </div>
 
         <FooterVizualization
           input_bloc={footer}

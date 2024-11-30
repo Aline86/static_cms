@@ -42,7 +42,7 @@ function CarouselContainer({
   const [trigger, setTrigger] = useState(false);
   const [move, setMove] = useState(0);
   const [isLeft, setIsLeft] = useState(true);
-  const [firstchick, setFirstClick] = useState(0);
+  const [firstclick, setFirstClick] = useState(0);
 
   const result = window.matchMedia("(max-width: 700px)");
 
@@ -74,7 +74,7 @@ function CarouselContainer({
     setIsLeft(true);
     setTrigger(!trigger);
     updateTransitionState(true);
-    setFirstClick(firstchick + 1);
+    setFirstClick(firstclick + 1);
   }
 
   function moveRight() {
@@ -82,7 +82,7 @@ function CarouselContainer({
     setIsLeft(false);
     setTrigger(!trigger);
     updateTransitionState(true);
-    setFirstClick(firstchick + 1);
+    setFirstClick(firstclick + 1);
   }
   function updateTransitionRightA() {
     if (data !== undefined) {
@@ -115,10 +115,11 @@ function CarouselContainer({
     updateCardRef();
   }, [isResponsive]);
   useEffect(() => {
+    updateCardRef();
     if (type === "carousel") {
-      if (!isLeft && firstchick > 0) {
+      if (!isLeft && firstclick > 0) {
         updateTransitionLeft();
-      } else if (firstchick > 0) {
+      } else if (firstclick > 0) {
         updateTransitionRight();
       }
     }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import s from "./styles.module.css";
 
 import { Link, useParams } from "react-router-dom";
@@ -27,35 +27,21 @@ function Voir({}: FooterInfo) {
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
 
-  const [loaded, setLoaded] = useState(false);
-
   let page_type = new Page(Number(id));
-  const [tools, setTools] = useState<BlocTools>(
-    new BlocTools(header, footer, page_type)
-  );
+  const tools = new BlocTools(page_type);
 
-  async function AsynchronRequestsToPopulateBlocs() {
-    const new_header = await header.get_bloc();
+  async function asynchronRequestsToPopulateBlocs() {
+    await header.get_bloc();
 
-    if (new_header.id === 1) {
-      setHeader(new_header);
-    }
-    const new_footer = await footer.get_bloc();
+    await footer.get_bloc();
 
-    if (new_footer.id === 1) {
-      setFooter(new_footer);
-    }
-
-    setTools(new BlocTools(header, footer, page_type));
-    let data = await tools.getAllBlocsPage();
-    triggerData(data);
+    let bloc_pages = await tools.getAllBlocsPage();
+    bloc_pages !== undefined && setBlocs(bloc_pages);
+    setToggle(!toggle);
   }
 
-  function triggerData(data: any) {
-    setBlocs(data);
-  }
   const adaptRoot = () => {
-    const root = document.getElementById("root");
+    let root = document.getElementById("root");
     if (root !== null && isReponsive) {
       root.style.width = "380px";
       root.style.paddingTop = "100px";
@@ -66,7 +52,7 @@ function Voir({}: FooterInfo) {
       root.style.paddingBottom = "75px";
     }
   };
-  useEffect(() => {
+  /* useEffect(() => {
     if (
       localStorage.getItem("previous_page_id") !== null &&
       localStorage.getItem("previous_page_id") !== id
@@ -74,19 +60,19 @@ function Voir({}: FooterInfo) {
       localStorage.removeItem("previous_page_id");
       window.location.reload();
     }
-  }, [id]);
+  }, [id]);*/
+
   useEffect(() => {
     adaptRoot();
   }, [isReponsive]);
 
   useEffect(() => {
-    AsynchronRequestsToPopulateBlocs();
     adaptRoot();
+    if (blocs.length === 0 || blocs === undefined) {
+      asynchronRequestsToPopulateBlocs();
+    }
   }, []);
-  useEffect(() => {
-    setLoaded(true);
-  }, [blocs]);
-
+  useEffect(() => {}, [blocs, toggle]);
   return (
     <div className={s.blocs_container}>
       <HeaderVizualization
@@ -109,44 +95,39 @@ function Voir({}: FooterInfo) {
         Mode responsive
       </a>
 
-      {loaded &&
-        blocs !== undefined &&
-        blocs.length >= 1 &&
-        blocs.map((value, index) => {
-          return value instanceof TextPicture ? (
-            <div
-              className={s.bloc}
-              style={{
-                height: "fit-content",
-              }}
-            >
-              <Bloc
-                index={index}
-                bloc={value}
-                css={value.css}
-                num_bloc={index}
+      {blocs.map((value, index) => {
+        console.log("value", value);
+        return value instanceof TextPicture ? (
+          <div
+            className={s.bloc}
+            style={{
+              height: "fit-content",
+            }}
+          >
+            <Bloc
+              index={index}
+              bloc={value}
+              css={value.css}
+              num_bloc={index}
+              toggle={toggle}
+              full={true}
+              isResponsive={isReponsive}
+            />
+          </div>
+        ) : (
+          value instanceof Carousel && (
+            <div className={s.carousel}>
+              <CarouselVisualization
+                input_bloc={value}
                 toggle={toggle}
-                setToggle={setToggle}
+                refresh={false}
                 full={true}
-                onContentStateChange={undefined}
-                contenstate={contentState}
                 isResponsive={isReponsive}
               />
             </div>
-          ) : (
-            value instanceof Carousel && (
-              <div className={s.carousel}>
-                <CarouselVisualization
-                  input_bloc={value}
-                  toggle={toggle}
-                  refresh={false}
-                  full={true}
-                  isResponsive={isReponsive}
-                />
-              </div>
-            )
-          );
-        })}
+          )
+        );
+      })}
       <FooterVizualization
         input_bloc={footer}
         toggle={toggle}

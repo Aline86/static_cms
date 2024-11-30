@@ -11,30 +11,14 @@ import { TextPicture } from "../../../backend/bloc/components/text_picture/class
 interface BlocParams {
   index: number;
   bloc: TextPicture;
-
-  contenstate: any;
   css: OptionCss;
   num_bloc: number;
   toggle: boolean;
-  setToggle: any;
   full: boolean;
-  onContentStateChange: any;
   isResponsive: boolean;
 }
 
-function Bloc({
-  index,
-  bloc,
-
-  contenstate,
-  css,
-  num_bloc,
-  toggle,
-  setToggle,
-  full,
-  onContentStateChange,
-  isResponsive,
-}: BlocParams) {
+function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
   useEffect(() => {
     setContentState(typeof bloc.text === "object" ? bloc.text : contentState);
@@ -42,7 +26,7 @@ function Bloc({
   useEffect(() => {
     setContentState(typeof bloc.text === "object" ? bloc.text : contentState);
   }, []);
-
+  useEffect(() => {}, [bloc]);
   return (
     <div
       className={s.bloc}
@@ -124,8 +108,8 @@ function Bloc({
               color={bloc.background_color}
               toggle={toggle}
               contenState={contentState}
-              setContentState={setContentState}
-              onContentStateChange={onContentStateChange}
+              setContentState={undefined}
+              onContentStateChange={undefined}
               isResponsive={isResponsive}
             />
           </div>

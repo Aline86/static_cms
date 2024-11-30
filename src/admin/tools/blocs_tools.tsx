@@ -1,47 +1,29 @@
 import { Carousel } from "../backend/bloc/components/carousel/class/Carousel";
-import Footer from "../backend/bloc/components/footer/Footer";
-import Header from "../backend/bloc/components/header/Header";
 import { TextPicture } from "../backend/bloc/components/text_picture/class/TextPicture";
 import Page from "../backend/page/class/Page";
 
 export default class BlocTools {
-  header!: Header;
-  footer!: Footer;
-  page!: Page;
+  page: Page;
 
-  constructor(header: Header, footer: Footer, page: Page) {
-    this.header = header;
-    this.footer = footer;
+  constructor(page: Page) {
     this.page = page;
   }
 
-  getHeader = async () => {
-    return await this.header.get_bloc();
-  };
-
-  getFooter = async () => {
-    return await this.footer.get_bloc();
-  };
-
   getAllBlocsPage = async () => {
-    await this.getHeader();
-    await this.getFooter();
-    let page_blocs = await this.getPage();
-
-    let components = await this.sortComponents(page_blocs);
-    return components;
+    return await this.getPage();
   };
 
   getPage = async () => {
     this.page = await this.page.get_bloc();
-    let async_result = await this.page.get_blocs_for_page();
 
-    let get_page_requests = await this.getAllRequests(async_result);
-    return get_page_requests;
+    let fullfilled_bloc_component_promises =
+      await this.page.get_blocs_for_page();
+
+    return this.getAllRequests(fullfilled_bloc_component_promises);
   };
 
-  async getAllRequests(async_result: any[]) {
-    let unordered_data = async function (page: Page) {
+  getAllRequests = async (async_result: any[]) => {
+    const unordered_data = async (page: Page) => {
       async_result.forEach(async (bloc, index) => {
         if (bloc.type === "text_picture") {
           let text_picture = new TextPicture(
@@ -49,21 +31,30 @@ export default class BlocTools {
             bloc.bloc_number,
             page.id
           );
-          async_result[index] = await text_picture.get_bloc();
+          async_result[index] = this.getBloc(text_picture.get_bloc());
         }
         if (bloc.type === "carousel") {
           let carousel = new Carousel(page.id, bloc.bloc_number, bloc.id);
-          async_result[index] = await carousel.get_bloc();
+          async_result[index] = this.getBloc(carousel.get_bloc());
         }
       });
       return async_result;
     };
 
-    let data = await unordered_data(this.page);
-    return data;
-  }
+    let promises = await unordered_data(this.page);
 
-  async sortComponents(array_unsorted: any) {
+    return Promise.all(promises).then((data) => {
+      let ordered = this.sortComponents(data);
+      return ordered;
+    });
+  };
+
+  getBloc = (promise: Promise<any>) => {
+    return new Promise(async function (resolve, reject) {
+      resolve(await promise);
+    });
+  };
+  sortComponents = (array_unsorted: any) => {
     let arr = array_unsorted;
     let n = arr.length;
     let swapped;
@@ -80,8 +71,14 @@ export default class BlocTools {
           swapped = true;
         }
       }
-      n--; // Reduce the range of the next iteration
+      n--;
+
+      // Reduce the range of the next iteration
     } while (swapped); // Continue if a swap occurred
+
     return arr;
-  }
+  };
+}
+function getBloc(text_picture: TextPicture): any {
+  throw new Error("Function not implemented.");
 }

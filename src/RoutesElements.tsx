@@ -47,7 +47,7 @@ export default function ThemeContextProvider({}: { children: any }) {
           Page
         </Route>
         <Route path="/:id/:name/" element={<Voir />}>
-          Page
+          Vizualisation
         </Route>
       </Routes>
     </HashRouter>

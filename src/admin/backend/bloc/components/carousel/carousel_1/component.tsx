@@ -19,13 +19,12 @@ function CarouselOption1({ toggle, updateCarousel, bloc }: CardDatas) {
     bloc.carousel_data.length > 4
       ? true
       : false;
-  useEffect(() => {}, [toggle]);
+
   return (
     <div className={s.body}>
       {bloc !== undefined &&
         bloc.carousel_data !== undefined &&
         bloc.carousel_data.map((value: CarouselData, index: number) => {
-          console.log("index", index);
           return (
             <div
               className={s.cards}

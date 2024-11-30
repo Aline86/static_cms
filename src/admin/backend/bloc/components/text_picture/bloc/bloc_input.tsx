@@ -38,7 +38,7 @@ function BlocInput({
       typeof input_bloc.text === "object" ? input_bloc.text : contentState
     );
   }, []);
-  useEffect(() => {}, [toggle]);
+
   return (
     <div className={s.bloc} key={input_bloc.bloc_number}>
       <div className={s.titre}>
