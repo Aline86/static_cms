@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import s from "./styles/style.module.css";
 
 import InsideButton from "./InsideButton";
-import { Button } from "../../../backend/bloc/components/button/class/Button";
+import { Button } from "../../../backoffice/bloc/components/button/class/Button";
 
 import JSanimationH2 from "../snippets/js_animation_h2";
 

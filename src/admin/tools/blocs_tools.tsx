@@ -1,8 +1,8 @@
-import { Button } from "../backend/bloc/components/button/class/Button";
-import { Carousel } from "../backend/bloc/components/carousel/class/Carousel";
-import { PictureGroup } from "../backend/bloc/components/picture_group/class/PictureGroup";
-import { TextPicture } from "../backend/bloc/components/text_picture/class/TextPicture";
-import Page from "../backend/page/class/Page";
+import { Button } from "../backoffice/bloc/components/button/class/Button";
+import { Carousel } from "../backoffice/bloc/components/carousel/class/Carousel";
+import { PictureGroup } from "../backoffice/bloc/components/picture_group/class/PictureGroup";
+import { TextPicture } from "../backoffice/bloc/components/text_picture/class/TextPicture";
+import Page from "../backoffice/page/class/Page";
 
 export default class BlocTools {
   page: Page;

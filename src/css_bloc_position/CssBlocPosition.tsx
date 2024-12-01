@@ -4,7 +4,7 @@ import centre from "./../assets/centre.png";
 import gauche from "./../assets/gauche.png";
 import droit from "./../assets/droit.png";
 import add_to_database from "./../assets/add_to_database.png";
-import { TextPicture } from "../admin/backend/bloc/components/text_picture/class/TextPicture";
+import { TextPicture } from "../admin/backoffice/bloc/components/text_picture/class/TextPicture";
 function CssBlocPosition({
   props,
   updateBloc,

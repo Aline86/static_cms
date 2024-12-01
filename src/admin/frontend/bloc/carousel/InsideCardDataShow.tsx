@@ -2,8 +2,8 @@ import { Link, useParams } from "react-router-dom";
 
 import s from "./styles/style.module.css";
 import { useEffect, useState } from "react";
-import Page from "../../../backend/page/class/Page";
-import CarouselData from "../../../backend/bloc/components/carousel/class/CarouselData";
+import Page from "../../../backoffice/page/class/Page";
+import CarouselData from "../../../backoffice/bloc/components/carousel/class/CarouselData";
 
 interface CardDatas {
   value: CarouselData;

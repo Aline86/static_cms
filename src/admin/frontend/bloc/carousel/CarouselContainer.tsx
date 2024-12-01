@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 import CardDataShow from "./CardDataShow";
 import s from "./styles/style.module.css";
-import CarouselCard from "../../../backend/bloc/components/carousel/class/CarouselData";
-import { Carousel } from "../../../backend/bloc/components/carousel/class/Carousel";
+import CarouselCard from "../../../backoffice/bloc/components/carousel/class/CarouselData";
+import { Carousel } from "../../../backoffice/bloc/components/carousel/class/Carousel";
 
 interface CarouselData {
   bloc: Carousel;

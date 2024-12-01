@@ -1,9 +1,9 @@
 import "./App.css";
 import { useContext, useEffect, useState } from "react";
 import ThemeContextProvider from "./RoutesElements";
-import Prerequis from "./admin/backend/prerequis/prerequis";
 import ColorContext from "./ColorContext";
-import Page from "./admin/backend/page/class/Page";
+import Page from "./admin/backoffice/page/class/Page";
+import Prerequis from "./admin/backoffice/prerequis/prerequis";
 
 function App() {
   const { common } = useContext(ColorContext);

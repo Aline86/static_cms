@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import Common from "./admin/backend/bloc/components/common/class/Common";
+import Common from "./admin/backoffice/bloc/components/common/class/Common";
 
 const getBloc = async () => {
   let common = new Common();

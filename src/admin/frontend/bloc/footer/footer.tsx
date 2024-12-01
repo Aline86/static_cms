@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import s from "./styles.module.css";
 import v from "./style_responsive.module.css";
-import Footer from "../../../backend/bloc/components/footer/Footer";
+import Footer from "../../../backoffice/bloc/components/footer/Footer";
 
 interface FooterInfo {
   input_bloc: Footer;

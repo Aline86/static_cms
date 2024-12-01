@@ -5,17 +5,17 @@ import { Link, useParams } from "react-router-dom";
 
 import { RawDraftContentState } from "draft-js";
 
-import { TextPicture } from "../../backend/bloc/components/text_picture/class/TextPicture";
-import { Carousel } from "../../backend/bloc/components/carousel/class/Carousel";
-import Footer from "../../backend/bloc/components/footer/Footer";
-import Header from "../../backend/bloc/components/header/Header";
-import Page from "../../backend/page/class/Page";
+import { TextPicture } from "../../backoffice/bloc/components/text_picture/class/TextPicture";
+import { Carousel } from "../../backoffice/bloc/components/carousel/class/Carousel";
+import Footer from "../../backoffice/bloc/components/footer/Footer";
+import Header from "../../backoffice/bloc/components/header/Header";
+import Page from "../../backoffice/page/class/Page";
 import Bloc from "../bloc/text_picture/bloc";
 import CarouselVisualization from "../bloc/carousel/Carousel";
 import HeaderVizualization from "../bloc/header/header";
 import FooterVizualization from "../bloc/footer/footer";
 import BlocTools from "../../tools/blocs_tools";
-import { PictureGroup } from "../../backend/bloc/components/picture_group/class/PictureGroup";
+import { PictureGroup } from "../../backoffice/bloc/components/picture_group/class/PictureGroup";
 import PictureGroupVizualisation from "../bloc/picture_group/PictureGroup";
 import ButtonVisualization from "../bloc/bouton/Button";
 

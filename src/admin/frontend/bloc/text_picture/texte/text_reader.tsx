@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import s from "./style.module.css";
 import BlockTextParams from "./classes/BlocTextParams";
 import { RawDraftContentState } from "draft-js";
-import { TextPicture } from "../../../../backend/bloc/components/text_picture/class/TextPicture";
+import { TextPicture } from "../../../../backoffice/bloc/components/text_picture/class/TextPicture";
 import JSanimationH2 from "../../snippets/js_animation_h2";
 
 interface TextParams {

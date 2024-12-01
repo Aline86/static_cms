@@ -1,4 +1,4 @@
-import CarouselData from "../../../backend/bloc/components/carousel/class/CarouselData";
+import CarouselData from "../../../backoffice/bloc/components/carousel/class/CarouselData";
 import InsideCardDataShow from "./InsideCardDataShow";
 import s from "./styles/style.module.css";
 import { useEffect } from "react";

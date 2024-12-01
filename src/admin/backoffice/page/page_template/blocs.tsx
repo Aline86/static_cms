@@ -15,13 +15,14 @@ import CssCarouselPosition from "../../bloc/components/carousel/css_bloc_positio
 import ajout from "./../../../../assets/ajouter.png";
 import CssPictureGroupPosition from "../../bloc/components/picture_group/css_bloc_position/CssBlocPosition";
 import { PictureGroup } from "../../bloc/components/picture_group/class/PictureGroup";
-import ImageGroup from "../../bloc/components/picture_group/class/image_group/component";
+
 import PictureGroupVizualisation from "../../../frontend/bloc/picture_group/PictureGroup";
 import { Button } from "../../bloc/components/button/class/Button";
 import ButtonInput from "../../bloc/components/button/bouton/component";
 import Bouton from "../../../frontend/bloc/bouton/bouton";
 import ButtonVisualization from "../../../frontend/bloc/bouton/Button";
 import CssButtonPosition from "../../bloc/components/button/css_bloc_position/CssButtonPosition";
+import ImageGroup from "../../bloc/components/picture_group/image_group/component";
 
 interface BlocData {
   blocs: Array<any>;

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, createRef } from "react";
 import s from "./styles/style.module.css";
-import { Button } from "../../../backend/bloc/components/button/class/Button";
+import { Button } from "../../../backoffice/bloc/components/button/class/Button";
 import ButtonContainer from "./ButtonContainer";
 
 interface CustomCarouselInfo {

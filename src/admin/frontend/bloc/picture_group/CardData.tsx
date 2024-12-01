@@ -4,8 +4,8 @@ import InsideCardData from "./InsideCardData";
 import s from "./styles/style.module.css";
 import { useEffect, useState } from "react";
 
-import PictureGroupCard from "../../../backend/bloc/components/picture_group/class/PictureGroupData";
-import Page from "../../../backend/page/class/Page";
+import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
+import Page from "../../../backoffice/page/class/Page";
 
 interface CardDatas {
   width: number;

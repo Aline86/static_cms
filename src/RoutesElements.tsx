@@ -3,15 +3,12 @@ import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 
 import axios from "axios";
-
-import Prerequis from "./admin/backend/prerequis/prerequis";
-
-import Page from "./admin/backend/page/class/Page";
-import Visualization from "./admin/backend/page/page_template/page";
-import Pages from "./admin/backend/page/pages";
 import Voir from "./admin/frontend/page/voir";
-import Common from "./admin/backend/bloc/components/common/class/Common";
-import CommonVisualization from "./admin/backend/bloc/components/common/general_settings";
+import Page from "./admin/backoffice/page/class/Page";
+import Prerequis from "./admin/backoffice/prerequis/prerequis";
+import Pages from "./admin/backoffice/page/pages";
+import Visualization from "./admin/backoffice/page/page_template/page";
+import CommonVisualization from "./admin/backoffice/bloc/components/common/general_settings";
 
 export default function ThemeContextProvider({}: { children: any }) {
   const [pages, setPages] = useState<Array<Page>>([]);

@@ -1,50 +1,27 @@
-# React + TypeScript + Vite
+# CMS for dynamic creation of static websites made with following technologies : React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CMS creation is yet not finished.
+I still have to finish following tasks :
 
-Currently, two official plugins are available:
+- responsive dropdowns for social medias and links
+- cleaning the code and renaming some of the files.
+- puting global and security variables in a .env file
+- available features for the moment only cover backoffice elements.
+- I still have to do the front office eventhough it is going to pick up the allready available components in the backoffice FO.
+- managing videos on the website
+- securing the site, for the moment there is no security.
+- I want to protect backoffice authomatized routes with secured access (very important)
+- full screen responsiveness has still not been fully implemented
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## What the CMS can actually do for the moment
 
-## Expanding the ESLint configuration
+You can create pages and blocs with simultaneous visualization of user content.
+backoffice is automatized. This means that you nearly don't have anything to do to implement new backoffice routes.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## If you want to have a hint of what the CMS can do, please go to following links :
 
-- Configure the top-level `parserOptions` property like this:
+Some improvements were made since the videos were down.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+https://www.dropbox.com/scl/fi/tgmqrfzbgdfy659f6ypmu/avancement_0.mp4?rlkey=52jh8yv3c0g1bcgd0g949jsy1&st=ifr0n8q4&dl=0
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+https://www.dropbox.com/scl/fi/4hyn3yf2oc2ugl0i54l51/avancement_1.mp4?rlkey=me1mmddaab4cswg912kokhhzp&st=op5i8w7s&dl=0

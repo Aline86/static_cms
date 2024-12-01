@@ -1,9 +1,9 @@
 import s from "./style/style.module.css";
 import { useEffect } from "react";
-import remove from "./../../../../../../../assets/remove.png";
-import PictureGroupData from "../PictureGroupData";
-import DropdownData from "../../dropdown/Dropdown";
-import { PictureGroup } from "../PictureGroup";
+import remove from "./../../../../../../assets/remove.png";
+import { PictureGroup } from "../class/PictureGroup";
+import PictureGroupData from "../class/PictureGroupData";
+import DropdownData from "../dropdown/Dropdown";
 
 interface CardDatas {
   bloc: PictureGroup;

@@ -5,8 +5,8 @@ import TextReader from "./texte/text_reader";
 
 import { useEffect, useState } from "react";
 import { RawDraftContentState } from "draft-js";
-import OptionCss from "../../../backend/bloc/components/text_picture/class/OptionsCss";
-import { TextPicture } from "../../../backend/bloc/components/text_picture/class/TextPicture";
+import OptionCss from "../../../backoffice/bloc/components/text_picture/class/OptionsCss";
+import { TextPicture } from "../../../backoffice/bloc/components/text_picture/class/TextPicture";
 
 interface BlocParams {
   index: number;

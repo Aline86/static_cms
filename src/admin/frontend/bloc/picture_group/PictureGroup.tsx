@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, createRef } from "react";
 import s from "./styles/style.module.css";
-import { PictureGroup } from "../../../backend/bloc/components/picture_group/class/PictureGroup";
-import PictureGroupCard from "../../../backend/bloc/components/picture_group/class/PictureGroupData";
+import { PictureGroup } from "../../../backoffice/bloc/components/picture_group/class/PictureGroup";
+import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 import PictureGroupContainer from "./PictureGroupContainer";
 
 interface CustomCarouselInfo {

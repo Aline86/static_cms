@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import s from "./style.module.css";
 import CssPosition from "../classes/cssPosition";
-import OptionCss from "../../../../backend/bloc/components/text_picture/class/OptionsCss";
+import OptionCss from "../../../../backoffice/bloc/components/text_picture/class/OptionsCss";
 
 interface ImageParams {
   image: string;

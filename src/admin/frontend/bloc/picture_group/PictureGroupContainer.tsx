@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import s from "./styles/style.module.css";
 import CardData from "./CardData";
-import PictureGroupCard from "../../../backend/bloc/components/picture_group/class/PictureGroupData";
-import { PictureGroup } from "../../../backend/bloc/components/picture_group/class/PictureGroup";
+import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
+import { PictureGroup } from "../../../backoffice/bloc/components/picture_group/class/PictureGroup";
 
 interface CarouselData {
   bloc: PictureGroup;

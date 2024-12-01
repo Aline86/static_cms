@@ -1,4 +1,4 @@
-import PictureGroupCard from "../../../backend/bloc/components/picture_group/class/PictureGroupData";
+import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 
 interface CardDatas {
   data: PictureGroupCard;

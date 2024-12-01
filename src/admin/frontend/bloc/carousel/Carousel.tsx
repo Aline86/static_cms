@@ -2,8 +2,8 @@ import { useEffect, useState, useRef, createRef } from "react";
 
 import CarouselContainer from "./CarouselContainer";
 import s from "./styles/style.module.css";
-import { Carousel } from "../../../backend/bloc/components/carousel/class/Carousel";
-import CarouselData from "../../../backend/bloc/components/carousel/class/CarouselData";
+import { Carousel } from "../../../backoffice/bloc/components/carousel/class/Carousel";
+import CarouselData from "../../../backoffice/bloc/components/carousel/class/CarouselData";
 
 interface CustomCarouselInfo {
   input_bloc: Carousel;

@@ -4,7 +4,7 @@ import s from "./style.module.css";
 
 import Nav from "./Nav/Nav";
 import { Link } from "react-router-dom";
-import Header from "../../../backend/bloc/components/header/Header";
+import Header from "../../../backoffice/bloc/components/header/Header";
 
 interface HeaderInfo {
   input_bloc: Header;

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import s from "./styles/style.module.css";
 import { Link, useParams } from "react-router-dom";
-import Page from "../../../backend/page/class/Page";
-import { Button } from "../../../backend/bloc/components/button/class/Button";
+import Page from "../../../backoffice/page/class/Page";
+import { Button } from "../../../backoffice/bloc/components/button/class/Button";
 
 interface CardDatas {
   data: Button;
