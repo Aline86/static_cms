@@ -27,7 +27,8 @@
                 }
             }
         }
-        $ordered_data = $data_components_to_build->reorder($all_components_data);
+        
+       /* $ordered_data = $data_components_to_build->reorder($all_components_data);
         $all_components_data =  [];
         foreach($ordered_data as $data_component) {
             $method_name_to_call = "";
@@ -39,7 +40,7 @@
                     $all_components_data[] = $model->$method_name_to_call($data_component)[0];
                     continue;
             }
-        } 
+        } */
     
         echo json_encode($all_components_data);
     }

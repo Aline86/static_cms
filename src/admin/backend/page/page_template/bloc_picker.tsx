@@ -45,23 +45,19 @@ function BlocDisplay({
         <div className={s.header_bloc_choose}>
           <div className={s.container_auto}>
             <img src={text_image} alt="texte image" />
-
             <input
               type="submit"
               value="Bloc Texte Image"
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new TextPicture(-1, blocs.length + 1, page.id));
-
                 handleScroll();
                 setOpen(!open);
               }}
             />
           </div>
-
           <div className={s.container_auto}>
             <img src={glissiere} alt="slider" />
-
             <input
               type="submit"
               value="Défilé d'images Option 1"
@@ -73,7 +69,6 @@ function BlocDisplay({
               }}
             />
           </div>
-
           <div className={s.container_auto}>
             <img src={auto} alt="carousel automatique" />
             <input
@@ -81,9 +76,7 @@ function BlocDisplay({
               value="Défilé d'images Option 2 (automatique)"
               onClick={(e) => {
                 e.preventDefault();
-
                 addBlocToBDD(new Carousel(page.id, blocs.length + 1, -1, true));
-
                 handleScroll();
                 setOpen(!open);
               }}
@@ -97,7 +90,6 @@ function BlocDisplay({
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new Button(page.id, blocs.length + 1));
-                //  BlocsFunctionClass.renderSwitch("bouton", blocs.length)
                 handleScroll();
                 setOpen(!open);
               }}
@@ -105,14 +97,12 @@ function BlocDisplay({
           </div>
           <div className={s.container_auto}>
             <img src={couches} alt="groupe d'image" />
-
             <input
               type="submit"
               value="Groupe d'images"
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new PictureGroup(page.id, blocs.length + 1));
-                //  BlocsFunctionClass.renderSwitch("images_group", blocs.length)
                 handleScroll();
                 setOpen(!open);
               }}

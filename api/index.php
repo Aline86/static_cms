@@ -18,7 +18,7 @@ class Db {
 }
 $db = Db::getInstance();
 
-$pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer', 'common'];
+$pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer', 'common', 'picture_group', 'button'];
 foreach($pages_array as $page_name) {
     include_once "./models/"  . $page_name . ".php";
 }

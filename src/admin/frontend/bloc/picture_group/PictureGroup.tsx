@@ -19,36 +19,14 @@ function PictureGroupVizualisation({
   isResponsive,
 }: CustomCarouselInfo) {
   const [dataValue, setData] = useState<PictureGroupCard[]>();
-  const [type, setType] = useState<string>("");
-  const [transitionFinished, setTransitionFinished] = useState(false);
-  const [cardWidth, setCardWidth] = useState<number>(0);
-  const cardRef = useRef<HTMLDivElement>();
+
   const [resize, setResize] = useState(window.innerWidth);
   const result = window.matchMedia("(max-width: 1000px)");
-  function updateCardRef() {
-    const cardWidth: number | undefined = cardRef.current?.clientWidth;
-    if (cardWidth !== undefined) {
-      setCardWidth(cardWidth + input_bloc.gap / 2);
-    }
-  }
-
-  function updateTransitionState(state: boolean) {
-    setTransitionFinished(state);
-  }
 
   function updateDataValue(cards: PictureGroupCard[]) {
     setData(cards);
   }
-  function updateType(input_bloc: PictureGroup) {
-    const type = input_bloc.isAutomatique
-      ? "auto"
-      : input_bloc.isCarousel
-      ? "carousel"
-      : input_bloc.card_number > 1
-      ? "images_group"
-      : "bouton";
-    setType(type);
-  }
+
   function updateSize() {
     window.location.reload();
   }
@@ -59,7 +37,6 @@ function PictureGroupVizualisation({
     }
   }, [result]);
   useEffect(() => {
-    updateType(input_bloc);
     setData((elRefs) =>
       Array(input_bloc.picture_group_data.length)
         .fill(elRefs)
@@ -73,15 +50,7 @@ function PictureGroupVizualisation({
         <PictureGroupContainer
           bloc={input_bloc}
           updateDataValue={updateDataValue}
-          transitionFinished={transitionFinished}
-          updateTransitionState={updateTransitionState}
-          cardWidth={cardWidth}
-          updateCardRef={updateCardRef}
-          cardRef={cardRef}
-          cardNumber={input_bloc.card_number}
           data={dataValue}
-          resize={resize}
-          type={type}
           toggle={toggle}
           full={full}
           isResponsive={isResponsive}

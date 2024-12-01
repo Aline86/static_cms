@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: calc(100% - 20px);
+  border: 1px solid lightgray;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 10px auto;
+}
+.container input {
+  display: inline;
+}
+.type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: calc(100% - 20px);
+}
+
+.container select {
+  height: 25px;
+  background-color: white;
+  border: 1px solid lightgray;
+}

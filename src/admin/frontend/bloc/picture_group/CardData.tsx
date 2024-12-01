@@ -3,15 +3,16 @@ import { Link, useParams } from "react-router-dom";
 import InsideCardData from "./InsideCardData";
 import s from "./styles/style.module.css";
 import { useEffect, useState } from "react";
-import Page from "../../../backend/bloc/components/page/class/Page";
+
 import PictureGroupCard from "../../../backend/bloc/components/picture_group/class/PictureGroupData";
+import Page from "../../../backend/page/class/Page";
 
 interface CardDatas {
   width: number;
   height: number;
   toggle: boolean;
   data: PictureGroupCard;
-  trigger: boolean;
+
   full: boolean;
   isResponsive: boolean;
 }
@@ -21,7 +22,7 @@ function CardData({
   height,
   data,
   toggle,
-  trigger,
+
   full,
   isResponsive,
 }: CardDatas) {
@@ -30,7 +31,7 @@ function CardData({
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
   let style_data: any = undefined;
-  if (!Boolean(Number(data.is_data_button))) {
+  if (!Boolean(data.is_data_button)) {
     style_data = {
       background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v2/api/uploadfile/${data.image_url}") no-repeat center / cover`,
       width: full
@@ -49,7 +50,7 @@ function CardData({
       width: full ? `100%` : `${width * 0.5}vw`,
 
       borderRadius: "1px",
-      height: `${height}vh`,
+      height: `fit-content`,
       border: "none",
       backgroundColor: `${data.background_color}`,
 
@@ -96,7 +97,7 @@ function CardData({
 
   useEffect(() => {
     checkExternal(data.href_url);
-  }, [toggle, trigger]);
+  }, [toggle]);
   useEffect(() => {
     id !== undefined && localStorage.setItem("previous_page_id", id);
   }, []);
@@ -107,7 +108,7 @@ function CardData({
       className={s.card_app_image_group}
       style={style_data}
     >
-      {!Boolean(Number(data.is_data_button)) ? (
+      {!Boolean(data.is_data_button) ? (
         <div className={s.text_image_group}>{data.text}</div>
       ) : (
         <InsideCardData data={data} isLightOrDark={isLightOrDark} />
@@ -116,11 +117,11 @@ function CardData({
   ) : (
     <Link
       //
-      to={{ pathname: `/` + page?.title + `/` + page?.id }}
+      to={{ pathname: `/` + page?.id + `/` + page?.title }}
       style={style_data}
       className={s.card_app_image_group}
     >
-      {!Boolean(Number(data.is_data_button)) ? (
+      {!Boolean(data.is_data_button) ? (
         <div className={s.text_image_group}>{data.text}</div>
       ) : (
         <InsideCardData data={data} isLightOrDark={isLightOrDark} />

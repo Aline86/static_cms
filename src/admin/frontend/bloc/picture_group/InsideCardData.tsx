@@ -10,6 +10,7 @@ function InsideCardData({ data, isLightOrDark }: CardDatas) {
     cursor: "pointer",
     color: isLightOrDark(data.background_color),
     border: "1px solid " + `${isLightOrDark(data.background_color)}`,
+    marginBottom: `25px`,
   };
 
   return (
@@ -17,7 +18,6 @@ function InsideCardData({ data, isLightOrDark }: CardDatas) {
       style={{
         display: `flex`,
         flexDirection: `column`,
-        alignItems: `center`,
         justifyContent: `center`,
         width: "360px",
 

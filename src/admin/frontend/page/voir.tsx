@@ -15,10 +15,14 @@ import CarouselVisualization from "../bloc/carousel/Carousel";
 import HeaderVizualization from "../bloc/header/header";
 import FooterVizualization from "../bloc/footer/footer";
 import BlocTools from "../../tools/blocs_tools";
+import { PictureGroup } from "../../backend/bloc/components/picture_group/class/PictureGroup";
+import PictureGroupVizualisation from "../bloc/picture_group/PictureGroup";
 
 interface FooterInfo {}
 function Voir({}: FooterInfo) {
-  const [blocs, setBlocs] = useState<Array<Carousel | TextPicture>>([]);
+  const [blocs, setBlocs] = useState<
+    Array<Carousel | TextPicture | PictureGroup>
+  >([]);
   const { id, name } = useParams();
 
   const contentState = useState<RawDraftContentState>();
@@ -97,7 +101,6 @@ function Voir({}: FooterInfo) {
       </a>
 
       {blocs.map((value, index) => {
-        console.log("value", value);
         return value instanceof TextPicture ? (
           <div
             className={s.bloc}
@@ -115,10 +118,20 @@ function Voir({}: FooterInfo) {
               isResponsive={isReponsive}
             />
           </div>
+        ) : value instanceof Carousel ? (
+          <div className={s.carousel}>
+            <CarouselVisualization
+              input_bloc={value}
+              toggle={toggle}
+              refresh={false}
+              full={true}
+              isResponsive={isReponsive}
+            />
+          </div>
         ) : (
-          value instanceof Carousel && (
+          value instanceof PictureGroup && (
             <div className={s.carousel}>
-              <CarouselVisualization
+              <PictureGroupVizualisation
                 input_bloc={value}
                 toggle={toggle}
                 refresh={false}

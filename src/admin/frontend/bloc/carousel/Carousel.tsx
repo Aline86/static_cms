@@ -92,9 +92,7 @@ function CarouselVisualization({
       reorder_carousel();
     }
   }, [isResponsive, input_bloc, toggle, dataToProcess]);
-  useEffect(() => {
-    console.log(input_bloc);
-  }, [isResponsive, input_bloc, dataValue]);
+  useEffect(() => {}, [isResponsive, input_bloc, dataValue]);
   return (
     <div className={s.body_container}>
       {dataValue !== undefined && (

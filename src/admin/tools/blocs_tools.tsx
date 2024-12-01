@@ -1,4 +1,5 @@
 import { Carousel } from "../backend/bloc/components/carousel/class/Carousel";
+import { PictureGroup } from "../backend/bloc/components/picture_group/class/PictureGroup";
 import { TextPicture } from "../backend/bloc/components/text_picture/class/TextPicture";
 import Page from "../backend/page/class/Page";
 
@@ -36,6 +37,14 @@ export default class BlocTools {
         if (bloc.type === "carousel") {
           let carousel = new Carousel(page.id, bloc.bloc_number, bloc.id);
           async_result[index] = this.getBloc(carousel.get_bloc());
+        }
+        if (bloc.type === "picture_group") {
+          let picture_group = new PictureGroup(
+            page.id,
+            bloc.bloc_number,
+            bloc.id
+          );
+          async_result[index] = this.getBloc(picture_group.get_bloc());
         }
       });
       return async_result;
