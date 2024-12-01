@@ -27,7 +27,7 @@
     $data_type = [];
     $associated_table_with_data =[];
     foreach($parameters as $parameter => $data_value) {
-        if (!isset($this->associated_tables[$parameter]) && !str_contains($parameter, 'id')) {
+        if (!isset($this->associated_tables[$parameter]) && !str_contains($parameter, '_id')) {
             $inside_SQL_string_1[] = $parameter . '=:' . $parameter;
             $data_bind_content[':' . $parameter] = $data_value;
         }
@@ -60,7 +60,7 @@
         } 
     }
 
-    $q->bindValue(':id', $id);
+
     $SQL_result = $q->execute(); 
   
     if(count($associated_table_with_data) > 0) {
@@ -69,7 +69,7 @@
           
             if(is_array($data_type_decoded) && isset($data_type_decoded[0])) {
                 foreach($data_type_decoded as $data_item) {
-                 
+                  
                     if(is_array($data_item)) {
                         if($data_item['id'] >= 1) {
                     
@@ -81,14 +81,17 @@
                     }
                 }
             } else  {
-                if($data_type_decoded['id'] >= 1) {
+                if(is_array($data_type_decoded)) {
+                    if($data_type_decoded['id'] >= 1) {
                 
-                    $this->update_children($data_type_decoded, $id, $associated_table);
+                        $this->update_children($data_type_decoded, $id, $associated_table);
+                    }
+                    else {
+                   
+                        $this->add_children($data_type_decoded, $id, $associated_table);
+                    }
                 }
-                else {
               
-                    $this->add_children($data_type_decoded, $id, $associated_table);
-                }
             }
           
         }

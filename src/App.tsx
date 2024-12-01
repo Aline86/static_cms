@@ -1,21 +1,12 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import ColorContext from "./ColorContext";
+import { useContext, useEffect, useState } from "react";
 import ThemeContextProvider from "./RoutesElements";
-import Page from "./admin/backend/page/page_template/page";
-import Common from "./admin/backend/bloc/components/common/class/Common";
 import Prerequis from "./admin/backend/prerequis/prerequis";
+import ColorContext from "./ColorContext";
+import Page from "./admin/backend/page/class/Page";
 
 function App() {
-  const [common, setCommon] = useState<any>(
-    new Common("#ffffff", "black", "#2f6091")
-  );
-  const getBloc = async () => {
-    const new_bloc = await common.get_bloc();
-    if (new_bloc !== undefined && new_bloc.id === 1) {
-      setCommon(new_bloc);
-    }
-  };
+  const { common } = useContext(ColorContext);
 
   const styles = {
     backgroundColor: common !== null ? `${common?.fond}` : "transparent",
@@ -24,11 +15,20 @@ function App() {
       ? `${common?.background_color_buttons}`
       : "#2f6091",
   };
+  // initilization of the first page, it should always exist prior to any action
+  const create_first_page = async () => {
+    let page_type = new Page();
+    let async_result = await page_type.get_pages();
 
+    if (Array.isArray(async_result) && async_result.length >= 1) {
+    } else {
+      let page = new Page(-1, "Accueil");
+      page.save_bloc();
+    }
+  };
   useEffect(() => {
-    //    getBloc();
-  }, []);
-
+    create_first_page();
+  }, [common]);
   return (
     common !== null && (
       <div className="app_container" style={styles}>

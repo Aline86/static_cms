@@ -279,6 +279,7 @@ button {
 .cards_auto {
   position: relative;
   display: flex;
+  background-color: transparent !important;
 }
 .card_app_auto {
   display: flex;

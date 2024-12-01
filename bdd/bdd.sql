@@ -44,30 +44,19 @@ CREATE TABLE IF NOT EXISTS `button` (
 
 `id` int(11) NOT NULL auto_increment,        
 `title` varchar(250)  NOT NULL default "",  
-`type` varchar(55)  NOT NULL default "button",             
+`type` varchar(55)  NOT NULL default "button", 
+`href_url` varchar(250)  NOT NULL default "",  
+`image_url` varchar(250)  NOT NULL default "",     
+`text` varchar(250)  NOT NULL default "",     
+`background_color` varchar(250)  NOT NULL default "",              
 `card_number` int(8)  NOT NULL , 
 `width` int(11)  NOT NULL default 21,
 `height` int(11)  NOT NULL default 250,
 `gap` int(11)  NOT NULL default 30,
-`text` text NOT NULL default "",    
 `bloc_number` int(11)  NOT NULL ,
 `page_id` int(11)  NOT NULL,
  PRIMARY KEY  (`id`),
  FOREIGN KEY (`page_id`) REFERENCES page(`id`) ON DELETE CASCADE
-);
-CREATE TABLE IF NOT EXISTS `button_data` (
-    `id` int(11) NOT NULL auto_increment,   
-    `title` varchar(250)  NOT NULL default "",          
-    `type` varchar(55)  NOT NULL default "button_data",     
-    `href_url` varchar(250)  NOT NULL default "",  
-    `image_url` varchar(250)  NOT NULL default "",     
-    `text` varchar(250)  NOT NULL default "",     
-    `background_color` varchar(250)  NOT NULL default "",     
-    `text_color` varchar(250)  NOT NULL default "",     
-    `card_number` int(11)  NOT NULL,   
-    `button_id` int(11)  NOT NULL,
-    PRIMARY KEY  (`id`),
-    FOREIGN KEY (`button_id`) REFERENCES button(`id`) ON DELETE CASCADE
 );
 
 

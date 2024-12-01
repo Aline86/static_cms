@@ -17,6 +17,11 @@ import CssPictureGroupPosition from "../../bloc/components/picture_group/css_blo
 import { PictureGroup } from "../../bloc/components/picture_group/class/PictureGroup";
 import ImageGroup from "../../bloc/components/picture_group/class/image_group/component";
 import PictureGroupVizualisation from "../../../frontend/bloc/picture_group/PictureGroup";
+import { Button } from "../../bloc/components/button/class/Button";
+import ButtonInput from "../../bloc/components/button/bouton/component";
+import Bouton from "../../../frontend/bloc/bouton/bouton";
+import ButtonVisualization from "../../../frontend/bloc/bouton/Button";
+import CssButtonPosition from "../../bloc/components/button/css_bloc_position/CssButtonPosition";
 
 interface BlocData {
   blocs: Array<any>;
@@ -58,9 +63,18 @@ function Blocs({
     input: string,
     input_bloc: TextPicture
   ) => {
-    input_bloc.update(e, field, input);
+    const new_Bloc = input_bloc.update(e, field, input);
 
+    blocs[input_bloc.bloc_number - 1] = new_Bloc;
     setBlocs(blocs);
+    setToggle(!toggle);
+  };
+  const updateButton = (e: any, field: string, input_bloc: Button) => {
+    const new_Bloc = input_bloc.update(e, field);
+
+    blocs[input_bloc.bloc_number - 1] = new_Bloc;
+    setBlocs(blocs);
+
     setToggle(!toggle);
   };
   const updateCarousel = (
@@ -74,7 +88,11 @@ function Blocs({
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
 
     setBlocs(blocs);
-    setToggle(!toggle);
+    if (field === "width" || field === "height") {
+      setRefresh(!refresh);
+    } else {
+      setToggle(!toggle);
+    }
   };
   const updatePictureGroupData = (
     e: any,
@@ -88,7 +106,9 @@ function Blocs({
     setBlocs(blocs);
     setToggle(!toggle);
   };
-  const removeBloc = async (bloc: Carousel | TextPicture | PictureGroup) => {
+  const removeBloc = async (
+    bloc: Carousel | TextPicture | PictureGroup | Button
+  ) => {
     blocs.splice(blocs.indexOf(bloc), 1);
     setBlocs(blocs);
     await bloc.remove();
@@ -109,9 +129,11 @@ function Blocs({
       new_bloc_array.push(bloc);
     });
     setBlocs(new_bloc_array);
-    blocs.map(async (bloc_to_save: Carousel | TextPicture | PictureGroup) => {
-      await bloc_to_save.save_bloc();
-    });
+    blocs.map(
+      async (bloc_to_save: Carousel | TextPicture | PictureGroup | Button) => {
+        await bloc_to_save.save_bloc();
+      }
+    );
   };
   const updateDragBloc = async (lastKey: number) => {
     const start = dragBegin;
@@ -124,20 +146,24 @@ function Blocs({
     newItems.splice(start, 1);
     newItems.splice(end, 0, draggedItemValue);
     let new_bloc_array: any = [];
-    newItems.map(async (bloc: TextPicture | Carousel | PictureGroup, index) => {
-      bloc.set_bloc_number(index + 1);
-      new_bloc_array.push(bloc);
-    });
+    newItems.map(
+      async (bloc: TextPicture | Carousel | PictureGroup | Button, index) => {
+        bloc.set_bloc_number(index + 1);
+        new_bloc_array.push(bloc);
+      }
+    );
     // saving the new info in database
     new_bloc_array.map(
-      async (bloc_to_save: Carousel | TextPicture | PictureGroup) => {
+      async (bloc_to_save: Carousel | TextPicture | PictureGroup | Button) => {
         await bloc_to_save.save_bloc();
       }
     );
     setBlocs(new_bloc_array);
   };
 
-  const saveBloc = async (bloc: TextPicture | Carousel | PictureGroup) => {
+  const saveBloc = async (
+    bloc: TextPicture | Carousel | PictureGroup | Button
+  ) => {
     bloc.save_bloc();
     setRefresh(!refresh);
   };
@@ -296,8 +322,76 @@ function Blocs({
               }
             />
           </div>
+        ) : value.type === "picture_group" ? (
+          <div
+            className="blocs"
+            draggable={drag}
+            onDragStart={() => setDragBegin(index)}
+            onDragOver={handleDragOver}
+            onDrop={() => updateDragBloc(index)}
+            key={index}
+          >
+            <Shrink
+              key={index}
+              setDragBegin={setDragBegin}
+              updateDragBloc={updateDragBloc}
+              drag={drag}
+              index={index + 1}
+              bloc={value}
+              props={
+                <div key={index} className={s.drag_bloc}>
+                  <div className={s.carousel_input}>
+                    {value.card_number > 1 && (
+                      <div
+                        className={s.addCard}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          updateCarousel(e, "ajout", value, -1);
+                        }}
+                      >
+                        <img src={ajout} />
+                      </div>
+                    )}
+                    <div
+                      className="button_remove_container"
+                      onClick={(e) => {
+                        removeBloc(value);
+                      }}
+                      style={{ top: "30px", right: "30px" }}
+                    >
+                      <img src={remove} alt="suppression box" />
+                      Supprimer le bloc
+                    </div>
+
+                    <CssPictureGroupPosition
+                      props={
+                        <ImageGroup
+                          updatePictureGroupData={updatePictureGroupData}
+                          toggle={toggle}
+                          bloc={value}
+                        />
+                      }
+                      updatePictureGroupData={updatePictureGroupData}
+                      bloc={value}
+                      draggable={drag}
+                      saveBlocAll={saveBlocAll}
+                    />
+                  </div>
+                  <div className={s.carousel}>
+                    <PictureGroupVizualisation
+                      input_bloc={value}
+                      toggle={toggle}
+                      refresh={refresh}
+                      full={false}
+                      isResponsive={false}
+                    />
+                  </div>
+                </div>
+              }
+            />
+          </div>
         ) : (
-          value.type === "picture_group" && (
+          value.type === "button" && (
             <div
               className="blocs"
               draggable={drag}
@@ -316,17 +410,6 @@ function Blocs({
                 props={
                   <div key={index} className={s.drag_bloc}>
                     <div className={s.carousel_input}>
-                      {value.card_number > 1 && (
-                        <div
-                          className={s.addCard}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            updateCarousel(e, "ajout", value, -1);
-                          }}
-                        >
-                          <img src={ajout} />
-                        </div>
-                      )}
                       <div
                         className="button_remove_container"
                         onClick={(e) => {
@@ -338,22 +421,22 @@ function Blocs({
                         Supprimer le bloc
                       </div>
 
-                      <CssPictureGroupPosition
+                      <CssButtonPosition
                         props={
-                          <ImageGroup
-                            updatePictureGroupData={updatePictureGroupData}
+                          <ButtonInput
+                            updateButton={updateButton}
                             toggle={toggle}
                             bloc={value}
                           />
                         }
-                        updatePictureGroupData={updatePictureGroupData}
+                        updateButton={updateButton}
                         bloc={value}
                         draggable={drag}
                         saveBlocAll={saveBlocAll}
                       />
                     </div>
                     <div className={s.carousel}>
-                      <PictureGroupVizualisation
+                      <ButtonVisualization
                         input_bloc={value}
                         toggle={toggle}
                         refresh={refresh}

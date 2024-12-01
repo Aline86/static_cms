@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-
-import s from "./style.module.css";
+import s from "./styles/style.module.css";
 import { Link, useParams } from "react-router-dom";
-
-import ButtonCard from "../../../backend/bloc/components/button/class/ButtonCard";
 import Page from "../../../backend/page/class/Page";
+import { Button } from "../../../backend/bloc/components/button/class/Button";
 
 interface CardDatas {
-  data: ButtonCard;
+  data: Button;
   width: number;
   height: number;
   link: boolean;
@@ -23,27 +21,20 @@ function InsideButton({
   toggle,
   isResponsive,
 }: CardDatas) {
-  const [external, isExternalLink] = useState<boolean>(true);
+  const [external, isExternalLink] = useState<boolean>(false);
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
   const checkExternal = async (url: string) => {
-    let prefixe = url.substring(0, 4);
-    if (prefixe === "http" || prefixe === "") {
+    if (typeof url !== "number") {
       isExternalLink(true);
     } else {
-      isExternalLink(false);
-      let prefixe = Number(url.substring(0, 2));
-      let pageData = await getPage(prefixe);
+      let prefixe = Number(url);
+      let conscerned_page = new Page(prefixe);
+      let pageData = await conscerned_page.get_bloc();
       setPage(pageData);
     }
   };
-  const getPage = async (id: number) => {
-    const conscerned_page = new Page(id);
-    await conscerned_page.get_bloc();
-    if (page !== undefined) {
-      return page;
-    }
-  };
+
   // adapt text color to chosed color
   const isLightOrDark = (hexcolor: string) => {
     var c = hexcolor.substring(1); // strip #
@@ -60,7 +51,6 @@ function InsideButton({
     return "black";
   };
   useEffect(() => {
-    console.log("link", link);
     checkExternal(data.href_url);
     id !== undefined && localStorage.setItem("previous_page_id", id);
   }, [toggle]);
@@ -74,32 +64,32 @@ function InsideButton({
     border: "1px solid " + `${isLightOrDark(data.background_color)}`,
     marginTop: "50px",
   };
-  return link ? (
-    external ? (
+  return external ? (
+    link ? (
       <a href={data.href_url} className="buttons" style={style_data}>
         {data.text}
       </a>
     ) : (
-      <Link
-        to={{ pathname: `/` + page?.title + `/` + page?.id }}
-        className={s.card_app}
+      <a
+        href={`http://localhost:80/cms_v2/api/uploadfile/` + `${data.href_url}`}
+        className="buttons"
+        style={style_data}
       >
-        {data.text.length > 0 && (
-          <div className="buttons" style={style_data}>
-            {data.text}
-          </div>
-        )}
-      </Link>
+        {data.text}
+      </a>
     )
   ) : (
-    <a
-      href={`http://localhost:80/cms_v2/api/uploadfile/` + `${data.href_url}`}
-      target="_blank"
-      className="buttons"
-      style={style_data}
+    <Link
+      //
+      to={{ pathname: `/` + page?.id + `/` + page?.title }}
+      className={s.card_app_image_group}
     >
-      {data.text}
-    </a>
+      {data.text.length > 0 && (
+        <div className="buttons" style={style_data}>
+          {data.text}
+        </div>
+      )}
+    </Link>
   );
 }
 

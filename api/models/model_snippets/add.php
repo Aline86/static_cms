@@ -45,10 +45,17 @@
         $parent_id = self::$db->lastInsertId();
         foreach($associated_table_with_data as $associated_table_name => $all_data_blocs) {
             if(is_array($all_data_blocs)) {
-                foreach($all_data_blocs as $data_type) {
+                if(isset($all_data_blocs[0])) {
+                    foreach($all_data_blocs as $data_type) {
         
-                    $this->add_children($data_type, $parent_id, $associated_table_name);
+                        $this->add_children($data_type, $parent_id, $associated_table_name);
+                    }
                 }
+                else {
+                    $this->add_children($all_data_blocs, $parent_id, $associated_table_name);
+                }
+              
+
             }
             else if(is_object($all_data_blocs)) {
                 $this->add_children($all_data_blocs, $parent_id, $associated_table_name);

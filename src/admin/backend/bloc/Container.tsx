@@ -134,20 +134,23 @@ export default abstract class Container {
 
       try {
         const json_object = await response.json();
-        let property_list: any = {};
-        const class_properties: any = Object.keys(this);
-        class_properties.forEach((key_exists: string) => {
-          if (key_exists !== "parameters" && key_exists !== "BASE_URL") {
-            property_list[key_exists] = [];
-          }
-        });
-        json_object.forEach((value: this) => {
-          Object.entries(value).forEach(([property, data]) => {
-            property_list[property] = data;
+        if (json_object.length >= 1) {
+          let property_list: any = {};
+          const class_properties: any = Object.keys(this);
+          class_properties.forEach((key_exists: string) => {
+            if (key_exists !== "parameters" && key_exists !== "BASE_URL") {
+              property_list[key_exists] = [];
+            }
           });
-        });
 
-        this._property_call(property_list);
+          json_object.forEach((value: this) => {
+            Object.entries(value).forEach(([property, data]) => {
+              property_list[property] = data;
+            });
+          });
+
+          this._property_call(property_list);
+        }
       } catch (error) {}
     } catch (error: any) {
       console.error(error.message);

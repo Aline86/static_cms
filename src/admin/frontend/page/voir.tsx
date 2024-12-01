@@ -17,6 +17,7 @@ import FooterVizualization from "../bloc/footer/footer";
 import BlocTools from "../../tools/blocs_tools";
 import { PictureGroup } from "../../backend/bloc/components/picture_group/class/PictureGroup";
 import PictureGroupVizualisation from "../bloc/picture_group/PictureGroup";
+import ButtonVisualization from "../bloc/bouton/Button";
 
 interface FooterInfo {}
 function Voir({}: FooterInfo) {
@@ -24,8 +25,6 @@ function Voir({}: FooterInfo) {
     Array<Carousel | TextPicture | PictureGroup>
   >([]);
   const { id, name } = useParams();
-
-  const contentState = useState<RawDraftContentState>();
   const [toggle, setToggle] = useState(false);
   const [isReponsive, setResponsive] = useState(false);
   const [footer, setFooter] = useState<Footer>(new Footer());
@@ -128,18 +127,26 @@ function Voir({}: FooterInfo) {
               isResponsive={isReponsive}
             />
           </div>
+        ) : value instanceof PictureGroup ? (
+          <div className={s.carousel}>
+            <PictureGroupVizualisation
+              input_bloc={value}
+              toggle={toggle}
+              refresh={false}
+              full={true}
+              isResponsive={isReponsive}
+            />
+          </div>
         ) : (
-          value instanceof PictureGroup && (
-            <div className={s.carousel}>
-              <PictureGroupVizualisation
-                input_bloc={value}
-                toggle={toggle}
-                refresh={false}
-                full={true}
-                isResponsive={isReponsive}
-              />
-            </div>
-          )
+          <div className={s.carousel}>
+            <ButtonVisualization
+              input_bloc={value}
+              toggle={toggle}
+              refresh={false}
+              full={true}
+              isResponsive={isReponsive}
+            />
+          </div>
         );
       })}
       <FooterVizualization

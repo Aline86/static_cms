@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import s from "./style.module.css";
+import s from "./styles/style.module.css";
 
 import InsideButton from "./InsideButton";
 import { Button } from "../../../backend/bloc/components/button/class/Button";
-import ButtonCard from "../../../backend/bloc/components/button/class/ButtonCard";
+
 import JSanimationH2 from "../snippets/js_animation_h2";
 
 interface CustomButtonInfo {
   width: number;
   height: number;
-  data: ButtonCard;
+
   toggle: boolean;
   bloc: Button;
   full: boolean;
@@ -19,7 +19,7 @@ interface CustomButtonInfo {
 function Bouton({
   width,
   height,
-  data,
+
   toggle,
   bloc,
   full,
@@ -35,10 +35,10 @@ function Bouton({
     }
   };
   useEffect(() => {
-    checkExternal(data.href_url);
+    checkExternal(bloc.href_url);
   }, []);
   useEffect(() => {
-    checkExternal(data.href_url);
+    checkExternal(bloc.href_url);
   }, [toggle]);
   useEffect(() => {
     JSanimationH2(".container_data", "disappear_data");
@@ -48,8 +48,9 @@ function Bouton({
     <div
       className={s.button_bloc}
       style={{
-        backgroundColor: data.background_color,
+        backgroundColor: bloc.background_color,
         width: !full ? "43vw" : isResponsive ? "360px" : "90vw",
+        margin: "0 auto",
       }}
     >
       <h2 className="">{bloc.title}</h2>
@@ -59,14 +60,14 @@ function Bouton({
             width: isResponsive ? "320px" : "100%",
           }}
           src={
-            "http://localhost:80/cms_v2/api/uploadfile/" + `${data.image_url}`
+            "http://localhost:80/cms_v2/api/uploadfile/" + `${bloc.image_url}`
           }
           alt={bloc.title}
         />
       </div>
 
       <InsideButton
-        data={bloc.button_data}
+        data={bloc}
         width={width}
         height={height}
         link={link}

@@ -47,6 +47,8 @@ function CssCarouselPosition({
                     <input
                       type="number"
                       value={bloc.width}
+                      min={25}
+                      max={100}
                       onChange={(e) => updateCarousel(e, "width", bloc)}
                     />
                   </div>
@@ -55,6 +57,8 @@ function CssCarouselPosition({
                     <input
                       type="number"
                       value={bloc.height}
+                      min={15}
+                      max={100}
                       onChange={(e) => updateCarousel(e, "height", bloc)}
                     />
                   </div>

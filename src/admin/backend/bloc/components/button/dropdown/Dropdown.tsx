@@ -1,31 +1,22 @@
 import { useEffect, useState } from "react";
 import s from "./styles.module.css";
 import Page from "../../../../page/class/Page";
-import CarouselData from "../../carousel/class/CarouselData";
-import { Carousel } from "../../carousel/class/Carousel";
+
+import { Button } from "../class/Button";
 
 interface DropdownInfo {
-  bloc: Carousel;
-  data: CarouselData;
-  type: string;
-  index: number;
-  updateCarousel: any;
+  bloc: Button;
+
+  updateButton: any;
 }
 
-function DropdownData({
-  bloc,
-  data,
-  type,
-  index,
-  updateCarousel,
-}: DropdownInfo) {
+function DropdownData({ bloc, updateButton }: DropdownInfo) {
   const [pages, setPages] = useState<Page[]>();
-  const [page, setPage] = useState<Page>();
+  const [page, setPage] = useState<Page>(new Page());
   const [choice, isExternalLink] = useState<boolean>();
   const [toggle, setToggle] = useState<boolean>(false);
 
   const getPages = async () => {
-    let page = new Page();
     let pages = await page.get_pages();
     setPages(pages);
   };
@@ -50,7 +41,7 @@ function DropdownData({
     return resulting_page;
   };
   useEffect(() => {
-    checkExternal(data.href_url);
+    checkExternal(bloc.href_url);
     getPages();
   }, []);
   useEffect(() => {}, [choice]);
@@ -81,10 +72,10 @@ function DropdownData({
               <h5>Page externe :</h5>
               <input
                 className={s.href_url}
-                value={data.href_url}
+                value={bloc.href_url}
                 placeholder="Url de redirection"
                 onChange={(e) => {
-                  updateCarousel(e, "href_url", bloc, index);
+                  updateButton(e, "href_url", bloc);
                 }}
               />
             </div>
@@ -93,8 +84,8 @@ function DropdownData({
               <h5>Page interne :</h5>
               <select
                 className={s.select_box}
-                onClick={(e) => updateCarousel(e, "href_url", bloc, index)}
-                defaultValue={data.href_url}
+                onClick={(e) => updateButton(e, "href_url", bloc)}
+                defaultValue={bloc.href_url}
               >
                 <option key={0}>Choisir une page de redirection</option>
 
@@ -105,7 +96,7 @@ function DropdownData({
                         key={index}
                         value={value.id}
                         selected={
-                          Number(data.href_url) === Number(value.id)
+                          Number(bloc.href_url) === Number(value.id)
                             ? true
                             : false
                         }
@@ -133,7 +124,7 @@ function DropdownData({
               type="file"
               className={s.image_url}
               onChange={(e) => {
-                updateCarousel(e, "href_url", bloc, index);
+                updateButton(e, "href_url", bloc);
               }}
             />
           </label>

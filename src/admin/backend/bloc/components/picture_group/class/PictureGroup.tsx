@@ -16,9 +16,7 @@ export class PictureGroup extends Container {
     page_id: number,
     bloc_number: number,
     id: number = -1,
-
     card_number: number = 4,
-
     width: number = 43,
     height: number = 25,
     gap: number = 30,
@@ -74,10 +72,21 @@ export class PictureGroup extends Container {
           (this.picture_group_data[index].text = e.target.value);
         break;
       case "height":
-        this.set_height(e.target.value);
+        let height = e.target.value;
+        if (e.target.value < 15) {
+          height = 15;
+        } else if (e.target.value > 100) {
+          height = 100;
+        }
+        this.set_height(height);
         break;
       case "width":
-        this.set_width(e.target.value);
+        let width = e.target.value;
+        if (e.target.value < 25) {
+          width = 25;
+        } else if (e.target.value > 100) {
+          width = 100;
+        }
         break;
       case "is_data_button":
         index !== undefined &&

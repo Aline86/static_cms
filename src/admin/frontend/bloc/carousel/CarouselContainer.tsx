@@ -43,7 +43,6 @@ function CarouselContainer({
   const [move, setMove] = useState(0);
   const [isLeft, setIsLeft] = useState(true);
   const [firstclick, setFirstClick] = useState(0);
-
   const result = window.matchMedia("(max-width: 700px)");
 
   function updateTransitionLeft() {
@@ -57,7 +56,6 @@ function CarouselContainer({
       }
     }
   }
-
   function updateTransitionRight() {
     if (data !== undefined) {
       const shiftItem = data.shift();
@@ -68,7 +66,6 @@ function CarouselContainer({
       }
     }
   }
-
   function moveLeft() {
     setMove(-cardWidth - 15);
     setIsLeft(true);
@@ -76,7 +73,6 @@ function CarouselContainer({
     updateTransitionState(true);
     setFirstClick(firstclick + 1);
   }
-
   function moveRight() {
     setMove(cardWidth + 15);
     setIsLeft(false);
@@ -97,9 +93,7 @@ function CarouselContainer({
 
   function moveRightA() {
     setTrigger(!trigger);
-
     setMove(-(cardWidth + bloc.gap / 2));
-
     updateTransitionState(true);
   }
 
@@ -216,7 +210,9 @@ function CarouselContainer({
             className={s.card_container}
             style={{
               height: `fit-content`,
-              transform: `translateX(${-cardWidth - bloc.gap * 0.5}px)`,
+              transform: !full
+                ? `translateX(calc(${-bloc.width * 0.5}vw - ${bloc.gap}px))`
+                : `translateX(calc(${-bloc.width}vw - ${bloc.gap}px))`,
             }}
           >
             <div
@@ -283,15 +279,17 @@ function CarouselContainer({
         className={s.container_class_auto}
         style={{
           minWidth: `${cardWidth}px`,
-          margin: !full ? `${bloc.gap}px auto` : `0`,
-          height: isResponsive ? `250px` : `fit-content`,
+          margin: !full ? `${bloc.gap}px auto` : `auto -25px`,
+          height: isResponsive ? `${bloc.height}vh` : `fit-content`,
+          paddingTop: isResponsive ? `75px` : `0px`,
+          minHeight: isResponsive ? `170px` : `fit-content`,
           width: full ? (isResponsive ? `380px` : `100vw`) : `43vw`,
         }}
       >
         <div
           className={s.card_container_auto}
           style={{
-            transform: `translateX(${-cardWidth}px)`,
+            transform: `translateX(${-cardWidth + 0.7 * bloc.gap}px)`,
             height: `fit-content`,
           }}
         >

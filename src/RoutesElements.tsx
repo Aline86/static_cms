@@ -10,6 +10,8 @@ import Page from "./admin/backend/page/class/Page";
 import Visualization from "./admin/backend/page/page_template/page";
 import Pages from "./admin/backend/page/pages";
 import Voir from "./admin/frontend/page/voir";
+import Common from "./admin/backend/bloc/components/common/class/Common";
+import CommonVisualization from "./admin/backend/bloc/components/common/general_settings";
 
 export default function ThemeContextProvider({}: { children: any }) {
   const [pages, setPages] = useState<Array<Page>>([]);
@@ -38,7 +40,7 @@ export default function ThemeContextProvider({}: { children: any }) {
     <HashRouter>
       <Routes>
         <Route path="/" element={<Prerequis />}>
-          Page
+          Accueil
         </Route>
         <Route path="/pages" element={<Pages />}>
           Pages
@@ -47,7 +49,10 @@ export default function ThemeContextProvider({}: { children: any }) {
           Page
         </Route>
         <Route path="/:id/:name/" element={<Voir />}>
-          Vizualisation
+          Visualization
+        </Route>
+        <Route path="/commun" element={<CommonVisualization />}>
+          Paramètres généraux
         </Route>
       </Routes>
     </HashRouter>

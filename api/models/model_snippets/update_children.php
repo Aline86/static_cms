@@ -5,7 +5,7 @@
     $inside_SQL_string_1 = [];
     $inside_SQL_string_2 = [];
     $data_bind_content = [];
-
+   
     $id = 0;
     $SQL_string_1 = 'UPDATE ' . $associated_table_name . ' SET ';
     foreach($data_decoded as $parameter => $data_value) {

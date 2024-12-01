@@ -19,8 +19,8 @@ export class Carousel extends Container {
     id: number = -1,
     isAutomatique: boolean = false,
     card_number: number = 5,
-    width: number = 15,
-    height: number = 25,
+    width: number = 25,
+    height: number = 15,
     gap: number = 30,
     title: string = "",
     type: string = "carousel",
@@ -74,10 +74,24 @@ export class Carousel extends Container {
           (this.carousel_data[index].text = e.target.value);
         break;
       case "height":
-        this.set_height(e.target.value);
+        let height = e.target.value;
+        console.log(height);
+        if (e.target.value < 15) {
+          height = 15;
+        } else if (e.target.value > 100) {
+          height = 100;
+        }
+        this.set_height(height);
         break;
       case "width":
-        this.set_width(e.target.value);
+        let width = e.target.value;
+        if (e.target.value < 25) {
+          width = 25;
+        } else if (e.target.value > 100) {
+          width = 100;
+        }
+        console.log(width);
+        this.set_width(width);
         break;
       case "image_url":
         index !== undefined &&

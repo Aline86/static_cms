@@ -94,9 +94,9 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
               width: `${
                 bloc.bloc_column
                   ? `100%`
-                  : !full && bloc.image !== undefined && bloc.image.length === 0
-                  ? `100%`
-                  : `50%`
+                  : bloc.image !== undefined && bloc.image.length !== 0
+                  ? `50%`
+                  : `90%`
               }`,
               margin: "0 auto",
             }}

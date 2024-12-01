@@ -8,10 +8,11 @@ export default class Common extends Container {
   titles: string;
   background_color_buttons: string;
   parameters: string;
+
   constructor(
-    fond: string = "",
-    titles: string = "",
-    background_color_buttons: string = "",
+    fond: string = "transparent",
+    titles: string = "black",
+    background_color_buttons: string = "#2f6091",
     id: number = -1,
     title: string = "",
     type: string = "common"
@@ -26,6 +27,21 @@ export default class Common extends Container {
     this.parameters = this.type + "&id=1&type=" + this.type;
   }
 
+  public update(e: any, field: string) {
+    switch (field) {
+      case "titles":
+        this.set_titles(e.target.value);
+        break;
+      case "fond":
+        this.set_fond(e.target.value);
+        break;
+      case "background_color_buttons":
+        this.set_background_color_buttons(e.target.value);
+        break;
+    }
+
+    return this;
+  }
   _get_class_api_call_parameters(): string {
     return this.parameters;
   }

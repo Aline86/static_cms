@@ -1,3 +1,4 @@
+import { Button } from "../backend/bloc/components/button/class/Button";
 import { Carousel } from "../backend/bloc/components/carousel/class/Carousel";
 import { PictureGroup } from "../backend/bloc/components/picture_group/class/PictureGroup";
 import { TextPicture } from "../backend/bloc/components/text_picture/class/TextPicture";
@@ -45,6 +46,10 @@ export default class BlocTools {
             bloc.id
           );
           async_result[index] = this.getBloc(picture_group.get_bloc());
+        }
+        if (bloc.type === "button") {
+          let button = new Button(page.id, bloc.bloc_number, bloc.id);
+          async_result[index] = this.getBloc(button.get_bloc());
         }
       });
       return async_result;

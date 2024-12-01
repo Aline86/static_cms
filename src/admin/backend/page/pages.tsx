@@ -54,10 +54,6 @@ function Pages({}: PagesParams) {
 
     if (Array.isArray(async_result) && async_result.length >= 1) {
       setPages(async_result);
-    } else {
-      let page = new Page(-1, "Accueil");
-      page.save_bloc();
-      setPages([page]);
     }
   };
   const getHeader = async () => {

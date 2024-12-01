@@ -9,6 +9,7 @@
     $inside_SQL_string_2 = [];
     $data_bind_content = [];
     $data_type = [];
+
     foreach($data_decoded as $parameter => $data_value) {
   
         if ($parameter !== 'id' && $parameter !== $this->type . '_id') {

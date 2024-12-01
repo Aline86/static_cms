@@ -11,7 +11,8 @@ interface FooterInfo {
 function FooterVizualization({ input_bloc, toggle, isResponsive }: FooterInfo) {
   const [opened, setOpened] = useState(false);
   const [stylePath, setStylePath] = useState(s);
-  const root_map: string = input_bloc.map_iframe_url.replace("watch?v=", "v/");
+  const root_map: string =
+    input_bloc.map_iframe_url; /*.replace("watch?v=", "v/");*/
 
   const style_width = {
     width: isResponsive ? "380px" : "100%",

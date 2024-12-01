@@ -1,0 +1,16 @@
+h3 {
+  margin-top: 0px;
+  padding-top: 15px;
+}
+.page_container_setting {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 280px);
+}
+
+.color_display {
+  text-align: center;
+}
