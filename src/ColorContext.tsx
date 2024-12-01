@@ -11,7 +11,6 @@ const getBloc = async () => {
     }
     if (result.id === -1) {
       resolve(await common.save_bloc());
-      await common.save_bloc();
       resolve(await common.get_bloc());
     }
   });
