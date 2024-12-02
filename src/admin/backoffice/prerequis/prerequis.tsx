@@ -5,7 +5,6 @@ import FooterVizualization from "../../frontend/bloc/footer/footer";
 import Header from "../bloc/components/header/Header";
 import Footer from "../bloc/components/footer/Footer";
 import HeaderInput from "../bloc/components/header/header_template/header_input";
-import { Container } from "react-dom";
 import FooterInput from "../bloc/components/footer/footer_template/footer";
 
 interface PageParams {}

@@ -1,5 +1,4 @@
-import "./App.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import ThemeContextProvider from "./RoutesElements";
 import ColorContext from "./ColorContext";
 import Page from "./admin/backoffice/page/class/Page";
@@ -19,9 +18,8 @@ function App() {
   const create_first_page = async () => {
     let page_type = new Page();
     let async_result = await page_type.get_pages();
-
     if (Array.isArray(async_result) && async_result.length >= 1) {
-    } else {
+    } else if (async_result !== undefined) {
       let page = new Page(-1, "Accueil");
       page.save_bloc();
     }
