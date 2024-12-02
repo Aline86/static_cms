@@ -161,7 +161,17 @@ function CssTextPicturePosition({
             </div>
           </div>
 
-          <img src={add_to_database} alt="ajouter en base de données" />
+          <div className="bouton_container_carousel"></div>
+          <div
+            className={s.button_save_page}
+            onClick={(e) => {
+              e.preventDefault();
+              saveBlocAll();
+            }}
+            style={{ top: "30px", right: "30px" }}
+          >
+            <img src={add_to_database} alt="ajouter en base de données" />
+          </div>
         </div>
       </div>
     </div>

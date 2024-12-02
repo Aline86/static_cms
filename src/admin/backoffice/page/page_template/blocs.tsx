@@ -5,7 +5,7 @@ import Shrink from "./shrink/shrink";
 import { RawDraftContentState } from "draft-js";
 import { TextPicture } from "../../bloc/components/text_picture/class/TextPicture";
 import { Carousel } from "../../bloc/components/carousel/class/Carousel";
-import CssBlocPosition from "../../../../css_bloc_position/CssBlocPosition";
+
 import BlocInput from "../../bloc/components/text_picture/bloc/bloc_input";
 import Bloc from "../../../frontend/bloc/text_picture/bloc";
 import CarouselOption1 from "../../bloc/components/carousel/carousel_1/component";
@@ -19,10 +19,11 @@ import { PictureGroup } from "../../bloc/components/picture_group/class/PictureG
 import PictureGroupVizualisation from "../../../frontend/bloc/picture_group/PictureGroup";
 import { Button } from "../../bloc/components/button/class/Button";
 import ButtonInput from "../../bloc/components/button/bouton/component";
-import Bouton from "../../../frontend/bloc/bouton/bouton";
+
 import ButtonVisualization from "../../../frontend/bloc/bouton/Button";
 import CssButtonPosition from "../../bloc/components/button/css_bloc_position/CssButtonPosition";
 import ImageGroup from "../../bloc/components/picture_group/image_group/component";
+import CssBlocPosition from "../../bloc/components/text_picture/css_bloc_position/CssBlocPosition";
 
 interface BlocData {
   blocs: Array<any>;
