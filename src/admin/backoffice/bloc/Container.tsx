@@ -43,13 +43,11 @@ export default abstract class Container {
    * @returns string with promise status to say if data has been correctly sent
    */
   public async save_bloc(): Promise<this> {
-    let sent: this;
     const action = this.id > -1 ? "update" : "add";
     let data_to_send = this._create_form(this);
     await fetch(
       this.BASE_URL + action + "_" + this._get_class_api_call_parameters(),
       {
-        mode: "no-cors",
         method: "POST",
         body: data_to_send,
       }
