@@ -45,14 +45,16 @@ export default class Page extends Container {
     return page_array;
   }
 
-  public remove_page() {
+  public async remove_page() {
     this.set_parameters(
       "delete_" + this.type + "&id=" + this.id + "&type=" + this.type
     );
 
-    this.delete_bloc();
-    this.set_parameters(this.type + "&id=1&type=" + this.type);
-    return this;
+    let result = await this.delete_bloc();
+    if (result !== undefined) {
+      this.set_parameters(this.type + "&id=1&type=" + this.type);
+      return this;
+    }
   }
   public get_parameters(): string {
     return this.parameters;

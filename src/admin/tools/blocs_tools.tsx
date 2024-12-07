@@ -98,6 +98,3 @@ export default class BlocTools {
     return arr;
   };
 }
-function getBloc(text_picture: TextPicture): any {
-  throw new Error("Function not implemented.");
-}

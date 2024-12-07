@@ -34,7 +34,9 @@ function CssPictureGroupPosition({
               <input
                 type="number"
                 value={bloc.width}
-                onChange={(e) => updatePictureGroupData(e, "width", -1, bloc)}
+                onChange={(e) =>
+                  updatePictureGroupData(e, "width", undefined, bloc)
+                }
               />
             </div>
             <div className={s.bouton_container}>
@@ -42,7 +44,9 @@ function CssPictureGroupPosition({
               <input
                 type="number"
                 value={bloc.height}
-                onChange={(e) => updatePictureGroupData(e, "height", -1, bloc)}
+                onChange={(e) =>
+                  updatePictureGroupData(e, "height", undefined, bloc)
+                }
               />
             </div>
           </div>

@@ -42,7 +42,7 @@ function Voir() {
 
     let bloc_pages = await tools.getAllBlocsPage();
     bloc_pages !== undefined && setBlocs(bloc_pages);
-    isVideoLoaded(false);
+    //isVideoLoaded(false);
     setToggle(!toggle);
   }
 
@@ -75,11 +75,11 @@ function Voir() {
     const result = blocs.filter((bloc) => bloc.type === "video");
     console.log("result", result);
     if (result.length === 0) {
+      console.log("videoLoaded", videoLoaded);
       isVideoLoaded(true);
     } else if (result.length > 0) {
       isVideoLoaded(false);
     }
-    console.log("videoLoaded", videoLoaded);
   };
   useEffect(() => {
     adaptRoot();
@@ -87,13 +87,16 @@ function Voir() {
 
   useEffect(() => {
     adaptRoot();
-    //if (blocs.length === 0 || blocs === undefined) {
-    asynchronRequestsToPopulateBlocs();
-    checkIfVideo();
-    //}
+    if (blocs.length === 0 || blocs === undefined) {
+      asynchronRequestsToPopulateBlocs();
+    }
   }, []);
-
-  useEffect(() => {}, [videoLoaded, isReponsive]);
+  useEffect(() => {
+    checkIfVideo();
+  }, [blocs]);
+  useEffect(() => {
+    console.log("videoLoaded", videoLoaded);
+  }, [videoLoaded]);
 
   return (
     <div className={s.blocs_container}>
@@ -173,6 +176,7 @@ function Voir() {
                 updateLoaded={updateLoaded}
                 full={true}
                 isResponsive={isReponsive}
+                videoLoaded={videoLoaded}
               />
             </div>
           )

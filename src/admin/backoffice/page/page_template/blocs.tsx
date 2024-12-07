@@ -201,7 +201,7 @@ function Blocs({
   }, [blocs]);
   useEffect(() => {
     // getAllBlocsPage();
-  }, [refresh]);
+  }, [refresh, toggle]);
   return (
     <div className={s.blocs_container}>
       {blocs.map((value, index) => {
@@ -538,6 +538,7 @@ function Blocs({
                         updateLoaded={undefined}
                         full={false}
                         isResponsive={false}
+                        videoLoaded={false}
                       />
                     </div>
                   </div>

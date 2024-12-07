@@ -37,6 +37,7 @@ function Image({
         justifyContent: datacss.justifyContent,
         alignItems: datacss.alignItems,
         margin: "0 auto",
+
         marginBottom: "30px",
       }}
     >
@@ -56,6 +57,7 @@ function Image({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        marginTop: isResponsive ? "40px" : "0",
       }}
     >
       <h2
@@ -70,6 +72,7 @@ function Image({
 
           marginTop: "50px",
           fontSize: isResponsive ? "5vh" : "12vh",
+
           lineHeight: isResponsive ? "5vh" : "14vh",
           backgroundClip: "text",
           backgroundRepeat: "no-repeat",
@@ -89,7 +92,7 @@ function Image({
           `url(http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/` +
           image +
           `)`,
-        height: "42vh",
+        height: "45vh",
         backgroundAttachment: "fixed",
         width: full ? "100vw" : "43vw",
         left: 0,

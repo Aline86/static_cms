@@ -35,17 +35,18 @@ function Pages({}: PagesParams) {
   };
 
   const savePage = async (page: Page) => {
-    page.save_bloc();
-    if (page.id > 0) {
-      setToggle(!toggle);
-    } else {
-      setRefresh(!refresh);
+    let result = await page.save_bloc();
+    if (result !== undefined) {
+      if (page.id > 0) {
+        setToggle(!toggle);
+      } else {
+        setRefresh(!refresh);
+      }
     }
-
-    setToggle(!toggle);
   };
   const removePage = async (page: Page) => {
-    page.remove_page();
+    await page.remove_page();
+
     setRefresh(!refresh);
   };
 
