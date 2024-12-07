@@ -18,18 +18,20 @@ import BlocTools from "../../tools/blocs_tools";
 import { PictureGroup } from "../../backoffice/bloc/components/picture_group/class/PictureGroup";
 import PictureGroupVizualisation from "../bloc/picture_group/PictureGroup";
 import ButtonVisualization from "../bloc/bouton/Button";
+import VideoVizualisation from "../bloc/video/video";
+import { Button } from "../../backoffice/bloc/components/button/class/Button";
+import { Video } from "../../backoffice/bloc/components/video/class/Video";
 
-interface FooterInfo {}
-function Voir({}: FooterInfo) {
+function Voir() {
   const [blocs, setBlocs] = useState<
-    Array<Carousel | TextPicture | PictureGroup>
+    Array<Carousel | TextPicture | PictureGroup | Button | Video>
   >([]);
   const { id, name } = useParams();
   const [toggle, setToggle] = useState(false);
   const [isReponsive, setResponsive] = useState(false);
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
-
+  const [videoLoaded, isVideoLoaded] = useState<boolean>(false);
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
 
@@ -40,9 +42,13 @@ function Voir({}: FooterInfo) {
 
     let bloc_pages = await tools.getAllBlocsPage();
     bloc_pages !== undefined && setBlocs(bloc_pages);
+    isVideoLoaded(false);
     setToggle(!toggle);
   }
 
+  const updateLoaded = (loaded: boolean) => {
+    isVideoLoaded(loaded);
+  };
   const adaptRoot = () => {
     let root = document.getElementById("root");
     if (root !== null && isReponsive) {
@@ -65,18 +71,30 @@ function Voir({}: FooterInfo) {
       console.log(localStorage.getItem("previous_page_id"));
     }
   }, [id]);*/
-
+  const checkIfVideo = () => {
+    const result = blocs.filter((bloc) => bloc.type === "video");
+    console.log("result", result);
+    if (result.length === 0) {
+      isVideoLoaded(true);
+    } else if (result.length > 0) {
+      isVideoLoaded(false);
+    }
+    console.log("videoLoaded", videoLoaded);
+  };
   useEffect(() => {
     adaptRoot();
   }, [isReponsive]);
 
   useEffect(() => {
     adaptRoot();
-    if (blocs.length === 0 || blocs === undefined) {
-      asynchronRequestsToPopulateBlocs();
-    }
+    //if (blocs.length === 0 || blocs === undefined) {
+    asynchronRequestsToPopulateBlocs();
+    checkIfVideo();
+    //}
   }, []);
-  useEffect(() => {}, [blocs, toggle]);
+
+  useEffect(() => {}, [videoLoaded, isReponsive]);
+
   return (
     <div className={s.blocs_container}>
       <HeaderVizualization
@@ -100,7 +118,7 @@ function Voir({}: FooterInfo) {
       </a>
 
       {blocs.map((value, index) => {
-        return value instanceof TextPicture ? (
+        return videoLoaded && value instanceof TextPicture ? (
           <div
             className={s.bloc}
             style={{
@@ -117,7 +135,7 @@ function Voir({}: FooterInfo) {
               isResponsive={isReponsive}
             />
           </div>
-        ) : value instanceof Carousel ? (
+        ) : videoLoaded && value instanceof Carousel ? (
           <div className={s.carousel}>
             <CarouselVisualization
               input_bloc={value}
@@ -127,7 +145,7 @@ function Voir({}: FooterInfo) {
               isResponsive={isReponsive}
             />
           </div>
-        ) : value instanceof PictureGroup ? (
+        ) : videoLoaded && value instanceof PictureGroup ? (
           <div className={s.carousel}>
             <PictureGroupVizualisation
               input_bloc={value}
@@ -137,7 +155,7 @@ function Voir({}: FooterInfo) {
               isResponsive={isReponsive}
             />
           </div>
-        ) : (
+        ) : videoLoaded && value instanceof Button ? (
           <div className={s.carousel}>
             <ButtonVisualization
               input_bloc={value}
@@ -147,6 +165,17 @@ function Voir({}: FooterInfo) {
               isResponsive={isReponsive}
             />
           </div>
+        ) : (
+          value instanceof Video && (
+            <div className={s.video}>
+              <VideoVizualisation
+                bloc={value}
+                updateLoaded={updateLoaded}
+                full={true}
+                isResponsive={isReponsive}
+              />
+            </div>
+          )
         );
       })}
       <FooterVizualization

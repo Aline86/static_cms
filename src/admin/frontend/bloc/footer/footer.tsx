@@ -47,7 +47,7 @@ function FooterVizualization({ input_bloc, toggle, isResponsive }: FooterInfo) {
                 >
                   <img
                     src={
-                      "http://localhost:80/cms_v2/api/uploadfile/" +
+                      "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
                       value.logo_url
                     }
                     alt={value.title}
@@ -58,7 +58,7 @@ function FooterVizualization({ input_bloc, toggle, isResponsive }: FooterInfo) {
                   key={key}
                   className={stylePath.facebook}
                   href={
-                    "http://localhost:80/cms_v2/api/uploadfile/" +
+                    "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
                     value.logo_url
                   }
                   title={value.title}

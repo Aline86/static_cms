@@ -27,7 +27,7 @@ function InsideCardDataShow({
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
   const style_data = {
-    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v2/api/uploadfile/${value.image_url}") no-repeat center / cover`,
+    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
     width: `${!result.matches ? `${width}vw` : `80vw`}`,
     height: full ? `${height}vh` : `${height}vh`,
   };
@@ -61,7 +61,7 @@ function InsideCardDataShow({
       target="_blank"
       className={s.card_app}
       style={{
-        background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v2/api/uploadfile/${value.image_url}") no-repeat center / cover`,
+        background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
         width: `${!result.matches ? `${width}vw` : `80vw`}`,
         height: full ? `${height}vh` : `${height * 0.5}vh`,
       }}

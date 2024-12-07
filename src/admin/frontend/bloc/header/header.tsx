@@ -32,7 +32,7 @@ function HeaderVizualization({ input_bloc, toggle, isResponsive }: HeaderInfo) {
         className={stylePath.backdrop}
         style={{
           backgroundImage: `url(${
-            "http://localhost:80/cms_v2/api/uploadfile/" +
+            "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
             input_bloc.background_url
           })`,
         }}
@@ -73,7 +73,7 @@ function HeaderVizualization({ input_bloc, toggle, isResponsive }: HeaderInfo) {
                   {value.logo_url.length > 0 ? (
                     <img
                       src={
-                        "http://localhost:80/cms_v2/api/uploadfile/" +
+                        "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
                         value.logo_url
                       }
                       alt={value.title}
@@ -89,7 +89,7 @@ function HeaderVizualization({ input_bloc, toggle, isResponsive }: HeaderInfo) {
             <div className={stylePath.logo}>
               <img
                 src={
-                  "http://localhost:80/cms_v2/api/uploadfile/" +
+                  "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
                   input_bloc.logo_url
                 }
                 alt="logo"

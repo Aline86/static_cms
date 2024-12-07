@@ -33,7 +33,7 @@ function CardData({
   let style_data: any = undefined;
   if (!Boolean(data.is_data_button)) {
     style_data = {
-      background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v2/api/uploadfile/${data.image_url}") no-repeat center / cover`,
+      background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${data.image_url}") no-repeat center / cover`,
       width: full
         ? isResponsive
           ? `360px`

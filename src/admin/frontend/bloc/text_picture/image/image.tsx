@@ -42,7 +42,9 @@ function Image({
     >
       <img
         style={{ width: `${css.width}%`, height: `auto` }}
-        src={"http://localhost:80/cms_v2/api/uploadfile/" + image}
+        src={
+          "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" + image
+        }
         alt={alt_image}
       />
     </div>
@@ -60,7 +62,9 @@ function Image({
         className="show"
         style={{
           backgroundImage:
-            `url(http://localhost:80/cms_v2/api/uploadfile/` + image + `)`,
+            `url(http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/` +
+            image +
+            `)`,
 
           width: !full ? "43vw" : "100%",
 
@@ -82,7 +86,9 @@ function Image({
       style={{
         position: "relative",
         backgroundImage:
-          `url(http://localhost:80/cms_v2/api/uploadfile/` + image + `)`,
+          `url(http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/` +
+          image +
+          `)`,
         height: "42vh",
         backgroundAttachment: "fixed",
         width: full ? "100vw" : "43vw",

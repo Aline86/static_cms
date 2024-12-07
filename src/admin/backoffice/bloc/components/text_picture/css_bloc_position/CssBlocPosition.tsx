@@ -160,8 +160,6 @@ function CssTextPicturePosition({
               </div>
             </div>
           </div>
-
-          <div className="bouton_container_carousel"></div>
           <div
             className={s.button_save_page}
             onClick={(e) => {

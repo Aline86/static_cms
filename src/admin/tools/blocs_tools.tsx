@@ -2,6 +2,7 @@ import { Button } from "../backoffice/bloc/components/button/class/Button";
 import { Carousel } from "../backoffice/bloc/components/carousel/class/Carousel";
 import { PictureGroup } from "../backoffice/bloc/components/picture_group/class/PictureGroup";
 import { TextPicture } from "../backoffice/bloc/components/text_picture/class/TextPicture";
+import { Video } from "../backoffice/bloc/components/video/class/Video";
 import Page from "../backoffice/page/class/Page";
 
 export default class BlocTools {
@@ -49,6 +50,10 @@ export default class BlocTools {
         }
         if (bloc.type === "button") {
           let button = new Button(page.id, bloc.bloc_number, bloc.id);
+          async_result[index] = this.getBloc(button.get_bloc());
+        }
+        if (bloc.type === "video") {
+          let button = new Video(page.id, bloc.bloc_number, bloc.id);
           async_result[index] = this.getBloc(button.get_bloc());
         }
       });

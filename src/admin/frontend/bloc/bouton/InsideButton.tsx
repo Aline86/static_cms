@@ -71,7 +71,10 @@ function InsideButton({
       </a>
     ) : (
       <a
-        href={`http://localhost:80/cms_v2/api/uploadfile/` + `${data.href_url}`}
+        href={
+          `http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/` +
+          `${data.href_url}`
+        }
         className="buttons"
         style={style_data}
       >

@@ -292,7 +292,7 @@ function TextReader({
     updateConvertToText(contenState.blocks);
   }, [contenState, refresh === 2, entityMapLength]);
   useEffect(() => {
-    JSanimationH2(".container_data", "disappear_data");
+    //JSanimationH2(".container_data", "bloc_data");
   }, [toggle, stringTexts]);
 
   useEffect(() => {
@@ -325,7 +325,7 @@ function TextReader({
               pictures_offset[j].data !== undefined && (
                 <div
                   key={j}
-                  className="container_data disappear"
+                  className="container_data bloc"
                   style={{
                     display: "inline",
                     textAlign: "center",
@@ -354,7 +354,7 @@ function TextReader({
             headlines[j] === "unordered-list-item" ? (
             <div
               key={j}
-              className="container_data disappear"
+              className="container_data bloc"
               style={{ display: "inline" }}
             >
               <ul>
@@ -383,7 +383,7 @@ function TextReader({
             headlines[j] === "header-two" ? (
             <h2 key={j}>
               <div
-                className="container_data disappear"
+                className="container_data bloc"
                 style={{ display: "inline" }}
               >
                 {stringText !== undefined &&
@@ -407,7 +407,7 @@ function TextReader({
               <div key={j} className={`${textAlign[j]}`}>
                 <div
                   key={j}
-                  className="container_data disappear"
+                  className="container_data bloc"
                   style={{ display: "inline" }}
                 >
                   {stringText !== undefined &&

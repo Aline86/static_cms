@@ -60,7 +60,8 @@ function Bouton({
             width: isResponsive ? "320px" : "100%",
           }}
           src={
-            "http://localhost:80/cms_v2/api/uploadfile/" + `${bloc.image_url}`
+            "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
+            `${bloc.image_url}`
           }
           alt={bloc.title}
         />

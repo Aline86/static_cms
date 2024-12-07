@@ -114,12 +114,12 @@ function BlocInput({
                         resolve({
                           data: {
                             link:
-                              "http://localhost:80/cms_v2/api/uploadfile/" +
+                              "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
                               filename,
                           },
                           link: {
                             url:
-                              "http://localhost:80/cms_v2/api/uploadfile/" +
+                              "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
                               filename,
                           },
                         });

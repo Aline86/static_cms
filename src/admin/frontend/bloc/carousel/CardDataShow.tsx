@@ -40,7 +40,7 @@ function CardDataShow({
   const result = window.matchMedia("(max-width: 700px)");
 
   const style_data_transition_finished_auto = {
-    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v2/api/uploadfile/${value.image_url}") no-repeat center / cover`,
+    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
     width: width,
     height: `${height}vh`,
     transition: `${trasnsType}`,
@@ -48,7 +48,7 @@ function CardDataShow({
     fontSize: isResponsive ? `18px` : `24px`,
   };
   const style_data_transition_start_auto = {
-    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v2/api/uploadfile/${value.image_url}") no-repeat center / cover`,
+    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
     width: width,
     height: `${height}vh`,
     fontSize: isResponsive ? `18px` : `24px`,

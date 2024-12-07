@@ -46,7 +46,9 @@ function Shrink({
                   ? "Carousel option 1 (défilé d'images au clic)"
                   : bloc.type === "picture_group"
                   ? "Groupe d'images"
-                  : "Bouton"}
+                  : bloc.type === "bouton"
+                  ? "Bouton"
+                  : "Vidéo"}
               </div>
               <img src={down} alt="fermer" />
             </div>

@@ -10,6 +10,7 @@ import { Carousel } from "../../bloc/components/carousel/class/Carousel";
 import { Button } from "../../bloc/components/button/class/Button";
 import { PictureGroup } from "../../bloc/components/picture_group/class/PictureGroup";
 import Page from "../class/Page";
+import { Video } from "../../bloc/components/video/class/Video";
 
 interface BlocData {
   getPage: any;
@@ -77,6 +78,19 @@ function BlocDisplay({
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new Carousel(page.id, blocs.length + 1, -1, true));
+                handleScroll();
+                setOpen(!open);
+              }}
+            />
+          </div>
+          <div className={s.container_auto}>
+            <img src={text_image} alt="texte image" />
+            <input
+              type="submit"
+              value="Vidéo"
+              onClick={(e) => {
+                e.preventDefault();
+                addBlocToBDD(new Video(page.id, blocs.length + 1));
                 handleScroll();
                 setOpen(!open);
               }}
