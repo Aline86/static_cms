@@ -18,7 +18,7 @@
     if (array_key_exists('id_component', $method_params)) {
    
         $id_component = $method_params['id_component'];
-        $data_components_to_build = new AllDataComponents($component);
+        $data_components_to_build = new AllDataComponents($component, $database_name);
         $data_to_process = $data_components_to_build->get_components($id_component);
         foreach($data_to_process as $data_component_array) {
             if(!empty($data_component_array)) {
@@ -45,7 +45,8 @@
         echo json_encode($all_components_data);
     }
     else {
-        $data_components_to_build = new AllDataComponents($component);
+      
+        $data_components_to_build = new AllDataComponents($component, $database_name);
         $data_to_process = $data_components_to_build->get_components_without_id();
        
         echo json_encode($data_to_process);

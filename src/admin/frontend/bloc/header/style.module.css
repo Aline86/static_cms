@@ -130,7 +130,8 @@
   border-bottom: 2px solid white;
 }
 
-.end {
+.end,
+.links {
   position: fixed;
   display: flex;
   justify-content: end;

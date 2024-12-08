@@ -86,11 +86,6 @@ function Pages({}: PagesParams) {
   useEffect(() => {}, [toggle, header, footer, pages]);
   return (
     <div className={s.pages}>
-      <HeaderVizualization
-        input_bloc={header}
-        isResponsive={false}
-        toggle={toggle}
-      />
       <div
         className={s.addCard}
         onClick={(e) => {

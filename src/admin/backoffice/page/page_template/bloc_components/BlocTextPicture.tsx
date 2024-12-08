@@ -85,6 +85,7 @@ function BlocTextPicture({
             saveBlocAll={saveBlocAll}
           />
         }
+        isOpen={true}
       />
     </div>
   );

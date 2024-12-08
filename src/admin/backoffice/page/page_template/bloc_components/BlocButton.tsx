@@ -73,6 +73,7 @@ function BlocButton({
             saveBlocAll={saveBlocAll}
           />
         }
+        isOpen={true}
       />
     </div>
   );

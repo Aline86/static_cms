@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import v from "./style_responsive.module.css";
 import s from "./style.module.css";
-
+import e from "./edition.module.css";
 import Nav from "./Nav/Nav";
 import { Link } from "react-router-dom";
 import Header from "../../../backoffice/bloc/components/header/Header";
@@ -9,9 +9,15 @@ import Header from "../../../backoffice/bloc/components/header/Header";
 interface HeaderInfo {
   input_bloc: Header;
   isResponsive: boolean;
+  full: boolean;
   toggle: boolean;
 }
-function HeaderVizualization({ input_bloc, toggle, isResponsive }: HeaderInfo) {
+function HeaderVizualization({
+  input_bloc,
+  toggle,
+  full,
+  isResponsive,
+}: HeaderInfo) {
   const [open, setOpen] = useState(false);
   const [stylePath, setStylePath] = useState(s);
   const style_width = {
@@ -22,8 +28,10 @@ function HeaderVizualization({ input_bloc, toggle, isResponsive }: HeaderInfo) {
   useEffect(() => {
     if (isResponsive) {
       setStylePath(v);
-    } else {
+    } else if (full) {
       setStylePath(s);
+    } else if (!full) {
+      setStylePath(e);
     }
   }, [isResponsive]);
   return (
@@ -60,31 +68,32 @@ function HeaderVizualization({ input_bloc, toggle, isResponsive }: HeaderInfo) {
           </div>
         </div>
         <div className={stylePath.end}>
-          {input_bloc.link_networks_an_others_header.length > 0 &&
-            input_bloc.link_networks_an_others_header.map((value, key) => {
-              return (
-                <a
-                  key={key}
-                  className={stylePath.facebook}
-                  href={value.background_url}
-                  title={value.title}
-                  target="_blank"
-                >
-                  {value.logo_url.length > 0 ? (
-                    <img
-                      src={
-                        "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-                        value.logo_url
-                      }
-                      alt={value.title}
-                    />
-                  ) : (
-                    value.name
-                  )}
-                </a>
-              );
-            })}
-
+          <div className={stylePath.links}>
+            {input_bloc.link_networks_an_others_header.length > 0 &&
+              input_bloc.link_networks_an_others_header.map((value, key) => {
+                return (
+                  <a
+                    key={key}
+                    className={stylePath.facebook}
+                    href={value.background_url}
+                    title={value.title}
+                    target="_blank"
+                  >
+                    {value.logo_url.length > 0 ? (
+                      <img
+                        src={
+                          "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
+                          value.logo_url
+                        }
+                        alt={value.title}
+                      />
+                    ) : (
+                      value.name
+                    )}
+                  </a>
+                );
+              })}
+          </div>
           <Link to="/">
             <div className={stylePath.logo}>
               <img

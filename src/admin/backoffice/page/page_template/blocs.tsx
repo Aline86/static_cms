@@ -11,6 +11,9 @@ import BlocCarousel from "./bloc_components/BlocCarousel";
 import BlocPictureGroup from "./bloc_components/BlocPictureGroup";
 import BlocButton from "./bloc_components/BlocButton";
 import BlocVideo from "./bloc_components/BlocVideo";
+import BlocHeader from "./bloc_components/BlocHeader";
+import Footer from "../../bloc/components/footer/Footer";
+import Header from "../../bloc/components/header/Header";
 
 interface BlocData {
   blocs: Array<any>;
@@ -155,10 +158,114 @@ function Blocs({
   const handleDragOver = (event: any) => {
     event.preventDefault();
   };
+  const [header, setHeader] = useState<Header>(new Header());
+  const [footer, setFooter] = useState<Footer>(new Footer());
+  const savePrerequisites = async () => {
+    await saveHeaderAndFooter(header);
+    await saveHeaderAndFooter(footer);
+  };
 
+  const saveHeaderAndFooter = async (bloc: Header | Footer) => {
+    let update = null;
+    update = await bloc.save_bloc();
+    if (bloc.id === -1) {
+      setRefresh(!refresh);
+    } else {
+      setToggle(!toggle);
+    }
+  };
+
+  const updateHeader = async (
+    e: any,
+    field: string,
+    input: string | undefined,
+    id_network: number | undefined = undefined
+  ) => {
+    if (header !== undefined) {
+      const new_bloc = header.updateHeader(e, field, input, id_network);
+      if (id_network !== undefined) {
+        setToggle(!toggle);
+      } else {
+        setHeader(new_bloc);
+        setToggle(!toggle);
+      }
+    }
+  };
+
+  const remove_bloc = async (bloc: Header | Footer, index: number) => {
+    await bloc.remove_link(index);
+    let result = await bloc.get_bloc();
+    if (result !== undefined && result instanceof Footer) {
+      setFooter(result);
+
+      setRefresh(!refresh);
+    }
+
+    if (result !== undefined && result instanceof Header) {
+      setHeader(result);
+      setRefresh(!refresh);
+    }
+  };
+
+  const getHeader = async () => {
+    const new_bloc = await header.get_bloc();
+
+    if (new_bloc.id === 1) {
+      setHeader(header);
+    }
+  };
+  const getFooter = async () => {
+    const new_bloc = await footer.get_bloc();
+
+    if (new_bloc.id === 1) {
+      setFooter(new_bloc);
+    }
+  };
+  const getFooterAndHeader = async () => {
+    await getHeader();
+    await getFooter();
+    setToggle(!toggle);
+  };
+  const updateFooter = async (
+    e: any,
+    field: string,
+    input: string,
+    id_network: number | undefined = undefined
+  ) => {
+    const new_bloc = footer.updateFooter(e, field, input, id_network);
+    if (id_network !== undefined) {
+      setToggle(!toggle);
+    } else {
+      setFooter(new_bloc);
+      setToggle(!toggle);
+    }
+  };
+
+  const adaptRoot = () => {
+    let root = document.getElementById("root");
+    if (root !== null) {
+      root.style.paddingTop = "0px";
+      root.style.paddingBottom = "220px";
+    }
+  };
+  useEffect(() => {
+    getFooterAndHeader();
+    adaptRoot();
+  }, []);
+
+  useEffect(() => {
+    getFooterAndHeader();
+  }, [refresh]);
   useEffect(() => {}, [refresh, toggle, blocs]);
   return (
     <div className={s.blocs_container}>
+      <BlocHeader
+        bloc={header}
+        updateHeader={updateHeader}
+        removeBloc={remove_bloc}
+        toggle={toggle}
+        saveBloc={savePrerequisites}
+      />
       {blocs.map((bloc, index) => {
         return bloc.type === "text_picture" ? (
           <BlocTextPicture

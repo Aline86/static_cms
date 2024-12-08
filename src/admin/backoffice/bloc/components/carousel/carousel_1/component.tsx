@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { Carousel } from "../class/Carousel";
 import CarouselData from "../class/CarouselData";
 import s from "./style/style.module.css";
-
+import ajout from "./../../../../../../assets/ajouter.png";
 import CardData from "./wrapper";
 
 interface CardDatas {
@@ -22,6 +21,15 @@ function CarouselOption1({ toggle, updateCarousel, bloc }: CardDatas) {
 
   return (
     <div className={s.body}>
+      <div
+        className={s.addCard}
+        onClick={(e) => {
+          e.preventDefault();
+          updateCarousel(e, "ajout", bloc);
+        }}
+      >
+        <img src={ajout} alt="ajout" />
+      </div>
       {bloc !== undefined &&
         bloc.carousel_data !== undefined &&
         bloc.carousel_data.map((value: CarouselData, index: number) => {

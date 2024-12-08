@@ -34,6 +34,7 @@ function BlocDisplay({
   page,
 }: BlocData) {
   const addBlocToBDD = async (bloc: any) => {
+    console.log("bloc", bloc);
     await bloc.save_bloc();
     page.get_blocs();
     getPage();

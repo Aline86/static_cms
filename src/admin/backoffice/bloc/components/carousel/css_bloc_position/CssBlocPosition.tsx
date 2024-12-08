@@ -30,7 +30,7 @@ function CssCarouselPosition({
           <div draggable={draggable}>{props}</div>
 
           <div className={s.bouton_container}>
-            {bloc.type === "carousel" && !bloc.isAutomatique ? (
+            {bloc.type === "carousel" && !bloc.is_automatique ? (
               <div className={s.bouton_container_bloc}>
                 <div className={s.encart_bloc_name_title}>
                   <h3

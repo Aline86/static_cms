@@ -53,10 +53,11 @@ export default class BlocTools {
           async_result[index] = this.getBloc(button.get_bloc());
         }
         if (bloc.type === "video") {
-          let button = new Video(page.id, bloc.bloc_number, bloc.id);
-          async_result[index] = this.getBloc(button.get_bloc());
+          let video = new Video(page.id, bloc.bloc_number, bloc.id);
+          async_result[index] = this.getBloc(video.get_bloc());
         }
       });
+
       return async_result;
     };
 

@@ -6,13 +6,13 @@ class Carousel {
     private $associated_tables;
     private $database_name ;
     function __construct($type, $database_name) {
-        self::$db = DB::getInstance();
+        self::$db = DB::getInstance($database_name);
         $this->type = $type;
         $this->database_name = $database_name;
         $this->associated_tables = $this->get_associated_tables();
        
     }
-    public  function get_button($parameters)
+    public  function get_carousel($parameters)
     {
        
         $resultat = include 'model_snippets/get.php';

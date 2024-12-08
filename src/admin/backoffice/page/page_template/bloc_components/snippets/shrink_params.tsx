@@ -12,6 +12,7 @@ interface BlocData {
   index: number;
   css_position: any;
   component_visualization: any;
+  isOpen: boolean;
 }
 
 function ShrinkParams({
@@ -24,6 +25,7 @@ function ShrinkParams({
   index,
   css_position,
   component_visualization,
+  isOpen,
 }: BlocData) {
   return (
     <div
@@ -38,22 +40,26 @@ function ShrinkParams({
         key={index}
         index={index + 1}
         bloc={bloc}
+        isOpen={isOpen}
         props={
           <div key={index} className={s.drag_bloc}>
             <div className={s.carousel_input}>
-              <div
-                className="button_remove_container"
-                onClick={(e) => {
-                  removeBloc(bloc);
-                }}
-                style={{ top: "30px", right: "30px" }}
-              >
-                <img src={remove} alt="suppression box" />
-                Supprimer le bloc
-              </div>
+              {removeBloc !== undefined && (
+                <div
+                  className="button_remove_container"
+                  onClick={(e) => {
+                    removeBloc(bloc);
+                  }}
+                  style={{ top: "30px", right: "30px" }}
+                >
+                  <img src={remove} alt="suppression box" />
+                  Supprimer le bloc
+                </div>
+              )}
 
               {css_position}
             </div>
+
             <div className={s.carousel}>{component_visualization}</div>
           </div>
         }

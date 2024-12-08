@@ -8,10 +8,11 @@ interface ShrinkData {
   index: number;
   bloc: any;
   props: any;
+  isOpen: boolean;
 }
 
-function Shrink({ props, bloc, index }: ShrinkData) {
-  const [open, setOpen] = useState(true);
+function Shrink({ props, bloc, index, isOpen }: ShrinkData) {
+  const [open, setOpen] = useState(isOpen);
   return (
     <div className={s.shrink_bloc} key={index}>
       <div
@@ -27,17 +28,22 @@ function Shrink({ props, bloc, index }: ShrinkData) {
                 {`${"Bloc n° " + index} : `}{" "}
                 {bloc.type === "carousel" &&
                 bloc instanceof Carousel &&
-                bloc.isAutomatique
+                bloc.is_automatique
                   ? "Carousel option 2 (automatique)"
                   : bloc.type === "carousel" &&
                     bloc instanceof Carousel &&
-                    !bloc.isAutomatique
+                    !bloc.is_automatique
                   ? "Carousel option 1 (défilé d'images au clic)"
                   : bloc.type === "picture_group"
                   ? "Groupe d'images"
                   : bloc.type === "bouton"
                   ? "Bouton"
-                  : "Vidéo"}
+                  : bloc.type === "video"
+                  ? "Vidéo"
+                  : bloc.type === "header"
+                  ? "En tête (ne peut pas être déplacé)"
+                  : bloc.type === "footer" &&
+                    "Bas de page (ne peut pas être déplacé)"}
               </div>
               <img src={down} alt="fermer" />
             </div>

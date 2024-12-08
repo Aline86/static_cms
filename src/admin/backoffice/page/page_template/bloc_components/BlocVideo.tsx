@@ -66,6 +66,7 @@ function BlocVideo({
           page_id={bloc.page_id}
         />
       }
+      isOpen={true}
     />
   );
 }

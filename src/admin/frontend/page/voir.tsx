@@ -103,6 +103,7 @@ function Voir() {
       <HeaderVizualization
         input_bloc={header}
         toggle={toggle}
+        full={true}
         isResponsive={isReponsive}
       />
       {!isReponsive && (

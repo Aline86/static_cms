@@ -55,11 +55,6 @@ function Visualization({}: PageParams) {
   return (
     <div className="page">
       <div className={s.page_container}>
-        <HeaderVizualization
-          input_bloc={header}
-          toggle={toggle}
-          isResponsive={false}
-        />
         <Link to={{ pathname: `/` + id + `/` + name }}>
           <li>
             <div className={s.navigate}>Visualiser</div>

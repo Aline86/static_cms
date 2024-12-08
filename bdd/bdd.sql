@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `carousel` (
     `id` int(11) NOT NULL auto_increment,        
     `title` varchar(250)  NOT NULL default "",  
     `type` varchar(55)  NOT NULL default "carousel",           
-    `isAutomatique` boolean  ,     
+    `is_automatique` boolean  ,     
     `card_number` int(8)  NOT NULL , 
 
     `width` int(11)  NOT NULL default 21,

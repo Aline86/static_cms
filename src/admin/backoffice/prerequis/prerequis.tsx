@@ -112,6 +112,7 @@ function Prerequis({}: PageParams) {
           input_bloc={header}
           toggle={toggle}
           isResponsive={false}
+          full={false}
         />
         <HeaderInput
           input_bloc={header}

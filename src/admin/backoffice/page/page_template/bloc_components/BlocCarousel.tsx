@@ -4,6 +4,7 @@ import CarouselOption2 from "../../../bloc/components/carousel/carousel_2/compon
 import CarouselOption1 from "../../../bloc/components/carousel/carousel_1/component";
 import CarouselVisualization from "../../../../frontend/bloc/carousel/Carousel";
 import ShrinkParams from "./snippets/shrink_params";
+import { useEffect } from "react";
 
 interface BlocData {
   bloc: Carousel;
@@ -36,6 +37,9 @@ function BlocCarousel({
   index,
   refresh,
 }: BlocData) {
+  useEffect(() => {
+    console.log("bloc", bloc);
+  }, []);
   return (
     <div
       className="blocs"
@@ -66,7 +70,7 @@ function BlocCarousel({
         css_position={
           <CssCarouselPosition
             props={
-              bloc.isAutomatique ? (
+              bloc.is_automatique ? (
                 <CarouselOption2
                   updateCarousel={updateCarousel}
                   toggle={toggle}
@@ -89,6 +93,7 @@ function BlocCarousel({
             saveBlocAll={saveBlocAll}
           />
         }
+        isOpen={true}
       />
     </div>
   );

@@ -87,6 +87,7 @@ function BlocPictureGroup({
             saveBlocAll={saveBlocAll}
           />
         }
+        isOpen={true}
       />
     </div>
   );

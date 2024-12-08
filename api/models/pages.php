@@ -1,8 +1,8 @@
 <?php
 class Pages {
     private static $db;
-    function __construct() {
-        self::$db = Db::getInstance();
+    function __construct($database_name) {
+        self::$db = Db::getInstance($database_name);
     }
     public static function get_pages(){
         $requete='SELECT DISTINCT * FROM page ';

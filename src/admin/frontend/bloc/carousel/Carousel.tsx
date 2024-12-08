@@ -42,7 +42,7 @@ function CarouselVisualization({
     setData(cards);
   }
   function updateType(input_bloc: Carousel) {
-    const type = input_bloc.isAutomatique ? "auto" : "carousel";
+    const type = input_bloc.is_automatique ? "auto" : "carousel";
     setType(type);
   }
 
@@ -86,7 +86,7 @@ function CarouselVisualization({
     );
   }, [toggle, refresh]);
   useEffect(() => {
-    if (input_bloc.isAutomatique) {
+    if (input_bloc.is_automatique) {
       reorder_automatic();
     } else {
       reorder_carousel();
