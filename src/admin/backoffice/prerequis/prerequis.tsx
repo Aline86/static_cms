@@ -23,8 +23,11 @@ function Prerequis({}: PageParams) {
   const saveHeaderAndFooter = async (bloc: Header | Footer) => {
     let update = null;
     update = await bloc.save_bloc();
-    setRefresh(!refresh);
-    return update;
+    if (bloc.id === -1) {
+      setRefresh(!refresh);
+    } else {
+      setToggle(!toggle);
+    }
   };
 
   const updateHeader = async (
@@ -46,14 +49,17 @@ function Prerequis({}: PageParams) {
 
   const remove_bloc = async (bloc: Header | Footer, index: number) => {
     await bloc.remove_link(index);
-    let new_bloc = await bloc.get_bloc();
-    if (new_bloc instanceof Header) {
-      setHeader(new_bloc);
+    let result = await bloc.get_bloc();
+    if (result !== undefined && result instanceof Footer) {
+      setFooter(result);
+
+      setRefresh(!refresh);
     }
-    if (new_bloc instanceof Footer) {
-      setFooter(new_bloc);
+
+    if (result !== undefined && result instanceof Header) {
+      setHeader(result);
+      setRefresh(!refresh);
     }
-    setRefresh(!refresh);
   };
 
   const getHeader = async () => {
@@ -96,7 +102,6 @@ function Prerequis({}: PageParams) {
   useEffect(() => {
     getFooterAndHeader();
   }, [refresh]);
-  // useEffect(() => {}, [toggle]);
 
   return (
     <div className={s.page_container}>

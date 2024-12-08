@@ -16,6 +16,7 @@ class Db {
         return self::$instance;
     }
 }
+$database_name = 'welcome_poitiers_2';
 $db = Db::getInstance();
 
 $pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer', 'common', 'picture_group', 'button', 'video'];
@@ -69,7 +70,7 @@ foreach($crud as $method_to_call) {
         $method_params['associated_table'] = $associated_method_for_delete;
         $class = ucfirst($type);
   
-        $model = new $class($type);
+        $model = new $class($type, $database_name);
         echo json_encode($model->$method_to_call($method_params));
         exit();
     }
@@ -80,7 +81,7 @@ foreach($crud as $method_to_call) {
         $method_name_to_call = $method_to_call . $type;
      
         $class = ucfirst($type);
-        $model = new $class($type);
+        $model = new $class($type, $database_name);
         echo json_encode($model->$method_name_to_call($method_params));
         exit();
     }
@@ -88,7 +89,7 @@ foreach($crud as $method_to_call) {
    
         $class = ucfirst($type);
   
-        $model = new $class($type);
+        $model = new $class($type, $database_name);
       
         $method_name_to_call = $method_to_call . $type;
      

@@ -1,33 +1,16 @@
 import s from "./style.module.css";
 import { useEffect, useState } from "react";
-import remove from "./../../../../assets/remove.png";
-import Shrink from "./shrink/shrink";
 import { RawDraftContentState } from "draft-js";
 import { TextPicture } from "../../bloc/components/text_picture/class/TextPicture";
 import { Carousel } from "../../bloc/components/carousel/class/Carousel";
-
-import BlocInput from "../../bloc/components/text_picture/bloc/bloc_input";
-import Bloc from "../../../frontend/bloc/text_picture/bloc";
-import CarouselOption1 from "../../bloc/components/carousel/carousel_1/component";
-import CarouselOption2 from "../../bloc/components/carousel/carousel_2/component";
-import CarouselVisualization from "../../../frontend/bloc/carousel/Carousel";
-import CssCarouselPosition from "../../bloc/components/carousel/css_bloc_position/CssBlocPosition";
-import ajout from "./../../../../assets/ajouter.png";
-import CssPictureGroupPosition from "../../bloc/components/picture_group/css_bloc_position/CssBlocPosition";
 import { PictureGroup } from "../../bloc/components/picture_group/class/PictureGroup";
-
-import PictureGroupVizualisation from "../../../frontend/bloc/picture_group/PictureGroup";
 import { Button } from "../../bloc/components/button/class/Button";
-import ButtonInput from "../../bloc/components/button/bouton/component";
-
-import ButtonVisualization from "../../../frontend/bloc/bouton/Button";
-import CssButtonPosition from "../../bloc/components/button/css_bloc_position/CssButtonPosition";
-import ImageGroup from "../../bloc/components/picture_group/image_group/component";
-import CssBlocPosition from "../../bloc/components/text_picture/css_bloc_position/CssBlocPosition";
 import { Video } from "../../bloc/components/video/class/Video";
-import VideoVizualisation from "../../../frontend/bloc/video/video";
-import VideoInput from "../../bloc/components/video/video_template/video_input";
-import CssVideoPosition from "../../bloc/components/video/css_bloc_position/CssBlocPosition";
+import BlocTextPicture from "./bloc_components/BlocTextPicture";
+import BlocCarousel from "./bloc_components/BlocCarousel";
+import BlocPictureGroup from "./bloc_components/BlocPictureGroup";
+import BlocButton from "./bloc_components/BlocButton";
+import BlocVideo from "./bloc_components/BlocVideo";
 
 interface BlocData {
   blocs: Array<any>;
@@ -52,7 +35,8 @@ function Blocs({
 }: BlocData) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
   const [refresh, setRefresh] = useState(false);
-
+  // edit with new component type when you add a bloc
+  let component_types: Carousel | TextPicture | PictureGroup | Button | Video;
   const onContentStateChange = (
     contentState: any,
     input_bloc: TextPicture,
@@ -63,7 +47,6 @@ function Blocs({
     setBlocs(blocs);
     setContentState(contentState);
   };
-
   const updateBloc = (
     e: any,
     field: string,
@@ -91,9 +74,7 @@ function Blocs({
     index: number
   ) => {
     const new_Bloc = input_bloc.update(e, field, index);
-
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
-
     setBlocs(blocs);
     if (field === "width" || field === "height") {
       setRefresh(!refresh);
@@ -116,29 +97,22 @@ function Blocs({
     index: number,
     input_bloc: PictureGroup
   ) => {
-    console.log(input_bloc);
     const new_Bloc = input_bloc.update(e, field, index);
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
     setBlocs(blocs);
     setToggle(!toggle);
   };
-  const removeBloc = async (
-    bloc: Carousel | TextPicture | PictureGroup | Button | Video
-  ) => {
+
+  const removeBloc = async (bloc: typeof component_types) => {
     blocs.splice(blocs.indexOf(bloc), 1);
     setBlocs(blocs);
     await bloc.remove();
-    blocs.map(
-      async (
-        bloc_in_blocs: Carousel | TextPicture | PictureGroup | Video,
-        index
-      ) => {
-        bloc_in_blocs.update(index + 1, "bloc_number", undefined);
-        console.log("bloc", bloc_in_blocs);
-        await bloc_in_blocs.save_bloc();
-      }
-    );
-    setToggle(!toggle);
+    blocs.map(async (bloc_in_blocs: typeof component_types, index) => {
+      bloc_in_blocs.update(index + 1, "bloc_number", undefined);
+      console.log("bloc", bloc_in_blocs);
+      await bloc_in_blocs.save_bloc();
+    });
+    setRefresh(!refresh);
   };
 
   const saveBlocAll = async () => {
@@ -148,13 +122,9 @@ function Blocs({
       new_bloc_array.push(bloc);
     });
     setBlocs(new_bloc_array);
-    blocs.map(
-      async (
-        bloc_to_save: Carousel | TextPicture | PictureGroup | Button | Video
-      ) => {
-        await bloc_to_save.save_bloc();
-      }
-    );
+    blocs.map(async (bloc_to_save: typeof component_types) => {
+      await bloc_to_save.save_bloc();
+    });
   };
   const updateDragBloc = async (lastKey: number) => {
     const start = dragBegin;
@@ -167,384 +137,103 @@ function Blocs({
     newItems.splice(start, 1);
     newItems.splice(end, 0, draggedItemValue);
     let new_bloc_array: any = [];
-    newItems.map(
-      async (
-        bloc: TextPicture | Carousel | PictureGroup | Button | Video,
-        index
-      ) => {
-        bloc.set_bloc_number(index + 1);
-        new_bloc_array.push(bloc);
-      }
-    );
+    newItems.map(async (bloc: typeof component_types, index) => {
+      bloc.set_bloc_number(index + 1);
+      new_bloc_array.push(bloc);
+    });
     // saving the new info in database
-    new_bloc_array.map(
-      async (
-        bloc_to_save: Carousel | TextPicture | PictureGroup | Button | Video
-      ) => {
-        await bloc_to_save.save_bloc();
-      }
-    );
+    new_bloc_array.map(async (bloc_to_save: typeof component_types) => {
+      await bloc_to_save.save_bloc();
+    });
     setBlocs(new_bloc_array);
   };
 
-  const saveBloc = async (
-    bloc: TextPicture | Carousel | PictureGroup | Button | Video
-  ) => {
+  const saveBloc = async (bloc: typeof component_types) => {
     bloc.save_bloc();
     setRefresh(!refresh);
   };
   const handleDragOver = (event: any) => {
     event.preventDefault();
   };
-  useEffect(() => {
-    // getAllBlocsPage();
-  }, [blocs]);
-  useEffect(() => {
-    // getAllBlocsPage();
-  }, [refresh, toggle]);
+
+  useEffect(() => {}, [refresh, toggle, blocs]);
   return (
     <div className={s.blocs_container}>
-      {blocs.map((value, index) => {
-        return value.type === "text_picture" ? (
-          <div
-            key={index}
-            className="blocs"
-            draggable={drag}
-            onDragStart={() => setDragBegin(index)}
-            onDragOver={handleDragOver}
-            onDrop={() => updateDragBloc(index)}
-          >
-            <Shrink
-              key={index}
-              setDragBegin={setDragBegin}
-              updateDragBloc={updateDragBloc}
-              drag={drag}
-              index={index + 1}
-              bloc={value}
-              props={
-                <div key={index} className={s.drag_bloc}>
-                  <div className={s.bloc_input}>
-                    <div
-                      className="button_remove_container"
-                      onClick={() => {
-                        removeBloc(value);
-                      }}
-                      style={{ top: "30px", right: "30px" }}
-                    >
-                      <img src={remove} alt="suppression box" />
-                      Supprimer le bloc
-                    </div>
-                    <CssBlocPosition
-                      props={
-                        <BlocInput
-                          input_bloc={value}
-                          draggable={drag}
-                          updateBloc={updateBloc}
-                          onContentStateChange={onContentStateChange}
-                          toggle={toggle}
-                          index={index}
-                        />
-                      }
-                      updateBloc={updateBloc}
-                      context={"bloc"}
-                      bloc={value}
-                      draggable={drag}
-                      saveBloc={saveBloc}
-                      page_id={page_id}
-                      saveBlocAll={saveBlocAll}
-                    />
-                  </div>
-                  <div className={s.bloc}>
-                    <Bloc
-                      bloc={value}
-                      num_bloc={index}
-                      css={value.css}
-                      toggle={toggle}
-                      full={false}
-                      index={index}
-                      isResponsive={false}
-                    />
-                  </div>
-                </div>
-              }
-            />
-          </div>
-        ) : value.type === "carousel" ? (
-          <div
-            className="blocs"
-            draggable={drag}
-            onDragStart={() => setDragBegin(index)}
-            onDragOver={handleDragOver}
-            onDrop={() => updateDragBloc(index)}
-            key={index}
-          >
-            <Shrink
-              key={index}
-              setDragBegin={setDragBegin}
-              updateDragBloc={updateDragBloc}
-              drag={drag}
-              index={index + 1}
-              bloc={value}
-              props={
-                <div key={index} className={s.drag_bloc}>
-                  <div className={s.carousel_input}>
-                    {value.card_number > 1 && (
-                      <div
-                        className={s.addCard}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          updateCarousel(e, "ajout", value, -1);
-                        }}
-                      >
-                        <img src={ajout} />
-                      </div>
-                    )}
-                    <div
-                      className="button_remove_container"
-                      onClick={(e) => {
-                        removeBloc(value);
-                      }}
-                      style={{ top: "30px", right: "30px" }}
-                    >
-                      <img src={remove} alt="suppression box" />
-                      Supprimer le bloc
-                    </div>
-
-                    <CssCarouselPosition
-                      props={
-                        value.isAutomatique ? (
-                          <CarouselOption2
-                            updateCarousel={updateCarousel}
-                            toggle={toggle}
-                            bloc={value}
-                          />
-                        ) : (
-                          <CarouselOption1
-                            updateCarousel={updateCarousel}
-                            toggle={toggle}
-                            bloc={value}
-                          />
-                        )
-                      }
-                      updateCarousel={updateCarousel}
-                      context={"carousel"}
-                      bloc={value}
-                      draggable={drag}
-                      saveBloc={saveBloc}
-                      page_id={page_id}
-                      saveBlocAll={saveBlocAll}
-                    />
-                  </div>
-                  <div className={s.carousel}>
-                    <CarouselVisualization
-                      input_bloc={value}
-                      toggle={toggle}
-                      refresh={refresh}
-                      full={false}
-                      isResponsive={false}
-                    />
-                  </div>
-                </div>
-              }
-            />
-          </div>
-        ) : value.type === "picture_group" ? (
-          <div
-            className="blocs"
-            draggable={drag}
-            onDragStart={() => setDragBegin(index)}
-            onDragOver={handleDragOver}
-            onDrop={() => updateDragBloc(index)}
-            key={index}
-          >
-            <Shrink
-              key={index}
-              setDragBegin={setDragBegin}
-              updateDragBloc={updateDragBloc}
-              drag={drag}
-              index={index + 1}
-              bloc={value}
-              props={
-                <div key={index} className={s.drag_bloc}>
-                  <div className={s.carousel_input}>
-                    {value.card_number > 1 && (
-                      <div
-                        className={s.addCard}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          updateCarousel(e, "ajout", value, -1);
-                        }}
-                      >
-                        <img src={ajout} />
-                      </div>
-                    )}
-                    <div
-                      className="button_remove_container"
-                      onClick={(e) => {
-                        removeBloc(value);
-                      }}
-                      style={{ top: "30px", right: "30px" }}
-                    >
-                      <img src={remove} alt="suppression box" />
-                      Supprimer le bloc
-                    </div>
-
-                    <CssPictureGroupPosition
-                      props={
-                        <ImageGroup
-                          updatePictureGroupData={updatePictureGroupData}
-                          toggle={toggle}
-                          bloc={value}
-                        />
-                      }
-                      updatePictureGroupData={updatePictureGroupData}
-                      bloc={value}
-                      draggable={drag}
-                      saveBlocAll={saveBlocAll}
-                    />
-                  </div>
-                  <div className={s.carousel}>
-                    <PictureGroupVizualisation
-                      input_bloc={value}
-                      toggle={toggle}
-                      refresh={refresh}
-                      full={false}
-                      isResponsive={false}
-                    />
-                  </div>
-                </div>
-              }
-            />
-          </div>
-        ) : value.type === "button" ? (
-          <div
-            className="blocs"
-            draggable={drag}
-            onDragStart={() => setDragBegin(index)}
-            onDragOver={handleDragOver}
-            onDrop={() => updateDragBloc(index)}
-            key={index}
-          >
-            <Shrink
-              key={index}
-              setDragBegin={setDragBegin}
-              updateDragBloc={updateDragBloc}
-              drag={drag}
-              index={index + 1}
-              bloc={value}
-              props={
-                <div key={index} className={s.drag_bloc}>
-                  <div className={s.carousel_input}>
-                    <div
-                      className="button_remove_container"
-                      onClick={(e) => {
-                        removeBloc(value);
-                      }}
-                      style={{ top: "30px", right: "30px" }}
-                    >
-                      <img src={remove} alt="suppression box" />
-                      Supprimer le bloc
-                    </div>
-
-                    <CssButtonPosition
-                      props={
-                        <ButtonInput
-                          updateButton={updateButton}
-                          toggle={toggle}
-                          bloc={value}
-                        />
-                      }
-                      updateButton={updateButton}
-                      bloc={value}
-                      draggable={drag}
-                      saveBlocAll={saveBlocAll}
-                    />
-                  </div>
-                  <div className={s.carousel}>
-                    <ButtonVisualization
-                      input_bloc={value}
-                      toggle={toggle}
-                      refresh={refresh}
-                      full={false}
-                      isResponsive={false}
-                    />
-                  </div>
-                </div>
-              }
-            />
-          </div>
+      {blocs.map((bloc, index) => {
+        return bloc.type === "text_picture" ? (
+          <BlocTextPicture
+            bloc={bloc}
+            setDragBegin={setDragBegin}
+            updateDragBloc={updateDragBloc}
+            handleDragOver={handleDragOver}
+            removeBloc={removeBloc}
+            updateBloc={updateBloc}
+            saveBloc={saveBloc}
+            saveBlocAll={saveBlocAll}
+            onContentStateChange={onContentStateChange}
+            drag={drag}
+            toggle={toggle}
+            page_id={page_id}
+            index={index}
+          />
+        ) : bloc.type === "carousel" ? (
+          <BlocCarousel
+            bloc={bloc}
+            setDragBegin={setDragBegin}
+            updateDragBloc={updateDragBloc}
+            handleDragOver={handleDragOver}
+            updateCarousel={updateCarousel}
+            removeBloc={removeBloc}
+            saveBloc={saveBloc}
+            saveBlocAll={saveBlocAll}
+            drag={drag}
+            toggle={toggle}
+            page_id={page_id}
+            index={index}
+            refresh={refresh}
+          />
+        ) : bloc.type === "picture_group" ? (
+          <BlocPictureGroup
+            bloc={bloc}
+            setDragBegin={setDragBegin}
+            updateDragBloc={updateDragBloc}
+            handleDragOver={handleDragOver}
+            updatePictureGroupData={updatePictureGroupData}
+            removeBloc={removeBloc}
+            saveBlocAll={saveBlocAll}
+            drag={drag}
+            toggle={toggle}
+            index={index}
+            refresh={refresh}
+          />
+        ) : bloc.type === "button" ? (
+          <BlocButton
+            bloc={bloc}
+            setDragBegin={setDragBegin}
+            updateDragBloc={updateDragBloc}
+            handleDragOver={handleDragOver}
+            updateButton={updateButton}
+            removeBloc={removeBloc}
+            saveBlocAll={saveBlocAll}
+            drag={drag}
+            toggle={toggle}
+            index={index}
+            refresh={refresh}
+          />
         ) : (
-          value.type === "video" && (
-            <div
-              className="blocs"
-              draggable={drag}
-              onDragStart={() => setDragBegin(index)}
-              onDragOver={handleDragOver}
-              onDrop={() => updateDragBloc(index)}
-              key={index}
-            >
-              <Shrink
-                key={index}
-                setDragBegin={setDragBegin}
-                updateDragBloc={updateDragBloc}
-                drag={drag}
-                index={index + 1}
-                bloc={value}
-                props={
-                  <div key={index} className={s.drag_bloc}>
-                    <div className={s.carousel_input}>
-                      {value.card_number > 1 && (
-                        <div
-                          className={s.addCard}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            updateVideo(e, "ajout", value);
-                          }}
-                        >
-                          <img src={ajout} />
-                        </div>
-                      )}
-                      <div
-                        className="button_remove_container"
-                        onClick={(e) => {
-                          removeBloc(value);
-                        }}
-                        style={{ top: "30px", right: "30px" }}
-                      >
-                        <img src={remove} alt="suppression box" />
-                        Supprimer le bloc
-                      </div>
-
-                      <CssVideoPosition
-                        props={
-                          <VideoInput
-                            updateVideo={updateVideo}
-                            toggle={toggle}
-                            input_bloc={value}
-                          />
-                        }
-                        updateVideo={updateVideo}
-                        bloc={value}
-                        draggable={drag}
-                        saveBlocAll={saveBlocAll}
-                        context={""}
-                        saveBloc={undefined}
-                        page_id={0}
-                      />
-                    </div>
-                    <div className={s.carousel}>
-                      <VideoVizualisation
-                        bloc={value}
-                        updateLoaded={undefined}
-                        full={false}
-                        isResponsive={false}
-                        videoLoaded={false}
-                      />
-                    </div>
-                  </div>
-                }
-              />
-            </div>
+          bloc.type === "video" && (
+            <BlocVideo
+              bloc={bloc}
+              setDragBegin={setDragBegin}
+              updateDragBloc={updateDragBloc}
+              handleDragOver={handleDragOver}
+              updateVideo={updateVideo}
+              removeBloc={removeBloc}
+              saveBlocAll={saveBlocAll}
+              drag={drag}
+              toggle={toggle}
+              index={index}
+            />
           )
         );
       })}

@@ -64,7 +64,7 @@ function HeaderInput({
             <div
               className={s.addLink}
               onClick={(e) => {
-                updateHeader(e, "ajout", undefined, undefined, input_bloc);
+                updateHeader(e, "ajout", undefined, undefined);
               }}
             >
               <img src={ajout} alt="bouton ajouter" />

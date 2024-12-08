@@ -1,27 +1,16 @@
 import { useState } from "react";
 import s from "./style.module.css";
-import up from "./../../../../../assets/up.png";
-import down from "./../../../../../assets/down.png";
-import { TextPicture } from "../../../bloc/components/text_picture/class/TextPicture";
-import { Carousel } from "../../../bloc/components/carousel/class/Carousel";
+import up from "./../../../../../../../assets/up.png";
+import down from "./../../../../../../../assets/down.png";
+import { Carousel } from "../../../../../bloc/components/carousel/class/Carousel";
 
 interface ShrinkData {
   index: number;
-  bloc: TextPicture | Carousel;
+  bloc: any;
   props: any;
-  setDragBegin: any;
-  updateDragBloc: any;
-  drag: boolean;
 }
 
-function Shrink({
-  props,
-  bloc,
-  index,
-  setDragBegin,
-  updateDragBloc,
-  drag,
-}: ShrinkData) {
+function Shrink({ props, bloc, index }: ShrinkData) {
   const [open, setOpen] = useState(true);
   return (
     <div className={s.shrink_bloc} key={index}>
