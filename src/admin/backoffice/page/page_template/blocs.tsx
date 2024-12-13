@@ -1,6 +1,6 @@
 import s from "./style.module.css";
 import { useEffect, useState } from "react";
-import { RawDraftContentState } from "draft-js";
+import { EditorState, RawDraftContentState } from "draft-js";
 import { TextPicture } from "../../bloc/components/text_picture/class/TextPicture";
 import { Carousel } from "../../bloc/components/carousel/class/Carousel";
 import { PictureGroup } from "../../bloc/components/picture_group/class/PictureGroup";
@@ -37,6 +37,8 @@ function Blocs({
   page_id,
 }: BlocData) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
+  const [editorState, setEditorState] = useState<EditorState>();
+
   const [refresh, setRefresh] = useState(false);
   // edit with new component type when you add a bloc
   let component_types: Carousel | TextPicture | PictureGroup | Button | Video;
@@ -245,7 +247,7 @@ function Blocs({
     let root = document.getElementById("root");
     if (root !== null) {
       root.style.paddingTop = "0px";
-      root.style.paddingBottom = "220px";
+      root.style.paddingBottom = "75px";
     }
   };
   useEffect(() => {

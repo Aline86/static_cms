@@ -2,7 +2,7 @@ import { Video } from "../../../bloc/components/video/class/Video";
 import CssVideoPosition from "../../../bloc/components/video/css_bloc_position/CssBlocPosition";
 import VideoInput from "../../../bloc/components/video/video_template/video_input";
 import VideoVizualisation from "../../../../frontend/bloc/video/video";
-import ShrinkParams from "./snippets/shrink_params";
+import BlockContainer from "./snippets/BlockContainer";
 
 interface BlocData {
   bloc: Video;
@@ -30,15 +30,15 @@ function BlocVideo({
   index,
 }: BlocData) {
   return (
-    <ShrinkParams
-      key={index}
+    <BlockContainer
+      bloc={bloc}
       setDragBegin={setDragBegin}
       updateDragBloc={updateDragBloc}
-      drag={drag}
-      index={index + 1}
-      bloc={bloc}
       handleDragOver={handleDragOver}
       removeBloc={removeBloc}
+      index={index}
+      drag={drag}
+      isOpen={true}
       component_visualization={
         <VideoVizualisation
           bloc={bloc}
@@ -66,7 +66,6 @@ function BlocVideo({
           page_id={bloc.page_id}
         />
       }
-      isOpen={true}
     />
   );
 }

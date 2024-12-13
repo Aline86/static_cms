@@ -5,6 +5,7 @@ import CarouselOption1 from "../../../bloc/components/carousel/carousel_1/compon
 import CarouselVisualization from "../../../../frontend/bloc/carousel/Carousel";
 import ShrinkParams from "./snippets/shrink_params";
 import { useEffect } from "react";
+import BlockContainer from "./snippets/BlockContainer";
 
 interface BlocData {
   bloc: Carousel;
@@ -29,73 +30,56 @@ function BlocCarousel({
   handleDragOver,
   removeBloc,
   updateCarousel,
-  saveBloc,
   saveBlocAll,
   drag,
   toggle,
-  page_id,
   index,
   refresh,
 }: BlocData) {
-  useEffect(() => {
-    console.log("bloc", bloc);
-  }, []);
+  useEffect(() => {}, []);
   return (
-    <div
-      className="blocs"
-      draggable={drag}
-      onDragStart={() => setDragBegin(index)}
-      onDragOver={handleDragOver}
-      onDrop={() => updateDragBloc(index)}
-      key={index}
-    >
-      <ShrinkParams
-        key={index}
-        setDragBegin={setDragBegin}
-        updateDragBloc={updateDragBloc}
-        drag={drag}
-        index={index + 1}
-        bloc={bloc}
-        handleDragOver={handleDragOver}
-        removeBloc={removeBloc}
-        component_visualization={
-          <CarouselVisualization
-            input_bloc={bloc}
-            toggle={toggle}
-            refresh={refresh}
-            full={false}
-            isResponsive={false}
-          />
-        }
-        css_position={
-          <CssCarouselPosition
-            props={
-              bloc.is_automatique ? (
-                <CarouselOption2
-                  updateCarousel={updateCarousel}
-                  toggle={toggle}
-                  bloc={bloc}
-                />
-              ) : (
-                <CarouselOption1
-                  updateCarousel={updateCarousel}
-                  toggle={toggle}
-                  bloc={bloc}
-                />
-              )
-            }
-            updateCarousel={updateCarousel}
-            context={"carousel"}
-            bloc={bloc}
-            draggable={drag}
-            saveBloc={saveBloc}
-            page_id={page_id}
-            saveBlocAll={saveBlocAll}
-          />
-        }
-        isOpen={true}
-      />
-    </div>
+    <BlockContainer
+      bloc={bloc}
+      setDragBegin={setDragBegin}
+      updateDragBloc={updateDragBloc}
+      handleDragOver={handleDragOver}
+      removeBloc={removeBloc}
+      drag={drag}
+      index={index}
+      isOpen={true}
+      component_visualization={
+        <CarouselVisualization
+          input_bloc={bloc}
+          toggle={toggle}
+          refresh={refresh}
+          full={false}
+          isResponsive={false}
+        />
+      }
+      css_position={
+        <CssCarouselPosition
+          props={
+            bloc.is_automatique ? (
+              <CarouselOption2
+                updateCarousel={updateCarousel}
+                toggle={toggle}
+                bloc={bloc}
+              />
+            ) : (
+              <CarouselOption1
+                updateCarousel={updateCarousel}
+                toggle={toggle}
+                bloc={bloc}
+              />
+            )
+          }
+          updateCarousel={updateCarousel}
+          bloc={bloc}
+          draggable={drag}
+          saveBlocAll={saveBlocAll}
+        />
+      }
+    />
   );
 }
 export default BlocCarousel;

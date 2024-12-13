@@ -2,7 +2,7 @@ import CssButtonPosition from "../../../bloc/components/button/css_bloc_position
 import ButtonInput from "../../../bloc/components/button/bouton/component";
 import { Button } from "../../../bloc/components/button/class/Button";
 import ButtonVisualization from "../../../../frontend/bloc/bouton/Button";
-import ShrinkParams from "./snippets/shrink_params";
+import BlockContainer from "./snippets/BlockContainer";
 
 interface BlocData {
   bloc: Button;
@@ -32,50 +32,40 @@ function BlocButton({
   refresh,
 }: BlocData) {
   return (
-    <div
-      className="blocs"
-      draggable={drag}
-      onDragStart={() => setDragBegin(index)}
-      onDragOver={handleDragOver}
-      onDrop={() => updateDragBloc(index)}
-      key={index}
-    >
-      <ShrinkParams
-        key={index}
-        setDragBegin={setDragBegin}
-        updateDragBloc={updateDragBloc}
-        drag={drag}
-        index={index + 1}
-        bloc={bloc}
-        handleDragOver={handleDragOver}
-        removeBloc={removeBloc}
-        component_visualization={
-          <ButtonVisualization
-            input_bloc={bloc}
-            toggle={toggle}
-            refresh={refresh}
-            full={false}
-            isResponsive={false}
-          />
-        }
-        css_position={
-          <CssButtonPosition
-            props={
-              <ButtonInput
-                updateButton={updateButton}
-                toggle={toggle}
-                bloc={bloc}
-              />
-            }
-            updateButton={updateButton}
-            bloc={bloc}
-            draggable={drag}
-            saveBlocAll={saveBlocAll}
-          />
-        }
-        isOpen={true}
-      />
-    </div>
+    <BlockContainer
+      bloc={bloc}
+      setDragBegin={setDragBegin}
+      updateDragBloc={updateDragBloc}
+      handleDragOver={handleDragOver}
+      removeBloc={removeBloc}
+      drag={drag}
+      index={index}
+      isOpen={true}
+      component_visualization={
+        <ButtonVisualization
+          input_bloc={bloc}
+          toggle={toggle}
+          refresh={refresh}
+          full={false}
+          isResponsive={false}
+        />
+      }
+      css_position={
+        <CssButtonPosition
+          props={
+            <ButtonInput
+              updateButton={updateButton}
+              toggle={toggle}
+              bloc={bloc}
+            />
+          }
+          updateBloc={updateButton}
+          bloc={bloc}
+          draggable={drag}
+          saveBlocAll={saveBlocAll}
+        />
+      }
+    />
   );
 }
 

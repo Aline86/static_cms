@@ -4,7 +4,15 @@ body,
   margin: 0;
   padding: 0;
 }
-
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.blocs_container_display_none {
+  display: none;
+  height: 0px;
+}
 .app_container {
   /*background-color: rgb(250, 228, 103) !important;*/
   height: 100%;

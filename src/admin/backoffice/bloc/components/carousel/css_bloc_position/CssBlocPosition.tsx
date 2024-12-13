@@ -4,20 +4,18 @@ import add_to_database from "./../../../../../../assets/add_to_database.png";
 function CssCarouselPosition({
   props,
   updateCarousel,
-  context,
+
   bloc,
   draggable,
-  saveBloc,
-  page_id,
+
   saveBlocAll,
 }: {
   props: any;
   updateCarousel: any;
-  context: string;
+
   bloc: any;
   draggable: boolean;
-  saveBloc: any;
-  page_id: number;
+
   saveBlocAll: any;
 }) {
   return (

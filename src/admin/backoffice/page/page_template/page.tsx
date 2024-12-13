@@ -55,11 +55,19 @@ function Visualization({}: PageParams) {
   return (
     <div className="page">
       <div className={s.page_container}>
-        <Link to={{ pathname: `/` + id + `/` + name }}>
+        <div className="flex">
+          <Link to={{ pathname: `/` + id + `/` + name }}>
+            <li>
+              <div className={s.navigate}>Visualiser</div>
+            </li>
+          </Link>
+
           <li>
-            <div className={s.navigate}>Visualiser</div>
+            <div className={s.navigate} onClick={() => setOpen(!open)}>
+              Choisir un bloc
+            </div>
           </li>
-        </Link>
+        </div>
 
         <div>
           <BlocDisplay
@@ -73,14 +81,7 @@ function Visualization({}: PageParams) {
             getPage={asynchronRequestsToPopulateBlocs}
           />
           <h1>{name}</h1>
-          <div
-            className={s.bloc_creation_wrapper}
-            onClick={() => setOpen(!open)}
-          >
-            <div className={s.bloc_creation}>
-              <img src={ajout} />
-            </div>
-          </div>
+
           <Blocs
             blocs={blocs}
             setBlocs={setBlocs}

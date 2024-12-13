@@ -42,8 +42,12 @@ function BlocDisplay({
 
   useEffect(() => {}, []);
   return (
-    open && (
-      <div className={s.blocs_container_display}>
+    <div className={s.to_append}>
+      <div
+        className={
+          open ? s.blocs_container_display : s.blocs_container_display_none
+        }
+      >
         <div className={s.header_bloc_choose}>
           <div className={s.container_auto}>
             <img src={text_image} alt="texte image" />
@@ -101,7 +105,7 @@ function BlocDisplay({
             <div security={s.nothing}></div>
             <input
               type="submit"
-              value="Bouton"
+              value="Image lien"
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new Button(page.id, blocs.length + 1));
@@ -137,7 +141,7 @@ function BlocDisplay({
           </div>
         </div>
       </div>
-    )
+    </div>
   );
 }
 

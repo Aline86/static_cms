@@ -61,7 +61,7 @@ function TextReader({
           picture_data_offset[bloc.entityRanges[0].key].push(pictures[0][i]);
 
           i++;
-        } else {
+        } else if (bloc.type !== "atomic") {
           head.push(bloc.type);
         }
         const setDefaultIfNeeded =
@@ -95,6 +95,7 @@ function TextReader({
     }
   };
   const setIndexPictureData = (picture_data_: any) => {
+    console.log("picture_data_", picture_data_);
     let picture_data_offset: any = {};
     let picture_data_offset_final: any = {};
     Object.entries(picture_data_).map(([key, picture]) => {
@@ -322,7 +323,35 @@ function TextReader({
             headlines[j] === "atomic" &&
             pictures_offset !== undefined ? (
             pictures_offset[j] !== undefined &&
-              pictures_offset[j].data !== undefined && (
+            pictures_offset[j].data !== undefined &&
+            pictures_offset[j].data.src !== undefined ? (
+              <div
+                key={j}
+                className="container_data bloc"
+                style={{
+                  display: "inline",
+                  textAlign: "center",
+                }}
+              >
+                <img
+                  style={{
+                    maxWidth: "100%",
+                    objectFit: "contain",
+
+                    margin: "0 auto",
+                    width: `${pictures_offset[j].data.width}`,
+                    height: isResponsive
+                      ? `auto`
+                      : `${pictures_offset[j].data.height}`,
+                  }}
+                  src={pictures_offset[j].data.src}
+                  alt=""
+                />
+              </div>
+            ) : (
+              pictures_offset[j] !== undefined &&
+              pictures_offset[j].data !== undefined &&
+              pictures_offset[j].data.src === undefined && (
                 <div
                   key={j}
                   className="container_data bloc"
@@ -331,22 +360,12 @@ function TextReader({
                     textAlign: "center",
                   }}
                 >
-                  <img
-                    style={{
-                      maxWidth: "100%",
-                      objectFit: "contain",
-
-                      margin: "0 auto",
-                      width: `${pictures_offset[j].data.width}`,
-                      height: isResponsive
-                        ? `auto`
-                        : `${pictures_offset[j].data.height}`,
-                    }}
-                    src={pictures_offset[j].data.src}
-                    alt=""
-                  />
+                  <a href={pictures_offset[j].data}>
+                    {pictures_offset[j].data}
+                  </a>
                 </div>
               )
+            )
           ) : ((read_more && isToggle && j >= 0) ||
               (!isToggle && j <= 1) ||
               !read_more) &&
