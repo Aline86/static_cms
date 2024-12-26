@@ -73,10 +73,14 @@ function CarouselVisualization({
   }
   useEffect(() => {
     if (!result.matches) {
-      //window.addEventListener("resize", updateSize);
-      // setResize(window.innerWidth);
+      updateCardRef();
+      if (input_bloc.is_automatique) {
+        reorder_automatic();
+      } else {
+        reorder_carousel();
+      }
     }
-  }, [result]);
+  }, [result.matches]);
   useEffect(() => {
     updateType(input_bloc);
     setDataToProcess((elRefs) =>

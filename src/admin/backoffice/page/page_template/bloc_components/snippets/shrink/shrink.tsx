@@ -40,6 +40,8 @@ function Shrink({ props, bloc, index, isOpen }: ShrinkData) {
                   ? "Image lien"
                   : bloc.type === "video"
                   ? "Vidéo"
+                  : bloc.type === "parallaxe"
+                  ? "Parallaxe"
                   : bloc.type === "header"
                   ? "En tête"
                   : bloc.type === "footer" && "Bas de page"}

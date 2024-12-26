@@ -58,12 +58,12 @@ function Visualization({}: PageParams) {
         <div className="flex">
           <Link to={{ pathname: `/` + id + `/` + name }}>
             <li>
-              <div className={s.navigate}>Visualiser</div>
+              <div className={s.navigate_2}>Visualiser la page</div>
             </li>
           </Link>
           <Link to={{ pathname: `/pages` }}>
             <li>
-              <div className={s.navigate}>Pages</div>
+              <div className={s.navigate_2}>Liste des pages</div>
             </li>
           </Link>
           <Link to={{ pathname: `/` }}>
@@ -73,7 +73,19 @@ function Visualization({}: PageParams) {
           </Link>
           <li>
             <div className={s.navigate} onClick={() => setOpen(!open)}>
-              Choisir un bloc
+              Ajouter un bloc
+            </div>
+          </li>
+          <li>
+            <div
+              className={s.navigate_2}
+              onClick={(e) => {
+                e.preventDefault();
+                setToDrag(!drag);
+                setOpen(false);
+              }}
+            >
+              Changer l'ordre des blocks
             </div>
           </li>
         </div>

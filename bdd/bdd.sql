@@ -91,7 +91,19 @@ CREATE TABLE IF NOT EXISTS `carousel_data` (
     PRIMARY KEY  (`id`),
     FOREIGN KEY (`carousel_id`) REFERENCES carousel(`id`) ON DELETE CASCADE
   );
-  
+/*Table structure for table `parallaxe` */
+
+CREATE TABLE IF NOT EXISTS `parallaxe` (
+    `id` int(11) NOT NULL auto_increment,  
+    `title` varchar(250)  NOT NULL default "", 
+    `type` varchar(55)  NOT NULL default "parallaxe",           
+    `image` varchar(250)  NOT NULL default "",     
+    `alt_image` varchar(250)  NOT NULL default "",     
+    `bloc_number` int(11)  NOT NULL,
+    `page_id` int(11)  NOT NULL,
+    PRIMARY KEY  (`id`),
+    FOREIGN KEY (`page_id`) REFERENCES page(`id`)
+);
 /*Table structure for table `text_picture` */
 
 CREATE TABLE IF NOT EXISTS `text_picture` (
@@ -101,10 +113,8 @@ CREATE TABLE IF NOT EXISTS `text_picture` (
     `show_picture` boolean default true ,     
     `show_text` boolean default true   ,  
     `bloc_column` boolean  default false  ,     
-    `image_right` boolean default false  ,  
-    `is_parallaxe` boolean default false  ,    
+    `image_right` boolean default false  ,     
     `text_button_more` boolean default false   ,        
-     
     `text` text NOT NULL default "",     
     `image` varchar(250)  NOT NULL default "",     
     `alt_image` varchar(250)  NOT NULL default "",     

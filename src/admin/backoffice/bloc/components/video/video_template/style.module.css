@@ -19,6 +19,9 @@
 .titre input {
   height: 25px;
 }
+.vjs-contextmenu-ui-menu {
+  display: none !important;
+}
 .image input {
   margin-bottom: 25px;
 }

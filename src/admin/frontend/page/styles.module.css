@@ -9,7 +9,7 @@
   margin-bottom: 60px;
 }
 .video {
-  position: relative;
+  height: auto;
 }
 .bloc {
   height: 100%;
@@ -51,4 +51,7 @@ a {
   z-index: 50;
   right: 5%;
   cursor: pointer;
+}
+.parallaxe {
+  height: fit-content;
 }

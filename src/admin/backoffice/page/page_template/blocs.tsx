@@ -15,6 +15,8 @@ import BlocHeader from "./bloc_components/BlocHeader";
 import Footer from "../../bloc/components/footer/Footer";
 import Header from "../../bloc/components/header/Header";
 import BlocFooter from "./bloc_components/BlocFooter";
+import BlocParallaxe from "./bloc_components/BlocParallaxe";
+import { Parallaxe } from "../../bloc/components/parallaxe/class/Parallaxe";
 
 interface BlocData {
   blocs: Array<any>;
@@ -42,7 +44,13 @@ function Blocs({
 
   const [refresh, setRefresh] = useState(false);
   // edit with new component type when you add a bloc
-  let component_types: Carousel | TextPicture | PictureGroup | Button | Video;
+  let component_types:
+    | Carousel
+    | TextPicture
+    | PictureGroup
+    | Button
+    | Video
+    | Parallaxe;
   const onContentStateChange = (
     contentState: any,
     input_bloc: TextPicture,
@@ -89,6 +97,16 @@ function Blocs({
     }
   };
   const updateVideo = (e: any, field: string, input_bloc: Video) => {
+    const new_Bloc = input_bloc.update(e, field);
+
+    blocs[input_bloc.bloc_number - 1] = new_Bloc;
+
+    setBlocs(blocs);
+
+    setToggle(!toggle);
+  };
+  const updateParallaxe = (e: any, field: string, input_bloc: Parallaxe) => {
+    console.log("input_bloc", input_bloc);
     const new_Bloc = input_bloc.update(e, field);
 
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
@@ -330,14 +348,27 @@ function Blocs({
             index={index}
             refresh={refresh}
           />
+        ) : bloc.type === "video" ? (
+          <BlocVideo
+            bloc={bloc}
+            setDragBegin={setDragBegin}
+            updateDragBloc={updateDragBloc}
+            handleDragOver={handleDragOver}
+            updateVideo={updateVideo}
+            removeBloc={removeBloc}
+            saveBlocAll={saveBlocAll}
+            drag={drag}
+            toggle={toggle}
+            index={index}
+          />
         ) : (
-          bloc.type === "video" && (
-            <BlocVideo
+          bloc.type === "parallaxe" && (
+            <BlocParallaxe
               bloc={bloc}
               setDragBegin={setDragBegin}
               updateDragBloc={updateDragBloc}
               handleDragOver={handleDragOver}
-              updateVideo={updateVideo}
+              updateParallaxe={updateParallaxe}
               removeBloc={removeBloc}
               saveBlocAll={saveBlocAll}
               drag={drag}

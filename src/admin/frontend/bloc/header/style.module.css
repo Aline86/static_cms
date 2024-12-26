@@ -122,11 +122,12 @@
 .title .title_container span {
   display: inline-block;
   position: relative;
-  top: -30px;
+  top: -10px;
   width: 100%;
   /*animation-iteration-count: infinite;*/
   animation-duration: 5s;
   animation-name: slidein;
+
   border-bottom: 2px solid white;
 }
 
@@ -184,7 +185,7 @@
   font-size: 55px;
   margin-bottom: 0 !important;
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1200px) {
   .container {
     position: absolute !important;
     top: 0;

@@ -117,6 +117,11 @@ function BlocInput({
 
           {mounted && (
             <Editor
+              editorStyle={{
+                border: "1px solid darkgray",
+                minHeight: "150px",
+                padding: "10px",
+              }}
               localization={{ locale: "fr" }}
               contentState={contentState}
               toolbar={{

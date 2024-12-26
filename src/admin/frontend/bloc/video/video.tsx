@@ -59,7 +59,9 @@ function VideoVizualisation({
   useEffect(() => {
     setToggle(!isToggle);
   }, [blocHeight]);
-  useEffect(() => {}, [isToggle]);
+  useEffect(() => {
+    window.addEventListener("resize", updateblocRef);
+  }, [isToggle, window.innerWidth]);
   useEffect(() => {}, [url]);
   return url !== undefined && url.length > 0 && external ? (
     <div>
@@ -127,84 +129,86 @@ function VideoVizualisation({
       </div>
     </div>
   ) : url !== undefined && url.length > 0 ? (
-    <div
-      className={s.bloc}
-      style={{
-        width: "100%",
-        marginLeft: `${full ? "0" : "30px"}`,
-        height: `${
-          full ? (isResponsive ? 200 : blocHeight - 330) : blocHeight
-        }px`,
-
-        maxHeight: "50vh",
-        marginTop: `${
-          full
-            ? !isResponsive
-              ? "75px"
-              : "75px"
-            : bloc.bloc_number > 1
-            ? "60px"
-            : "0"
-        }`,
-        marginBottom: full ? (!isResponsive ? "50vh" : "0px") : "0",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className={s.bloc}>
       <div
-        className={s.encart}
         style={{
-          position: "relative",
-          width: "100%",
-          zIndex: "2",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
+          width: `${blocWidth + "px"}`,
+          height: `${blocHeight + "px"}`,
+          marginLeft: full ? (isResponsive ? "0" : "0") : "30px",
         }}
       >
-        <h2
+        <div
+          className={s.encart}
           style={{
-            color: "white",
-            display: "inline-block",
-            textAlign: "center",
-            fontSize: `${full ? (!isResponsive ? "72px" : "35px") : "72px"}`,
-            opacity: "0.5",
+            position: `${
+              full ? (isResponsive ? "absolute" : "relative") : "absolute"
+            }`,
+            top: `${full ? (isResponsive ? "200px" : "40%") : "450px"}`,
+            left: `${full ? (isResponsive ? "50%" : "50%") : "52%"}`,
+            transform: `${
+              full
+                ? isResponsive
+                  ? "translate(-50%, -50%)"
+                  : "translate(-50%, -50%)"
+                : "unset"
+            }`,
+            color: "red",
+            height: full ? (isResponsive ? "auto" : "100vh") : "50%",
+            width: full ? (isResponsive ? "100vw" : "100vw") : "43vw",
+            zIndex: "2",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          {bloc.title}
-        </h2>
-        <p
-          style={{
-            color: "white",
-            fontSize: "25px",
-            textAlign: "center",
+          <h2
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
 
-            display: "inline-block",
-          }}
-        >
-          {bloc.text}
-        </p>
-      </div>
-      <div
-        ref={blocRef}
-        style={{
-          position: "absolute",
-          left: full ? 0 : "53vw",
-          right: full ? 0 : "3vw",
+              textAlign: "center",
+              fontSize: `${full ? (!isResponsive ? "72px" : "35px") : "72px"}`,
+              opacity: "0.5",
+            }}
+          >
+            {bloc.title}
+          </h2>
+          <p
+            style={{
+              color: "white",
+              fontSize: "25px",
+              textAlign: "center",
 
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+              display: "inline-block",
+            }}
+          >
+            {bloc.text}
+          </p>
+        </div>
         <video
+          ref={blocRef}
+          style={{
+            position: `${
+              full ? (isResponsive ? "relative" : "absolute") : "relative"
+            }`,
+
+            left: "0",
+            right: "0",
+            top: "0",
+            bottom: "0",
+            height: `${full ? (isResponsive ? "300px" : "auto") : "auto"}`,
+            width: `${full ? (isResponsive ? "380px" : "100vw") : "43vw"}`,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
           autoPlay
           muted
-          width={bloc.width + "%"}
-          height={bloc.height + "%"}
           onLoadedData={() => {
             updateblocRef();
           }}

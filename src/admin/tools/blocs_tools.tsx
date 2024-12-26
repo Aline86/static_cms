@@ -1,5 +1,6 @@
 import { Button } from "../backoffice/bloc/components/button/class/Button";
 import { Carousel } from "../backoffice/bloc/components/carousel/class/Carousel";
+import { Parallaxe } from "../backoffice/bloc/components/parallaxe/class/Parallaxe";
 import { PictureGroup } from "../backoffice/bloc/components/picture_group/class/PictureGroup";
 import { TextPicture } from "../backoffice/bloc/components/text_picture/class/TextPicture";
 import { Video } from "../backoffice/bloc/components/video/class/Video";
@@ -55,6 +56,10 @@ export default class BlocTools {
         if (bloc.type === "video") {
           let video = new Video(page.id, bloc.bloc_number, bloc.id);
           async_result[index] = this.getBloc(video.get_bloc());
+        }
+        if (bloc.type === "parallaxe") {
+          let parallaxe = new Parallaxe(page.id, bloc.bloc_number, bloc.id);
+          async_result[index] = this.getBloc(parallaxe.get_bloc());
         }
       });
 

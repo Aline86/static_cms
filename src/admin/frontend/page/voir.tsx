@@ -22,10 +22,12 @@ import VideoVizualisation from "../bloc/video/video";
 import { Button } from "../../backoffice/bloc/components/button/class/Button";
 import { Video } from "../../backoffice/bloc/components/video/class/Video";
 import ColorContext from "../../../ColorContext";
+import { Parallaxe } from "../../backoffice/bloc/components/parallaxe/class/Parallaxe";
+import ParallaxeVizualisation from "../bloc/parallaxe/parallaxe";
 
 function Voir() {
   const [blocs, setBlocs] = useState<
-    Array<Carousel | TextPicture | PictureGroup | Button | Video>
+    Array<Carousel | TextPicture | PictureGroup | Button | Video | Parallaxe>
   >([]);
   const { id, name } = useParams();
   const [toggle, setToggle] = useState(false);
@@ -33,6 +35,7 @@ function Voir() {
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
   const [videoLoaded, isVideoLoaded] = useState<boolean>(false);
+  const result = window.matchMedia("(max-width: 700px)");
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
   const { common } = useContext(ColorContext);
@@ -52,7 +55,7 @@ function Voir() {
   };
   const adaptRoot = () => {
     let root = document.getElementById("root");
-    if (root !== null && isReponsive) {
+    if (root !== null && (isReponsive || result.matches)) {
       root.style.width = "380px";
       root.style.paddingTop = "0px";
       root.style.paddingBottom = "220px";
@@ -76,7 +79,6 @@ function Voir() {
     const result = blocs.filter((bloc) => bloc.type === "video");
     console.log("result", result);
     if (result.length === 0) {
-      console.log("videoLoaded", videoLoaded);
       isVideoLoaded(true);
     } else if (result.length > 0) {
       isVideoLoaded(false);
@@ -103,9 +105,7 @@ function Voir() {
   useEffect(() => {
     checkIfVideo();
   }, [blocs]);
-  useEffect(() => {
-    console.log("videoLoaded", videoLoaded);
-  }, [videoLoaded]);
+  useEffect(() => {}, [videoLoaded]);
 
   return (
     <div className={s.blocs_container} style={styles}>
@@ -173,15 +173,23 @@ function Voir() {
               isResponsive={isReponsive}
             />
           </div>
+        ) : value instanceof Video ? (
+          <div className={s.video}>
+            <VideoVizualisation
+              bloc={value}
+              updateLoaded={updateLoaded}
+              full={true}
+              isResponsive={isReponsive}
+              videoLoaded={videoLoaded}
+            />
+          </div>
         ) : (
-          value instanceof Video && (
+          value instanceof Parallaxe && (
             <div className={s.video}>
-              <VideoVizualisation
+              <ParallaxeVizualisation
                 bloc={value}
-                updateLoaded={updateLoaded}
                 full={true}
                 isResponsive={isReponsive}
-                videoLoaded={videoLoaded}
               />
             </div>
           )

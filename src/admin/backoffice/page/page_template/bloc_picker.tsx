@@ -5,12 +5,16 @@ import glissiere from "./img/glissiere.png";
 import text_image from "./img/image.png";
 import auto from "./img/auto.png";
 import couches from "./img/couches.png";
+import video from "./img/montage.png";
+import parallaxe from "./img/picture.png";
+import link from "./img/link.png";
 import { TextPicture } from "../../bloc/components/text_picture/class/TextPicture";
 import { Carousel } from "../../bloc/components/carousel/class/Carousel";
 import { Button } from "../../bloc/components/button/class/Button";
 import { PictureGroup } from "../../bloc/components/picture_group/class/PictureGroup";
 import Page from "../class/Page";
 import { Video } from "../../bloc/components/video/class/Video";
+import { Parallaxe } from "../../bloc/components/parallaxe/class/Parallaxe";
 
 interface BlocData {
   getPage: any;
@@ -48,6 +52,9 @@ function BlocDisplay({
           open ? s.blocs_container_display : s.blocs_container_display_none
         }
       >
+        <div className={s.close} onClick={() => setOpen(!open)}>
+          X
+        </div>
         <div className={s.header_bloc_choose}>
           <div className={s.container_auto}>
             <img src={text_image} alt="texte image" />
@@ -89,7 +96,7 @@ function BlocDisplay({
             />
           </div>
           <div className={s.container_auto}>
-            <img src={text_image} alt="texte image" />
+            <img src={video} alt="Vidéo" />
             <input
               type="submit"
               value="Vidéo"
@@ -102,10 +109,23 @@ function BlocDisplay({
             />
           </div>
           <div className={s.container_auto}>
-            <div security={s.nothing}></div>
+            <img src={parallaxe} alt="parallaxe" />
             <input
               type="submit"
-              value="Image lien"
+              value="Parallaxe"
+              onClick={(e) => {
+                e.preventDefault();
+                addBlocToBDD(new Parallaxe(page.id, blocs.length + 1));
+                handleScroll();
+                setOpen(!open);
+              }}
+            />
+          </div>
+          <div className={s.container_auto}>
+            <img src={link} alt="Image plus lien" />
+            <input
+              type="submit"
+              value="Image + lien"
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new Button(page.id, blocs.length + 1));
@@ -124,18 +144,6 @@ function BlocDisplay({
                 addBlocToBDD(new PictureGroup(page.id, blocs.length + 1));
                 handleScroll();
                 setOpen(!open);
-              }}
-            />
-          </div>
-          <div className={s.container_auto}>
-            <div security={s.nothing}></div>
-            <input
-              type="submit"
-              value="Changer l'ordre des blocks"
-              onClick={(e) => {
-                e.preventDefault();
-                setToDrag(!drag);
-                setOpen(false);
               }}
             />
           </div>

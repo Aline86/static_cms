@@ -4,10 +4,13 @@ body,
   margin: 0;
   padding: 0;
 }
+* {
+  font-size: 18px;
+}
 .flex {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  justify-content: space-around;
 }
 .blocs_container_display_none {
   display: none;
