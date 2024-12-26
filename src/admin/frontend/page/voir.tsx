@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import s from "./styles.module.css";
 
 import { Link, useParams } from "react-router-dom";
@@ -21,6 +21,7 @@ import ButtonVisualization from "../bloc/bouton/Button";
 import VideoVizualisation from "../bloc/video/video";
 import { Button } from "../../backoffice/bloc/components/button/class/Button";
 import { Video } from "../../backoffice/bloc/components/video/class/Video";
+import ColorContext from "../../../ColorContext";
 
 function Voir() {
   const [blocs, setBlocs] = useState<
@@ -34,7 +35,7 @@ function Voir() {
   const [videoLoaded, isVideoLoaded] = useState<boolean>(false);
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
-
+  const { common } = useContext(ColorContext);
   async function asynchronRequestsToPopulateBlocs() {
     await header.get_bloc();
 
@@ -81,6 +82,14 @@ function Voir() {
       isVideoLoaded(false);
     }
   };
+  const styles = {
+    backgroundColor: common !== null ? `${common?.fond}` : "transparent",
+    "--titles": `${common?.titles}` ? `${common?.titles}` : "black",
+    "--button-background-color": `${common?.background_color_buttons}`
+      ? `${common?.background_color_buttons}`
+      : "#2f6091",
+    height: "fit-content",
+  };
   useEffect(() => {
     adaptRoot();
   }, [isReponsive]);
@@ -99,7 +108,7 @@ function Voir() {
   }, [videoLoaded]);
 
   return (
-    <div className={s.blocs_container}>
+    <div className={s.blocs_container} style={styles}>
       <HeaderVizualization
         input_bloc={header}
         toggle={toggle}
@@ -123,12 +132,7 @@ function Voir() {
 
       {blocs.map((value, index) => {
         return videoLoaded && value instanceof TextPicture ? (
-          <div
-            className={s.bloc}
-            style={{
-              height: "fit-content",
-            }}
-          >
+          <div className={s.bloc}>
             <Bloc
               index={index}
               bloc={value}
@@ -187,6 +191,7 @@ function Voir() {
         input_bloc={footer}
         toggle={toggle}
         isResponsive={isReponsive}
+        full={true}
       />
     </div>
   );

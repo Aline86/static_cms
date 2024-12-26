@@ -93,12 +93,6 @@ function Visualization({}: PageParams) {
             page_id={Number(id)}
           />
         </div>
-
-        <FooterVizualization
-          input_bloc={footer}
-          toggle={toggle}
-          isResponsive={false}
-        />
       </div>
     </div>
   );

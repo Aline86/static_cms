@@ -14,6 +14,7 @@ import BlocVideo from "./bloc_components/BlocVideo";
 import BlocHeader from "./bloc_components/BlocHeader";
 import Footer from "../../bloc/components/footer/Footer";
 import Header from "../../bloc/components/header/Header";
+import BlocFooter from "./bloc_components/BlocFooter";
 
 interface BlocData {
   blocs: Array<any>;
@@ -247,7 +248,7 @@ function Blocs({
     let root = document.getElementById("root");
     if (root !== null) {
       root.style.paddingTop = "0px";
-      root.style.paddingBottom = "75px";
+      root.style.paddingBottom = "0px";
     }
   };
   useEffect(() => {
@@ -346,6 +347,13 @@ function Blocs({
           )
         );
       })}
+      <BlocFooter
+        bloc={footer}
+        updateFooter={updateFooter}
+        removeBloc={remove_bloc}
+        toggle={toggle}
+        saveBloc={savePrerequisites}
+      />
     </div>
   );
 }

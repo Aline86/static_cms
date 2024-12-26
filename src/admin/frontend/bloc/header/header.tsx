@@ -5,6 +5,7 @@ import e from "./edition.module.css";
 import Nav from "./Nav/Nav";
 import { Link } from "react-router-dom";
 import Header from "../../../backoffice/bloc/components/header/Header";
+import reseaux from "./../../../../assets/reseaux.png";
 
 interface HeaderInfo {
   input_bloc: Header;
@@ -19,18 +20,24 @@ function HeaderVizualization({
   isResponsive,
 }: HeaderInfo) {
   const [open, setOpen] = useState(false);
+  const [trigger_show_link, setTrigger_show_link] = useState(true);
   const [stylePath, setStylePath] = useState(s);
   const style_width = {
     width: isResponsive ? "380px" : "100%",
   };
-
+  const handleShowLinks = () => {
+    setTrigger_show_link(!trigger_show_link);
+  };
   useEffect(() => {}, [toggle]);
   useEffect(() => {
     if (isResponsive) {
+      setTrigger_show_link(false);
       setStylePath(v);
     } else if (full) {
+      setTrigger_show_link(true);
       setStylePath(s);
     } else if (!full) {
+      setTrigger_show_link(true);
       setStylePath(e);
     }
   }, [isResponsive]);
@@ -69,6 +76,12 @@ function HeaderVizualization({
         </div>
         <div className={stylePath.end}>
           <div className={stylePath.links}>
+            {isResponsive && (
+              <div className="plus" onClick={() => handleShowLinks()}>
+                <img src={reseaux} alt="réseaux sociaux" />
+              </div>
+            )}
+
             {input_bloc.link_networks_an_others_header.length > 0 &&
               input_bloc.link_networks_an_others_header.map((value, key) => {
                 return (
@@ -86,6 +99,9 @@ function HeaderVizualization({
                           value.logo_url
                         }
                         alt={value.title}
+                        className={
+                          trigger_show_link ? "tr show_link" : "tr small"
+                        }
                       />
                     ) : (
                       value.name

@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import s from "./styles.module.css";
 import v from "./style_responsive.module.css";
+import e from "./edition.module.css";
 import Footer from "../../../backoffice/bloc/components/footer/Footer";
 
 interface FooterInfo {
   input_bloc: Footer;
   toggle: boolean;
   isResponsive: boolean;
+  full: boolean;
 }
-function FooterVizualization({ input_bloc, toggle, isResponsive }: FooterInfo) {
+function FooterVizualization({
+  input_bloc,
+  toggle,
+  isResponsive,
+  full,
+}: FooterInfo) {
   const [opened, setOpened] = useState(false);
   const [stylePath, setStylePath] = useState(s);
   const root_map: string =
@@ -21,14 +28,16 @@ function FooterVizualization({ input_bloc, toggle, isResponsive }: FooterInfo) {
   useEffect(() => {
     if (isResponsive) {
       setStylePath(v);
-    } else {
+    } else if (full) {
       setStylePath(s);
+    } else {
+      setStylePath(e);
     }
   }, [isResponsive]);
   useEffect(() => {}, [toggle]);
   return (
     <div className={stylePath.container} style={style_width}>
-      <div className={stylePath.facebook}>
+      <div className={stylePath.facebook_container}>
         <div className={stylePath.end}>
           {input_bloc.links_network_an_others_footer.length > 0 &&
             input_bloc.links_network_an_others_footer.map((value, key) => {
@@ -40,7 +49,6 @@ function FooterVizualization({ input_bloc, toggle, isResponsive }: FooterInfo) {
                   title={value.title}
                   target="_blank"
                   style={{
-                    position: "relative",
                     zIndex: "106",
                     cursor: "pointer",
                   }}

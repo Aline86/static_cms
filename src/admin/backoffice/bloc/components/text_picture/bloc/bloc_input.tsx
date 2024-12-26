@@ -162,7 +162,6 @@ function BlocInput({
                   "blockType",
                   "history",
                   "image",
-                  "link",
                 ],
                 inline: {
                   options: ["bold", "italic", "underline"],

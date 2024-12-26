@@ -70,10 +70,10 @@ function Image({
 
           width: !full ? "43vw" : "100%",
 
-          marginTop: "50px",
+          marginTop: "0px",
           fontSize: isResponsive ? "5vh" : "12vh",
 
-          lineHeight: isResponsive ? "5vh" : "14vh",
+          lineHeight: isResponsive ? "5vh" : "12vh",
           backgroundClip: "text",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",

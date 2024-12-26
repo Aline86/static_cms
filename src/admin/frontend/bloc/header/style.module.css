@@ -137,7 +137,7 @@
   justify-content: end;
   gap: 30px;
   width: auto;
-  right: 100px;
+  right: 120px;
   top: 3px;
 }
 
@@ -152,10 +152,10 @@
   align-items: center;
   justify-content: center;
 }
-.facebook img {
+/*.facebook img {
   height: 50px;
   width: 50px;
-}
+}*/
 .facebook:hover {
   transform: scale(1.2);
   cursor: pointer;
