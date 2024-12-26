@@ -1,10 +1,7 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import s from "./style.module.css";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
-import HeaderVizualization from "../../../../frontend/bloc/header/header";
-import FooterVizualization from "../../../../frontend/bloc/footer/footer";
-import Common from "./class/Common";
 import { useCommon } from "./../../../../../ColorContext";
 interface PageParams {}
 
@@ -31,12 +28,6 @@ function CommonVisualization({}: PageParams) {
   return (
     <div className="page">
       <div className={s.page_container_setting}>
-        <HeaderVizualization
-          input_bloc={header}
-          toggle={toggle}
-          isResponsive={false}
-        />
-
         <div className={s.page_container}>
           <div className={s.page}>
             <div className={s.page_container}>
@@ -78,12 +69,6 @@ function CommonVisualization({}: PageParams) {
             </div>
           </div>
         </div>
-
-        <FooterVizualization
-          input_bloc={footer}
-          toggle={toggle}
-          isResponsive={false}
-        />
       </div>
     </div>
   );

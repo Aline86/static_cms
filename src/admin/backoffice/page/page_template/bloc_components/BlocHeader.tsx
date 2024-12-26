@@ -1,4 +1,3 @@
-import ShrinkParams from "./snippets/shrink_params";
 import HeaderVizualization from "../../../../frontend/bloc/header/header";
 import Header from "../../../bloc/components/header/Header";
 import HeaderInput from "../../../bloc/components/header/header_template/header_input";

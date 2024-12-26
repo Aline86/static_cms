@@ -61,7 +61,16 @@ function Visualization({}: PageParams) {
               <div className={s.navigate}>Visualiser</div>
             </li>
           </Link>
-
+          <Link to={{ pathname: `/pages` }}>
+            <li>
+              <div className={s.navigate}>Pages</div>
+            </li>
+          </Link>
+          <Link to={{ pathname: `/` }}>
+            <li>
+              <div className={s.navigate}>Paramètres généraux</div>
+            </li>
+          </Link>
           <li>
             <div className={s.navigate} onClick={() => setOpen(!open)}>
               Choisir un bloc

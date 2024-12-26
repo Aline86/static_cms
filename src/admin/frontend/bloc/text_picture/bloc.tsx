@@ -58,19 +58,19 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
         <div
           className={s.image}
           style={{
-            display: `${
+            /*display: `${
               bloc.image !== undefined && bloc.image.length > 0
                 ? `block`
                 : `none`
-            }`,
+            }`,*/
 
             width: `${
               bloc.bloc_column ? `100%` : bloc.is_parallaxe ? `100%` : `50%`
             }`,
-
-            marginLeft: `${
-              bloc.image_right && !bloc.bloc_column ? `30px` : `0px`
-            }`,
+            paddingTop: "15px",
+            marginLeft: `${!bloc.bloc_column ? `30px` : `0px`}`,
+            marginRight: `${!bloc.bloc_column ? `30px` : `0px`}`,
+            float: `${bloc.image_right ? "left" : "right"}`,
           }}
         >
           {bloc.image !== undefined && (
@@ -95,7 +95,7 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
                 bloc.bloc_column
                   ? `100%`
                   : bloc.image !== undefined && bloc.image.length !== 0
-                  ? `50%`
+                  ? `100%`
                   : `90%`
               }`,
               margin: "0 auto",

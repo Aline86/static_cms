@@ -6,6 +6,10 @@ import Header from "../bloc/components/header/Header";
 import Footer from "../bloc/components/footer/Footer";
 import HeaderInput from "../bloc/components/header/header_template/header_input";
 import FooterInput from "../bloc/components/footer/footer_template/footer";
+import BlocHeader from "../page/page_template/bloc_components/BlocHeader";
+import BlocFooter from "../page/page_template/bloc_components/BlocFooter";
+import CommonVisualization from "../bloc/components/common/general_settings";
+import { Link } from "react-router-dom";
 
 interface PageParams {}
 
@@ -16,6 +20,11 @@ function Prerequis({}: PageParams) {
   const [header, setHeader] = useState<Header>(new Header());
   const [footer, setFooter] = useState<Footer>(new Footer());
   const saveBloc = async () => {
+    await saveHeaderAndFooter(header);
+    await saveHeaderAndFooter(footer);
+  };
+
+  const savePrerequisites = async () => {
     await saveHeaderAndFooter(header);
     await saveHeaderAndFooter(footer);
   };
@@ -105,37 +114,33 @@ function Prerequis({}: PageParams) {
 
   return (
     <div className={s.page_container}>
-      <h2>En-tête du site</h2>
-
-      <div>
-        <HeaderVizualization
-          input_bloc={header}
-          toggle={toggle}
-          isResponsive={false}
-          full={false}
-        />
-        <HeaderInput
-          input_bloc={header}
+      <h2>
+        Paramètres généraux : Attention à bien compléter l'en-tête et le bas de
+        page
+      </h2>
+      <div className={s.blocs_container}>
+        <CommonVisualization />
+        <BlocHeader
+          bloc={header}
           updateHeader={updateHeader}
-          remove_bloc={remove_bloc}
-          saveBloc={saveBloc}
+          removeBloc={remove_bloc}
+          toggle={toggle}
+          saveBloc={savePrerequisites}
+        />
+        <BlocFooter
+          bloc={footer}
+          updateFooter={updateFooter}
+          removeBloc={remove_bloc}
+          toggle={toggle}
+          saveBloc={savePrerequisites}
         />
       </div>
-
-      <h2>Bas de page du site</h2>
-
-      <div>
-        <FooterInput
-          input_bloc={footer}
-          remove_bloc={remove_bloc}
-          updateFooter={updateFooter}
-          saveBloc={saveBloc}
-        />
-        <FooterVizualization
-          input_bloc={footer}
-          toggle={toggle}
-          isResponsive={false}
-        />
+      <div className={s.center}>
+        <Link to={{ pathname: `/pages` }}>
+          <li>
+            <div className={s.navigate}>Créer des pages</div>
+          </li>
+        </Link>
       </div>
     </div>
   );

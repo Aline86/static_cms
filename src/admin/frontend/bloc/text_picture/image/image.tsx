@@ -33,7 +33,7 @@ function Image({
       className={s.image}
       style={{
         display: "flex",
-        height: "100%",
+
         justifyContent: datacss.justifyContent,
         alignItems: datacss.alignItems,
         margin: "0 auto",

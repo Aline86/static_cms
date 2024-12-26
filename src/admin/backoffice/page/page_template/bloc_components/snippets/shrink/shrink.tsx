@@ -25,7 +25,7 @@ function Shrink({ props, bloc, index, isOpen }: ShrinkData) {
           (!open ? (
             <div className={s.up}>
               <div style={{ textDecoration: "underline" }}>
-                {`${"Bloc n° " + index} : `}{" "}
+                {index !== -1 && `${"Bloc n° " + index} : `}{" "}
                 {bloc.type === "carousel" &&
                 bloc instanceof Carousel &&
                 bloc.is_automatique
@@ -41,9 +41,8 @@ function Shrink({ props, bloc, index, isOpen }: ShrinkData) {
                   : bloc.type === "video"
                   ? "Vidéo"
                   : bloc.type === "header"
-                  ? "En tête (ne peut pas être déplacé)"
-                  : bloc.type === "footer" &&
-                    "Bas de page (ne peut pas être déplacé)"}
+                  ? "En tête"
+                  : bloc.type === "footer" && "Bas de page"}
               </div>
               <img src={down} alt="fermer" />
             </div>

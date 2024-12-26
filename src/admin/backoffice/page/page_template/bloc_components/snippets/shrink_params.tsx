@@ -38,7 +38,7 @@ function ShrinkParams({
     >
       <Shrink
         key={index}
-        index={index + 1}
+        index={index}
         bloc={bloc}
         isOpen={isOpen}
         props={

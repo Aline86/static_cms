@@ -39,7 +39,7 @@ function BlockContainer({
         setDragBegin={setDragBegin}
         updateDragBloc={updateDragBloc}
         drag={drag}
-        index={index + 1}
+        index={index !== -1 ? index + 1 : index}
         bloc={bloc}
         handleDragOver={handleDragOver}
         removeBloc={removeBloc}

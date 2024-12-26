@@ -318,7 +318,7 @@ function TextReader({
             read_more &&
             isToggle &&
             j >= 0) ||
-            (!isToggle && j <= 1) ||
+            (!isToggle && j <= 2) ||
             !read_more) &&
             headlines[j] === "atomic" &&
             pictures_offset !== undefined ? (
@@ -367,7 +367,7 @@ function TextReader({
               )
             )
           ) : ((read_more && isToggle && j >= 0) ||
-              (!isToggle && j <= 1) ||
+              (!isToggle && j <= 2) ||
               !read_more) &&
             headlines[j] !== undefined &&
             headlines[j] === "unordered-list-item" ? (
@@ -396,7 +396,7 @@ function TextReader({
               </ul>
             </div>
           ) : ((read_more && isToggle && j >= 0) ||
-              (!isToggle && j <= 1) ||
+              (!isToggle && j <= 2) ||
               !read_more) &&
             headlines[j] !== undefined &&
             headlines[j] === "header-two" ? (
@@ -420,7 +420,7 @@ function TextReader({
               </div>
             </h2>
           ) : (
-            ((read_more && ((isToggle && j >= 0) || (!isToggle && j <= 1))) ||
+            ((read_more && ((isToggle && j >= 0) || (!isToggle && j <= 2))) ||
               !read_more) &&
             headlines[j] !== "atomic" && (
               <div key={j} className={`${textAlign[j]}`}>
@@ -447,7 +447,7 @@ function TextReader({
           );
         })}
       <div className={s.button}>
-        {read_more && stringTexts.length >= 1 ? (
+        {read_more && stringTexts.length >= 2 ? (
           <button
             onClick={() => setIsToggle(!isToggle)}
             className={s.show_more}
