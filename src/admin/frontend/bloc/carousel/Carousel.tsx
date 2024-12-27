@@ -104,11 +104,17 @@ function CarouselVisualization({
           isResponsive &&
           input_bloc.bloc_number > 1
             ? "-180px"
-            : "fit-content"
+            : input_bloc.is_automatique &&
+              isResponsive &&
+              input_bloc.bloc_number === 1
+            ? "-75px"
+            : "0px"
         }`,
         marginBottom: `${
-          input_bloc.is_automatique && input_bloc.bloc_number === 1
-            ? "60px"
+          input_bloc.is_automatique &&
+          input_bloc.bloc_number === 1 &&
+          (isResponsive || result.matches)
+            ? "130px"
             : "0px"
         }`,
       }}

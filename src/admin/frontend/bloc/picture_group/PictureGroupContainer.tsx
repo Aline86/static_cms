@@ -25,7 +25,7 @@ function PictureGroupContainer({
   full,
   isResponsive,
 }: CarouselData) {
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
 
   return (
     <div
@@ -52,7 +52,7 @@ function PictureGroupContainer({
           <div
             className={s.cards_image_group}
             style={
-              !isResponsive
+              !isResponsive && !result.matches
                 ? {
                     minHeight: `${bloc.height}vh`,
                     height: `fit-content`,

@@ -163,9 +163,9 @@ export class Carousel extends Container {
     );
   }
   remove_data(index: number | undefined) {
+    index !== undefined && this.remove_link(index);
     index !== undefined && this.carousel_data.splice(index, 1);
     this.card_number--;
-    index !== undefined && this.remove_link(index);
   }
 
   public get_is_automatique(): boolean {

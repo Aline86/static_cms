@@ -100,7 +100,11 @@ function VideoVizualisation({
       <div
         style={{
           margin: "0 auto",
-          marginTop: "30px",
+          marginTop: full
+            ? !isResponsive && !result.matches
+              ? "-60px"
+              : "30px"
+            : "0px",
           marginBottom: "60px",
           width: `${full ? (isResponsive ? "380px" : "50vw") : "43vw"}`,
           height: "50vh",
@@ -162,7 +166,7 @@ function VideoVizualisation({
                   : "relative"
                 : "absolute"
             }`,
-            top: `${full ? (isResponsive ? "200px" : "40%") : "200px"}`,
+            top: `${full ? (isResponsive ? "200px" : "40%") : "100px"}`,
             left: `${full ? (isResponsive ? "50%" : "50%") : "0%"}`,
             transform: `${
               full

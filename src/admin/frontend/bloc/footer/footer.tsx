@@ -20,7 +20,7 @@ function FooterVizualization({
   const [stylePath, setStylePath] = useState(s);
   const root_map: string =
     input_bloc.map_iframe_url; /*.replace("watch?v=", "v/");*/
-
+  const result = window.matchMedia("(max-width: 700px)");
   const style_width = {
     width: isResponsive ? "380px" : "100%",
   };
