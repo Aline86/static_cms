@@ -9,7 +9,7 @@ interface BlocParams {
 }
 
 function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
   useEffect(() => {}, [bloc]);
   useEffect(() => {}, [isResponsive]);
 

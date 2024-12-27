@@ -23,7 +23,7 @@ function HeaderVizualization({
   const [open, setOpen] = useState(false);
   const [trigger_show_link, setTrigger_show_link] = useState(true);
   const [stylePath, setStylePath] = useState(s);
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
   const style_width = {
     width: isResponsive ? "380px" : "100%",
   };

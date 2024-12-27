@@ -26,7 +26,7 @@ function VideoVizualisation({
   const [blocHeight, setblocHeight] = useState<number>(0);
   const [url, setUrl] = useState<string>("");
   const blocRef = useRef<any>();
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
   function updateblocRef() {
     const blocWidth: number | undefined = blocRef?.current?.clientWidth;
 

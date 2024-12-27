@@ -36,7 +36,8 @@ function Voir() {
   const [header, setHeader] = useState<Header>(new Header());
   const location = useLocation();
   const [videoLoaded, isVideoLoaded] = useState<boolean>(false);
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
+  const result_mid = window.matchMedia("(max-width: 1200px)");
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
   const { common } = useContext(ColorContext);
@@ -59,6 +60,10 @@ function Voir() {
       root.style.width = "380px";
       root.style.paddingTop = "0px";
       root.style.paddingBottom = "220px";
+    } else if (root !== null && result_mid.matches) {
+      root.style.width = "100vw";
+      root.style.paddingTop = "75px";
+      root.style.paddingBottom = "75px";
     } else if (root !== null) {
       root.style.width = "100vw";
       root.style.paddingTop = "130px";

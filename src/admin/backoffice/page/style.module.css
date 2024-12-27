@@ -37,7 +37,8 @@
 }
 .pages {
   display: block;
-  width: 100%;
+  width: 95%;
+  margin: 0 auto;
 }
 .button_save_page {
   cursor: pointer;

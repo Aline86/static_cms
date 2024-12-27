@@ -43,7 +43,7 @@ function CarouselContainer({
   const [move, setMove] = useState(0);
   const [isLeft, setIsLeft] = useState(true);
   const [firstclick, setFirstClick] = useState(0);
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
 
   function updateTransitionLeft() {
     if (data !== undefined) {
@@ -291,9 +291,10 @@ function CarouselContainer({
           minWidth: `${cardWidth}px`,
           margin: !full ? `${bloc.gap}px auto` : `auto -25px`,
           height: isResponsive ? `${bloc.height}vh` : `fit-content`,
-          paddingTop: isResponsive ? `75px` : result.matches ? `40px` : `0px`,
+          paddingTop: isResponsive ? `120px` : result.matches ? `30px` : `0px`,
           minHeight: isResponsive ? `170px` : `fit-content`,
           width: full ? (isResponsive ? `380px` : `100vw`) : `43vw`,
+          marginBottom: result.matches ? "60px" : "0",
         }}
       >
         <div

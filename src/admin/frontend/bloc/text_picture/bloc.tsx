@@ -20,7 +20,7 @@ interface BlocParams {
 
 function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
   useEffect(() => {
     setContentState(typeof bloc.text === "object" ? bloc.text : contentState);
   }, [bloc.text]);

@@ -37,7 +37,7 @@ function CardDataShow({
   isResponsive,
 }: CardDatas) {
   useEffect(() => {}, [toggle]);
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
 
   const style_data_transition_finished_auto = {
     background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
