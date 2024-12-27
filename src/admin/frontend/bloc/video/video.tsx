@@ -162,8 +162,8 @@ function VideoVizualisation({
                   : "relative"
                 : "absolute"
             }`,
-            top: `${full ? (isResponsive ? "200px" : "40%") : "450px"}`,
-            left: `${full ? (isResponsive ? "50%" : "50%") : "52%"}`,
+            top: `${full ? (isResponsive ? "200px" : "40%") : "200px"}`,
+            left: `${full ? (isResponsive ? "50%" : "50%") : "0%"}`,
             transform: `${
               full
                 ? isResponsive

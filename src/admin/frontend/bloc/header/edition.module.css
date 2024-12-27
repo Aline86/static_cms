@@ -1,7 +1,7 @@
 .backdrop {
   position: absolute;
 
-  width: 45%;
+  width: 47.5%;
   height: 75px;
 }
 .container {
@@ -84,7 +84,7 @@
   flex-direction: column;
   align-items: center;
   justify-self: center;
-  margin-top: 20px;
+  margin-top: 15px;
   font-size: 12px;
   width: 100%;
 
