@@ -25,7 +25,7 @@ function PictureGroupContainer({
   full,
   isResponsive,
 }: CarouselData) {
-  const result = window.matchMedia("(max-width: 800px)");
+  const result = window.matchMedia("(max-width: 700px)");
 
   return (
     <div

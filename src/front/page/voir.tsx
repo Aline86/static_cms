@@ -8,7 +8,7 @@ import Header from "../../admin/backoffice/bloc/components/header/Header";
 import Page from "../../admin/backoffice/page/class/Page";
 import Bloc from "../../admin/frontend/bloc/text_picture/bloc";
 import CarouselVisualization from "../../admin/frontend/bloc/carousel/Carousel";
-import HeaderVizualization from "../../admin/frontend/bloc/header/header";
+import HeaderVizualization from "../../front/header/header";
 import FooterVizualization from "../../admin/frontend/bloc/footer/footer";
 import BlocTools from "../../admin/tools/blocs_tools";
 import { PictureGroup } from "../../admin/backoffice/bloc/components/picture_group/class/PictureGroup";
@@ -27,7 +27,7 @@ function Front() {
   >([]);
   const { id, name } = useParams();
   const [toggle, setToggle] = useState(false);
-  const [isReponsive, setResponsive] = useState(false);
+
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
   const location = useLocation();
@@ -37,7 +37,6 @@ function Front() {
   const tools = new BlocTools(page_type);
   const { common } = useContext(ColorContext);
   async function asynchronRequestsToPopulateBlocs() {
-    setBlocs([]);
     await header.get_bloc();
 
     let bloc_pages = await tools.getAllBlocsPage();
@@ -52,8 +51,8 @@ function Front() {
   };
   const adaptRoot = () => {
     let root = document.getElementById("root");
-    if (root !== null && (isReponsive || result.matches)) {
-      root.style.width = "380px";
+    if (root !== null && result.matches) {
+      root.style.width = "100%";
       root.style.paddingTop = "0px";
       root.style.paddingBottom = "220px";
     } else if (root !== null) {
@@ -63,6 +62,8 @@ function Front() {
     }
   };
   useEffect(() => {
+    setBlocs([]);
+
     asynchronRequestsToPopulateBlocs();
   }, [location]);
   const checkIfVideo = () => {
@@ -84,7 +85,7 @@ function Front() {
   };
   useEffect(() => {
     adaptRoot();
-  }, [isReponsive]);
+  }, [result.matches]);
 
   useEffect(() => {
     adaptRoot();
@@ -103,7 +104,7 @@ function Front() {
         input_bloc={header}
         toggle={toggle}
         full={true}
-        isResponsive={isReponsive}
+        isResponsive={false}
       />
       {blocs.map((value, index) => {
         return videoLoaded && value instanceof TextPicture ? (
@@ -115,7 +116,7 @@ function Front() {
               num_bloc={index}
               toggle={toggle}
               full={true}
-              isResponsive={isReponsive}
+              isResponsive={false}
             />
           </div>
         ) : videoLoaded && value instanceof Carousel ? (
@@ -123,7 +124,7 @@ function Front() {
             className={s.carousel}
             style={{
               marginBottom: `${
-                (isReponsive || result.matches) && value.is_automatique
+                (false || result.matches) && value.is_automatique
                   ? "-90px"
                   : "30px"
               }`,
@@ -134,7 +135,7 @@ function Front() {
               toggle={toggle}
               refresh={false}
               full={true}
-              isResponsive={isReponsive}
+              isResponsive={false}
             />
           </div>
         ) : videoLoaded && value instanceof PictureGroup ? (
@@ -144,7 +145,7 @@ function Front() {
               toggle={toggle}
               refresh={false}
               full={true}
-              isResponsive={isReponsive}
+              isResponsive={false}
             />
           </div>
         ) : videoLoaded && value instanceof Button ? (
@@ -154,7 +155,7 @@ function Front() {
               toggle={toggle}
               refresh={false}
               full={true}
-              isResponsive={isReponsive}
+              isResponsive={false}
             />
           </div>
         ) : value instanceof Video ? (
@@ -163,7 +164,7 @@ function Front() {
               bloc={value}
               updateLoaded={updateLoaded}
               full={true}
-              isResponsive={isReponsive}
+              isResponsive={false}
               videoLoaded={videoLoaded}
             />
           </div>
@@ -174,7 +175,7 @@ function Front() {
               <ParallaxeVizualisation
                 bloc={value}
                 full={true}
-                isResponsive={isReponsive}
+                isResponsive={false}
               />
             </div>
           )
@@ -183,7 +184,7 @@ function Front() {
       <FooterVizualization
         input_bloc={footer}
         toggle={toggle}
-        isResponsive={isReponsive}
+        isResponsive={false}
         full={true}
       />
     </div>

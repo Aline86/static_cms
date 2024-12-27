@@ -26,7 +26,7 @@ export default function ThemeContextProvider({}: { children: any }) {
         <Route path="/admin/page/:id/:name" element={<Visualization />}>
           Page
         </Route>
-        <Route path="admin/:id/:name" element={<Voir />}>
+        <Route path="/admin/:id/:name" element={<Voir />}>
           Visualization
         </Route>
         <Route path="/:id/:name" element={<Front />}>

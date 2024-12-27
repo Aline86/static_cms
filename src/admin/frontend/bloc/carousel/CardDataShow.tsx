@@ -42,7 +42,7 @@ function CardDataShow({
   const style_data_transition_finished_auto = {
     background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
     width: width,
-    height: `${height}vh`,
+    height: `200px`,
     transition: `${trasnsType}`,
     transform: `translateX(${width})`,
     fontSize: isResponsive ? `18px` : `24px`,
@@ -50,7 +50,7 @@ function CardDataShow({
   const style_data_transition_start_auto = {
     background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
     width: width,
-    height: `${height}vh`,
+    height: `200px`,
     fontSize: isResponsive ? `18px` : `24px`,
   };
   const style_data_transition_finished_carousel = {

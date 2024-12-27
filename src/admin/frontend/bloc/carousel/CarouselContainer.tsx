@@ -291,7 +291,7 @@ function CarouselContainer({
           minWidth: `${cardWidth}px`,
           margin: !full ? `${bloc.gap}px auto` : `auto -25px`,
           height: isResponsive ? `${bloc.height}vh` : `fit-content`,
-          paddingTop: isResponsive ? `75px` : `0px`,
+          paddingTop: isResponsive ? `75px` : result.matches ? `40px` : `0px`,
           minHeight: isResponsive ? `170px` : `fit-content`,
           width: full ? (isResponsive ? `380px` : `100vw`) : `43vw`,
         }}

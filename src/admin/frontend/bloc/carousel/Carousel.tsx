@@ -114,7 +114,7 @@ function CarouselVisualization({
           input_bloc.is_automatique &&
           input_bloc.bloc_number === 1 &&
           (isResponsive || result.matches)
-            ? "130px"
+            ? "50px"
             : "0px"
         }`,
       }}

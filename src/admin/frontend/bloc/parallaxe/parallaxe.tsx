@@ -1,7 +1,5 @@
 import s from "./style.module.css";
-
 import { useEffect, useRef, useState } from "react";
-import { Video } from "../../../backoffice/bloc/components/video/class/Video";
 import { Parallaxe } from "../../../backoffice/bloc/components/parallaxe/class/Parallaxe";
 
 interface BlocParams {

@@ -144,7 +144,7 @@ function VideoVizualisation({
             ? isResponsive
               ? "0"
               : result.matches
-              ? "-35px"
+              ? "0"
               : "0px"
             : "30px",
           marginTop: full

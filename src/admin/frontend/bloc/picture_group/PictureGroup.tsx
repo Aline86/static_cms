@@ -21,7 +21,7 @@ function PictureGroupVizualisation({
   const [dataValue, setData] = useState<PictureGroupCard[]>();
 
   const [resize, setResize] = useState(window.innerWidth);
-  const result = window.matchMedia("(max-width: 800px)");
+  const result = window.matchMedia("(max-width: 00px)");
 
   function updateDataValue(cards: PictureGroupCard[]) {
     setData(cards);

@@ -26,7 +26,7 @@ function CardData({
   full,
   isResponsive,
 }: CardDatas) {
-  const result = window.matchMedia("(max-width: 1000px)");
+  const result = window.matchMedia("(max-width: 700px)");
   const [external, isExternalLink] = useState<boolean>(true);
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
@@ -37,6 +37,8 @@ function CardData({
       width: full
         ? isResponsive
           ? `360px`
+          : result.matches
+          ? "95%"
           : `${width}vw`
         : `${width * 0.5}vw`,
       height: `${height}vh`,

@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import s from "./styles.module.css";
 import v from "./style_responsive.module.css";
 import { useEffect, useState } from "react";
-import Page from "../../../../backoffice/page/class/Page";
+import Page from "../../../admin/backoffice/page/class/Page";
 
 interface NavInfo {
   opened: boolean;
@@ -50,7 +50,7 @@ export default function Nav({ opened, isResponsive }: NavInfo) {
         return (
           <ul className={stylePath.ul_menu}>
             <div key={page.id}>
-              <Link to={`/admin/${page.id}/${page.title}`}>
+              <Link to={`/${page.id}/${page.title}`}>
                 <li>
                   <div>
                     {page.title}
