@@ -56,17 +56,17 @@ function Visualization({}: PageParams) {
     <div className="page">
       <div className={s.page_container}>
         <div className="flex">
-          <Link to={{ pathname: `/` + id + `/` + name }}>
+          <Link to={{ pathname: `/admin/` + id + `/` + name }}>
             <li>
               <div className={s.navigate_2}>Visualiser la page</div>
             </li>
           </Link>
-          <Link to={{ pathname: `/pages` }}>
+          <Link to={{ pathname: `/admin/pages` }}>
             <li>
               <div className={s.navigate_2}>Liste des pages</div>
             </li>
           </Link>
-          <Link to={{ pathname: `/` }}>
+          <Link to={{ pathname: `/admin` }}>
             <li>
               <div className={s.navigate}>Paramètres généraux</div>
             </li>

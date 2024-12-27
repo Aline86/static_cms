@@ -1,32 +1,38 @@
-import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  HashRouter,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 
-import { useState } from "react";
-
-import axios from "axios";
 import Voir from "./admin/frontend/page/voir";
-import Page from "./admin/backoffice/page/class/Page";
-import Prerequis from "./admin/backoffice/prerequis/prerequis";
 import Pages from "./admin/backoffice/page/pages";
 import Visualization from "./admin/backoffice/page/page_template/page";
 import CommonVisualization from "./admin/backoffice/bloc/components/common/general_settings";
+import Front from "./front/page/voir";
+import Prerequis from "./admin/backoffice/prerequis/prerequis";
 
 export default function ThemeContextProvider({}: { children: any }) {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<Prerequis />}>
+        <Route path="/" element={<Navigate to="/1/Accueil" replace />}>
           Accueil
         </Route>
-        <Route path="/pages" element={<Pages />}>
+        <Route path="/admin/pages" element={<Pages />}>
           Pages
         </Route>
-        <Route path="/page/:id/:name/" element={<Visualization />}>
+        <Route path="/admin/page/:id/:name" element={<Visualization />}>
           Page
         </Route>
-        <Route path="/:id/:name/" element={<Voir />}>
+        <Route path="admin/:id/:name" element={<Voir />}>
           Visualization
         </Route>
-        <Route path="/commun" element={<CommonVisualization />}>
+        <Route path="/:id/:name" element={<Front />}>
+          Front
+        </Route>
+        <Route path="/admin" element={<Prerequis />}>
           Paramètres généraux
         </Route>
       </Routes>

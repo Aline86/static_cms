@@ -1,31 +1,27 @@
-import { SetStateAction, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import s from "./styles.module.css";
-
 import { Link, useLocation, useParams } from "react-router-dom";
+import { TextPicture } from "../../admin/backoffice/bloc/components/text_picture/class/TextPicture";
+import { Carousel } from "../../admin/backoffice/bloc/components/carousel/class/Carousel";
+import Footer from "../../admin/backoffice/bloc/components/footer/Footer";
+import Header from "../../admin/backoffice/bloc/components/header/Header";
+import Page from "../../admin/backoffice/page/class/Page";
+import Bloc from "../../admin/frontend/bloc/text_picture/bloc";
+import CarouselVisualization from "../../admin/frontend/bloc/carousel/Carousel";
+import HeaderVizualization from "../../admin/frontend/bloc/header/header";
+import FooterVizualization from "../../admin/frontend/bloc/footer/footer";
+import BlocTools from "../../admin/tools/blocs_tools";
+import { PictureGroup } from "../../admin/backoffice/bloc/components/picture_group/class/PictureGroup";
+import PictureGroupVizualisation from "../../admin/frontend/bloc/picture_group/PictureGroup";
+import ButtonVisualization from "../../admin/frontend/bloc/bouton/Button";
+import VideoVizualisation from "../../admin/frontend/bloc/video/video";
+import { Button } from "../../admin/backoffice/bloc/components/button/class/Button";
+import { Video } from "../../admin/backoffice/bloc/components/video/class/Video";
+import ColorContext from "../../ColorContext";
+import { Parallaxe } from "../../admin/backoffice/bloc/components/parallaxe/class/Parallaxe";
+import ParallaxeVizualisation from "../../admin/frontend/bloc/parallaxe/parallaxe";
 
-import { RawDraftContentState } from "draft-js";
-
-import { TextPicture } from "../../backoffice/bloc/components/text_picture/class/TextPicture";
-import { Carousel } from "../../backoffice/bloc/components/carousel/class/Carousel";
-import Footer from "../../backoffice/bloc/components/footer/Footer";
-import Header from "../../backoffice/bloc/components/header/Header";
-import Page from "../../backoffice/page/class/Page";
-import Bloc from "../bloc/text_picture/bloc";
-import CarouselVisualization from "../bloc/carousel/Carousel";
-import HeaderVizualization from "../bloc/header/header";
-import FooterVizualization from "../bloc/footer/footer";
-import BlocTools from "../../tools/blocs_tools";
-import { PictureGroup } from "../../backoffice/bloc/components/picture_group/class/PictureGroup";
-import PictureGroupVizualisation from "../bloc/picture_group/PictureGroup";
-import ButtonVisualization from "../bloc/bouton/Button";
-import VideoVizualisation from "../bloc/video/video";
-import { Button } from "../../backoffice/bloc/components/button/class/Button";
-import { Video } from "../../backoffice/bloc/components/video/class/Video";
-import ColorContext from "../../../ColorContext";
-import { Parallaxe } from "../../backoffice/bloc/components/parallaxe/class/Parallaxe";
-import ParallaxeVizualisation from "../bloc/parallaxe/parallaxe";
-
-function Voir() {
+function Front() {
   const [blocs, setBlocs] = useState<
     Array<Carousel | TextPicture | PictureGroup | Button | Video | Parallaxe>
   >([]);
@@ -109,21 +105,6 @@ function Voir() {
         full={true}
         isResponsive={isReponsive}
       />
-      {!isReponsive && (
-        <Link to={{ pathname: `/admin/page/` + id + `/` + name }}>
-          <li>
-            <div className={s.navigate}>Retour</div>
-          </li>
-        </Link>
-      )}
-
-      <a
-        className={s.responsive_mode}
-        onClick={() => setResponsive(!isReponsive)}
-      >
-        Mode responsive
-      </a>
-
       {blocs.map((value, index) => {
         return videoLoaded && value instanceof TextPicture ? (
           <div className={s.bloc}>
@@ -209,4 +190,4 @@ function Voir() {
   );
 }
 
-export default Voir;
+export default Front;

@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import s from "./styles.module.css";
 import v from "./style_responsive.module.css";
 import { useEffect, useState } from "react";
+import Page from "../../../../backoffice/page/class/Page";
 
 interface NavInfo {
   opened: boolean;
@@ -9,10 +10,23 @@ interface NavInfo {
 }
 export default function Nav({ opened, isResponsive }: NavInfo) {
   const [stylePath, setStylePath] = useState(s);
-  const style_width = {
-    width: isResponsive ? "380px" : "100%",
-  };
+  const [pages, setPages] = useState<Page[]>([]);
+  const page_type = new Page();
+  // const { id, name } = useParams();
+  const getPages = async () => {
+    let async_result = await page_type.get_pages();
 
+    if (Array.isArray(async_result) && async_result.length >= 1) {
+      setPages(async_result);
+    }
+  };
+  /*if (
+    localStorage.getItem("previous_page_id") !== null &&
+    localStorage.getItem("previous_page_id") !== id
+  ) {
+    localStorage.removeItem("previous_page_id");
+    window.location.reload();
+  }*/
   useEffect(() => {
     if (isResponsive) {
       setStylePath(v);
@@ -20,6 +34,10 @@ export default function Nav({ opened, isResponsive }: NavInfo) {
       setStylePath(s);
     }
   }, [isResponsive]);
+  useEffect(() => {
+    getPages();
+  }, []);
+  useEffect(() => {}, [pages]);
   return (
     <nav
       className={
@@ -28,29 +46,22 @@ export default function Nav({ opened, isResponsive }: NavInfo) {
           : `${stylePath.side_menu}`
       }
     >
-      <ul className={stylePath.ul_menu}>
-        <Link to="/">
-          <li>
-            <div>
-              Accueil<span></span>
+      {pages.map((page, index) => {
+        return (
+          <ul className={stylePath.ul_menu}>
+            <div key={page.id}>
+              <Link to={`/${page.id}/${page.title}`}>
+                <li>
+                  <div>
+                    {page.title}
+                    <span></span>
+                  </div>
+                </li>
+              </Link>
             </div>
-          </li>
-        </Link>
-        <Link to="/pages">
-          <li>
-            <div>
-              Liste des pages<span></span>
-            </div>
-          </li>
-        </Link>
-        <Link to="/commun">
-          <li>
-            <div>
-              Paramètres généraux<span></span>
-            </div>
-          </li>
-        </Link>
-      </ul>
+          </ul>
+        );
+      })}
     </nav>
   );
 }

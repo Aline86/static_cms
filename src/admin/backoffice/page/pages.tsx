@@ -121,7 +121,9 @@ function Pages({}: PagesParams) {
                     />
                   </div>
                 )}
-                <Link to={{ pathname: `/page/` + page.id + `/` + page.title }}>
+                <Link
+                  to={{ pathname: `/admin/page/` + page.id + `/` + page.title }}
+                >
                   <img src={update} alt="modification" />
                 </Link>
                 {key > 0 && (
