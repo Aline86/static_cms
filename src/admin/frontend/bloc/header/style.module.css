@@ -298,21 +298,59 @@
     margin-left: 0px;
     margin-top: 2px;
   }
+  .side_menu {
+    position: absolute;
+    top: -20px !important;
+    right: -20px !important;
+
+    height: 100vh;
+    width: 300px;
+    background-color: white;
+    display: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 150px;
+    transition: all 0.5s ease-in-out;
+  }
 }
-@media screen and (max-width: 450px) {
+
+@media screen and (max-width: 700px) {
   .title {
     align-items: center;
     font-size: 18px;
+    margin-top: 25px;
+    margin-left: 30px;
   }
   .title_container h1 {
     margin: 0;
     font-size: 18px;
     font-weight: bold;
   }
-  .facebook {
-    height: 70px;
-  }
 
+  .facebook {
+    display: none;
+    margin-top: 7px;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .facebook img.small {
+    display: none !important;
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 0;
+    padding: 5px;
+
+    margin: 0;
+  }
+  .facebook img.show_link {
+    display: block;
+  }
   .logo {
     width: 30px;
     height: 30px;
@@ -322,7 +360,16 @@
   .burger_menu {
     display: block;
     width: 40px;
-    margin-top: 15px;
+    margin-top: 5px;
+  }
+  .links {
+    display: flex;
+    flex-direction: column !important;
+    right: 90px;
+  }
+
+  .tr {
+    transition: all 0.5s ease-in-out;
   }
 
   .menu_btn {
@@ -345,6 +392,17 @@
 
     border-radius: 3px;
     /*transition: all .2s ease-in-out;*/
+  }
+
+  .facebook img {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 0;
+    padding: 5px;
+
+    margin: 0;
   }
 }
 @keyframes slidein {

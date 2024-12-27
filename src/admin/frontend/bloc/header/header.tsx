@@ -22,7 +22,7 @@ function HeaderVizualization({
   const [open, setOpen] = useState(false);
   const [trigger_show_link, setTrigger_show_link] = useState(true);
   const [stylePath, setStylePath] = useState(s);
-
+  const result = window.matchMedia("(max-width: 700px)");
   const style_width = {
     width: isResponsive ? "380px" : "100%",
   };
@@ -31,9 +31,13 @@ function HeaderVizualization({
   };
   useEffect(() => {}, [toggle]);
   useEffect(() => {
-    if (isResponsive) {
+    if (isResponsive || result.matches) {
       setTrigger_show_link(false);
-      setStylePath(v);
+      if (result.matches) {
+        setStylePath(s);
+      } else {
+        setStylePath(v);
+      }
     } else if (full) {
       setTrigger_show_link(true);
       setStylePath(s);
@@ -77,7 +81,7 @@ function HeaderVizualization({
         </div>
         <div className={stylePath.end}>
           <div className={stylePath.links}>
-            {isResponsive && (
+            {(isResponsive || result.matches) && (
               <div className="plus" onClick={() => handleShowLinks()}>
                 <img src={reseaux} alt="réseaux sociaux" />
               </div>

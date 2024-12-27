@@ -10,17 +10,9 @@ interface BlocParams {
   isResponsive: boolean;
 }
 
-function ParallaxeVizualisation({
-  bloc,
-
-  full,
-
-  isResponsive,
-}: BlocParams) {
-  useEffect(() => {
-    console.log("bloc", bloc);
-  }, [bloc]);
-
+function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
+  const result = window.matchMedia("(max-width: 700px)");
+  useEffect(() => {}, [bloc]);
   useEffect(() => {}, [isResponsive]);
 
   return bloc.title !== "" ? (
@@ -31,7 +23,12 @@ function ParallaxeVizualisation({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: isResponsive || bloc.bloc_number > 1 ? "-50px" : "0",
+        marginTop:
+          isResponsive || (bloc.bloc_number > 1 && !result.matches)
+            ? "-50px"
+            : bloc.bloc_number === 1
+            ? "-35px"
+            : "-170px",
       }}
     >
       <h2
@@ -44,7 +41,7 @@ function ParallaxeVizualisation({
           textTransform: "uppercase",
           width: !full ? "45vw" : "100%",
           backgroundAttachment: "fixed",
-          marginTop: `${full ? (isResponsive ? "30px" : "0") : "30px"}`,
+          marginTop: `${full ? (isResponsive ? "30px" : "140px") : "30px"}`,
           fontSize: isResponsive ? "4vh" : "10vh",
           WebkitTextFillColor: "transparent",
           lineHeight: isResponsive ? "5vh" : "12vh",

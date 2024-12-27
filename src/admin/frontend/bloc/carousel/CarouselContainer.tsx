@@ -216,7 +216,9 @@ function CarouselContainer({
               height: `fit-content`,
               transform: !full
                 ? `translateX(calc(${-bloc.width * 0.5}vw - ${bloc.gap}px))`
-                : `translateX(calc(${-bloc.width}vw - ${bloc.gap}px))`,
+                : !result.matches && !isResponsive
+                ? `translateX(calc(${-bloc.width}vw - ${bloc.gap}px))`
+                : `translateX(0px))`,
             }}
           >
             <div

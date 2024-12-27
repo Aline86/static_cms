@@ -20,18 +20,21 @@ interface BlocParams {
 
 function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
+  const result = window.matchMedia("(max-width: 700px)");
   useEffect(() => {
     setContentState(typeof bloc.text === "object" ? bloc.text : contentState);
   }, [bloc.text]);
   useEffect(() => {
     setContentState(typeof bloc.text === "object" ? bloc.text : contentState);
   }, []);
-  useEffect(() => {}, [bloc]);
+  useEffect(() => {}, [bloc, result.matches]);
   return (
     <div
       className={s.bloc}
       style={{
-        width: `${isResponsive ? "95%" : "50%"}`,
+        width: `${
+          full ? (isResponsive || result.matches ? "95%" : "50%") : "90%"
+        }`,
         margin: "0 auto",
         paddingLeft: full ? `0px` : !bloc.bloc_column ? `30px` : `0px`,
       }}

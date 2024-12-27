@@ -74,11 +74,6 @@ function CarouselVisualization({
   useEffect(() => {
     if (!result.matches) {
       updateCardRef();
-      if (input_bloc.is_automatique) {
-        reorder_automatic();
-      } else {
-        reorder_carousel();
-      }
     }
   }, [result.matches]);
   useEffect(() => {
@@ -92,13 +87,32 @@ function CarouselVisualization({
   useEffect(() => {
     if (input_bloc.is_automatique) {
       reorder_automatic();
-    } else {
+    } else if (!isResponsive && !result.matches) {
       reorder_carousel();
+    } else {
+      updateCardRef();
+      setData(dataToProcess);
     }
   }, [isResponsive, input_bloc, toggle, dataToProcess]);
   useEffect(() => {}, [isResponsive, input_bloc, dataValue]);
   return (
-    <div className={s.body_container}>
+    <div
+      className={s.body_container}
+      style={{
+        marginTop: `${
+          input_bloc.is_automatique &&
+          isResponsive &&
+          input_bloc.bloc_number > 1
+            ? "-180px"
+            : "fit-content"
+        }`,
+        marginBottom: `${
+          input_bloc.is_automatique && input_bloc.bloc_number === 1
+            ? "60px"
+            : "0px"
+        }`,
+      }}
+    >
       {dataValue !== undefined && (
         <CarouselContainer
           bloc={input_bloc}

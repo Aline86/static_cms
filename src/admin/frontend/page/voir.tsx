@@ -144,7 +144,16 @@ function Voir() {
             />
           </div>
         ) : videoLoaded && value instanceof Carousel ? (
-          <div className={s.carousel}>
+          <div
+            className={s.carousel}
+            style={{
+              marginBottom: `${
+                (isReponsive || result.matches) && value.is_automatique
+                  ? "-90px"
+                  : "30px"
+              }`,
+            }}
+          >
             <CarouselVisualization
               input_bloc={value}
               toggle={toggle}

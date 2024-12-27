@@ -26,6 +26,7 @@ function VideoVizualisation({
   const [blocHeight, setblocHeight] = useState<number>(0);
   const [url, setUrl] = useState<string>("");
   const blocRef = useRef<any>();
+  const result = window.matchMedia("(max-width: 700px)");
   function updateblocRef() {
     const blocWidth: number | undefined = blocRef?.current?.clientWidth;
 
@@ -132,16 +133,34 @@ function VideoVizualisation({
     <div className={s.bloc}>
       <div
         style={{
+          position: "relative",
           width: `${blocWidth + "px"}`,
           height: `${blocHeight + "px"}`,
-          marginLeft: full ? (isResponsive ? "0" : "0") : "30px",
+          marginLeft: full
+            ? isResponsive
+              ? "0"
+              : result.matches
+              ? "-35px"
+              : "0px"
+            : "30px",
+          marginTop: full
+            ? isResponsive
+              ? "-0px"
+              : !result.matches
+              ? "-60px"
+              : "75px"
+            : "0",
         }}
       >
         <div
           className={s.encart}
           style={{
             position: `${
-              full ? (isResponsive ? "absolute" : "relative") : "absolute"
+              full
+                ? isResponsive || !result.matches
+                  ? "absolute"
+                  : "relative"
+                : "absolute"
             }`,
             top: `${full ? (isResponsive ? "200px" : "40%") : "450px"}`,
             left: `${full ? (isResponsive ? "50%" : "50%") : "52%"}`,
@@ -193,7 +212,11 @@ function VideoVizualisation({
           ref={blocRef}
           style={{
             position: `${
-              full ? (isResponsive ? "relative" : "absolute") : "relative"
+              full
+                ? isResponsive || !result.matches
+                  ? "relative"
+                  : "absolute"
+                : "relative"
             }`,
 
             left: "0",
