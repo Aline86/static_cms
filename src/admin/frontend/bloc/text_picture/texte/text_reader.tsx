@@ -61,7 +61,7 @@ function TextReader({
           picture_data_offset[bloc.entityRanges[0].key].push(pictures[0][i]);
 
           i++;
-        } else {
+        } else if (bloc.type !== "atomic") {
           head.push(bloc.type);
         }
         const setDefaultIfNeeded =
@@ -95,6 +95,7 @@ function TextReader({
     }
   };
   const setIndexPictureData = (picture_data_: any) => {
+    console.log("picture_data_", picture_data_);
     let picture_data_offset: any = {};
     let picture_data_offset_final: any = {};
     Object.entries(picture_data_).map(([key, picture]) => {
@@ -292,7 +293,7 @@ function TextReader({
     updateConvertToText(contenState.blocks);
   }, [contenState, refresh === 2, entityMapLength]);
   useEffect(() => {
-    JSanimationH2(".container_data", "disappear_data");
+    //JSanimationH2(".container_data", "bloc_data");
   }, [toggle, stringTexts]);
 
   useEffect(() => {
@@ -317,44 +318,62 @@ function TextReader({
             read_more &&
             isToggle &&
             j >= 0) ||
-            (!isToggle && j <= 1) ||
+            (!isToggle && j <= 2) ||
             !read_more) &&
             headlines[j] === "atomic" &&
             pictures_offset !== undefined ? (
             pictures_offset[j] !== undefined &&
-              pictures_offset[j].data !== undefined && (
+            pictures_offset[j].data !== undefined &&
+            pictures_offset[j].data.src !== undefined ? (
+              <div
+                key={j}
+                className="container_data bloc"
+                style={{
+                  display: "inline",
+                  textAlign: "center",
+                }}
+              >
+                <img
+                  style={{
+                    maxWidth: "100%",
+                    objectFit: "contain",
+
+                    margin: "0 auto",
+                    width: `${pictures_offset[j].data.width}`,
+                    height: isResponsive
+                      ? `auto`
+                      : `${pictures_offset[j].data.height}`,
+                  }}
+                  src={pictures_offset[j].data.src}
+                  alt=""
+                />
+              </div>
+            ) : (
+              pictures_offset[j] !== undefined &&
+              pictures_offset[j].data !== undefined &&
+              pictures_offset[j].data.src === undefined && (
                 <div
                   key={j}
-                  className="container_data disappear"
+                  className="container_data bloc"
                   style={{
                     display: "inline",
                     textAlign: "center",
                   }}
                 >
-                  <img
-                    style={{
-                      maxWidth: "100%",
-                      objectFit: "contain",
-
-                      margin: "0 auto",
-                      width: `${pictures_offset[j].data.width}`,
-                      height: isResponsive
-                        ? `auto`
-                        : `${pictures_offset[j].data.height}`,
-                    }}
-                    src={pictures_offset[j].data.src}
-                    alt=""
-                  />
+                  <a href={pictures_offset[j].data}>
+                    {pictures_offset[j].data}
+                  </a>
                 </div>
               )
+            )
           ) : ((read_more && isToggle && j >= 0) ||
-              (!isToggle && j <= 1) ||
+              (!isToggle && j <= 2) ||
               !read_more) &&
             headlines[j] !== undefined &&
             headlines[j] === "unordered-list-item" ? (
             <div
               key={j}
-              className="container_data disappear"
+              className="container_data bloc"
               style={{ display: "inline" }}
             >
               <ul>
@@ -377,13 +396,13 @@ function TextReader({
               </ul>
             </div>
           ) : ((read_more && isToggle && j >= 0) ||
-              (!isToggle && j <= 1) ||
+              (!isToggle && j <= 2) ||
               !read_more) &&
             headlines[j] !== undefined &&
             headlines[j] === "header-two" ? (
             <h2 key={j}>
               <div
-                className="container_data disappear"
+                className="container_data bloc"
                 style={{ display: "inline" }}
               >
                 {stringText !== undefined &&
@@ -401,13 +420,13 @@ function TextReader({
               </div>
             </h2>
           ) : (
-            ((read_more && ((isToggle && j >= 0) || (!isToggle && j <= 1))) ||
+            ((read_more && ((isToggle && j >= 0) || (!isToggle && j <= 2))) ||
               !read_more) &&
             headlines[j] !== "atomic" && (
               <div key={j} className={`${textAlign[j]}`}>
                 <div
                   key={j}
-                  className="container_data disappear"
+                  className="container_data bloc"
                   style={{ display: "inline" }}
                 >
                   {stringText !== undefined &&
@@ -428,7 +447,7 @@ function TextReader({
           );
         })}
       <div className={s.button}>
-        {read_more && stringTexts.length >= 1 ? (
+        {read_more && stringTexts.length >= 2 ? (
           <button
             onClick={() => setIsToggle(!isToggle)}
             className={s.show_more}

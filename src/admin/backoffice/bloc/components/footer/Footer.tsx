@@ -54,17 +54,19 @@ export default class Footer extends Container {
   }
 
   public async remove_link(index: number) {
-    this.set_parameters(
-      "delete_child&id=" +
-        this.links_network_an_others_footer[index].id +
-        "&type=" +
-        this.type +
-        "&associated_table=links_network_an_others_footer"
-    );
-
-    let new_bloc = await this.delete_bloc();
-    this.set_parameters(this.type + "&id=1&type=" + this.type);
-    return new_bloc;
+    if (index !== undefined) {
+      this.set_parameters(
+        "delete_child&id=" +
+          this.links_network_an_others_footer[index].id +
+          "&type=" +
+          this.type +
+          "&associated_table=links_network_an_others_footer"
+      );
+      this.links_network_an_others_footer.splice(index, 1);
+      let new_bloc = await this.delete_bloc();
+      this.set_parameters(this.type + "&id=1&type=" + this.type);
+      return new_bloc;
+    }
   }
 
   _get_class_api_call_parameters(): string {

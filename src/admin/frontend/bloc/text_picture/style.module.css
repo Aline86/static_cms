@@ -1,5 +1,5 @@
 .bloc_content {
-  display: flex;
+  /* display: flex;*/
   margin: 0 auto;
 }
 
@@ -12,4 +12,7 @@ ul {
 }
 ul li {
   list-style-type: disc;
+}
+.image {
+  display: inline !important;
 }

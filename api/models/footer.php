@@ -4,11 +4,15 @@ class Footer {
     private static $db;
     private $type;
     private $associated_tables;
-
-    function __construct($type) {
-        self::$db = DB::getInstance();
+    private $database_name ;
+    function __construct($type, $database_name) {
+       
+        self::$db = DB::getInstance($database_name);
         $this->type = $type;
+        $this->database_name = $database_name;
         $this->associated_tables = $this->get_associated_tables();
+     
+    
     }
     public  function get_footer($parameters)
     {
@@ -19,14 +23,17 @@ class Footer {
     } 
     public function get_associated_tables()
     {
-        $requete = 'SELECT TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = "'. $this->type .'" AND TABLE_SCHEMA = "welcome_poitiers_2"';
+        $requete = 'SELECT TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = "'. $this->type .'" AND TABLE_SCHEMA = "' .$this->database_name . '"';
+     
         $resultat = self::$db->query($requete);
         $resultat->execute();
         $tables = $resultat->fetchAll();
+
         $associated_tables = [];
         foreach($tables as $table) {
             $associated_tables[$table['TABLE_NAME']] = $table['TABLE_NAME'];
         }
+        
         return $associated_tables;
     }
     public  function add_footer($parameters)

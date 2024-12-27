@@ -20,29 +20,29 @@ interface BlocParams {
 
 function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
+  const result = window.matchMedia("(max-width: 700px)");
   useEffect(() => {
     setContentState(typeof bloc.text === "object" ? bloc.text : contentState);
   }, [bloc.text]);
   useEffect(() => {
     setContentState(typeof bloc.text === "object" ? bloc.text : contentState);
   }, []);
-  useEffect(() => {}, [bloc]);
+  useEffect(() => {}, [bloc, result.matches]);
   return (
     <div
       className={s.bloc}
       style={{
         width: `${
-          !bloc.is_parallaxe ? (isResponsive ? "95%" : "50%") : "100%"
+          full ? (isResponsive || result.matches ? "95%" : "50%") : "90%"
         }`,
         margin: "0 auto",
         paddingLeft: full ? `0px` : !bloc.bloc_column ? `30px` : `0px`,
       }}
     >
-      {!bloc.is_parallaxe && (
-        <div className={s.titre}>
-          <Titre titre={bloc.title} />
-        </div>
-      )}
+      <div className={s.titre}>
+        <Titre titre={bloc.title} />
+      </div>
+
       <div
         className={s.bloc_content}
         style={{
@@ -58,19 +58,11 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
         <div
           className={s.image}
           style={{
-            display: `${
-              bloc.image !== undefined && bloc.image.length > 0
-                ? `block`
-                : `none`
-            }`,
-
-            width: `${
-              bloc.bloc_column ? `100%` : bloc.is_parallaxe ? `100%` : `50%`
-            }`,
-
-            marginLeft: `${
-              bloc.image_right && !bloc.bloc_column ? `30px` : `0px`
-            }`,
+            width: `${bloc.bloc_column ? `100%` : `50%`}`,
+            paddingTop: "15px",
+            marginLeft: `${!bloc.bloc_column ? `30px` : `0px`}`,
+            marginRight: `${!bloc.bloc_column ? `30px` : `0px`}`,
+            float: `${bloc.image_right ? "left" : "right"}`,
           }}
         >
           {bloc.image !== undefined && (
@@ -79,14 +71,13 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
               image={bloc.image}
               alt_image={bloc.alt_image}
               css={css}
-              parallaxe={bloc.is_parallaxe}
               titre={bloc.title}
               isBlocColumn={bloc.bloc_column}
               isResponsive={isResponsive}
             />
           )}
         </div>
-        {contentState !== undefined && !bloc.is_parallaxe && (
+        {contentState !== undefined && (
           <div
             className={s.text}
             style={{
@@ -95,7 +86,7 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
                 bloc.bloc_column
                   ? `100%`
                   : bloc.image !== undefined && bloc.image.length !== 0
-                  ? `50%`
+                  ? `100%`
                   : `90%`
               }`,
               margin: "0 auto",

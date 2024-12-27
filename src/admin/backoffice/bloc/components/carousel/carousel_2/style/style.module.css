@@ -17,6 +17,18 @@
   position: relative;
   vertical-align: center;
 }
+.addCard {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: -90px;
+  z-index: 6;
+}
+.addCard img {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
 @media screen and (max-width: 700px) {
   .container_class {
     overflow-x: scroll;

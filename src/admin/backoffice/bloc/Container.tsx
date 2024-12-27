@@ -195,7 +195,6 @@ export default abstract class Container {
   }
   setProperty(instance: any, propName: any, value: any) {
     let name: any = "set_" + propName;
-
     if (instance[name] !== undefined) {
       try {
         value = JSON.parse(value);

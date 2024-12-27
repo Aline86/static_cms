@@ -3,7 +3,7 @@ import Container from "../../../Container";
 import CarouselData from "./CarouselData";
 
 export class Carousel extends Container {
-  isAutomatique: boolean;
+  is_automatique: boolean;
 
   card_number: number;
   width: number;
@@ -17,10 +17,10 @@ export class Carousel extends Container {
     page_id: number,
     bloc_number: number,
     id: number = -1,
-    isAutomatique: boolean = false,
+    is_automatique: boolean = false,
     card_number: number = 5,
     width: number = 25,
-    height: number = 15,
+    height: number = 30,
     gap: number = 30,
     title: string = "",
     type: string = "carousel",
@@ -30,7 +30,7 @@ export class Carousel extends Container {
     this.page_id = page_id;
     this.title = title;
     this.type = type;
-    this.isAutomatique = isAutomatique;
+    this.is_automatique = is_automatique;
     this.card_number = card_number;
     this.width = width;
     this.height = height;
@@ -168,11 +168,11 @@ export class Carousel extends Container {
     index !== undefined && this.remove_link(index);
   }
 
-  public get_isAutomatique(): boolean {
-    return this.isAutomatique;
+  public get_is_automatique(): boolean {
+    return this.is_automatique;
   }
-  public set_isAutomatique(value: boolean) {
-    this.isAutomatique = value;
+  public set_is_automatique(value: boolean) {
+    this.is_automatique = value;
   }
 
   public get_data_number(): number {

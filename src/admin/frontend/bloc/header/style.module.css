@@ -122,21 +122,23 @@
 .title .title_container span {
   display: inline-block;
   position: relative;
-  top: -30px;
+  top: -10px;
   width: 100%;
   /*animation-iteration-count: infinite;*/
   animation-duration: 5s;
   animation-name: slidein;
+
   border-bottom: 2px solid white;
 }
 
-.end {
+.end,
+.links {
   position: fixed;
   display: flex;
   justify-content: end;
   gap: 30px;
   width: auto;
-  right: 100px;
+  right: 120px;
   top: 3px;
 }
 
@@ -151,10 +153,10 @@
   align-items: center;
   justify-content: center;
 }
-.facebook img {
+/*.facebook img {
   height: 50px;
   width: 50px;
-}
+}*/
 .facebook:hover {
   transform: scale(1.2);
   cursor: pointer;
@@ -183,7 +185,7 @@
   font-size: 55px;
   margin-bottom: 0 !important;
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1200px) {
   .container {
     position: absolute !important;
     top: 0;
@@ -296,21 +298,59 @@
     margin-left: 0px;
     margin-top: 2px;
   }
+  .side_menu {
+    position: absolute;
+    top: -20px !important;
+    right: -20px !important;
+
+    height: 100vh;
+    width: 300px;
+    background-color: white;
+    display: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 150px;
+    transition: all 0.5s ease-in-out;
+  }
 }
-@media screen and (max-width: 450px) {
+
+@media screen and (max-width: 700px) {
   .title {
     align-items: center;
     font-size: 18px;
+    margin-top: 25px;
+    margin-left: 30px;
   }
   .title_container h1 {
     margin: 0;
     font-size: 18px;
     font-weight: bold;
   }
-  .facebook {
-    height: 70px;
-  }
 
+  .facebook {
+    display: none;
+    margin-top: 7px;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .facebook img.small {
+    display: none !important;
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 0;
+    padding: 5px;
+
+    margin: 0;
+  }
+  .facebook img.show_link {
+    display: block;
+  }
   .logo {
     width: 30px;
     height: 30px;
@@ -320,7 +360,16 @@
   .burger_menu {
     display: block;
     width: 40px;
-    margin-top: 15px;
+    margin-top: 5px;
+  }
+  .links {
+    display: flex;
+    flex-direction: column !important;
+    right: 90px;
+  }
+
+  .tr {
+    transition: all 0.5s ease-in-out;
   }
 
   .menu_btn {
@@ -343,6 +392,17 @@
 
     border-radius: 3px;
     /*transition: all .2s ease-in-out;*/
+  }
+
+  .facebook img {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 0;
+    padding: 5px;
+
+    margin: 0;
   }
 }
 @keyframes slidein {

@@ -6,13 +6,12 @@ import Prerequis from "./admin/backoffice/prerequis/prerequis";
 
 function App() {
   const { common } = useContext(ColorContext);
-
   const styles = {
-    backgroundColor: common !== null ? `${common?.fond}` : "transparent",
     "--titles": `${common?.titles}` ? `${common?.titles}` : "black",
     "--button-background-color": `${common?.background_color_buttons}`
       ? `${common?.background_color_buttons}`
       : "#2f6091",
+    height: "fit-content",
   };
   // initilization of the first page, it should always exist prior to any action
   const create_first_page = async () => {

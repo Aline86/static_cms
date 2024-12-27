@@ -44,18 +44,28 @@ function CssTextPicturePosition({
               <div className={s.flex_bloc_type_1}>
                 <div
                   className={s.see_text_image}
-                  onClick={(e) => {
-                    updateBloc(e, "image_right", undefined, bloc);
+                  onClick={() => {
+                    updateBloc(false, "image_right", undefined, bloc);
+                    updateBloc(false, "bloc_column", undefined, bloc);
                   }}
                 >
                   <div className={s.inside_title}>titre</div>
                   <div className={s.inside_flex}>
-                    <div className={s.inside_first}>
-                      {bloc.image_right ? "image" : "texte"}
-                    </div>
-                    <div className={s.inside_second}>
-                      {bloc.image_right ? "texte" : "image"}
-                    </div>
+                    <div className={s.inside_first}>texte</div>
+                    <div className={s.inside_second}>image</div>
+                  </div>
+                </div>
+                <div
+                  className={s.see_text_image}
+                  onClick={() => {
+                    updateBloc(true, "image_right", undefined, bloc);
+                    updateBloc(false, "bloc_column", undefined, bloc);
+                  }}
+                >
+                  <div className={s.inside_title}>titre</div>
+                  <div className={s.inside_flex}>
+                    <div className={s.inside_first}>image</div>
+                    <div className={s.inside_second}>texte</div>
                   </div>
                 </div>
               </div>
@@ -63,7 +73,7 @@ function CssTextPicturePosition({
                 <div
                   className={s.see_text}
                   onClick={(e) => {
-                    updateBloc(e, "bloc_column", undefined, bloc);
+                    updateBloc(true, "bloc_column", undefined, bloc);
                   }}
                 >
                   <div className={s.inside_title}>titre</div>
@@ -89,16 +99,6 @@ function CssTextPicturePosition({
                     value={bloc.background_color}
                     onChange={(e) => {
                       updateBloc(e, "color", undefined, bloc);
-                    }}
-                  />
-                </div>
-                <div className={s.flex_row}>
-                  <h3>Parallaxe</h3>
-                  <input
-                    defaultChecked={Boolean(Number(bloc.is_parallaxe))}
-                    type="checkbox"
-                    onClick={(e) => {
-                      updateBloc(e, "parallaxe", undefined, bloc);
                     }}
                   />
                 </div>
@@ -160,8 +160,6 @@ function CssTextPicturePosition({
               </div>
             </div>
           </div>
-
-          <div className="bouton_container_carousel"></div>
           <div
             className={s.button_save_page}
             onClick={(e) => {

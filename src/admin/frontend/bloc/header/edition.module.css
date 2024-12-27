@@ -1,0 +1,161 @@
+.backdrop {
+  position: absolute;
+
+  width: 45%;
+  height: 75px;
+}
+.container {
+  display: block;
+
+  height: 75px;
+  position: relative;
+  width: 100%;
+
+  left: 0;
+  right: 0;
+  top: 0;
+}
+.backdrop::before {
+  background-color: rgba(0, 0, 0, 0.37);
+  content: "";
+  display: block;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+/* Burger menu */
+.burger_menu {
+  position: absolute;
+  right: 65px;
+  top: 7px;
+  display: block;
+  width: 25px;
+  pointer-events: none;
+}
+
+.menu_btn {
+  width: 150px;
+  height: 40px;
+  position: relative;
+  display: flex;
+  justify-content: start;
+  margin-left: 12px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.menu_btn__burger {
+  width: 25px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+}
+
+.menu_btn__burger::before,
+.menu_btn__burger::after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+}
+
+.menu_btn__burger::before {
+  transform: translateY(-8px);
+}
+
+.menu_btn__burger::after {
+  transform: translateY(8px);
+}
+
+/* Burger menu */
+.title {
+  display: block;
+
+  position: relative;
+
+  text-transform: uppercase;
+  display: inline-block;
+  width: fit-content;
+  height: 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  margin-top: 20px;
+  font-size: 12px;
+  width: 100%;
+
+  color: white;
+}
+.title .title_container span {
+  display: inline-block;
+  position: relative;
+  top: -10px;
+  width: 100%;
+  /*animation-iteration-count: infinite;*/
+  animation-duration: 5s;
+  animation-name: slidein;
+  border-bottom: 1px solid white;
+}
+
+.end,
+.links {
+  position: absolute;
+  display: flex;
+
+  width: 100%;
+
+  top: 0px;
+}
+.links {
+  justify-content: end;
+  right: 100px;
+}
+.end a {
+  color: white;
+}
+.links .facebook {
+  width: 35px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+.facebook img {
+  height: 25px;
+  width: 25px;
+}
+.facebook:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+.logo {
+  position: relative;
+  width: auto;
+  height: 60px;
+  width: auto;
+  display: flex;
+  background-color: transparent;
+
+  padding: 7px;
+  left: 12px;
+}
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.logo img {
+  width: 100%;
+}
+.title_container h1 {
+  margin: 0 auto;
+  font-weight: 400;
+  font-size: 22px;
+  margin-bottom: 0 !important;
+}

@@ -4,20 +4,18 @@ import add_to_database from "./../../../../../../assets/add_to_database.png";
 function CssCarouselPosition({
   props,
   updateCarousel,
-  context,
+
   bloc,
   draggable,
-  saveBloc,
-  page_id,
+
   saveBlocAll,
 }: {
   props: any;
   updateCarousel: any;
-  context: string;
+
   bloc: any;
   draggable: boolean;
-  saveBloc: any;
-  page_id: number;
+
   saveBlocAll: any;
 }) {
   return (
@@ -30,7 +28,7 @@ function CssCarouselPosition({
           <div draggable={draggable}>{props}</div>
 
           <div className={s.bouton_container}>
-            {bloc.type === "carousel" && !bloc.isAutomatique ? (
+            {bloc.type === "carousel" && !bloc.is_automatique ? (
               <div className={s.bouton_container_bloc}>
                 <div className={s.encart_bloc_name_title}>
                   <h3

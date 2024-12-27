@@ -21,9 +21,10 @@
 
   justify-content: center;
 }
-.facebook div {
+.facebook_container div {
   display: flex;
   flex-direction: row;
+  margin-top: 13px;
   gap: 30px;
   margin-left: 25px;
   width: fit-content;

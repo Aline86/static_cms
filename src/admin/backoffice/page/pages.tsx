@@ -5,13 +5,10 @@ import ajout from "./../../../assets/ajouter.png";
 import update from "./../../../assets/update.png";
 import add_to_database from "./../../../assets/add_to_database.png";
 import s from "./style.module.css";
-
 import { Link } from "react-router-dom";
 import Page from "./class/Page";
 import Header from "../bloc/components/header/Header";
 import Footer from "../bloc/components/footer/Footer";
-import HeaderVizualization from "../../frontend/bloc/header/header";
-import FooterVizualization from "../../frontend/bloc/footer/footer";
 
 interface PagesParams {}
 
@@ -35,17 +32,18 @@ function Pages({}: PagesParams) {
   };
 
   const savePage = async (page: Page) => {
-    page.save_bloc();
-    if (page.id > 0) {
-      setToggle(!toggle);
-    } else {
-      setRefresh(!refresh);
+    let result = await page.save_bloc();
+    if (result !== undefined) {
+      if (page.id > 0) {
+        setToggle(!toggle);
+      } else {
+        setRefresh(!refresh);
+      }
     }
-
-    setToggle(!toggle);
   };
   const removePage = async (page: Page) => {
-    page.remove_page();
+    await page.remove_page();
+
     setRefresh(!refresh);
   };
 
@@ -85,11 +83,6 @@ function Pages({}: PagesParams) {
   useEffect(() => {}, [toggle, header, footer, pages]);
   return (
     <div className={s.pages}>
-      <HeaderVizualization
-        input_bloc={header}
-        isResponsive={false}
-        toggle={toggle}
-      />
       <div
         className={s.addCard}
         onClick={(e) => {
@@ -146,11 +139,6 @@ function Pages({}: PagesParams) {
             </div>
           );
         })}
-      <FooterVizualization
-        input_bloc={footer}
-        toggle={toggle}
-        isResponsive={false}
-      />
     </div>
   );
 }

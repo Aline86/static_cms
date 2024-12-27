@@ -65,11 +65,11 @@ CREATE TABLE IF NOT EXISTS `carousel` (
     `id` int(11) NOT NULL auto_increment,        
     `title` varchar(250)  NOT NULL default "",  
     `type` varchar(55)  NOT NULL default "carousel",           
-    `isAutomatique` boolean  ,     
+    `is_automatique` boolean  ,     
     `card_number` int(8)  NOT NULL , 
 
     `width` int(11)  NOT NULL default 21,
-    `height` int(11)  NOT NULL default 250,
+    `height` int(11)  NOT NULL default 25,
     `gap` int(11)  NOT NULL default 30,
 
     `bloc_number` int(11)  NOT NULL ,
@@ -91,8 +91,20 @@ CREATE TABLE IF NOT EXISTS `carousel_data` (
     PRIMARY KEY  (`id`),
     FOREIGN KEY (`carousel_id`) REFERENCES carousel(`id`) ON DELETE CASCADE
   );
-  
-/*Table structure for table `bloc` */
+/*Table structure for table `parallaxe` */
+
+CREATE TABLE IF NOT EXISTS `parallaxe` (
+    `id` int(11) NOT NULL auto_increment,  
+    `title` varchar(250)  NOT NULL default "", 
+    `type` varchar(55)  NOT NULL default "parallaxe",           
+    `image` varchar(250)  NOT NULL default "",     
+    `alt_image` varchar(250)  NOT NULL default "",     
+    `bloc_number` int(11)  NOT NULL,
+    `page_id` int(11)  NOT NULL,
+    PRIMARY KEY  (`id`),
+    FOREIGN KEY (`page_id`) REFERENCES page(`id`)
+);
+/*Table structure for table `text_picture` */
 
 CREATE TABLE IF NOT EXISTS `text_picture` (
     `id` int(11) NOT NULL auto_increment,  
@@ -101,10 +113,8 @@ CREATE TABLE IF NOT EXISTS `text_picture` (
     `show_picture` boolean default true ,     
     `show_text` boolean default true   ,  
     `bloc_column` boolean  default false  ,     
-    `image_right` boolean default false  ,  
-    `is_parallaxe` boolean default false  ,    
+    `image_right` boolean default false  ,     
     `text_button_more` boolean default false   ,        
-     
     `text` text NOT NULL default "",     
     `image` varchar(250)  NOT NULL default "",     
     `alt_image` varchar(250)  NOT NULL default "",     
@@ -115,7 +125,22 @@ CREATE TABLE IF NOT EXISTS `text_picture` (
     PRIMARY KEY  (`id`),
     FOREIGN KEY (`page_id`) REFERENCES page(`id`)
 );
+/*Table structure for table `video` */
 
+CREATE TABLE IF NOT EXISTS `video` (
+    `id` int(11) NOT NULL auto_increment,  
+    `title` varchar(250)  NOT NULL default "", 
+    `type` varchar(55)  NOT NULL default "video",           
+    `overlay` boolean  default false  ,   
+    `text` text NOT NULL default "",    
+    `width` int(11)  NOT NULL default 100,
+    `height` int(11)  NOT NULL default 100, 
+    `video_url` text NOT NULL default "", 
+    `bloc_number` int(11)  NOT NULL,
+    `page_id` int(11)  NOT NULL,
+    PRIMARY KEY  (`id`),
+    FOREIGN KEY (`page_id`) REFERENCES page(`id`)
+);
 /*Table structure for table `header` */
 
 CREATE TABLE IF NOT EXISTS `header` (

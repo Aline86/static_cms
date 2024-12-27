@@ -9,7 +9,7 @@ interface ImageParams {
   alt_image: string;
   full: boolean;
   css: OptionCss;
-  parallaxe: boolean;
+
   isBlocColumn: boolean;
   titre: string;
   isResponsive: boolean;
@@ -20,7 +20,7 @@ function Image({
   alt_image,
   full,
   css,
-  parallaxe,
+
   isBlocColumn,
   titre,
   isResponsive,
@@ -28,72 +28,30 @@ function Image({
   let datacss = CssPosition.returnPosition(css.position);
 
   useEffect(() => {}, []);
-  return image.length > 0 && !Boolean(Number(parallaxe)) ? (
-    <div
-      className={s.image}
-      style={{
-        display: "flex",
-        height: "100%",
-        justifyContent: datacss.justifyContent,
-        alignItems: datacss.alignItems,
-        margin: "0 auto",
-        marginBottom: "30px",
-      }}
-    >
-      <img
-        style={{ width: `${css.width}%`, height: `auto` }}
-        src={"http://localhost:80/cms_v2/api/uploadfile/" + image}
-        alt={alt_image}
-      />
-    </div>
-  ) : titre !== "" ? (
-    <div
-      className={s.image}
-      style={{
-        width: !full ? "43vw" : "auto",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <h2
-        className="show"
+  return (
+    image.length > 0 && (
+      <div
+        className={s.image}
         style={{
-          backgroundImage:
-            `url(http://localhost:80/cms_v2/api/uploadfile/` + image + `)`,
+          display: "flex",
 
-          width: !full ? "43vw" : "100%",
+          justifyContent: datacss.justifyContent,
+          alignItems: datacss.alignItems,
+          margin: "0 auto",
 
-          marginTop: "50px",
-          fontSize: isResponsive ? "5vh" : "12vh",
-          lineHeight: isResponsive ? "5vh" : "14vh",
-          backgroundClip: "text",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundOrigin: "center",
+          marginBottom: "30px",
         }}
       >
-        {titre}
-      </h2>
-    </div>
-  ) : (
-    <div
-      className={s.image}
-      style={{
-        position: "relative",
-        backgroundImage:
-          `url(http://localhost:80/cms_v2/api/uploadfile/` + image + `)`,
-        height: "42vh",
-        backgroundAttachment: "fixed",
-        width: full ? "100vw" : "43vw",
-        left: 0,
-        right: 0,
-
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
-    ></div>
+        <img
+          style={{ width: `${css.width}%`, height: `auto` }}
+          src={
+            "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
+            image
+          }
+          alt={alt_image}
+        />
+      </div>
+    )
   );
 }
 

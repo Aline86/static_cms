@@ -55,16 +55,40 @@ function Visualization({}: PageParams) {
   return (
     <div className="page">
       <div className={s.page_container}>
-        <HeaderVizualization
-          input_bloc={header}
-          toggle={toggle}
-          isResponsive={false}
-        />
-        <Link to={{ pathname: `/` + id + `/` + name }}>
+        <div className="flex">
+          <Link to={{ pathname: `/` + id + `/` + name }}>
+            <li>
+              <div className={s.navigate_2}>Visualiser la page</div>
+            </li>
+          </Link>
+          <Link to={{ pathname: `/pages` }}>
+            <li>
+              <div className={s.navigate_2}>Liste des pages</div>
+            </li>
+          </Link>
+          <Link to={{ pathname: `/` }}>
+            <li>
+              <div className={s.navigate}>Paramètres généraux</div>
+            </li>
+          </Link>
           <li>
-            <div className={s.navigate}>Visualiser</div>
+            <div className={s.navigate} onClick={() => setOpen(!open)}>
+              Ajouter un bloc
+            </div>
           </li>
-        </Link>
+          <li>
+            <div
+              className={s.navigate_2}
+              onClick={(e) => {
+                e.preventDefault();
+                setToDrag(!drag);
+                setOpen(false);
+              }}
+            >
+              Changer l'ordre des blocks
+            </div>
+          </li>
+        </div>
 
         <div>
           <BlocDisplay
@@ -78,14 +102,7 @@ function Visualization({}: PageParams) {
             getPage={asynchronRequestsToPopulateBlocs}
           />
           <h1>{name}</h1>
-          <div
-            className={s.bloc_creation_wrapper}
-            onClick={() => setOpen(!open)}
-          >
-            <div className={s.bloc_creation}>
-              <img src={ajout} />
-            </div>
-          </div>
+
           <Blocs
             blocs={blocs}
             setBlocs={setBlocs}
@@ -97,12 +114,6 @@ function Visualization({}: PageParams) {
             page_id={Number(id)}
           />
         </div>
-
-        <FooterVizualization
-          input_bloc={footer}
-          toggle={toggle}
-          isResponsive={false}
-        />
       </div>
     </div>
   );

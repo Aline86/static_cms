@@ -4,6 +4,7 @@
     $id_type = null;
     $bloc_number = null;
     $associated_component_ids = [];
+
     foreach($parameters as $parameter => $data_value) {
         if($parameter === 'id') {
             $id = $data_value;
@@ -82,7 +83,7 @@
                 }
             } else  {
                 if(is_array($data_type_decoded)) {
-                    if($data_type_decoded['id'] >= 1) {
+                    if(isset($data_type_decoded['id']) && $data_type_decoded['id'] >= 1) {
                 
                         $this->update_children($data_type_decoded, $id, $associated_table);
                     }

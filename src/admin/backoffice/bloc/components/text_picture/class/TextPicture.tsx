@@ -14,7 +14,6 @@ export class TextPicture extends Container {
   bloc_number: number;
   css: OptionsCss;
   background_color: string;
-  is_parallaxe: boolean;
   parameters: string;
   page_id: number;
   constructor(
@@ -34,7 +33,6 @@ export class TextPicture extends Container {
     title: string = "",
     type: string = "text_picture",
     background_color: string = "#ffffff",
-    is_parallaxe: boolean = false,
     css: OptionsCss = new OptionsCss()
   ) {
     super(id, title, type);
@@ -50,7 +48,6 @@ export class TextPicture extends Container {
     this.bloc_number = bloc_number;
     this.css = css;
     this.background_color = background_color;
-    this.is_parallaxe = is_parallaxe;
     this.parameters = this.type + "&id=" + this.id + "&type=" + this.type;
   }
 
@@ -67,17 +64,15 @@ export class TextPicture extends Container {
         this.set_show_text(e.target.checked ? true : false);
         break;
       case "bloc_column":
-        this.set_bloc_column(!this.bloc_column);
+        this.set_bloc_column(e);
         break;
       case "bloc_number":
         this.set_bloc_number(e);
         break;
       case "image_right":
-        this.set_image_right(!this.image_right);
+        this.set_image_right(e);
         break;
-      case "parallaxe":
-        this.set_is_parallaxe(e.target.checked ? true : false);
-        break;
+
       case "text_button_more":
         this.set_text_button_more(e.target.checked ? true : false);
         break;
@@ -215,12 +210,6 @@ export class TextPicture extends Container {
     this.background_color = value;
   }
 
-  public _is_parallaxe(): boolean {
-    return this.is_parallaxe;
-  }
-  public set_is_parallaxe(value: boolean) {
-    this.is_parallaxe = value;
-  }
   public _id(): number {
     return this.id;
   }

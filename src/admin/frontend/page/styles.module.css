@@ -5,8 +5,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  margin-bottom: 60px;
+}
+.video {
+  height: auto;
 }
 .bloc {
   height: 100%;
@@ -48,4 +49,7 @@ a {
   z-index: 50;
   right: 5%;
   cursor: pointer;
+}
+.parallaxe {
+  height: fit-content;
 }

@@ -1,5 +1,7 @@
 import s from "./style.module.css";
 import add_to_database from "./../../../../../../assets/add_to_database.png";
+import ajout from "./../../../../../../assets/ajouter.png";
+import { PictureGroup } from "../class/PictureGroup";
 
 function CssPictureGroupPosition({
   props,
@@ -10,12 +12,21 @@ function CssPictureGroupPosition({
 }: {
   props: any;
   updatePictureGroupData: any;
-  bloc: any;
+  bloc: PictureGroup;
   draggable: boolean;
   saveBlocAll: any;
 }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+      <div
+        className={s.addCard}
+        onClick={(e) => {
+          e.preventDefault();
+          updatePictureGroupData(e, "ajout", undefined, bloc);
+        }}
+      >
+        <img src={ajout} alt="ajout" />
+      </div>
       <div className="bouton_container_bloc_css_carousel">
         <div draggable={draggable}>{props}</div>
         <div className={s.bouton_container_bloc}>
@@ -34,7 +45,9 @@ function CssPictureGroupPosition({
               <input
                 type="number"
                 value={bloc.width}
-                onChange={(e) => updatePictureGroupData(e, "width", -1, bloc)}
+                onChange={(e) =>
+                  updatePictureGroupData(e, "width", undefined, bloc)
+                }
               />
             </div>
             <div className={s.bouton_container}>
@@ -42,7 +55,9 @@ function CssPictureGroupPosition({
               <input
                 type="number"
                 value={bloc.height}
-                onChange={(e) => updatePictureGroupData(e, "height", -1, bloc)}
+                onChange={(e) =>
+                  updatePictureGroupData(e, "height", undefined, bloc)
+                }
               />
             </div>
           </div>

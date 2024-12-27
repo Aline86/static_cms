@@ -1,8 +1,8 @@
-import { PictureGroup } from "../PictureGroup";
-import PictureGroupData from "../PictureGroupData";
 import s from "./style/style.module.css";
 
 import CardData from "./wrapper";
+import { PictureGroup } from "../class/PictureGroup";
+import PictureGroupData from "../class/PictureGroupData";
 
 interface ImageGroupData {
   toggle: boolean;

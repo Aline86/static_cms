@@ -67,10 +67,10 @@ export default class Header extends Container {
         this.type +
         "&associated_table=link_networks_an_others_header"
     );
-
-    let new_bloc = await this.delete_bloc();
+    index !== undefined && this.link_networks_an_others_header.splice(index, 1);
+    await this.delete_bloc();
     this.set_parameters(this.type + "&id=1&type=" + this.type);
-    return new_bloc;
+    return this;
   }
 
   _get_class_api_call_parameters(): string {

@@ -1,29 +1,49 @@
 import { useEffect, useState } from "react";
 import v from "./style_responsive.module.css";
 import s from "./style.module.css";
-
+import e from "./edition.module.css";
 import Nav from "./Nav/Nav";
 import { Link } from "react-router-dom";
 import Header from "../../../backoffice/bloc/components/header/Header";
+import reseaux from "./../../../../assets/reseaux.png";
 
 interface HeaderInfo {
   input_bloc: Header;
   isResponsive: boolean;
+  full: boolean;
   toggle: boolean;
 }
-function HeaderVizualization({ input_bloc, toggle, isResponsive }: HeaderInfo) {
+function HeaderVizualization({
+  input_bloc,
+  toggle,
+  full,
+  isResponsive,
+}: HeaderInfo) {
   const [open, setOpen] = useState(false);
+  const [trigger_show_link, setTrigger_show_link] = useState(true);
   const [stylePath, setStylePath] = useState(s);
+  const result = window.matchMedia("(max-width: 700px)");
   const style_width = {
     width: isResponsive ? "380px" : "100%",
   };
-
+  const handleShowLinks = () => {
+    setTrigger_show_link(!trigger_show_link);
+  };
   useEffect(() => {}, [toggle]);
   useEffect(() => {
-    if (isResponsive) {
-      setStylePath(v);
-    } else {
+    if (isResponsive || result.matches) {
+      setTrigger_show_link(false);
+      if (result.matches) {
+        setStylePath(s);
+      } else {
+        setStylePath(v);
+      }
+    } else if (full) {
+      setTrigger_show_link(true);
       setStylePath(s);
+    } else if (!full) {
+      setTrigger_show_link(true);
+      setStylePath(e);
     }
   }, [isResponsive]);
   return (
@@ -32,7 +52,7 @@ function HeaderVizualization({ input_bloc, toggle, isResponsive }: HeaderInfo) {
         className={stylePath.backdrop}
         style={{
           backgroundImage: `url(${
-            "http://localhost:80/cms_v2/api/uploadfile/" +
+            "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
             input_bloc.background_url
           })`,
         }}
@@ -60,36 +80,46 @@ function HeaderVizualization({ input_bloc, toggle, isResponsive }: HeaderInfo) {
           </div>
         </div>
         <div className={stylePath.end}>
-          {input_bloc.link_networks_an_others_header.length > 0 &&
-            input_bloc.link_networks_an_others_header.map((value, key) => {
-              return (
-                <a
-                  key={key}
-                  className={stylePath.facebook}
-                  href={value.background_url}
-                  title={value.title}
-                  target="_blank"
-                >
-                  {value.logo_url.length > 0 ? (
-                    <img
-                      src={
-                        "http://localhost:80/cms_v2/api/uploadfile/" +
-                        value.logo_url
-                      }
-                      alt={value.title}
-                    />
-                  ) : (
-                    value.name
-                  )}
-                </a>
-              );
-            })}
+          <div className={stylePath.links}>
+            {(isResponsive || result.matches) && (
+              <div className="plus" onClick={() => handleShowLinks()}>
+                <img src={reseaux} alt="réseaux sociaux" />
+              </div>
+            )}
 
+            {input_bloc.link_networks_an_others_header.length > 0 &&
+              input_bloc.link_networks_an_others_header.map((value, key) => {
+                return (
+                  <a
+                    key={key}
+                    className={stylePath.facebook}
+                    href={value.background_url}
+                    title={value.title}
+                    target="_blank"
+                  >
+                    {value.logo_url.length > 0 ? (
+                      <img
+                        src={
+                          "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
+                          value.logo_url
+                        }
+                        alt={value.title}
+                        className={
+                          trigger_show_link ? "tr show_link" : "tr small"
+                        }
+                      />
+                    ) : (
+                      value.name
+                    )}
+                  </a>
+                );
+              })}
+          </div>
           <Link to="/">
             <div className={stylePath.logo}>
               <img
                 src={
-                  "http://localhost:80/cms_v2/api/uploadfile/" +
+                  "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
                   input_bloc.logo_url
                 }
                 alt="logo"

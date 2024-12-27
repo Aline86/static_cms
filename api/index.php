@@ -3,22 +3,27 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers:* ");
 header("Access-Control-Allow-Methods:* ");
+$database_name = 'welcome_poitiers_2';
 class Db {
     private static $instance = NULL;
     private function __construct() {}
     private function __clone() {}
-    public static function getInstance() {
+    public static function getInstance($database_name) {
+        /// 
+        
+       
         if (!isset(self::$instance)) {
             $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-            self::$instance = new PDO('mysql:host=localhost;dbname=welcome_poitiers_2', 'root', '', $pdo_options);
+            self::$instance = new PDO('mysql:host=localhost;dbname=' . $database_name, 'root', '', $pdo_options);
        
         }
         return self::$instance;
     }
 }
-$db = Db::getInstance();
 
-$pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer', 'common', 'picture_group', 'button'];
+$db = Db::getInstance($database_name);
+
+$pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer', 'common', 'picture_group', 'button', 'video', 'parallaxe'];
 foreach($pages_array as $page_name) {
     include_once "./models/"  . $page_name . ".php";
 }
@@ -69,7 +74,7 @@ foreach($crud as $method_to_call) {
         $method_params['associated_table'] = $associated_method_for_delete;
         $class = ucfirst($type);
   
-        $model = new $class($type);
+        $model = new $class($type, $database_name);
         echo json_encode($model->$method_to_call($method_params));
         exit();
     }
@@ -80,7 +85,7 @@ foreach($crud as $method_to_call) {
         $method_name_to_call = $method_to_call . $type;
      
         $class = ucfirst($type);
-        $model = new $class($type);
+        $model = new $class($type, $database_name);
         echo json_encode($model->$method_name_to_call($method_params));
         exit();
     }
@@ -88,7 +93,7 @@ foreach($crud as $method_to_call) {
    
         $class = ucfirst($type);
   
-        $model = new $class($type);
+        $model = new $class($type, $database_name);
       
         $method_name_to_call = $method_to_call . $type;
      

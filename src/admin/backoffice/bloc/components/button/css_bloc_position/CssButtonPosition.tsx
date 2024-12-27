@@ -5,7 +5,7 @@ import { Button } from "../class/Button";
 
 function CssButtonPosition({
   props,
-  updateButton,
+  updateBloc,
 
   bloc,
   draggable,
@@ -13,7 +13,7 @@ function CssButtonPosition({
   saveBlocAll,
 }: {
   props: any;
-  updateButton: any;
+  updateBloc: any;
 
   bloc: any;
   draggable: boolean;
@@ -37,7 +37,7 @@ function CssButtonPosition({
                 textDecoration: "underline",
               }}
             >
-              Bouton
+              Image lien
             </h3>
           </div>
           <div style={{ display: "flex", gap: "30px" }}>
@@ -46,7 +46,7 @@ function CssButtonPosition({
               <input
                 type="number"
                 value={bloc.width}
-                onChange={(e) => updateButton(e, "width", bloc)}
+                onChange={(e) => updateBloc(e, "width", bloc)}
               />
             </div>
             <div className={s.bouton_container}>
@@ -54,7 +54,7 @@ function CssButtonPosition({
               <input
                 type="number"
                 value={bloc.height}
-                onChange={(e) => updateButton(e, "height", bloc)}
+                onChange={(e) => updateBloc(e, "height", bloc)}
               />
             </div>
           </div>

@@ -99,34 +99,23 @@
   flex-direction: row;
   width: 100%;
   gap: 30px;
+  margin-bottom: 30px;
+}
+.flex_bloc_type_1 {
+  display: flex;
+  gap: 30px;
+  width: 30%;
+}
+.flex_bloc_type_2 {
+  width: 30%;
 }
 .flex_bloc_type_1,
 .flex_bloc_type_2 {
-  width: 33%;
   cursor: pointer;
   font-size: 18px;
   color: rgb(135, 134, 134);
 }
 
-.flex_bloc_type_1:hover::before {
-  position: absolute;
-  content: "";
-  width: 16.6%;
-  height: 100px;
-  background-color: black;
-  opacity: 0.2;
-  z-index: -1;
-}
-
-.flex_bloc_type_2:hover::before {
-  position: absolute;
-  content: "";
-  width: 10%;
-  height: 100px;
-  background-color: black;
-  opacity: 0.2;
-  z-index: -1;
-}
 .see_text_image {
   display: flex;
   flex-direction: column;

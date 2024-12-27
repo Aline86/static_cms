@@ -107,7 +107,7 @@ function CarouselContainer({
   }, []);
   useEffect(() => {
     updateCardRef();
-  }, [isResponsive]);
+  }, [isResponsive, result.matches]);
   useEffect(() => {
     updateCardRef();
     if (type === "carousel") {
@@ -150,34 +150,49 @@ function CarouselContainer({
           maxWidth: full ? "90vw" : "43vw",
         }}
       >
-        {type === "carousel" && transitionFinished ? (
-          <button
-            className={s.left}
-            style={{
-              pointerEvents: "none",
-              marginRight: `${bloc.gap}px`,
-              color: "lightgray",
-            }}
-          >
-            &#x27E8;
-          </button>
+        {!result.matches ? (
+          type === "carousel" && transitionFinished ? (
+            <button
+              className={s.left}
+              style={{
+                pointerEvents: "none",
+                marginRight: `${bloc.gap}px`,
+                color: "lightgray",
+              }}
+            >
+              &#x27E8;
+            </button>
+          ) : (
+            <button
+              className={s.left}
+              onClick={(e) => {
+                e.preventDefault();
+                moveRight();
+              }}
+              style={{ marginRight: `${bloc.gap}px` }}
+            >
+              <span>&#x27E8;</span>
+            </button>
+          )
         ) : (
-          <button
-            className={s.left}
-            onClick={(e) => {
-              e.preventDefault();
-              moveRight();
-            }}
-            style={{ marginRight: `${bloc.gap}px` }}
-          >
-            <span>&#x27E8;</span>
-          </button>
+          ""
         )}
         <div
           className={s.container_class}
           style={
-            !isResponsive
+            isResponsive || result.matches
               ? {
+                  minWidth: `${cardWidth}px`,
+                  margin: `${bloc.gap}px auto`,
+                  overflow: `scroll`,
+                  height: full
+                    ? `${Number(bloc.height)}vh`
+                    : `${Number(bloc.height) * 0.5}vh`,
+
+                  marginLeft: `15px`,
+                  width: `100%`,
+                }
+              : {
                   minWidth: `${cardWidth}px`,
                   margin: `${bloc.gap}px auto`,
 
@@ -193,17 +208,6 @@ function CarouselContainer({
                         bloc.gap * cardNumber
                       }px)`,
                 }
-              : {
-                  minWidth: `${cardWidth}px`,
-                  margin: `${bloc.gap}px auto`,
-                  overflow: `scroll`,
-                  height: full
-                    ? `${Number(bloc.height)}vh`
-                    : `${Number(bloc.height) * 0.5}vh`,
-
-                  marginLeft: `15px`,
-                  width: `fit-content`,
-                }
           }
         >
           <div
@@ -212,7 +216,9 @@ function CarouselContainer({
               height: `fit-content`,
               transform: !full
                 ? `translateX(calc(${-bloc.width * 0.5}vw - ${bloc.gap}px))`
-                : `translateX(calc(${-bloc.width}vw - ${bloc.gap}px))`,
+                : !result.matches && !isResponsive
+                ? `translateX(calc(${-bloc.width}vw - ${bloc.gap}px))`
+                : `translateX(0px))`,
             }}
           >
             <div
@@ -248,28 +254,32 @@ function CarouselContainer({
             </div>
           </div>
         </div>
-        {type === "carousel" && transitionFinished ? (
-          <button
-            className={s.right}
-            style={{
-              marginLeft: `${!result.matches ? bloc.gap : 0}px`,
-              pointerEvents: "none",
-              color: "lightgray",
-            }}
-          >
-            &#x27E9;
-          </button>
+        {!result.matches ? (
+          type === "carousel" && transitionFinished ? (
+            <button
+              className={s.right}
+              style={{
+                marginLeft: `${!result.matches ? bloc.gap : 0}px`,
+                pointerEvents: "none",
+                color: "lightgray",
+              }}
+            >
+              &#x27E9;
+            </button>
+          ) : (
+            <button
+              className={s.right}
+              onClick={(e) => {
+                e.preventDefault();
+                moveLeft();
+              }}
+              style={{ marginLeft: `${bloc.gap}px` }}
+            >
+              <span>&#x27E9;</span>
+            </button>
+          )
         ) : (
-          <button
-            className={s.right}
-            onClick={(e) => {
-              e.preventDefault();
-              moveLeft();
-            }}
-            style={{ marginLeft: `${bloc.gap}px` }}
-          >
-            <span>&#x27E9;</span>
-          </button>
+          ""
         )}
       </div>
     </div>

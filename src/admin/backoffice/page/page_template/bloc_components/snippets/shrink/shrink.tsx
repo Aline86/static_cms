@@ -1,28 +1,18 @@
 import { useState } from "react";
 import s from "./style.module.css";
-import up from "./../../../../../assets/up.png";
-import down from "./../../../../../assets/down.png";
-import { TextPicture } from "../../../bloc/components/text_picture/class/TextPicture";
-import { Carousel } from "../../../bloc/components/carousel/class/Carousel";
+import up from "./../../../../../../../assets/up.png";
+import down from "./../../../../../../../assets/down.png";
+import { Carousel } from "../../../../../bloc/components/carousel/class/Carousel";
 
 interface ShrinkData {
   index: number;
-  bloc: TextPicture | Carousel;
+  bloc: any;
   props: any;
-  setDragBegin: any;
-  updateDragBloc: any;
-  drag: boolean;
+  isOpen: boolean;
 }
 
-function Shrink({
-  props,
-  bloc,
-  index,
-  setDragBegin,
-  updateDragBloc,
-  drag,
-}: ShrinkData) {
-  const [open, setOpen] = useState(true);
+function Shrink({ props, bloc, index, isOpen }: ShrinkData) {
+  const [open, setOpen] = useState(isOpen);
   return (
     <div className={s.shrink_bloc} key={index}>
       <div
@@ -35,18 +25,26 @@ function Shrink({
           (!open ? (
             <div className={s.up}>
               <div style={{ textDecoration: "underline" }}>
-                {`${"Bloc n° " + index} : `}{" "}
+                {index !== -1 && `${"Bloc n° " + index} : `}{" "}
                 {bloc.type === "carousel" &&
                 bloc instanceof Carousel &&
-                bloc.isAutomatique
+                bloc.is_automatique
                   ? "Carousel option 2 (automatique)"
                   : bloc.type === "carousel" &&
                     bloc instanceof Carousel &&
-                    !bloc.isAutomatique
+                    !bloc.is_automatique
                   ? "Carousel option 1 (défilé d'images au clic)"
                   : bloc.type === "picture_group"
                   ? "Groupe d'images"
-                  : "Bouton"}
+                  : bloc.type === "button"
+                  ? "Image lien"
+                  : bloc.type === "video"
+                  ? "Vidéo"
+                  : bloc.type === "parallaxe"
+                  ? "Parallaxe"
+                  : bloc.type === "header"
+                  ? "En tête"
+                  : bloc.type === "footer" && "Bas de page"}
               </div>
               <img src={down} alt="fermer" />
             </div>
