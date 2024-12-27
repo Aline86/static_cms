@@ -290,11 +290,11 @@ function CarouselContainer({
         style={{
           minWidth: `${cardWidth}px`,
           margin: !full ? `${bloc.gap}px auto` : `auto -25px`,
-          height: isResponsive ? `${bloc.height}vh` : `fit-content`,
+          height: isResponsive ? `230px` : `fit-content`,
           paddingTop: isResponsive ? `120px` : result.matches ? `30px` : `0px`,
           minHeight: isResponsive ? `170px` : `fit-content`,
           width: full ? (isResponsive ? `380px` : `100vw`) : `43vw`,
-          marginBottom: result.matches ? "60px" : "0",
+          marginBottom: result.matches ? "60px" : isResponsive ? "60px" : "0",
         }}
       >
         <div
