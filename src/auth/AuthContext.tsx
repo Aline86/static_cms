@@ -7,7 +7,6 @@ function AuthContextProvider(children: any) {
   const [user, setUser] = useState<any>(new User("", "", ""));
 
   const loginAction_starter = async (data: any) => {
-    console.log("data", data);
     try {
       let response = await user.loginAction(data);
       let res = response;
@@ -19,6 +18,7 @@ function AuthContextProvider(children: any) {
       ) {
         let user_data = new User(res[0].email, res[0].password, res[0].token);
         setUser(user_data);
+
         return user_data;
       }
       throw new Error(response.message);

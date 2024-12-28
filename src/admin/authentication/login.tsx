@@ -3,8 +3,7 @@ import AuthContextProvider from "../../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { user, setUser, loginAction_starter } =
-    useContext(AuthContextProvider);
+  const { loginAction_starter } = useContext(AuthContextProvider);
   const navigate = useNavigate();
   const [input, setInput] = useState({
     email: "",
@@ -15,11 +14,7 @@ const Login = () => {
     e.preventDefault();
     if (input.email !== "" && input.password !== "") {
       let user_data = await loginAction_starter(input);
-      console.log("res", user_data);
-
       if (user_data !== undefined) {
-        console.log("user bef", user);
-
         navigate("/admin");
       }
     }

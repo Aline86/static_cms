@@ -12,7 +12,6 @@ class Db {
         if (!isset(self::$instance)) {
             $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
             self::$instance = new PDO('mysql:host=localhost;dbname=' . $database_name, 'root', '', $pdo_options);
-       
         }
         return self::$instance;
     }
@@ -24,13 +23,33 @@ $pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer',
 foreach($pages_array as $page_name) {
     include_once "./models/"  . $page_name . ".php";
 }
-
 $crud = ['get_', 'add_', 'update_', 'delete_', 'delete_child', 'all_'];
 $method = isset($_GET['method']) ? $_GET['method'] : null; //return GET, POST, PUT, DELETE
 $type = isset($_GET['type']) ? $_GET['type'] : null;
 $id = isset($_GET['id']) ? $_GET['id'] : null;
 $id_component = isset($_GET['id_component']) ? $_GET['id_component'] : null;
 $associated_method_for_delete = isset($_GET['associated_table']) ? $_GET['associated_table'] : null;
+$methods_to_check = ['add_', 'update_', 'delete_', 'delete_child'];
+
+if(in_array($method, $methods_to_check) && $_POST['token'] === null) {
+    exit();
+}
+
+if (isset($_POST['token'])) {
+    $token = json_decode($_POST['token']);
+    $requete2 = 'SELECT * FROM user WHERE token=:token';
+    $resultat2 = $db->prepare($requete2);
+    $resultat2->bindParam(':token', $token, PDO::PARAM_STR);
+    $resultat2->execute(); 
+    $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+    print_r($token);
+    if(count($user) > 0 ) {
+        unset($_POST['token']);
+    }
+    else {
+        exit();
+    }
+} 
 
 if(isset($_POST['BASE_URL'])) {
     unset($_POST['BASE_URL']);
@@ -38,6 +57,7 @@ if(isset($_POST['BASE_URL'])) {
 if(isset($_POST['parameters'])) {
     unset($_POST['parameters']);
 }
+
 $method_constructor = [];
 foreach ($_POST as $parameter => $data_sent) {
  
