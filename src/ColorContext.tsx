@@ -29,8 +29,6 @@ function ColorContextProvider(children: any) {
 
   async function updateCommon(e: any, field: string, common: Common) {
     common.update(e, field);
-    console.log(common);
-
     await common.save_bloc();
     initCommon();
   }

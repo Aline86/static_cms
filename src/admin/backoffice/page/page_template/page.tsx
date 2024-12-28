@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import s from "./style.module.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ajout from "./../../../../assets/ajouter.png";
 import Footer from "../../bloc/components/footer/Footer";
 import Header from "../../bloc/components/header/Header";
@@ -10,6 +10,9 @@ import BlocDisplay from "./bloc_picker";
 import Page from "../class/Page";
 import Blocs from "./blocs";
 import BlocTools from "../../../tools/blocs_tools";
+
+import User from "../../../authentication/class/User";
+import AuthContextProvider from "../../../../auth/AuthContext";
 
 interface PageParams {}
 
@@ -21,6 +24,9 @@ function Visualization({}: PageParams) {
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
   const { id, name } = useParams();
+
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContextProvider);
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
 
@@ -45,6 +51,11 @@ function Visualization({}: PageParams) {
       behavior: "smooth",
     });
   }
+  const logOut = () => {
+    user.logOut();
+    setUser(new User("", "", ""));
+    navigate("/login");
+  };
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();
   }, []);
@@ -74,6 +85,11 @@ function Visualization({}: PageParams) {
           <li>
             <div className={s.navigate} onClick={() => setOpen(!open)}>
               Ajouter un bloc
+            </div>
+          </li>
+          <li>
+            <div className={s.navigate} onClick={() => logOut()}>
+              Se déconnecter
             </div>
           </li>
           <li>
