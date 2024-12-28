@@ -47,7 +47,7 @@ function Voir() {
     let bloc_pages = await tools.getAllBlocsPage();
     bloc_pages !== undefined && setBlocs(bloc_pages);
     await footer.get_bloc();
-    //isVideoLoaded(false);
+    checkIfVideo();
     setToggle(!toggle);
   }
 
@@ -100,9 +100,7 @@ function Voir() {
       asynchronRequestsToPopulateBlocs();
     }
   }, []);
-  useEffect(() => {
-    checkIfVideo();
-  }, [blocs]);
+
   useEffect(() => {}, [videoLoaded]);
 
   return (

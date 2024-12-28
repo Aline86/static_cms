@@ -43,7 +43,7 @@ function Front() {
     let bloc_pages = await tools.getAllBlocsPage();
     bloc_pages !== undefined && setBlocs(bloc_pages);
     await footer.get_bloc();
-    //isVideoLoaded(false);
+    checkIfVideo();
     setToggle(!toggle);
   }
 
@@ -94,13 +94,11 @@ function Front() {
 
   useEffect(() => {
     adaptRoot();
-    if (blocs.length === 0 || blocs === undefined) {
-      asynchronRequestsToPopulateBlocs();
-    }
+    // if (blocs.length === 0 || blocs === undefined) {
+    asynchronRequestsToPopulateBlocs();
+    // }
   }, []);
-  useEffect(() => {
-    checkIfVideo();
-  }, [blocs]);
+
   useEffect(() => {}, [videoLoaded]);
 
   return (

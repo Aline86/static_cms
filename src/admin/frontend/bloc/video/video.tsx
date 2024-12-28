@@ -49,7 +49,9 @@ function VideoVizualisation({
     }
     setUrl(url);
   };
-
+  useEffect(() => {
+    updateblocRef();
+  }, []);
   useEffect(() => {
     checkExternal(bloc.video_url);
   }, [videoLoaded]);

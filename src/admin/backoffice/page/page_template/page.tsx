@@ -59,9 +59,7 @@ function Visualization({}: PageParams) {
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();
   }, []);
-  /*useEffect(() => {
-    asynchronRequestsToPopulateBlocs();
-  }, [id]);*/
+
   useEffect(() => {}, [toggle, blocs]);
   return (
     <div className="page">

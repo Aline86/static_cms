@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import remove from "./../../../assets/remove.png";
 import ajout from "./../../../assets/ajouter.png";
 import update from "./../../../assets/update.png";
 import add_to_database from "./../../../assets/add_to_database.png";
 import s from "./style.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Page from "./class/Page";
 import Header from "../bloc/components/header/Header";
 import Footer from "../bloc/components/footer/Footer";
+import AuthContextProvider from "../../../auth/AuthContext";
+import User from "../../authentication/class/User";
 
 interface PagesParams {}
 
@@ -17,8 +19,11 @@ function Pages({}: PagesParams) {
   const [refresh, setRefresh] = useState<boolean>(false);
   const [pages, setPages] = useState<Page[]>([]);
   const [header, setHeader] = useState<Header>(new Header());
+  const { user, setUser } = useContext(AuthContextProvider);
   const page_type = new Page();
   const [footer, setFooter] = useState<Footer>(new Footer());
+  const navigate = useNavigate();
+
   const updatePage = (e: any, field: string, page: Page, key: number) => {
     page.updatePage(e, field);
     pages[key] = page;
@@ -69,7 +74,11 @@ function Pages({}: PagesParams) {
     }
     setToggle(!toggle);
   };
-
+  const logOut = () => {
+    user.logOut();
+    setUser(new User("", "", ""));
+    navigate("/login");
+  };
   useEffect(() => {
     getHeader();
     getPages();
@@ -83,6 +92,19 @@ function Pages({}: PagesParams) {
   useEffect(() => {}, [toggle, header, footer, pages]);
   return (
     <div className={s.pages}>
+      <div className="flex">
+        <Link to={{ pathname: `/admin` }}>
+          <li>
+            <div className={s.navigate}>Paramètres généraux</div>
+          </li>
+        </Link>
+        <li>
+          <div className={s.navigate} onClick={() => logOut()}>
+            Se déconnecter
+          </div>
+        </li>
+      </div>
+
       <div
         className={s.addCard}
         onClick={(e) => {
