@@ -26,7 +26,7 @@ function Bouton({
   full,
   isResponsive,
 }: CustomButtonInfo) {
-  const result = window.matchMedia("(max-width: 1000px)");
+  const result = window.matchMedia("(max-width: 700px)");
   const [link, isLink] = useState(true);
   const checkExternal = async (url: string) => {
     if (/.pdf/.test(url.substring(url.length - 4))) {
@@ -58,7 +58,7 @@ function Bouton({
       <div className={s.image_button_bloc}>
         <img
           style={{
-            width: isResponsive ? "320px" : "100%",
+            width: isResponsive || result.matches ? "320px" : "100%",
           }}
           src={BASE_URL_SITE + "/api/uploadfile/" + `${bloc.image_url}`}
           alt={bloc.title}
