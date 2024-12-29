@@ -43,25 +43,33 @@ $id_component = isset($_GET['id_component']) ? $_GET['id_component'] : null;
 $associated_method_for_delete = isset($_GET['associated_table']) ? $_GET['associated_table'] : null;
 $methods_to_check = ['add_', 'update_', 'delete_', 'delete_child'];
 
-if(in_array($method, $methods_to_check) && $_POST['token'] === null) {
-    exit();
-}
 
-if (isset($_POST['token'])) {
-    $token = json_decode($_POST['token']);
-    $requete2 = 'SELECT * FROM user WHERE token=:token';
-    $resultat2 = $db->prepare($requete2);
-    $resultat2->bindParam(':token', $token, PDO::PARAM_STR);
-    $resultat2->execute(); 
-    $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-    print_r($token);
-    if(count($user) > 0 ) {
-        unset($_POST['token']);
-    }
-    else {
-        exit();
-    }
+$headers = getallheaders();
+$authorization_header = $headers['Authorization'] ?? null;
+
+if ($authorization_header) {
+    // Bearer token is sent in the format: "Bearer <token>"
+    $token_parts = explode(' ', $authorization_header);
+    if (count($token_parts) == 2 && $token_parts[0] == 'Bearer') {
+        $token = $token_parts[1]; // Extract token
+        if(in_array($method, $methods_to_check) && $token === null) {
+            exit();
+        }
+        $requete2 = 'SELECT * FROM user WHERE token=:token';
+        $resultat2 = $db->prepare($requete2);
+        $resultat2->bindParam(':token', $token, PDO::PARAM_STR);
+        $resultat2->execute(); 
+        $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+
+        if(count($user) > 0 ) {
+            unset($_POST['token']);
+        }
+        else {
+            exit();
+        }
+    }   
 } 
+
 
 if(isset($_POST['BASE_URL'])) {
     unset($_POST['BASE_URL']);

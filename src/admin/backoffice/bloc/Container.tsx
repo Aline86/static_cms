@@ -166,6 +166,7 @@ export default abstract class Container {
       const response = await fetch(
         this.BASE_URL + this._get_class_api_call_parameters(),
         {
+          method: "DELETE",
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
