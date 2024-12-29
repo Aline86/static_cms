@@ -1,3 +1,4 @@
+import { BASE_URL_SITE } from "../../../../config";
 import CarouselData from "../../../backoffice/bloc/components/carousel/class/CarouselData";
 import InsideCardDataShow from "./InsideCardDataShow";
 import s from "./styles/style.module.css";
@@ -40,7 +41,7 @@ function CardDataShow({
   const result = window.matchMedia("(max-width: 800px)");
 
   const style_data_transition_finished_auto = {
-    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
+    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
     width: width,
     height: `200px`,
     transition: `${trasnsType}`,
@@ -48,7 +49,7 @@ function CardDataShow({
     fontSize: isResponsive ? `18px` : `24px`,
   };
   const style_data_transition_start_auto = {
-    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
+    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
     width: width,
     height: `200px`,
     fontSize: isResponsive ? `18px` : `24px`,

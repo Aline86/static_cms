@@ -3,6 +3,7 @@ import s from "./styles/style.module.css";
 import { Link, useParams } from "react-router-dom";
 import Page from "../../../backoffice/page/class/Page";
 import { Button } from "../../../backoffice/bloc/components/button/class/Button";
+import { BASE_URL_SITE } from "../../../../config";
 
 interface CardDatas {
   data: Button;
@@ -71,10 +72,7 @@ function InsideButton({
       </a>
     ) : (
       <a
-        href={
-          `http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/` +
-          `${data.href_url}`
-        }
+        href={BASE_URL_SITE + `/api/uploadfile/` + `${data.href_url}`}
         className="buttons"
         style={style_data}
       >

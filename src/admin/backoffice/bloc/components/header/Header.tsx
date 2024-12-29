@@ -89,14 +89,14 @@ export default class Header extends Container {
         break;
       case "logo_url":
         this.set_logo_url(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0], "http://localhost:80");
+        UploadService.handleUpload(e.target.files[0]);
 
         break;
       case "background_url":
         this.set_background_url(
           UploadService.sanitizeName(e.target.files[0].name)
         );
-        UploadService.handleUpload(e.target.files[0], "http://localhost:80");
+        UploadService.handleUpload(e.target.files[0]);
         break;
       case "social_network":
         switch (input) {
@@ -117,10 +117,7 @@ export default class Header extends Container {
               (this.link_networks_an_others_header[index].logo_url =
                 UploadService.sanitizeName(e.target.files[0].name));
 
-            UploadService.handleUpload(
-              e.target.files[0],
-              "http://localhost:80"
-            );
+            UploadService.handleUpload(e.target.files[0]);
 
             break;
 

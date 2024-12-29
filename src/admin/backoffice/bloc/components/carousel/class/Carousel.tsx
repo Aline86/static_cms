@@ -98,7 +98,7 @@ export class Carousel extends Container {
           (this.carousel_data[index].image_url = UploadService.sanitizeName(
             e.target.files[0].name
           ));
-        UploadService.handleUpload(e.target.files[0], "http://localhost:80");
+        UploadService.handleUpload(e.target.files[0]);
         break;
       case "color":
         index !== undefined &&

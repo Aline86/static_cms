@@ -111,7 +111,7 @@ function Front() {
       />
       {blocs.map((value, index) => {
         return videoLoaded && value instanceof TextPicture ? (
-          <div className={s.bloc}>
+          <div className={s.bloc} key={index}>
             <Bloc
               index={index}
               bloc={value}
@@ -132,6 +132,7 @@ function Front() {
                   : "30px"
               }`,
             }}
+            key={index}
           >
             <CarouselVisualization
               input_bloc={value}
@@ -142,7 +143,7 @@ function Front() {
             />
           </div>
         ) : videoLoaded && value instanceof PictureGroup ? (
-          <div className={s.carousel}>
+          <div className={s.carousel} key={index}>
             <PictureGroupVizualisation
               input_bloc={value}
               toggle={toggle}
@@ -152,7 +153,7 @@ function Front() {
             />
           </div>
         ) : videoLoaded && value instanceof Button ? (
-          <div className={s.carousel}>
+          <div className={s.carousel} key={index}>
             <ButtonVisualization
               input_bloc={value}
               toggle={toggle}
@@ -162,7 +163,7 @@ function Front() {
             />
           </div>
         ) : value instanceof Video ? (
-          <div className={s.video}>
+          <div className={s.video} key={index}>
             <VideoVizualisation
               bloc={value}
               updateLoaded={updateLoaded}
@@ -174,7 +175,7 @@ function Front() {
         ) : (
           videoLoaded &&
           value instanceof Parallaxe && (
-            <div className={s.video}>
+            <div className={s.video} key={index}>
               <ParallaxeVizualisation
                 bloc={value}
                 full={true}

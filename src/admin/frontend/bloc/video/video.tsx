@@ -2,6 +2,7 @@ import s from "./style.module.css";
 
 import { useEffect, useRef, useState } from "react";
 import { Video } from "../../../backoffice/bloc/components/video/class/Video";
+import { BASE_URL_SITE } from "../../../../config";
 
 interface BlocParams {
   bloc: Video;
@@ -243,10 +244,7 @@ function VideoVizualisation({
           }}
         >
           <source
-            src={
-              "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-              url
-            }
+            src={BASE_URL_SITE + "/api/uploadfile/" + url}
             type="video/webm"
           />
         </video>

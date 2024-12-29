@@ -4,6 +4,7 @@ import s from "./styles/style.module.css";
 import { useEffect, useState } from "react";
 import Page from "../../../backoffice/page/class/Page";
 import CarouselData from "../../../backoffice/bloc/components/carousel/class/CarouselData";
+import { BASE_URL_SITE } from "../../../../config";
 
 interface CardDatas {
   value: CarouselData;
@@ -27,7 +28,7 @@ function InsideCardDataShow({
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
   const style_data = {
-    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
+    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
     width: `${!result.matches ? `${width}vw` : `80vw`}`,
     height: full ? `${height}vh` : `${height}vh`,
   };
@@ -61,7 +62,7 @@ function InsideCardDataShow({
       target="_blank"
       className={s.card_app}
       style={{
-        background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${value.image_url}") no-repeat center / cover`,
+        background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
         width: `${!result.matches ? `${width}vw` : `80vw`}`,
         height: full ? `${height}vh` : `${height * 0.5}vh`,
       }}

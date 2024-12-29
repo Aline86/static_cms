@@ -20,6 +20,7 @@ import Draft, {
 import { UploadService } from "../../../../services/uploadService";
 import { Link } from "react-router-dom";
 import LinkData from "./link/HyperLink";
+import { BASE_URL_SITE } from "../../../../../../config";
 
 function BlocInput({
   input_bloc,
@@ -133,19 +134,12 @@ function BlocInput({
 
                       reader.readAsDataURL(file);
                       reader.onload = async () => {
-                        let filename = await UploadService.handleUpload(
-                          file,
-                          ""
-                        );
+                        let filename = await UploadService.handleUpload(file);
                         resolve({
                           data: {
-                            link:
-                              "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-                              filename,
+                            link: BASE_URL_SITE + "/api/uploadfile/" + filename,
                           },
-                          link:
-                            "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-                            filename,
+                          link: BASE_URL_SITE + "/api/uploadfile/" + filename,
                         });
                       };
                       reader.onerror = (error) => {

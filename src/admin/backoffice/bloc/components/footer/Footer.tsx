@@ -188,10 +188,7 @@ export default class Footer extends Container {
               (this.links_network_an_others_footer[index].logo_url =
                 UploadService.sanitizeName(e.target.files[0].name));
 
-            UploadService.handleUpload(
-              e.target.files[0],
-              "http://localhost:80"
-            );
+            UploadService.handleUpload(e.target.files[0]);
             break;
 
           default:

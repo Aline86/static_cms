@@ -1,6 +1,7 @@
 import s from "./style.module.css";
 import { useEffect, useRef, useState } from "react";
 import { Parallaxe } from "../../../backoffice/bloc/components/parallaxe/class/Parallaxe";
+import { BASE_URL_SITE } from "../../../../config";
 
 interface BlocParams {
   bloc: Parallaxe;
@@ -33,9 +34,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
         className="show"
         style={{
           backgroundImage:
-            `url(http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/` +
-            bloc.image +
-            `)`,
+            `url(${BASE_URL_SITE}/api/uploadfile/` + bloc.image + `)`,
           textTransform: "uppercase",
           width: !full ? "45vw" : "100%",
           backgroundAttachment: "fixed",
@@ -59,9 +58,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
       style={{
         position: "relative",
         backgroundImage:
-          `url(http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/` +
-          bloc.image +
-          `)`,
+          `url(${BASE_URL_SITE}/api/uploadfile/` + bloc.image + `)`,
         height: "45vh",
         backgroundAttachment: "fixed",
         width: full ? "100vw" : "46vw",

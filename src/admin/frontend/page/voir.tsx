@@ -89,6 +89,7 @@ function Voir() {
       ? `${common?.background_color_buttons}`
       : "#2f6091",
     height: "fit-content",
+    paddingBottom: "30px",
   };
   useEffect(() => {
     adaptRoot();

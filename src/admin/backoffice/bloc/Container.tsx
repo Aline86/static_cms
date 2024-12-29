@@ -3,13 +3,14 @@
 // d'attributs (logique qui sera suivie sur le même principe pour les méthodes api)
 // Logique basée sur le fait que les noms de colonnes en bdd sont identiques au attributs des enfants
 
+import { BASE_URL_SITE } from "../../../config";
+
 export default abstract class Container {
   id: number;
   title: string;
   type: string;
   // à mettre dans un process .env
-  BASE_URL: string =
-    "http://localhost:80/cms_v3/welcome_poitiers/api/index.php?method=";
+  BASE_URL: string = BASE_URL_SITE + "/api/index.php?method=";
   token: string | null = localStorage.getItem("authToken");
 
   constructor(id: number = -1, title: string = "", type: string = "") {

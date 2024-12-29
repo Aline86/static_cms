@@ -1,3 +1,5 @@
+import { BASE_URL_SITE } from "./../../../config.tsx";
+
 export default class User {
   email: string;
   password: string;
@@ -14,7 +16,7 @@ export default class User {
     formdata.append("password", data.password);
 
     const response = await fetch(
-      "http://localhost:80/cms_v3/welcome_poitiers/api/user.php?method=connexion",
+      BASE_URL_SITE + "/api/user.php?method=connexion",
       {
         method: "POST",
         body: formdata,
@@ -34,7 +36,7 @@ export default class User {
     formdata.append("password", this.password);
 
     const response = await fetch(
-      "http://localhost:80/cms_v3/welcome_poitiers/api/user.php?method=delete_connexion",
+      BASE_URL_SITE + "/api/user.php?method=delete_connexion",
       {
         method: "DELETE",
         body: formdata,
