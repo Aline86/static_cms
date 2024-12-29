@@ -55,6 +55,7 @@ function Visualization({}: PageParams) {
     user.logOut();
     setUser(new User("", "", ""));
     navigate("/login");
+    localStorage.setItem("authToken", "");
   };
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();
