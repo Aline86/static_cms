@@ -21,8 +21,10 @@ class Carousel {
     } 
     public function get_associated_tables()
     {
-        $requete = 'SELECT TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = "'. $this->type .'" AND TABLE_SCHEMA = "' .$this->database_name . '"';
-        $resultat = self::$db->query($requete);
+        $requete = 'SELECT TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = :name AND TABLE_SCHEMA = :schema';
+        $resultat = self::$db->prepare($requete);
+        $resultat->bindValue(':name', $this->type);
+        $resultat->bindValue(':schema', $this->database_name);
         $resultat->execute();
         $tables = $resultat->fetchAll();
 
