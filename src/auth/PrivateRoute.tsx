@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import AuthContext from "../auth/AuthContext";
 
 const PrivateRoute = () => {
   const user = useContext(AuthContext);
-  console.log("user.token", user.user.token);
-  if (user.user.token === "") {
+  if (
+    user.user.token === "" ||
+    user.user.token !== localStorage.getItem("authToken")
+  ) {
     return <Navigate to="/login" />;
-  } else {
-    localStorage.setItem("authToken", user.user.token);
   }
   return <Outlet />;
 };

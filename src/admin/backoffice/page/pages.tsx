@@ -78,6 +78,7 @@ function Pages({}: PagesParams) {
     user.logOut();
     setUser(new User("", "", ""));
     navigate("/login");
+    localStorage.setItem("authToken", "");
   };
   useEffect(() => {
     getHeader();
