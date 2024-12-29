@@ -25,6 +25,8 @@ function InsideButton({
   const [external, isExternalLink] = useState<boolean>(false);
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
+  const result = window.matchMedia("(max-width: 700px)");
+
   const checkExternal = async (url: string) => {
     if (typeof url !== "number") {
       isExternalLink(true);
@@ -58,7 +60,7 @@ function InsideButton({
   useEffect(() => {}, [link]);
   const style_data = {
     cursor: "pointer",
-    width: isResponsive ? `320px` : `${width}vw`,
+    width: isResponsive || result.matches ? `320px` : `${width}vw`,
     height: `${height}px`,
     lineHeight: `${height}px`,
     color: isLightOrDark(data.background_color),

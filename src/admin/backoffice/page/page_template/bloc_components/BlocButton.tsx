@@ -52,13 +52,7 @@ function BlocButton({
       }
       css_position={
         <CssButtonPosition
-          props={
-            <ButtonInput
-              updateButton={updateButton}
-              toggle={toggle}
-              bloc={bloc}
-            />
-          }
+          props={<ButtonInput updateButton={updateButton} bloc={bloc} />}
           updateBloc={updateButton}
           bloc={bloc}
           draggable={drag}

@@ -3,12 +3,11 @@ import DropdownData from "../dropdown/Dropdown";
 import s from "./style/style.module.css";
 
 interface CardDatas {
-  toggle: boolean;
   updateButton: any;
   bloc: Button;
 }
 
-function ButtonInput({ toggle, updateButton, bloc }: CardDatas) {
+function ButtonInput({ updateButton, bloc }: CardDatas) {
   const result = window.matchMedia("(max-width: 1000px)");
 
   return (
