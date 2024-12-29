@@ -6,6 +6,7 @@ import Nav from "./Nav/Nav";
 import { Link } from "react-router-dom";
 import Header from "../../../backoffice/bloc/components/header/Header";
 import reseaux from "./../../../../assets/reseaux.png";
+import { BASE_URL_SITE } from "../../../../config";
 
 interface HeaderInfo {
   input_bloc: Header;
@@ -22,7 +23,7 @@ function HeaderVizualization({
   const [open, setOpen] = useState(false);
   const [trigger_show_link, setTrigger_show_link] = useState(true);
   const [stylePath, setStylePath] = useState(s);
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
   const style_width = {
     width: isResponsive ? "380px" : "100%",
   };
@@ -52,8 +53,7 @@ function HeaderVizualization({
         className={stylePath.backdrop}
         style={{
           backgroundImage: `url(${
-            "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-            input_bloc.background_url
+            BASE_URL_SITE + "/api/uploadfile/" + input_bloc.background_url
           })`,
         }}
       ></div>
@@ -100,8 +100,7 @@ function HeaderVizualization({
                     {value.logo_url.length > 0 ? (
                       <img
                         src={
-                          "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-                          value.logo_url
+                          BASE_URL_SITE + "/api/uploadfile/" + value.logo_url
                         }
                         alt={value.title}
                         className={
@@ -118,10 +117,7 @@ function HeaderVizualization({
           <Link to="/">
             <div className={stylePath.logo}>
               <img
-                src={
-                  "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-                  input_bloc.logo_url
-                }
+                src={BASE_URL_SITE + "/api/uploadfile/" + input_bloc.logo_url}
                 alt="logo"
               />
             </div>

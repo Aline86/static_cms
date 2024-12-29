@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 import Page from "../../../backoffice/page/class/Page";
+import { BASE_URL_SITE } from "../../../../config";
 
 interface CardDatas {
   width: number;
@@ -26,17 +27,19 @@ function CardData({
   full,
   isResponsive,
 }: CardDatas) {
-  const result = window.matchMedia("(max-width: 1000px)");
+  const result = window.matchMedia("(max-width: 800px)");
   const [external, isExternalLink] = useState<boolean>(true);
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
   let style_data: any = undefined;
   if (!Boolean(data.is_data_button)) {
     style_data = {
-      background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/${data.image_url}") no-repeat center / cover`,
+      background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("${BASE_URL_SITE}/api/uploadfile/${data.image_url}") no-repeat center / cover`,
       width: full
         ? isResponsive
           ? `360px`
+          : result.matches
+          ? "95%"
           : `${width}vw`
         : `${width * 0.5}vw`,
       height: `${height}vh`,

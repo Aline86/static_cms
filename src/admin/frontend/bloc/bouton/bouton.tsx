@@ -5,6 +5,7 @@ import InsideButton from "./InsideButton";
 import { Button } from "../../../backoffice/bloc/components/button/class/Button";
 
 import JSanimationH2 from "../snippets/js_animation_h2";
+import { BASE_URL_SITE } from "../../../../config";
 
 interface CustomButtonInfo {
   width: number;
@@ -59,10 +60,7 @@ function Bouton({
           style={{
             width: isResponsive ? "320px" : "100%",
           }}
-          src={
-            "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-            `${bloc.image_url}`
-          }
+          src={BASE_URL_SITE + "/api/uploadfile/" + `${bloc.image_url}`}
           alt={bloc.title}
         />
       </div>

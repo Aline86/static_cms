@@ -37,7 +37,8 @@
 }
 .pages {
   display: block;
-  width: 100%;
+  width: 95%;
+  margin: 0 auto;
 }
 .button_save_page {
   cursor: pointer;
@@ -48,4 +49,29 @@
 .href_url {
   border: none;
   cursor: pointer;
+}
+li {
+  list-style: none;
+}
+li .navigate,
+li .navigate_2 {
+  color: white;
+  background-color: #084cdf;
+  padding: 15px;
+
+  text-align: center;
+  border-radius: 3px;
+  font-size: 25px;
+  margin-top: 12px;
+  cursor: pointer;
+}
+li .navigate {
+  width: 250px;
+}
+
+li .navigate_2 {
+  width: 350px;
+}
+a {
+  text-decoration: none;
 }

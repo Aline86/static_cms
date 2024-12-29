@@ -20,7 +20,7 @@ interface BlocParams {
 
 function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
   useEffect(() => {
     setContentState(typeof bloc.text === "object" ? bloc.text : contentState);
   }, [bloc.text]);
@@ -55,17 +55,17 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
             : `row`,
         }}
       >
-        <div
-          className={s.image}
-          style={{
-            width: `${bloc.bloc_column ? `100%` : `50%`}`,
-            paddingTop: "15px",
-            marginLeft: `${!bloc.bloc_column ? `30px` : `0px`}`,
-            marginRight: `${!bloc.bloc_column ? `30px` : `0px`}`,
-            float: `${bloc.image_right ? "left" : "right"}`,
-          }}
-        >
-          {bloc.image !== undefined && (
+        {bloc.image.length > 0 && (
+          <div
+            className={s.image}
+            style={{
+              width: `${bloc.bloc_column ? `100%` : `50%`}`,
+              paddingTop: "15px",
+              marginLeft: `${!bloc.bloc_column ? `30px` : `0px`}`,
+              marginRight: `${!bloc.bloc_column ? `30px` : `0px`}`,
+              float: `${bloc.image_right ? "left" : "right"}`,
+            }}
+          >
             <Image
               full={full}
               image={bloc.image}
@@ -75,8 +75,8 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
               isBlocColumn={bloc.bloc_column}
               isResponsive={isResponsive}
             />
-          )}
-        </div>
+          </div>
+        )}
         {contentState !== undefined && (
           <div
             className={s.text}

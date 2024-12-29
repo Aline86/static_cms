@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import s from "./style.module.css";
 import CssPosition from "../classes/cssPosition";
 import OptionCss from "../../../../backoffice/bloc/components/text_picture/class/OptionsCss";
+import { BASE_URL_SITE } from "../../../../../config";
 
 interface ImageParams {
   image: string;
@@ -44,10 +45,7 @@ function Image({
       >
         <img
           style={{ width: `${css.width}%`, height: `auto` }}
-          src={
-            "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-            image
-          }
+          src={BASE_URL_SITE + "/api/uploadfile/" + image}
           alt={alt_image}
         />
       </div>

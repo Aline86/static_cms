@@ -57,7 +57,7 @@ export class Button extends Container {
       case "href_url":
         if (e.target.files !== null) {
           this.set_href_url(UploadService.sanitizeName(e.target.files[0].name));
-          UploadService.handleUpload(e.target.files[0], "http://localhost:80");
+          UploadService.handleUpload(e.target.files[0]);
         } else {
           this.set_href_url(e.target.value);
         }
@@ -89,7 +89,7 @@ export class Button extends Container {
 
       case "image_url":
         this.set_image_url(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0], "http://localhost:80");
+        UploadService.handleUpload(e.target.files[0]);
         break;
       case "background_color":
         this.set_background_color(e.target.value);

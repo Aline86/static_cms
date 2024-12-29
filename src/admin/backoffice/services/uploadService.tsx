@@ -1,10 +1,11 @@
 import sanitize from "sanitize-filename";
+import { BASE_URL_SITE } from "../../../config";
 export class UploadService {
   constructor() {}
   static sanitizeName = (filename: string) => {
     return sanitize(filename.replace("/.(?=.*.) /", ""));
   };
-  static handleUpload = async (file: any, base_url: string) => {
+  static handleUpload = async (file: any) => {
     if (file) {
       console.log("Uploading file...");
       const formData = new FormData();
@@ -12,8 +13,7 @@ export class UploadService {
       let result = null;
       let filename = this.sanitizeName(file.name);
       result = await fetch(
-        "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/index.php?name=" +
-          filename,
+        BASE_URL_SITE + "/api/uploadfile/index.php?name=" + filename,
         {
           method: "POST",
           body: formData,

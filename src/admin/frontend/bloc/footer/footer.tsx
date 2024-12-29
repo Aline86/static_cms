@@ -3,6 +3,7 @@ import s from "./styles.module.css";
 import v from "./style_responsive.module.css";
 import e from "./edition.module.css";
 import Footer from "../../../backoffice/bloc/components/footer/Footer";
+import { BASE_URL_SITE } from "../../../../config";
 
 interface FooterInfo {
   input_bloc: Footer;
@@ -20,7 +21,7 @@ function FooterVizualization({
   const [stylePath, setStylePath] = useState(s);
   const root_map: string =
     input_bloc.map_iframe_url; /*.replace("watch?v=", "v/");*/
-
+  const result = window.matchMedia("(max-width: 800px)");
   const style_width = {
     width: isResponsive ? "380px" : "100%",
   };
@@ -54,10 +55,7 @@ function FooterVizualization({
                   }}
                 >
                   <img
-                    src={
-                      "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-                      value.logo_url
-                    }
+                    src={BASE_URL_SITE + "/api/uploadfile/" + value.logo_url}
                     alt={value.title}
                   />
                 </a>
@@ -65,10 +63,7 @@ function FooterVizualization({
                 <a
                   key={key}
                   className={stylePath.facebook}
-                  href={
-                    "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-                    value.logo_url
-                  }
+                  href={BASE_URL_SITE + "/api/uploadfile/" + value.logo_url}
                   title={value.title}
                   target="_blank"
                   style={{

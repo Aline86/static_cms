@@ -99,7 +99,7 @@ export class PictureGroup extends Container {
         index !== undefined &&
           (this.picture_group_data[index].image_url =
             UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0], "http://localhost:80");
+        UploadService.handleUpload(e.target.files[0]);
         break;
       case "color":
         index !== undefined &&

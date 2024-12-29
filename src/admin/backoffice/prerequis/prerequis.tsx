@@ -136,7 +136,7 @@ function Prerequis({}: PageParams) {
         />
       </div>
       <div className={s.center}>
-        <Link to={{ pathname: `/pages` }}>
+        <Link to={{ pathname: `/admin/pages` }}>
           <li>
             <div className={s.navigate}>Créer des pages</div>
           </li>

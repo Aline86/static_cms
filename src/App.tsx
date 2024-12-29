@@ -4,6 +4,8 @@ import ColorContext from "./ColorContext";
 import Page from "./admin/backoffice/page/class/Page";
 import Prerequis from "./admin/backoffice/prerequis/prerequis";
 
+import { AuthContextProvider } from "./auth/AuthContext";
+
 function App() {
   const { common } = useContext(ColorContext);
   const styles = {
@@ -28,13 +30,13 @@ function App() {
   }, [common]);
   return (
     common !== null && (
-      <div className="app_container" style={styles}>
-        <div className="inside_app_container">
+      <AuthContextProvider>
+        <div className="app_container" style={styles}>
           <ThemeContextProvider>
             <Prerequis />
           </ThemeContextProvider>
         </div>
-      </div>
+      </AuthContextProvider>
     )
   );
 }

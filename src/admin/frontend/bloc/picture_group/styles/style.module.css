@@ -20,7 +20,7 @@
   justify-content: center;
   align-items: center;
 }
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
   .container_class {
     overflow-x: scroll;
     margin: 0;
@@ -170,7 +170,7 @@ button {
   text-decoration: underline;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
   .container_class_image_group {
     overflow-x: scroll;
     margin: 0;
@@ -383,7 +383,7 @@ button {
   border-bottom-right-radius: 15px;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
   .right_auto {
     display: none;
   }

@@ -2,6 +2,7 @@ import s from "./style.module.css";
 
 import { useEffect, useRef, useState } from "react";
 import { Video } from "../../../backoffice/bloc/components/video/class/Video";
+import { BASE_URL_SITE } from "../../../../config";
 
 interface BlocParams {
   bloc: Video;
@@ -26,7 +27,7 @@ function VideoVizualisation({
   const [blocHeight, setblocHeight] = useState<number>(0);
   const [url, setUrl] = useState<string>("");
   const blocRef = useRef<any>();
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
   function updateblocRef() {
     const blocWidth: number | undefined = blocRef?.current?.clientWidth;
 
@@ -49,7 +50,9 @@ function VideoVizualisation({
     }
     setUrl(url);
   };
-
+  useEffect(() => {
+    updateblocRef();
+  }, []);
   useEffect(() => {
     checkExternal(bloc.video_url);
   }, [videoLoaded]);
@@ -100,7 +103,11 @@ function VideoVizualisation({
       <div
         style={{
           margin: "0 auto",
-          marginTop: "30px",
+          marginTop: full
+            ? !isResponsive && !result.matches
+              ? "-60px"
+              : "30px"
+            : "0px",
           marginBottom: "60px",
           width: `${full ? (isResponsive ? "380px" : "50vw") : "43vw"}`,
           height: "50vh",
@@ -140,7 +147,7 @@ function VideoVizualisation({
             ? isResponsive
               ? "0"
               : result.matches
-              ? "-35px"
+              ? "0"
               : "0px"
             : "30px",
           marginTop: full
@@ -162,8 +169,8 @@ function VideoVizualisation({
                   : "relative"
                 : "absolute"
             }`,
-            top: `${full ? (isResponsive ? "200px" : "40%") : "450px"}`,
-            left: `${full ? (isResponsive ? "50%" : "50%") : "52%"}`,
+            top: `${full ? (isResponsive ? "200px" : "40%") : "100px"}`,
+            left: `${full ? (isResponsive ? "50%" : "50%") : "0%"}`,
             transform: `${
               full
                 ? isResponsive
@@ -237,10 +244,7 @@ function VideoVizualisation({
           }}
         >
           <source
-            src={
-              "http://localhost:80/cms_v3/welcome_poitiers/api/uploadfile/" +
-              url
-            }
+            src={BASE_URL_SITE + "/api/uploadfile/" + url}
             type="video/webm"
           />
         </video>

@@ -1,7 +1,7 @@
 import { SetStateAction, useContext, useEffect, useState } from "react";
 import s from "./styles.module.css";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import { RawDraftContentState } from "draft-js";
 
@@ -34,19 +34,20 @@ function Voir() {
   const [isReponsive, setResponsive] = useState(false);
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
+  const location = useLocation();
   const [videoLoaded, isVideoLoaded] = useState<boolean>(false);
-  const result = window.matchMedia("(max-width: 700px)");
+  const result = window.matchMedia("(max-width: 800px)");
+  const result_mid = window.matchMedia("(max-width: 1200px)");
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
   const { common } = useContext(ColorContext);
   async function asynchronRequestsToPopulateBlocs() {
     await header.get_bloc();
 
-    await footer.get_bloc();
-
     let bloc_pages = await tools.getAllBlocsPage();
     bloc_pages !== undefined && setBlocs(bloc_pages);
-    //isVideoLoaded(false);
+    await footer.get_bloc();
+    checkIfVideo();
     setToggle(!toggle);
   }
 
@@ -59,25 +60,22 @@ function Voir() {
       root.style.width = "380px";
       root.style.paddingTop = "0px";
       root.style.paddingBottom = "220px";
+    } else if (root !== null && result_mid.matches) {
+      root.style.width = "100vw";
+      root.style.paddingTop = "75px";
+      root.style.paddingBottom = "75px";
     } else if (root !== null) {
       root.style.width = "100vw";
       root.style.paddingTop = "130px";
       root.style.paddingBottom = "75px";
     }
   };
-  /* useEffect(() => {
-    if (
-      localStorage.getItem("previous_page_id") !== null &&
-      localStorage.getItem("previous_page_id") !== id
-    ) {
-      localStorage.removeItem("previous_page_id");
-      window.location.reload();
-      console.log(localStorage.getItem("previous_page_id"));
-    }
-  }, [id]);*/
+  useEffect(() => {
+    asynchronRequestsToPopulateBlocs();
+  }, [location]);
   const checkIfVideo = () => {
     const result = blocs.filter((bloc) => bloc.type === "video");
-    console.log("result", result);
+
     if (result.length === 0) {
       isVideoLoaded(true);
     } else if (result.length > 0) {
@@ -91,6 +89,7 @@ function Voir() {
       ? `${common?.background_color_buttons}`
       : "#2f6091",
     height: "fit-content",
+    paddingBottom: "30px",
   };
   useEffect(() => {
     adaptRoot();
@@ -102,9 +101,7 @@ function Voir() {
       asynchronRequestsToPopulateBlocs();
     }
   }, []);
-  useEffect(() => {
-    checkIfVideo();
-  }, [blocs]);
+
   useEffect(() => {}, [videoLoaded]);
 
   return (
@@ -116,7 +113,7 @@ function Voir() {
         isResponsive={isReponsive}
       />
       {!isReponsive && (
-        <Link to={{ pathname: `/page/` + id + `/` + name }}>
+        <Link to={{ pathname: `/admin/page/` + id + `/` + name }}>
           <li>
             <div className={s.navigate}>Retour</div>
           </li>
@@ -193,6 +190,7 @@ function Voir() {
             />
           </div>
         ) : (
+          videoLoaded &&
           value instanceof Parallaxe && (
             <div className={s.video}>
               <ParallaxeVizualisation

@@ -5,9 +5,9 @@ class Footer {
     private $type;
     private $associated_tables;
     private $database_name ;
-    function __construct($type, $database_name) {
+    function __construct($type, $database_name, $host, $user, $password) {
        
-        self::$db = DB::getInstance($database_name);
+        self::$db = DB::getInstance($database_name, $host, $user, $password);
         $this->type = $type;
         $this->database_name = $database_name;
         $this->associated_tables = $this->get_associated_tables();
