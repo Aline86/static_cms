@@ -16,11 +16,7 @@ body,
   display: none;
   height: 0px;
 }
-.app_container {
-  /*background-color: rgb(250, 228, 103) !important;*/
-  height: 100%;
-  min-height: 100vh;
-}
+
 .page {
   width: 95%;
   margin: 0 auto;

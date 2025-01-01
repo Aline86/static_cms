@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import s from "./style.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import ajout from "./../../../../assets/ajouter.png";
+
 import Footer from "../../bloc/components/footer/Footer";
 import Header from "../../bloc/components/header/Header";
-import HeaderVizualization from "../../../frontend/bloc/header/header";
-import FooterVizualization from "../../../frontend/bloc/footer/footer";
+
 import BlocDisplay from "./bloc_picker";
 import Page from "../class/Page";
 import Blocs from "./blocs";

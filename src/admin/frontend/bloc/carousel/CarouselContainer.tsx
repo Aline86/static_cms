@@ -140,14 +140,28 @@ function CarouselContainer({
       className={s.body}
       onTransitionEnd={() => updateTransitionState(false)}
       style={{
-        width: full ? "90vw" : "43vw",
+        width: full ? "90vw" : isResponsive ? `360px` : "43vw",
         margin: `${bloc.gap}px auto`,
-
-        height: `${bloc.height}vw`,
+        minHeight: "200px",
+        height:
+          !isResponsive && !result.matches
+            ? `calc(${bloc.height}vw + 200px)`
+            : "200px",
       }}
     >
-      <div className={s.left_arrows}>
-        {!result.matches ? (
+      <div
+        className={s.left_arrows}
+        style={{
+          width: full
+            ? `calc(${bloc.width * (cardNumber - 2)}vw + ${
+                bloc.gap * (cardNumber - 2)
+              }px)`
+            : `calc(${bloc.width * 0.85 * (cardNumber - 2)}vw + ${
+                bloc.gap * (cardNumber - 2)
+              }px)`,
+        }}
+      >
+        {!result.matches && !isResponsive ? (
           type === "carousel" && transitionFinished ? (
             <button
               className={s.left}
@@ -174,7 +188,7 @@ function CarouselContainer({
         ) : (
           ""
         )}
-        {!result.matches ? (
+        {!result.matches && !isResponsive ? (
           type === "carousel" && transitionFinished ? (
             <button
               className={s.right}
@@ -221,29 +235,31 @@ function CarouselContainer({
               ? {
                   minWidth: `${cardWidth}px`,
                   /*  margin: `${bloc.gap}px auto`,*/
-                  overflow: `scroll`,
-                  height: full
-                    ? `${Number(bloc.height)}vw`
-                    : `${Number(bloc.height) * 0.5}vw`,
-
+                  overflowX: `scroll`,
+                  height: `calc(${bloc.height}vw + 200px)`,
                   marginLeft: `15px`,
-                  width: `100%`,
+                  width: full
+                    ? `calc(${bloc.width * (cardNumber - 2)}vw + ${
+                        bloc.gap * (cardNumber - 2)
+                      }px)`
+                    : `calc(${bloc.width * (cardNumber - 2)}vw + ${
+                        bloc.gap * (cardNumber - 2)
+                      }px)`,
                 }
               : {
                   minWidth: `${cardWidth}px`,
                   /* margin: `${bloc.gap}px auto`,*/
 
-                  height: full
-                    ? `${Number(bloc.height)}vw`
-                    : `calc(${Number(bloc.height) * 0.5}vw + 2px)`,
-
-                  width: full
-                    ? `calc(${bloc.width * (cardNumber - 2)}vw + ${
-                        bloc.gap * (cardNumber - 2)
-                      }px)`
-                    : `calc(${bloc.width * 0.5 * (cardNumber - 2)}vw + ${
-                        bloc.gap * (cardNumber - 2)
-                      }px)`,
+                  height:
+                    !isResponsive && !result.matches
+                      ? `calc(${bloc.height}vw + 200px)`
+                      : "200px",
+                  width:
+                    !isResponsive && !result.matches
+                      ? `calc(${bloc.width * (cardNumber - 2)}vw + ${
+                          bloc.gap * (cardNumber - 2)
+                        }px)`
+                      : `80vw`,
                 }
           }
         >
@@ -252,10 +268,12 @@ function CarouselContainer({
             style={{
               height: `fit-content`,
               transform: full
-                ? `translateX(calc(${-bloc.width}vw - 15px) )`
-                : result.matches || isResponsive
-                ? `translateX(calc(${-bloc.width * 0.5}vw - 15px)`
-                : `translateX(0px))`,
+                ? !result.matches && !isResponsive
+                  ? `translateX(calc(${-bloc.width}vw - 15px) )`
+                  : !isResponsive
+                  ? `translateX(0vw)`
+                  : `translateX(${bloc.width}vw)`
+                : `translateX(calc(${-bloc.width}vw - 15px) )`,
             }}
           >
             <div
@@ -263,7 +281,7 @@ function CarouselContainer({
               style={{
                 height: full
                   ? `${Number(bloc.height)}vw`
-                  : `${Number(bloc.height) * 0.5}vw`,
+                  : `${Number(bloc.height)}vw`,
               }}
             >
               {data !== undefined &&
@@ -276,7 +294,7 @@ function CarouselContainer({
                       transitionFinished={transitionFinished}
                       trasnsType={"transform 0.5s ease-in"}
                       transX={move}
-                      width={full ? bloc.width : bloc.width * 0.5}
+                      width={full ? bloc.width : bloc.width}
                       gap={bloc.gap}
                       height={bloc.height}
                       value={value}
@@ -302,7 +320,7 @@ function CarouselContainer({
           margin: !full ? `${bloc.gap}px auto` : `auto -25px`,
           height: isResponsive ? `230px` : `fit-content`,
           paddingTop: isResponsive ? `120px` : result.matches ? `30px` : `0px`,
-          minHeight: isResponsive ? `170px` : `fit-content`,
+          minHeight: isResponsive ? `200px` : `fit-content`,
           width: full ? (isResponsive ? `380px` : `100vw`) : `43vw`,
           marginBottom: result.matches ? "60px" : isResponsive ? "60px" : "0",
         }}

@@ -62,7 +62,7 @@ function CarouselVisualization({
       let reordered_data_cards = [];
       let i = 0;
       let first = dataToProcess[dataToProcess.length - 1];
-
+      console.log(dataToProcess.length - 1);
       reordered_data_cards.push(first);
       while (i < dataToProcess.length - 1) {
         reordered_data_cards.push(dataToProcess[i]);
@@ -83,15 +83,19 @@ function CarouselVisualization({
         .fill(elRefs)
         .map((_, i) => input_bloc.carousel_data[i] || createRef())
     );
-  }, []);
+  }, [toggle, refresh]);
   useEffect(() => {
     if (input_bloc.is_automatique) {
       reorder_automatic();
+    }
+    if ((!isResponsive && !result.matches) || !full) {
+      reorder_carousel();
     } else {
       updateCardRef();
       setData(dataToProcess);
     }
-  }, [dataToProcess]);
+  }, [result.matches, isResponsive, input_bloc, toggle, dataToProcess]);
+  useEffect(() => {}, [isResponsive, input_bloc, dataValue]);
 
   return (
     <div
@@ -101,7 +105,7 @@ function CarouselVisualization({
           input_bloc.is_automatique &&
           isResponsive &&
           input_bloc.bloc_number > 1
-            ? "-180px"
+            ? "-170px"
             : input_bloc.is_automatique &&
               isResponsive &&
               input_bloc.bloc_number === 1

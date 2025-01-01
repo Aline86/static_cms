@@ -8,12 +8,11 @@ import Page from "./admin/backoffice/page/class/Page";
 
 function App() {
   const { common } = useContext(ColorContext);
-  const styles = {
+  const styles: any = {
     "--titles": `${common?.titles}` ? `${common?.titles}` : "black",
     "--button-background-color": `${common?.background_color_buttons}`
       ? `${common?.background_color_buttons}`
       : "#2f6091",
-    height: "fit-content",
   };
 
   useEffect(() => {}, [common]);

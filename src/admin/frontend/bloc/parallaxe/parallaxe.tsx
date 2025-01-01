@@ -59,7 +59,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
         position: "relative",
         backgroundImage:
           `url(${BASE_URL_SITE}/api/uploadfile/` + bloc.image + `)`,
-        height: "45vh",
+        height: isResponsive || result.matches ? "200px" : "30vh",
         backgroundAttachment: "fixed",
         width: full ? "100vw" : "46vw",
         left: 0,

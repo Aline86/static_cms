@@ -55,15 +55,17 @@ function CardDataShow({
     fontSize: isResponsive ? `18px` : `24px`,
   };
   const style_data_transition_finished_carousel = {
-    marginRight: `${!result.matches ? gap : 10}px`,
-    height: full ? `${height}vw` : `${height * 0.5}vw`,
+    marginRight: `${!result.matches && !isResponsive ? gap : 10}px`,
+    height: !isResponsive && !result.matches ? `${height}vw` : "200px",
+    minHeight: "200px",
     transition: `${trasnsType}`,
     transform: `translateX(${transX}px)`,
   };
 
   const style_data_transition_start_carousel = {
-    marginRight: `${!result.matches ? gap : 10}px`,
-    height: full ? `${height}vw` : `${height * 0.5}vw`,
+    marginRight: `${!result.matches && !isResponsive ? gap : 10}px`,
+    height: !isResponsive && !result.matches ? `${height}vw` : "200px",
+    minHeight: "200px",
   };
   if (type === "auto") {
     if (transitionFinished) {

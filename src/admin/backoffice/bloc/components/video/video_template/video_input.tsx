@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import s from "./style.module.css";
-
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
 import { Video } from "../class/Video";
-import { RawDraftContentState } from "draft-js";
-import { UploadService } from "../../../../services/uploadService";
-import DropdownData from "../dropdown/Dropdown";
 
 function VideoInput({
   input_bloc,
@@ -30,7 +25,7 @@ function VideoInput({
   const validateLink = async () => {
     let result = await input_bloc.save_bloc();
     if (result !== undefined) {
-      window.location.reload();
+      setToggle(!isToggle);
     }
   };
   const checkExternal = async (url: string) => {
@@ -51,6 +46,7 @@ function VideoInput({
   useEffect(() => {
     choice !== undefined && setIsYoutube(choice);
   }, [choice]);
+  useEffect(() => {}, [isToggle]);
   return (
     <div className={s.bloc} key={input_bloc.bloc_number}>
       <div className={s.titre}>
