@@ -39,7 +39,7 @@
 .card_app {
   position: relative;
   border: 1px solid rgb(168, 166, 166);
-  border-radius: 15px;
+  border-radius: 3px;
   object-fit: fit-content;
   display: flex;
   justify-content: end;
@@ -140,8 +140,8 @@ button {
 .card_app_image_group {
   text-decoration: none;
   position: relative;
-  border-radius: 15px;
-  border-radius: 15px;
+  border-radius: 3px;
+  border-radius: 3px;
   border: none;
   transition: all 0.5s;
 }
@@ -281,7 +281,7 @@ button {
   align-items: center;
 
   position: relative;
-  border-radius: 15px;
+  border-radius: 3px;
   object-fit: fit-content;
 }
 

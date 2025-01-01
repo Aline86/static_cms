@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import CardDataShow from "./CardDataShow";
 import s from "./styles/style.module.css";
+import right from "./../../../../assets/right.png";
+import left from "./../../../../assets/left.png";
 import CarouselCard from "../../../backoffice/bloc/components/carousel/class/CarouselData";
 import { Carousel } from "../../../backoffice/bloc/components/carousel/class/Carousel";
 
@@ -141,26 +143,21 @@ function CarouselContainer({
         width: full ? "90vw" : "43vw",
         margin: `${bloc.gap}px auto`,
 
-        height: `${bloc.height}vh`,
+        height: `${bloc.height}vw`,
       }}
     >
-      <div
-        className={s.arrow_container}
-        style={{
-          maxWidth: full ? "90vw" : "43vw",
-        }}
-      >
+      <div className={s.left_arrows}>
         {!result.matches ? (
           type === "carousel" && transitionFinished ? (
             <button
               className={s.left}
               style={{
                 pointerEvents: "none",
-                marginRight: `${bloc.gap}px`,
+                /*  marginRight: `${bloc.gap}px`,*/
                 color: "lightgray",
               }}
             >
-              &#x27E8;
+              <img src={left} alt="flèche pour regarder les images de gauche" />
             </button>
           ) : (
             <button
@@ -169,36 +166,76 @@ function CarouselContainer({
                 e.preventDefault();
                 moveRight();
               }}
-              style={{ marginRight: `${bloc.gap}px` }}
+              /*  style={{ marginRight: `${bloc.gap}px` }}*/
             >
-              <span>&#x27E8;</span>
+              <img src={left} alt="flèche pour regarder les images de gauche" />
             </button>
           )
         ) : (
           ""
         )}
+        {!result.matches ? (
+          type === "carousel" && transitionFinished ? (
+            <button
+              className={s.right}
+              style={{
+                /*  marginLeft: `${!result.matches ? bloc.gap : 0}px`,*/
+                pointerEvents: "none",
+                color: "lightgray",
+              }}
+            >
+              <img
+                src={right}
+                alt="flèche pour regarder les images de droite"
+              />
+            </button>
+          ) : (
+            <button
+              className={s.right}
+              onClick={(e) => {
+                e.preventDefault();
+                moveLeft();
+              }}
+              /* style={{ marginLeft: `${bloc.gap}px` }}*/
+            >
+              <img
+                src={right}
+                alt="flèche pour regarder les images de droite"
+              />
+            </button>
+          )
+        ) : (
+          ""
+        )}
+      </div>
+      <div
+        className={s.arrow_container}
+        style={{
+          maxWidth: full ? "90vw" : "43vw",
+        }}
+      >
         <div
           className={s.container_class}
           style={
             isResponsive || result.matches
               ? {
                   minWidth: `${cardWidth}px`,
-                  margin: `${bloc.gap}px auto`,
+                  /*  margin: `${bloc.gap}px auto`,*/
                   overflow: `scroll`,
                   height: full
-                    ? `${Number(bloc.height)}vh`
-                    : `${Number(bloc.height) * 0.5}vh`,
+                    ? `${Number(bloc.height)}vw`
+                    : `${Number(bloc.height) * 0.5}vw`,
 
                   marginLeft: `15px`,
                   width: `100%`,
                 }
               : {
                   minWidth: `${cardWidth}px`,
-                  margin: `${bloc.gap}px auto`,
+                  /* margin: `${bloc.gap}px auto`,*/
 
                   height: full
-                    ? `${Number(bloc.height)}vh`
-                    : `calc(${Number(bloc.height) * 0.5}vh + 2px)`,
+                    ? `${Number(bloc.height)}vw`
+                    : `calc(${Number(bloc.height) * 0.5}vw + 2px)`,
 
                   width: full
                     ? `calc(${bloc.width * cardNumber}vw + ${
@@ -214,10 +251,10 @@ function CarouselContainer({
             className={s.card_container}
             style={{
               height: `fit-content`,
-              transform: !full
-                ? `translateX(calc(${-bloc.width * 0.5}vw - ${bloc.gap}px))`
-                : !result.matches && !isResponsive
-                ? `translateX(calc(${-bloc.width}vw - ${bloc.gap}px))`
+              transform: full
+                ? `translateX(calc(${-bloc.width}vw))`
+                : result.matches || isResponsive
+                ? `translateX(calc(${-bloc.width * 0.5}vw)`
                 : `translateX(0px))`,
             }}
           >
@@ -225,8 +262,8 @@ function CarouselContainer({
               className={s.cards}
               style={{
                 height: full
-                  ? `${Number(bloc.height)}vh`
-                  : `${Number(bloc.height) * 0.5}vh`,
+                  ? `${Number(bloc.height)}vw`
+                  : `${Number(bloc.height) * 0.5}vw`,
               }}
             >
               {data !== undefined &&
@@ -254,33 +291,6 @@ function CarouselContainer({
             </div>
           </div>
         </div>
-        {!result.matches ? (
-          type === "carousel" && transitionFinished ? (
-            <button
-              className={s.right}
-              style={{
-                marginLeft: `${!result.matches ? bloc.gap : 0}px`,
-                pointerEvents: "none",
-                color: "lightgray",
-              }}
-            >
-              &#x27E9;
-            </button>
-          ) : (
-            <button
-              className={s.right}
-              onClick={(e) => {
-                e.preventDefault();
-                moveLeft();
-              }}
-              style={{ marginLeft: `${bloc.gap}px` }}
-            >
-              <span>&#x27E9;</span>
-            </button>
-          )
-        ) : (
-          ""
-        )}
       </div>
     </div>
   ) : (

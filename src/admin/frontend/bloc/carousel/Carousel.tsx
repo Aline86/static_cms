@@ -62,7 +62,7 @@ function CarouselVisualization({
       let reordered_data_cards = [];
       let i = 0;
       let first = dataToProcess[dataToProcess.length - 1];
-      console.log(dataToProcess.length - 1);
+
       reordered_data_cards.push(first);
       while (i < dataToProcess.length - 1) {
         reordered_data_cards.push(dataToProcess[i]);
@@ -83,7 +83,7 @@ function CarouselVisualization({
         .fill(elRefs)
         .map((_, i) => input_bloc.carousel_data[i] || createRef())
     );
-  }, [toggle, refresh]);
+  }, []);
   useEffect(() => {
     if (input_bloc.is_automatique) {
       reorder_automatic();
@@ -93,8 +93,8 @@ function CarouselVisualization({
       updateCardRef();
       setData(dataToProcess);
     }
-  }, [isResponsive, input_bloc, toggle, dataToProcess]);
-  useEffect(() => {}, [isResponsive, input_bloc, dataValue]);
+  }, [dataToProcess]);
+
   return (
     <div
       className={s.body_container}

@@ -56,14 +56,14 @@ function CardDataShow({
   };
   const style_data_transition_finished_carousel = {
     marginRight: `${!result.matches ? gap : 10}px`,
-    height: full ? `${height}vh` : `${height * 0.5}vh`,
+    height: full ? `${height}vw` : `${height * 0.5}vw`,
     transition: `${trasnsType}`,
     transform: `translateX(${transX}px)`,
   };
 
   const style_data_transition_start_carousel = {
     marginRight: `${!result.matches ? gap : 10}px`,
-    height: full ? `${height}vh` : `${height * 0.5}vh`,
+    height: full ? `${height}vw` : `${height * 0.5}vw`,
   };
   if (type === "auto") {
     if (transitionFinished) {
