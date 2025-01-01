@@ -238,11 +238,11 @@ function CarouselContainer({
                     : `calc(${Number(bloc.height) * 0.5}vw + 2px)`,
 
                   width: full
-                    ? `calc(${bloc.width * cardNumber}vw + ${
-                        bloc.gap * cardNumber
+                    ? `calc(${bloc.width * (cardNumber - 2)}vw + ${
+                        bloc.gap * (cardNumber - 2)
                       }px)`
-                    : `calc(${bloc.width * 0.5 * cardNumber}vw + ${
-                        bloc.gap * cardNumber
+                    : `calc(${bloc.width * 0.5 * (cardNumber - 2)}vw + ${
+                        bloc.gap * (cardNumber - 2)
                       }px)`,
                 }
           }
@@ -252,9 +252,9 @@ function CarouselContainer({
             style={{
               height: `fit-content`,
               transform: full
-                ? `translateX(calc(${-bloc.width}vw))`
+                ? `translateX(calc(${-bloc.width}vw - 15px) )`
                 : result.matches || isResponsive
-                ? `translateX(calc(${-bloc.width * 0.5}vw)`
+                ? `translateX(calc(${-bloc.width * 0.5}vw - 15px)`
                 : `translateX(0px))`,
             }}
           >

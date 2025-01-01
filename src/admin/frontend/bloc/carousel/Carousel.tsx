@@ -87,8 +87,6 @@ function CarouselVisualization({
   useEffect(() => {
     if (input_bloc.is_automatique) {
       reorder_automatic();
-    } else if (!isResponsive && !result.matches) {
-      reorder_carousel();
     } else {
       updateCardRef();
       setData(dataToProcess);
@@ -115,7 +113,7 @@ function CarouselVisualization({
           input_bloc.bloc_number === 1 &&
           (isResponsive || result.matches)
             ? "50px"
-            : "0px"
+            : "60px"
         }`,
       }}
     >

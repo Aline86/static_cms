@@ -85,12 +85,12 @@ export class Carousel extends Container {
         break;
       case "width":
         let width = e.target.value;
-        if (e.target.value < 25) {
-          width = 25;
+        if (e.target.value < 15) {
+          width = 15;
         } else if (e.target.value > 100) {
           width = 100;
         }
-        console.log(width);
+
         this.set_width(width);
         break;
       case "image_url":
