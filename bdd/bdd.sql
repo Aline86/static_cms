@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     `id` int(11) NOT NULL auto_increment,        
     `email` varchar(250)  NOT NULL default "",
     `password` varchar(250)  NOT NULL default "",       
-    `token` varchar(250)  NOT NULL default "", 
+    `token` text  NOT NULL default "", 
     PRIMARY KEY  (`id`)
 );
 

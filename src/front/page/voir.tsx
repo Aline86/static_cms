@@ -100,7 +100,9 @@ function Front() {
   }, []);
 
   useEffect(() => {}, [videoLoaded]);
-
+  useEffect(() => {
+    localStorage.setItem("authToken", "");
+  }, []);
   return (
     <div className={s.blocs_container} style={styles}>
       <HeaderVizualization

@@ -169,7 +169,7 @@ function VideoVizualisation({
                   : "relative"
                 : "absolute"
             }`,
-            top: `${full ? (isResponsive ? "200px" : "40%") : "100px"}`,
+            top: `${full ? (isResponsive ? "200px" : "50%") : "100px"}`,
             left: `${full ? (isResponsive ? "50%" : "50%") : "0%"}`,
             transform: `${
               full
@@ -230,8 +230,16 @@ function VideoVizualisation({
             right: "0",
             top: "0",
             bottom: "0",
-            height: `${full ? (isResponsive ? "300px" : "auto") : "auto"}`,
+            height: `${
+              full
+                ? isResponsive
+                  ? "300px"
+                  : "calc(" + bloc.height + "vh - 125px)"
+                : "auto"
+            }`,
             width: `${full ? (isResponsive ? "380px" : "100vw") : "43vw"}`,
+            margin: "0 auto",
+            objectFit: "cover",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

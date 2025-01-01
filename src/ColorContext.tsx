@@ -15,8 +15,23 @@ const getBloc = async () => {
     }
   });
 };
+
+const saveBloc = async () => {
+  let common = new Common();
+  return new Promise(async function (resolve, reject) {
+    let result = await common.get_bloc();
+    resolve(result);
+    if (result.id >= 1) {
+      resolve(await common.get_bloc());
+    }
+    if (result.id === -1) {
+      resolve(await common.save_bloc());
+      resolve(await common.get_bloc());
+    }
+  });
+};
 const ColorContext = createContext<any>(
-  new Common("transparent", "black", "#2f6091")
+  new Common("#ffffff", "black", "#2f6091")
 );
 
 export const useCommon = () => {
@@ -24,7 +39,7 @@ export const useCommon = () => {
 };
 function ColorContextProvider(children: any) {
   const [common, setCommon] = useState<any>(
-    new Common("transparent", "black", "#2f6091")
+    new Common("#ffffff", "black", "#2f6091")
   );
 
   async function updateCommon(e: any, field: string, common: Common) {
@@ -43,7 +58,7 @@ function ColorContextProvider(children: any) {
   }, []);
   useEffect(() => {}, [common]);
   return (
-    <ColorContext.Provider value={{ common, updateCommon }}>
+    <ColorContext.Provider value={{ common, updateCommon, saveBloc }}>
       {children.children}
     </ColorContext.Provider>
   );

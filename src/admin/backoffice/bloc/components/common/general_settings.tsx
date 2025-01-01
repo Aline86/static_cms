@@ -10,7 +10,7 @@ function CommonVisualization({}: PageParams) {
   const [header, setHeader] = useState<Header>(new Header());
   const [toggle, setToggle] = useState<boolean>(false);
 
-  const { common, updateCommon } = useCommon();
+  const { common, updateCommon, saveBloc } = useCommon();
 
   async function asynchronRequestsToPopulateBlocs() {
     setHeader(await header.get_bloc());
@@ -19,10 +19,9 @@ function CommonVisualization({}: PageParams) {
   }
 
   useEffect(() => {
+    saveBloc();
     asynchronRequestsToPopulateBlocs();
   }, []);
-
-  useEffect(() => {}, [toggle]);
 
   useEffect(() => {}, [common, toggle]);
   return (
@@ -37,7 +36,7 @@ function CommonVisualization({}: PageParams) {
                   <div className={s.color_display}>
                     <input
                       type="color"
-                      value={common?.fond}
+                      value={common?.fond === "" ? "#ffffff" : common?.fond}
                       onChange={(e) => {
                         updateCommon(e, "fond", common);
                       }}
@@ -48,7 +47,7 @@ function CommonVisualization({}: PageParams) {
                   <div className={s.color_display}>
                     <input
                       type="color"
-                      value={common?.titles}
+                      value={common?.titles === "" ? "#000000" : common?.titles}
                       onChange={(e) => {
                         updateCommon(e, "titles", common);
                       }}
@@ -58,7 +57,11 @@ function CommonVisualization({}: PageParams) {
                   <div className={s.color_display}>
                     <input
                       type="color"
-                      value={common?.background_color_buttons}
+                      value={
+                        common?.background_color_buttons === ""
+                          ? "#2f6091"
+                          : common?.background_color_buttons
+                      }
                       onChange={(e) => {
                         updateCommon(e, "background_color_buttons", common);
                       }}

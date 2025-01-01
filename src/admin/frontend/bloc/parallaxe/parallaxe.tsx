@@ -38,7 +38,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
           textTransform: "uppercase",
           width: !full ? "45vw" : "100%",
           backgroundAttachment: "fixed",
-          marginTop: `${full ? (isResponsive ? "30px" : "140px") : "30px"}`,
+          marginTop: `${full ? (isResponsive ? "90px" : "140px") : "30px"}`,
           fontSize: isResponsive ? "4vh" : "10vh",
           WebkitTextFillColor: "transparent",
           lineHeight: isResponsive ? "5vh" : "12vh",
