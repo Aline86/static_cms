@@ -54,7 +54,7 @@ function PictureGroupContainer({
             style={
               !isResponsive && !result.matches
                 ? {
-                    minHeight: `${bloc.height}vh`,
+                    minHeight: `${bloc.height}vw`,
                     height: `fit-content`,
                     display: "grid",
                     gridTemplateColumns: `repeat(2, 1fr)`,

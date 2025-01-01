@@ -42,7 +42,7 @@ function CardData({
           ? "95%"
           : `${width}vw`
         : `${width * 0.5}vw`,
-      height: `${height}vh`,
+      height: `${height}vw`,
       margin: "0 auto",
 
       marginBottom: "60px",

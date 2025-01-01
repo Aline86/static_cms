@@ -30,7 +30,7 @@ function InsideCardDataShow({
   const style_data = {
     background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
     width: `${!result.matches ? `${width}vw` : `80vw`}`,
-    height: full ? `${height}vh` : `${height}vh`,
+    height: full ? `${height}vw` : `${height}vw`,
   };
   const checkExternal = async (url: string) => {
     let prefixe = url.substring(0, 4);
@@ -64,7 +64,7 @@ function InsideCardDataShow({
       style={{
         background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
         width: `${!result.matches ? `${width}vw` : `80vw`}`,
-        height: full ? `${height}vh` : `${height * 0.5}vh`,
+        height: full ? `${height}vw` : `${height * 0.5}vw`,
       }}
     >
       {value.text.length > 0 && <div className={s.text}></div>}
