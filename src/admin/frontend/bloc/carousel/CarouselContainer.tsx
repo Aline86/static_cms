@@ -45,7 +45,7 @@ function CarouselContainer({
   const [move, setMove] = useState(0);
   const [isLeft, setIsLeft] = useState(true);
   const [firstclick, setFirstClick] = useState(0);
-  const result = window.matchMedia("(max-width: 800px)");
+  const result = window.matchMedia("(max-width: 1200px)");
 
   function updateTransitionLeft() {
     if (data !== undefined) {
@@ -142,27 +142,24 @@ function CarouselContainer({
       style={{
         width: full ? "90vw" : isResponsive ? `360px` : "43vw",
         margin: `${bloc.gap}px auto`,
-        minHeight: "200px",
-        height:
-          !isResponsive && !result.matches
-            ? `calc(${bloc.height}vw + 200px)`
-            : "200px",
+        marginBottom: isResponsive || result.matches ? "0px" : "30px",
+        marginLeft: isResponsive || result.matches ? "-15px" : "0",
       }}
     >
-      <div
-        className={s.left_arrows}
-        style={{
-          width: full
-            ? `calc(${bloc.width * (cardNumber - 2)}vw + ${
-                bloc.gap * (cardNumber - 2)
-              }px)`
-            : `calc(${bloc.width * 0.85 * (cardNumber - 2)}vw + ${
-                bloc.gap * (cardNumber - 2)
-              }px)`,
-        }}
-      >
-        {!result.matches && !isResponsive ? (
-          type === "carousel" && transitionFinished ? (
+      {!result.matches && !isResponsive && (
+        <div
+          className={s.left_arrows}
+          style={{
+            width: full
+              ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                  bloc.gap * (cardNumber - 1)
+                }px)`
+              : `calc(${bloc.width * 0.85 * (cardNumber - 1)}vw + ${
+                  bloc.gap * (cardNumber - 1)
+                }px)`,
+          }}
+        >
+          {type === "carousel" && transitionFinished ? (
             <button
               className={s.left}
               style={{
@@ -184,12 +181,9 @@ function CarouselContainer({
             >
               <img src={left} alt="flèche pour regarder les images de gauche" />
             </button>
-          )
-        ) : (
-          ""
-        )}
-        {!result.matches && !isResponsive ? (
-          type === "carousel" && transitionFinished ? (
+          )}
+
+          {type === "carousel" && transitionFinished ? (
             <button
               className={s.right}
               style={{
@@ -217,11 +211,9 @@ function CarouselContainer({
                 alt="flèche pour regarder les images de droite"
               />
             </button>
-          )
-        ) : (
-          ""
-        )}
-      </div>
+          )}
+        </div>
+      )}
       <div
         className={s.arrow_container}
         style={{
@@ -236,14 +228,18 @@ function CarouselContainer({
                   minWidth: `${cardWidth}px`,
                   /*  margin: `${bloc.gap}px auto`,*/
                   overflowX: `scroll`,
-                  height: `calc(${bloc.height}vw + 200px)`,
+                  height: full
+                    ? !result.matches && !isResponsive
+                      ? `${Number(bloc.height)}vw`
+                      : "220px"
+                    : `${Number(bloc.height)}vw`,
                   marginLeft: `15px`,
                   width: full
-                    ? `calc(${bloc.width * (cardNumber - 2)}vw + ${
-                        bloc.gap * (cardNumber - 2)
+                    ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                        bloc.gap * (cardNumber - 1)
                       }px)`
-                    : `calc(${bloc.width * (cardNumber - 2)}vw + ${
-                        bloc.gap * (cardNumber - 2)
+                    : `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                        bloc.gap * (cardNumber - 1)
                       }px)`,
                 }
               : {
@@ -252,14 +248,14 @@ function CarouselContainer({
 
                   height:
                     !isResponsive && !result.matches
-                      ? `calc(${bloc.height}vw + 200px)`
-                      : "200px",
+                      ? `calc(${bloc.height}vw)`
+                      : "180px",
                   width:
                     !isResponsive && !result.matches
-                      ? `calc(${bloc.width * (cardNumber - 2)}vw + ${
-                          bloc.gap * (cardNumber - 2)
+                      ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                          bloc.gap * (cardNumber - 1)
                         }px)`
-                      : `80vw`,
+                      : `360px`,
                 }
           }
         >
@@ -272,7 +268,7 @@ function CarouselContainer({
                   ? `translateX(calc(${-bloc.width}vw - 15px) )`
                   : !isResponsive
                   ? `translateX(0vw)`
-                  : `translateX(${bloc.width}vw)`
+                  : `translateX(${bloc.width * 1.6}vw )`
                 : `translateX(calc(${-bloc.width}vw - 15px) )`,
             }}
           >
@@ -280,7 +276,9 @@ function CarouselContainer({
               className={s.cards}
               style={{
                 height: full
-                  ? `${Number(bloc.height)}vw`
+                  ? !result.matches && !isResponsive
+                    ? `${Number(bloc.height)}vw`
+                    : "220px"
                   : `${Number(bloc.height)}vw`,
               }}
             >
@@ -317,10 +315,10 @@ function CarouselContainer({
         className={s.container_class_auto}
         style={{
           minWidth: `${cardWidth}px`,
-          margin: !full ? `${bloc.gap}px auto` : `auto -25px`,
+          margin: !full ? `${bloc.gap}px auto` : `0px`,
           height: isResponsive ? `230px` : `fit-content`,
           paddingTop: isResponsive ? `120px` : result.matches ? `30px` : `0px`,
-          minHeight: isResponsive ? `200px` : `fit-content`,
+          minHeight: isResponsive || result.matches ? `200px` : `fit-content`,
           width: full ? (isResponsive ? `380px` : `100vw`) : `43vw`,
           marginBottom: result.matches ? "60px" : isResponsive ? "60px" : "0",
         }}
@@ -328,7 +326,7 @@ function CarouselContainer({
         <div
           className={s.card_container_auto}
           style={{
-            transform: `translateX(${-cardWidth + 0.7 * bloc.gap}px)`,
+            transform: `translateX(${-cardWidth * 2 + 1.2 * bloc.gap}px)`,
             height: `fit-content`,
           }}
         >

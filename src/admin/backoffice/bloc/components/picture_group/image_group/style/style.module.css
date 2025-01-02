@@ -102,8 +102,8 @@
   color: white;
   line-height: 50px;
   text-align: center;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
   white-space: nowrap;
   overflow: hidden;
 }

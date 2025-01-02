@@ -21,7 +21,7 @@ function PictureGroupVizualisation({
   const [dataValue, setData] = useState<PictureGroupCard[]>();
 
   const [resize, setResize] = useState(window.innerWidth);
-  const result = window.matchMedia("(max-width: 00px)");
+  const result = window.matchMedia("(max-width: 1200px)");
 
   function updateDataValue(cards: PictureGroupCard[]) {
     setData(cards);
@@ -35,7 +35,7 @@ function PictureGroupVizualisation({
       window.addEventListener("resize", updateSize);
       setResize(window.innerWidth);
     }
-  }, [result]);
+  }, [result.matches]);
   useEffect(() => {
     setData((elRefs) =>
       Array(input_bloc.picture_group_data.length)

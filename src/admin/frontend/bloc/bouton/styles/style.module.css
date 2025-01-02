@@ -7,19 +7,15 @@
   color: gray;
   text-decoration: none;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .button_bloc {
-  height: 100%;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding-top: 30px;
   padding-bottom: 50px;
-}
-.button_bloc img {
-  width: auto;
-  max-height: 40vh;
 }

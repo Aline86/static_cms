@@ -31,11 +31,12 @@ function Voir() {
   >([]);
   const { id, name } = useParams();
   const [toggle, setToggle] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [isReponsive, setResponsive] = useState(false);
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
   const location = useLocation();
-  const [videoLoaded, isVideoLoaded] = useState<boolean>(false);
+  const [videoLoaded, isVideoLoaded] = useState<boolean>(true);
   const result = window.matchMedia("(max-width: 800px)");
   const result_mid = window.matchMedia("(max-width: 1200px)");
   let page_type = new Page(Number(id));
@@ -47,13 +48,10 @@ function Voir() {
     let bloc_pages = await tools.getAllBlocsPage();
     bloc_pages !== undefined && setBlocs(bloc_pages);
     await footer.get_bloc();
-    checkIfVideo();
+
     setToggle(!toggle);
   }
 
-  const updateLoaded = (loaded: boolean) => {
-    isVideoLoaded(loaded);
-  };
   const adaptRoot = () => {
     let root = document.getElementById("root");
     if (root !== null && (isReponsive || result.matches)) {
@@ -72,16 +70,8 @@ function Voir() {
   };
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();
-  }, [location]);
-  const checkIfVideo = () => {
-    const result = blocs.filter((bloc) => bloc.type === "video");
+  }, [location, refresh]);
 
-    if (result.length === 0) {
-      isVideoLoaded(true);
-    } else if (result.length > 0) {
-      isVideoLoaded(false);
-    }
-  };
   const styles = {
     backgroundColor: common !== null ? `${common?.fond}` : "transparent",
     "--titles": `${common?.titles}` ? `${common?.titles}` : "black",
@@ -147,7 +137,7 @@ function Voir() {
               marginBottom: `${
                 (isReponsive || result.matches) && value.is_automatique
                   ? "-90px"
-                  : "30px"
+                  : "0px"
               }`,
             }}
           >
@@ -183,10 +173,11 @@ function Voir() {
           <div className={s.video}>
             <VideoVizualisation
               bloc={value}
-              updateLoaded={updateLoaded}
+              updateLoaded={undefined}
               full={true}
               isResponsive={isReponsive}
               videoLoaded={videoLoaded}
+              toggle={refresh}
             />
           </div>
         ) : (

@@ -38,7 +38,7 @@ function CardDataShow({
   isResponsive,
 }: CardDatas) {
   useEffect(() => {}, [toggle]);
-  const result = window.matchMedia("(max-width: 800px)");
+  const result = window.matchMedia("(max-width: 1200px)");
 
   const style_data_transition_finished_auto = {
     background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,

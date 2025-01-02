@@ -63,8 +63,14 @@ function InsideButton({
     width: isResponsive || result.matches ? `320px` : `${width}vw`,
     height: `${height}px`,
     lineHeight: `${height}px`,
-    color: isLightOrDark(data.background_color),
-    border: "1px solid " + `${isLightOrDark(data.background_color)}`,
+    backgroundColor: data.image_url === "" ? "" : "rgba(0, 0, 0, 0.2)",
+    color:
+      data.image_url === "" ? isLightOrDark(data.background_color) : "#ffffff",
+    border:
+      "1px solid " +
+      `${
+        data.image_url === "" ? isLightOrDark(data.background_color) : "#ffffff"
+      }`,
     marginTop: "50px",
   };
   return external ? (

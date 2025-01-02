@@ -15,7 +15,7 @@
   z-index: 0;
 }
 .body_container {
-  height: 100%;
+  height: fit-content !important;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -29,6 +29,10 @@
     padding: 0;
   }
 }
+.body_container {
+  height: 280px;
+}
+
 .card_container {
   position: relative;
   z-index: 0;
@@ -49,12 +53,12 @@
 }
 
 .arrow_container {
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  height: fit-content;
 }
 button {
   border: none;
@@ -191,8 +195,8 @@ button {
   justify-content: end;
   cursor: pointer;
   overflow-x: hidden;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
   overflow: hidden;
 }
 
@@ -219,8 +223,8 @@ button {
   color: white;
   line-height: 50px;
   text-align: center;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -234,6 +238,7 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: fit-content;
 }
 .carousel_container_image_group {
   position: absolute;
@@ -364,8 +369,8 @@ button {
   font-size: 35px;
   background-color: black;
   opacity: 0.3;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 .card_app_carousel .card_app_carousel_text {
   position: absolute;
@@ -379,8 +384,8 @@ button {
   bottom: 5px;
   font-size: 35px;
   color: white;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 @media screen and (max-width: 800px) {

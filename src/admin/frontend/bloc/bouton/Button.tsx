@@ -32,7 +32,12 @@ function ButtonVisualization({
 
   useEffect(() => {}, [isResponsive]);
   return (
-    <div className={s.body_container}>
+    <div
+      className={s.body_container}
+      style={{
+        marginTop: `${input_bloc.bloc_number === 1 ? "60px" : "0"}`,
+      }}
+    >
       <ButtonContainer
         bloc={input_bloc}
         toggle={toggle}

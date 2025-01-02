@@ -25,7 +25,7 @@ function PictureGroupContainer({
   full,
   isResponsive,
 }: CarouselData) {
-  const result = window.matchMedia("(max-width: 800px)");
+  const result = window.matchMedia("(max-width: 1200px)");
 
   return (
     <div
@@ -54,15 +54,15 @@ function PictureGroupContainer({
             style={
               !isResponsive && !result.matches
                 ? {
-                    minHeight: `${bloc.height}vw`,
-                    height: `fit-content`,
-                    display: "grid",
-                    gridTemplateColumns: `repeat(2, 1fr)`,
-                    textAlign: "center",
-                    justifyContent: "center",
+                    display: "flex",
+                    flexWrap: "wrap",
+
+                    justifyContent: "space-around",
+                    margin: "0 auto",
+
                     gap: `30px`,
-                    margin: `0 auto`,
-                    width: full ? `90vw` : "43vw",
+
+                    width: full ? `90vw` : "46vw",
                   }
                 : {
                     display: "flex",
@@ -70,6 +70,7 @@ function PictureGroupContainer({
                     alignItems: "center",
                     justifyContent: "center",
                     margin: "0 auto",
+
                     gap: `30px`,
                   }
             }

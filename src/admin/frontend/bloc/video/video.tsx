@@ -7,6 +7,7 @@ import { BASE_URL_SITE } from "../../../../config";
 interface BlocParams {
   bloc: Video;
 
+  toggle: boolean;
   updateLoaded: any;
   full: boolean;
   videoLoaded: boolean;
@@ -19,10 +20,12 @@ function VideoVizualisation({
   full,
   videoLoaded,
   isResponsive,
+
+  toggle,
 }: BlocParams) {
   useEffect(() => {}, [bloc]);
   const [external, isExternalLink] = useState<boolean>();
-  const [isToggle, setToggle] = useState<boolean>(false);
+
   const [blocWidth, setblocWidth] = useState<number>(0);
   const [blocHeight, setblocHeight] = useState<number>(0);
   const [url, setUrl] = useState<string>("");
@@ -43,8 +46,6 @@ function VideoVizualisation({
 
     if (prefixe === "http") {
       isExternalLink(true);
-    } else if (/.pdf/.test(url.substring(url.length - 4))) {
-      setToggle(true);
     } else {
       isExternalLink(false);
     }
@@ -61,55 +62,64 @@ function VideoVizualisation({
   }, [external, url, isResponsive]);
 
   useEffect(() => {
-    setToggle(!isToggle);
-  }, [blocHeight]);
-  useEffect(() => {
     window.addEventListener("resize", updateblocRef);
-  }, [isToggle, window.innerWidth]);
+  }, [toggle, window.innerWidth]);
   useEffect(() => {}, [url]);
   return url !== undefined && url.length > 0 && external ? (
     <div>
-      <div
-        className={s.encart}
-        style={{
-          position: "relative",
-          zIndex: "2",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <h2
+      {bloc.title !== "" ? (
+        <div
+          className={s.encart}
           style={{
-            display: "inline-block",
-            textAlign: "center",
-            marginBottom: "0",
+            position: "relative",
+            zIndex: "2",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          {bloc.title}
-        </h2>
-        <p
-          style={{
-            fontSize: "25px",
-            textAlign: "center",
+          <h2
+            style={{
+              display: "inline-block",
+              textAlign: "center",
+              marginBottom: "0",
+            }}
+          >
+            {bloc.title}
+          </h2>
+          <p
+            style={{
+              fontSize: "25px",
+              textAlign: "center",
 
-            display: "inline-block",
-          }}
-        >
-          {bloc.text}
-        </p>
-      </div>
+              display: "inline-block",
+            }}
+          >
+            {bloc.text}
+          </p>
+        </div>
+      ) : (
+        <span></span>
+      )}
+
       <div
         style={{
           margin: "0 auto",
           marginTop: full
             ? !isResponsive && !result.matches
-              ? "-60px"
+              ? "0px"
               : "30px"
             : "0px",
           marginBottom: "60px",
-          width: `${full ? (isResponsive ? "380px" : "50vw") : "43vw"}`,
+          width: `${
+            full
+              ? isResponsive || result.matches
+                ? "380px"
+                : `${bloc.width + "vw"}`
+              : "43vw"
+          }`,
+          maxWidth: "90vw",
           height: "50vh",
           objectFit: "cover",
           display: "flex",
@@ -121,7 +131,10 @@ function VideoVizualisation({
         <iframe
           style={{
             display: "block",
-            width: `${isResponsive ? "380px" : bloc.width + "%"}`,
+            width: `${
+              isResponsive || result.matches ? "350px" : bloc.width + "%"
+            }`,
+            margin: "0 auto",
             height: `${bloc.height + "%"}`,
           }}
           ref={blocRef}
@@ -144,19 +157,18 @@ function VideoVizualisation({
           width: `${blocWidth + "px"}`,
           height: `${blocHeight + "px"}`,
           marginLeft: full
-            ? isResponsive
-              ? "0"
-              : result.matches
+            ? isResponsive || result.matches
               ? "0"
               : "0px"
             : "30px",
           marginTop: full
             ? isResponsive
-              ? "-0px"
-              : !result.matches
+              ? "0px"
+              : result.matches
               ? "-60px"
-              : "75px"
+              : "-75px"
             : "0",
+          marginBottom: "60px",
         }}
       >
         <div
@@ -234,7 +246,7 @@ function VideoVizualisation({
               full
                 ? isResponsive
                   ? "300px"
-                  : "calc(" + bloc.height + "vh - 125px)"
+                  : "calc(" + bloc.height + "vh )"
                 : "auto"
             }`,
             width: `${full ? (isResponsive ? "380px" : "100vw") : "43vw"}`,

@@ -68,8 +68,8 @@ function InsideCardDataShow({
           !result.matches && !isResponsive
             ? `${width}vw`
             : isResponsive
-            ? `360px`
-            : `80vw`
+            ? `200px`
+            : `200px`
         }`,
 
         height: `${height}vw`,

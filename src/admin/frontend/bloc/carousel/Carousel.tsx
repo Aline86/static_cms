@@ -26,7 +26,7 @@ function CarouselVisualization({
   const [cardWidth, setCardWidth] = useState<number>(0);
   const cardRef = useRef<HTMLDivElement>();
   const [resize, setResize] = useState(window.innerWidth);
-  const result = window.matchMedia("(max-width: 1000px)");
+  const result = window.matchMedia("(max-width: 1200px)");
   function updateCardRef() {
     const cardWidth: number | undefined = cardRef.current?.clientWidth;
     if (cardWidth !== undefined) {
@@ -62,7 +62,7 @@ function CarouselVisualization({
       let reordered_data_cards = [];
       let i = 0;
       let first = dataToProcess[dataToProcess.length - 1];
-      console.log(dataToProcess.length - 1);
+
       reordered_data_cards.push(first);
       while (i < dataToProcess.length - 1) {
         reordered_data_cards.push(dataToProcess[i]);
@@ -115,9 +115,11 @@ function CarouselVisualization({
         marginBottom: `${
           input_bloc.is_automatique &&
           input_bloc.bloc_number === 1 &&
-          (isResponsive || result.matches)
-            ? "50px"
-            : "60px"
+          result.matches
+            ? "-40px"
+            : isResponsive && input_bloc.is_automatique
+            ? "80px"
+            : "0px"
         }`,
       }}
     >
