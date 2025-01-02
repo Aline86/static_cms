@@ -29,8 +29,9 @@ function InsideCardDataShow({
   const { id } = useParams();
   const style_data = {
     background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
-    width: `${!result.matches ? `${width}vw` : `80vw`}`,
-    height: full ? `${height}vh` : `${height}vh`,
+    width: `${!result.matches && !isResponsive ? `${width}vw` : `80vw`}`,
+    height: full ? `${height}vw` : `50px`,
+    border: value.image_url !== "" ? "" : "1px solid rgb(168, 166, 166)",
   };
   const checkExternal = async (url: string) => {
     let prefixe = url.substring(0, 4);
@@ -63,8 +64,17 @@ function InsideCardDataShow({
       className={s.card_app}
       style={{
         background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
-        width: `${!result.matches ? `${width}vw` : `80vw`}`,
-        height: full ? `${height}vh` : `${height * 0.5}vh`,
+        width: `${
+          !result.matches && !isResponsive
+            ? `${width}vw`
+            : isResponsive
+            ? `200px`
+            : `200px`
+        }`,
+
+        height: `${height}vw`,
+        minHeight: "200px",
+        border: value.image_url !== "" ? "" : "1px solid rgb(168, 166, 166)",
       }}
     >
       {value.text.length > 0 && <div className={s.text}></div>}

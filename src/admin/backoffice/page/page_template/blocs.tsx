@@ -25,8 +25,11 @@ interface BlocData {
   drag: boolean;
   toggle: boolean;
   setBlocs: any;
+  setRefresh: any;
   setToggle: any;
   page_id: number;
+  refresh: boolean;
+  reload_blocs: any;
 }
 
 function Blocs({
@@ -36,13 +39,14 @@ function Blocs({
   drag,
   toggle,
   setBlocs,
+  refresh,
+  setRefresh,
   setToggle,
   page_id,
+  reload_blocs,
 }: BlocData) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
-  const [editorState, setEditorState] = useState<EditorState>();
 
-  const [refresh, setRefresh] = useState(false);
   // edit with new component type when you add a bloc
   let component_types:
     | Carousel
@@ -359,6 +363,8 @@ function Blocs({
             saveBlocAll={saveBlocAll}
             drag={drag}
             toggle={toggle}
+            refresh={refresh}
+            reload_blocs={reload_blocs}
             index={index}
           />
         ) : (

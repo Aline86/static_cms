@@ -19,10 +19,6 @@ function Prerequis({}: PageParams) {
 
   const [header, setHeader] = useState<Header>(new Header());
   const [footer, setFooter] = useState<Footer>(new Footer());
-  const saveBloc = async () => {
-    await saveHeaderAndFooter(header);
-    await saveHeaderAndFooter(footer);
-  };
 
   const savePrerequisites = async () => {
     await saveHeaderAndFooter(header);
@@ -59,6 +55,7 @@ function Prerequis({}: PageParams) {
   const remove_bloc = async (bloc: Header | Footer, index: number) => {
     await bloc.remove_link(index);
     let result = await bloc.get_bloc();
+
     if (result !== undefined && result instanceof Footer) {
       setFooter(result);
 
@@ -86,6 +83,7 @@ function Prerequis({}: PageParams) {
     }
   };
   const getFooterAndHeader = async () => {
+    // await saveBloc();
     await getHeader();
     await getFooter();
     setToggle(!toggle);

@@ -25,6 +25,8 @@ export default class User {
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
+      this.email = data.email;
+      this.password = data.password;
       return await response.json();
     });
     return response;

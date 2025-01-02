@@ -13,6 +13,8 @@ interface BlocData {
   removeBloc: any;
   saveBlocAll: any;
   drag: boolean;
+  reload_blocs: any;
+  refresh: boolean;
   toggle: boolean;
   index: number;
 }
@@ -26,6 +28,8 @@ function BlocVideo({
   updateVideo,
   saveBlocAll,
   drag,
+  reload_blocs,
+  refresh,
   toggle,
   index,
 }: BlocData) {
@@ -46,6 +50,7 @@ function BlocVideo({
           full={false}
           isResponsive={false}
           videoLoaded={false}
+          toggle={toggle}
         />
       }
       css_position={
@@ -55,6 +60,8 @@ function BlocVideo({
               updateVideo={updateVideo}
               toggle={toggle}
               input_bloc={bloc}
+              refresh={refresh}
+              reload_blocs={reload_blocs}
             />
           }
           updateVideo={updateVideo}

@@ -23,8 +23,6 @@ function CardData({
   show_remove,
   bloc,
 }: CardDatas) {
-  const result = window.matchMedia("(max-width: 1000px)");
-
   return (
     <div
       className={s.card_app}

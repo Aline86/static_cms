@@ -64,6 +64,7 @@ export default class Footer extends Container {
       );
       this.links_network_an_others_footer.splice(index, 1);
       let new_bloc = await this.delete_bloc();
+      console.log(new_bloc);
       this.set_parameters(this.type + "&id=1&type=" + this.type);
       return new_bloc;
     }

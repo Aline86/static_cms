@@ -49,21 +49,18 @@ function Bouton({
     <div
       className={s.button_bloc}
       style={{
-        backgroundColor: bloc.background_color,
+        background:
+          bloc.image_url !== ""
+            ? `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${bloc.image_url}) no-repeat center / cover`
+            : bloc.background_color,
+
         width: !full ? "43vw" : isResponsive ? "360px" : "90vw",
         margin: "0 auto",
       }}
     >
-      <h2 className="">{bloc.title}</h2>
-      <div className={s.image_button_bloc}>
-        <img
-          style={{
-            width: isResponsive || result.matches ? "320px" : "100%",
-          }}
-          src={BASE_URL_SITE + "/api/uploadfile/" + `${bloc.image_url}`}
-          alt={bloc.title}
-        />
-      </div>
+      <h2 style={{ color: bloc.image_url !== "" ? "#ffffff" : "" }}>
+        {bloc.title}
+      </h2>
 
       <InsideButton
         data={bloc}

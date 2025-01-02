@@ -16,7 +16,7 @@
     $component = isset($method_params['component']) ? $method_params['component'] : null;
 
     if (array_key_exists('id_component', $method_params)) {
-   
+        $all_components_data = [];
         $id_component = $method_params['id_component'];
         $data_components_to_build = new AllDataComponents($component, $database_name, $host, $user, $password);
         $data_to_process = $data_components_to_build->get_components($id_component);
@@ -41,7 +41,7 @@
                     continue;
             }
         } */
-    
+        
         echo json_encode($all_components_data);
     }
     else {

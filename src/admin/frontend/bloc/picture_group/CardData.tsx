@@ -27,7 +27,7 @@ function CardData({
   full,
   isResponsive,
 }: CardDatas) {
-  const result = window.matchMedia("(max-width: 800px)");
+  const result = window.matchMedia("(max-width: 1200px)");
   const [external, isExternalLink] = useState<boolean>(true);
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
@@ -36,13 +36,15 @@ function CardData({
     style_data = {
       background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("${BASE_URL_SITE}/api/uploadfile/${data.image_url}") no-repeat center / cover`,
       width: full
-        ? isResponsive
-          ? `360px`
-          : result.matches
-          ? "95%"
+        ? isResponsive || result.matches
+          ? `350px`
           : `${width}vw`
         : `${width * 0.5}vw`,
-      height: `${height}vh`,
+      height: full
+        ? isResponsive || result.matches
+          ? `350px`
+          : `${height}vw`
+        : `${height * 0.5}vw`,
       margin: "0 auto",
 
       marginBottom: "60px",
@@ -50,10 +52,18 @@ function CardData({
     };
   } else {
     style_data = {
-      width: full ? `100%` : `${width * 0.5}vw`,
+      width: full
+        ? isResponsive || result.matches
+          ? `350px`
+          : `${width}vw`
+        : `${width * 0.5}vw`,
 
       borderRadius: "1px",
-      height: `fit-content`,
+      height: full
+        ? isResponsive || result.matches
+          ? `350px`
+          : `${height}vw`
+        : `${height * 0.5}vw`,
       border: "none",
       backgroundColor: `${data.background_color}`,
 

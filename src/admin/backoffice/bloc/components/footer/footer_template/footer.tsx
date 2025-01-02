@@ -96,6 +96,7 @@ function FooterInput({
                     src={remove}
                     alt="suppression box"
                     onClick={(e) => {
+                      e.preventDefault();
                       remove_bloc(input_bloc, key);
                     }}
                   />
@@ -107,6 +108,7 @@ function FooterInput({
                     <input
                       type="file"
                       onChange={(e) => {
+                        e.preventDefault();
                         updateFooter(e, "social_network", "url_logo", key);
                       }}
                     />

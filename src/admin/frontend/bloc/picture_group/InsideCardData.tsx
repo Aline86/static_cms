@@ -19,9 +19,10 @@ function InsideCardData({ data, isLightOrDark }: CardDatas) {
         display: `flex`,
         flexDirection: `column`,
         justifyContent: `center`,
-        width: "360px",
-
-        aspectRatio: "1",
+        alignItems: `center`,
+        marginBlock: "0 auto",
+        width: "90%",
+        height: "100%",
       }}
     >
       <div
@@ -30,10 +31,10 @@ function InsideCardData({ data, isLightOrDark }: CardDatas) {
           flexDirection: `row`,
           alignItems: `center`,
           justifyContent: `center`,
+          height: "100%",
           marginBottom: "15px",
           fontSize: "25px",
           color: isLightOrDark(data.background_color),
-          aspectRatio: "1",
         }}
       >
         {data.text}

@@ -39,7 +39,7 @@
 .card_app {
   position: relative;
   border: 1px solid rgb(168, 166, 166);
-  border-radius: 15px;
+  border-radius: 3px;
   object-fit: fit-content;
   display: flex;
   justify-content: end;
@@ -140,8 +140,8 @@ button {
 .card_app_image_group {
   text-decoration: none;
   position: relative;
-  border-radius: 15px;
-  border-radius: 15px;
+  border-radius: 3px;
+  border-radius: 3px;
   border: none;
   transition: all 0.5s;
 }
@@ -188,6 +188,7 @@ button {
   display: flex;
   z-index: 11;
   overflow-x: hidden;
+  margin: 0 auto;
 }
 .card_app_image_group {
   position: relative;
@@ -197,8 +198,8 @@ button {
   justify-content: end;
   cursor: pointer;
   overflow-x: hidden;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
   overflow: hidden;
 }
 
@@ -225,8 +226,8 @@ button {
   color: white;
   line-height: 50px;
   text-align: center;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -281,7 +282,7 @@ button {
   align-items: center;
 
   position: relative;
-  border-radius: 15px;
+  border-radius: 3px;
   object-fit: fit-content;
 }
 
@@ -364,8 +365,8 @@ button {
   font-size: 35px;
   background-color: black;
   opacity: 0.3;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 .card_app_carousel .card_app_carousel_text {
   position: absolute;
@@ -379,8 +380,8 @@ button {
   bottom: 5px;
   font-size: 35px;
   color: white;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 @media screen and (max-width: 800px) {

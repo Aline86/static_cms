@@ -1,27 +1,26 @@
 import { useEffect, useState } from "react";
 import s from "./style.module.css";
-
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
 import { Video } from "../class/Video";
-import { RawDraftContentState } from "draft-js";
-import { UploadService } from "../../../../services/uploadService";
-import DropdownData from "../dropdown/Dropdown";
 
 function VideoInput({
   input_bloc,
+
   updateVideo,
+
+  reload_blocs,
   toggle,
 }: {
   input_bloc: Video;
 
   updateVideo: any;
+  reload_blocs: any;
+  refresh: boolean;
   toggle: boolean;
 }) {
   const [isYoutube, setIsYoutube] = useState(false);
   const [choice, isExternalLink] = useState<boolean>(true);
-  const [isToggle, setToggle] = useState<boolean>(toggle);
-  const [mounted, setMounted] = useState(false);
+
   const [clear, setClear] = useState(false);
   const updateIsYoutube = () => {
     setIsYoutube(!isYoutube);
@@ -30,7 +29,7 @@ function VideoInput({
   const validateLink = async () => {
     let result = await input_bloc.save_bloc();
     if (result !== undefined) {
-      window.location.reload();
+      reload_blocs();
     }
   };
   const checkExternal = async (url: string) => {
@@ -38,8 +37,6 @@ function VideoInput({
 
     if (prefixe === "http" || prefixe === "") {
       isExternalLink(true);
-    } else if (/.pdf/.test(url.substring(url.length - 4))) {
-      setToggle(true);
     } else {
       isExternalLink(false);
     }
@@ -51,6 +48,8 @@ function VideoInput({
   useEffect(() => {
     choice !== undefined && setIsYoutube(choice);
   }, [choice]);
+  useEffect(() => {}, [toggle]);
+
   return (
     <div className={s.bloc} key={input_bloc.bloc_number}>
       <div className={s.titre}>

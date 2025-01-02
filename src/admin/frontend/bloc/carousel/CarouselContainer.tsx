@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import CardDataShow from "./CardDataShow";
 import s from "./styles/style.module.css";
+import right from "./../../../../assets/right.png";
+import left from "./../../../../assets/left.png";
 import CarouselCard from "../../../backoffice/bloc/components/carousel/class/CarouselData";
 import { Carousel } from "../../../backoffice/bloc/components/carousel/class/Carousel";
 
@@ -43,7 +45,7 @@ function CarouselContainer({
   const [move, setMove] = useState(0);
   const [isLeft, setIsLeft] = useState(true);
   const [firstclick, setFirstClick] = useState(0);
-  const result = window.matchMedia("(max-width: 800px)");
+  const result = window.matchMedia("(max-width: 1200px)");
 
   function updateTransitionLeft() {
     if (data !== undefined) {
@@ -138,29 +140,35 @@ function CarouselContainer({
       className={s.body}
       onTransitionEnd={() => updateTransitionState(false)}
       style={{
-        width: full ? "90vw" : "43vw",
+        width: full ? "90vw" : isResponsive ? `360px` : "43vw",
         margin: `${bloc.gap}px auto`,
-
-        height: `${bloc.height}vh`,
+        marginBottom: isResponsive || result.matches ? "0px" : "30px",
+        marginLeft: isResponsive || result.matches ? "-15px" : "0",
       }}
     >
-      <div
-        className={s.arrow_container}
-        style={{
-          maxWidth: full ? "90vw" : "43vw",
-        }}
-      >
-        {!result.matches ? (
-          type === "carousel" && transitionFinished ? (
+      {!result.matches && !isResponsive && (
+        <div
+          className={s.left_arrows}
+          style={{
+            width: full
+              ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                  bloc.gap * (cardNumber - 1)
+                }px)`
+              : `calc(${bloc.width * 0.85 * (cardNumber - 1)}vw + ${
+                  bloc.gap * (cardNumber - 1)
+                }px)`,
+          }}
+        >
+          {type === "carousel" && transitionFinished ? (
             <button
               className={s.left}
               style={{
                 pointerEvents: "none",
-                marginRight: `${bloc.gap}px`,
+                /*  marginRight: `${bloc.gap}px`,*/
                 color: "lightgray",
               }}
             >
-              &#x27E8;
+              <img src={left} alt="flèche pour regarder les images de gauche" />
             </button>
           ) : (
             <button
@@ -169,44 +177,85 @@ function CarouselContainer({
                 e.preventDefault();
                 moveRight();
               }}
-              style={{ marginRight: `${bloc.gap}px` }}
+              /*  style={{ marginRight: `${bloc.gap}px` }}*/
             >
-              <span>&#x27E8;</span>
+              <img src={left} alt="flèche pour regarder les images de gauche" />
             </button>
-          )
-        ) : (
-          ""
-        )}
+          )}
+
+          {type === "carousel" && transitionFinished ? (
+            <button
+              className={s.right}
+              style={{
+                /*  marginLeft: `${!result.matches ? bloc.gap : 0}px`,*/
+                pointerEvents: "none",
+                color: "lightgray",
+              }}
+            >
+              <img
+                src={right}
+                alt="flèche pour regarder les images de droite"
+              />
+            </button>
+          ) : (
+            <button
+              className={s.right}
+              onClick={(e) => {
+                e.preventDefault();
+                moveLeft();
+              }}
+              /* style={{ marginLeft: `${bloc.gap}px` }}*/
+            >
+              <img
+                src={right}
+                alt="flèche pour regarder les images de droite"
+              />
+            </button>
+          )}
+        </div>
+      )}
+      <div
+        className={s.arrow_container}
+        style={{
+          maxWidth: full ? "90vw" : "43vw",
+        }}
+      >
         <div
           className={s.container_class}
           style={
             isResponsive || result.matches
               ? {
                   minWidth: `${cardWidth}px`,
-                  margin: `${bloc.gap}px auto`,
-                  overflow: `scroll`,
+                  /*  margin: `${bloc.gap}px auto`,*/
+                  overflowX: `scroll`,
                   height: full
-                    ? `${Number(bloc.height)}vh`
-                    : `${Number(bloc.height) * 0.5}vh`,
-
+                    ? !result.matches && !isResponsive
+                      ? `${Number(bloc.height)}vw`
+                      : "220px"
+                    : `${Number(bloc.height)}vw`,
                   marginLeft: `15px`,
-                  width: `100%`,
+                  width: full
+                    ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                        bloc.gap * (cardNumber - 1)
+                      }px)`
+                    : `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                        bloc.gap * (cardNumber - 1)
+                      }px)`,
                 }
               : {
                   minWidth: `${cardWidth}px`,
-                  margin: `${bloc.gap}px auto`,
+                  /* margin: `${bloc.gap}px auto`,*/
 
-                  height: full
-                    ? `${Number(bloc.height)}vh`
-                    : `calc(${Number(bloc.height) * 0.5}vh + 2px)`,
-
-                  width: full
-                    ? `calc(${bloc.width * cardNumber}vw + ${
-                        bloc.gap * cardNumber
-                      }px)`
-                    : `calc(${bloc.width * 0.5 * cardNumber}vw + ${
-                        bloc.gap * cardNumber
-                      }px)`,
+                  height:
+                    !isResponsive && !result.matches
+                      ? `calc(${bloc.height}vw)`
+                      : "180px",
+                  width:
+                    !isResponsive && !result.matches
+                      ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                          bloc.gap * (cardNumber - 1)
+                        }px)`
+                      : `360px`,
                 }
           }
         >
@@ -214,19 +263,23 @@ function CarouselContainer({
             className={s.card_container}
             style={{
               height: `fit-content`,
-              transform: !full
-                ? `translateX(calc(${-bloc.width * 0.5}vw - ${bloc.gap}px))`
-                : !result.matches && !isResponsive
-                ? `translateX(calc(${-bloc.width}vw - ${bloc.gap}px))`
-                : `translateX(0px))`,
+              transform: full
+                ? !result.matches && !isResponsive
+                  ? `translateX(calc(${-bloc.width}vw - 15px) )`
+                  : !isResponsive
+                  ? `translateX(0vw)`
+                  : `translateX(${bloc.width * 1.6}vw )`
+                : `translateX(calc(${-bloc.width}vw - 15px) )`,
             }}
           >
             <div
               className={s.cards}
               style={{
                 height: full
-                  ? `${Number(bloc.height)}vh`
-                  : `${Number(bloc.height) * 0.5}vh`,
+                  ? !result.matches && !isResponsive
+                    ? `${Number(bloc.height)}vw`
+                    : "220px"
+                  : `${Number(bloc.height)}vw`,
               }}
             >
               {data !== undefined &&
@@ -239,7 +292,7 @@ function CarouselContainer({
                       transitionFinished={transitionFinished}
                       trasnsType={"transform 0.5s ease-in"}
                       transX={move}
-                      width={full ? bloc.width : bloc.width * 0.5}
+                      width={full ? bloc.width : bloc.width}
                       gap={bloc.gap}
                       height={bloc.height}
                       value={value}
@@ -254,33 +307,6 @@ function CarouselContainer({
             </div>
           </div>
         </div>
-        {!result.matches ? (
-          type === "carousel" && transitionFinished ? (
-            <button
-              className={s.right}
-              style={{
-                marginLeft: `${!result.matches ? bloc.gap : 0}px`,
-                pointerEvents: "none",
-                color: "lightgray",
-              }}
-            >
-              &#x27E9;
-            </button>
-          ) : (
-            <button
-              className={s.right}
-              onClick={(e) => {
-                e.preventDefault();
-                moveLeft();
-              }}
-              style={{ marginLeft: `${bloc.gap}px` }}
-            >
-              <span>&#x27E9;</span>
-            </button>
-          )
-        ) : (
-          ""
-        )}
       </div>
     </div>
   ) : (
@@ -289,10 +315,10 @@ function CarouselContainer({
         className={s.container_class_auto}
         style={{
           minWidth: `${cardWidth}px`,
-          margin: !full ? `${bloc.gap}px auto` : `auto -25px`,
+          margin: !full ? `${bloc.gap}px auto` : `0px`,
           height: isResponsive ? `230px` : `fit-content`,
           paddingTop: isResponsive ? `120px` : result.matches ? `30px` : `0px`,
-          minHeight: isResponsive ? `170px` : `fit-content`,
+          minHeight: isResponsive || result.matches ? `200px` : `fit-content`,
           width: full ? (isResponsive ? `380px` : `100vw`) : `43vw`,
           marginBottom: result.matches ? "60px" : isResponsive ? "60px" : "0",
         }}
@@ -300,7 +326,7 @@ function CarouselContainer({
         <div
           className={s.card_container_auto}
           style={{
-            transform: `translateX(${-cardWidth + 0.7 * bloc.gap}px)`,
+            transform: `translateX(${-cardWidth * 2 + 1.2 * bloc.gap}px)`,
             height: `fit-content`,
           }}
         >

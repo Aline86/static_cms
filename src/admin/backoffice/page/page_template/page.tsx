@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import s from "./style.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import ajout from "./../../../../assets/ajouter.png";
+
 import Footer from "../../bloc/components/footer/Footer";
 import Header from "../../bloc/components/header/Header";
-import HeaderVizualization from "../../../frontend/bloc/header/header";
-import FooterVizualization from "../../../frontend/bloc/footer/footer";
+
 import BlocDisplay from "./bloc_picker";
 import Page from "../class/Page";
 import Blocs from "./blocs";
@@ -24,7 +23,7 @@ function Visualization({}: PageParams) {
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
   const { id, name } = useParams();
-
+  const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContextProvider);
   let page_type = new Page(Number(id));
@@ -33,6 +32,7 @@ function Visualization({}: PageParams) {
   const [blocs, setBlocs] = useState<Array<any>>([]);
 
   async function asynchronRequestsToPopulateBlocs() {
+    setBlocs([]);
     await header.get_bloc();
 
     await footer.get_bloc();
@@ -60,8 +60,17 @@ function Visualization({}: PageParams) {
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();
   }, []);
+  const reload_blocs = async () => {
+    let bloc_pages = await tools.getAllBlocsPage();
+
+    bloc_pages !== undefined && setBlocs(bloc_pages);
+    setRefresh(!refresh);
+  };
 
   useEffect(() => {}, [toggle, blocs]);
+  useEffect(() => {
+    asynchronRequestsToPopulateBlocs();
+  }, [refresh]);
   return (
     <div className="page">
       <div className={s.page_container}>
@@ -76,16 +85,17 @@ function Visualization({}: PageParams) {
               <div className={s.navigate_2}>Liste des pages</div>
             </li>
           </Link>
-          <Link to={{ pathname: `/admin` }}>
-            <li>
-              <div className={s.navigate}>Paramètres généraux</div>
-            </li>
-          </Link>
+
           <li>
             <div className={s.navigate} onClick={() => setOpen(!open)}>
               Ajouter un bloc
             </div>
           </li>
+          <Link to={{ pathname: `/admin` }}>
+            <li>
+              <div className={s.navigate}>Paramètres généraux</div>
+            </li>
+          </Link>
           <li>
             <div className={s.navigate} onClick={() => logOut()}>
               Se déconnecter
@@ -125,6 +135,9 @@ function Visualization({}: PageParams) {
             dragBegin={dragBegin}
             drag={drag}
             toggle={toggle}
+            setRefresh={setRefresh}
+            reload_blocs={reload_blocs}
+            refresh={refresh}
             setToggle={setToggle}
             page_id={Number(id)}
           />

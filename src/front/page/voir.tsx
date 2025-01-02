@@ -32,7 +32,7 @@ function Front() {
   const [header, setHeader] = useState<Header>(new Header());
   const location = useLocation();
   const result_mid = window.matchMedia("(max-width: 1200px)");
-  const [videoLoaded, isVideoLoaded] = useState<boolean>(false);
+  const [videoLoaded, isVideoLoaded] = useState<boolean>(true);
   const result = window.matchMedia("(max-width: 800px)");
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
@@ -43,7 +43,7 @@ function Front() {
     let bloc_pages = await tools.getAllBlocsPage();
     bloc_pages !== undefined && setBlocs(bloc_pages);
     await footer.get_bloc();
-    checkIfVideo();
+    // checkIfVideo();
     setToggle(!toggle);
   }
 
@@ -100,7 +100,9 @@ function Front() {
   }, []);
 
   useEffect(() => {}, [videoLoaded]);
-
+  useEffect(() => {
+    localStorage.setItem("authToken", "");
+  }, []);
   return (
     <div className={s.blocs_container} style={styles}>
       <HeaderVizualization
@@ -111,7 +113,7 @@ function Front() {
       />
       {blocs.map((value, index) => {
         return videoLoaded && value instanceof TextPicture ? (
-          <div className={s.bloc} key={index}>
+          <div className={s.bloc}>
             <Bloc
               index={index}
               bloc={value}
@@ -126,13 +128,8 @@ function Front() {
           <div
             className={s.carousel}
             style={{
-              marginBottom: `${
-                (false || result.matches) && value.is_automatique
-                  ? "-90px"
-                  : "30px"
-              }`,
+              marginBottom: value.is_automatique ? `0px` : `30px`,
             }}
-            key={index}
           >
             <CarouselVisualization
               input_bloc={value}
@@ -143,7 +140,7 @@ function Front() {
             />
           </div>
         ) : videoLoaded && value instanceof PictureGroup ? (
-          <div className={s.carousel} key={index}>
+          <div className={s.carousel}>
             <PictureGroupVizualisation
               input_bloc={value}
               toggle={toggle}
@@ -153,7 +150,7 @@ function Front() {
             />
           </div>
         ) : videoLoaded && value instanceof Button ? (
-          <div className={s.carousel} key={index}>
+          <div className={s.carousel}>
             <ButtonVisualization
               input_bloc={value}
               toggle={toggle}
@@ -163,19 +160,25 @@ function Front() {
             />
           </div>
         ) : value instanceof Video ? (
-          <div className={s.video} key={index}>
+          <div
+            className={s.video}
+            style={{
+              marginTop: `${"60px"}`,
+            }}
+          >
             <VideoVizualisation
               bloc={value}
-              updateLoaded={updateLoaded}
+              updateLoaded={undefined}
               full={true}
               isResponsive={false}
               videoLoaded={videoLoaded}
+              toggle={toggle}
             />
           </div>
         ) : (
           videoLoaded &&
           value instanceof Parallaxe && (
-            <div className={s.video} key={index}>
+            <div className={s.video}>
               <ParallaxeVizualisation
                 bloc={value}
                 full={true}

@@ -26,7 +26,7 @@ function CarouselVisualization({
   const [cardWidth, setCardWidth] = useState<number>(0);
   const cardRef = useRef<HTMLDivElement>();
   const [resize, setResize] = useState(window.innerWidth);
-  const result = window.matchMedia("(max-width: 1000px)");
+  const result = window.matchMedia("(max-width: 1200px)");
   function updateCardRef() {
     const cardWidth: number | undefined = cardRef.current?.clientWidth;
     if (cardWidth !== undefined) {
@@ -62,7 +62,7 @@ function CarouselVisualization({
       let reordered_data_cards = [];
       let i = 0;
       let first = dataToProcess[dataToProcess.length - 1];
-      console.log(dataToProcess.length - 1);
+
       reordered_data_cards.push(first);
       while (i < dataToProcess.length - 1) {
         reordered_data_cards.push(dataToProcess[i]);
@@ -87,14 +87,16 @@ function CarouselVisualization({
   useEffect(() => {
     if (input_bloc.is_automatique) {
       reorder_automatic();
-    } else if (!isResponsive && !result.matches) {
+    }
+    if ((!isResponsive && !result.matches) || !full) {
       reorder_carousel();
     } else {
       updateCardRef();
       setData(dataToProcess);
     }
-  }, [isResponsive, input_bloc, toggle, dataToProcess]);
+  }, [result.matches, isResponsive, input_bloc, toggle, dataToProcess]);
   useEffect(() => {}, [isResponsive, input_bloc, dataValue]);
+
   return (
     <div
       className={s.body_container}
@@ -103,7 +105,7 @@ function CarouselVisualization({
           input_bloc.is_automatique &&
           isResponsive &&
           input_bloc.bloc_number > 1
-            ? "-180px"
+            ? "-170px"
             : input_bloc.is_automatique &&
               isResponsive &&
               input_bloc.bloc_number === 1
@@ -113,8 +115,10 @@ function CarouselVisualization({
         marginBottom: `${
           input_bloc.is_automatique &&
           input_bloc.bloc_number === 1 &&
-          (isResponsive || result.matches)
-            ? "50px"
+          result.matches
+            ? "-40px"
+            : isResponsive && input_bloc.is_automatique
+            ? "80px"
             : "0px"
         }`,
       }}

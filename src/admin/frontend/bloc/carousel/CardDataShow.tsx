@@ -38,7 +38,7 @@ function CardDataShow({
   isResponsive,
 }: CardDatas) {
   useEffect(() => {}, [toggle]);
-  const result = window.matchMedia("(max-width: 800px)");
+  const result = window.matchMedia("(max-width: 1200px)");
 
   const style_data_transition_finished_auto = {
     background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
@@ -55,15 +55,17 @@ function CardDataShow({
     fontSize: isResponsive ? `18px` : `24px`,
   };
   const style_data_transition_finished_carousel = {
-    marginRight: `${!result.matches ? gap : 10}px`,
-    height: full ? `${height}vh` : `${height * 0.5}vh`,
+    marginRight: `${!result.matches && !isResponsive ? gap : 10}px`,
+    height: !isResponsive && !result.matches ? `${height}vw` : "200px",
+    minHeight: "200px",
     transition: `${trasnsType}`,
     transform: `translateX(${transX}px)`,
   };
 
   const style_data_transition_start_carousel = {
-    marginRight: `${!result.matches ? gap : 10}px`,
-    height: full ? `${height}vh` : `${height * 0.5}vh`,
+    marginRight: `${!result.matches && !isResponsive ? gap : 10}px`,
+    height: !isResponsive && !result.matches ? `${height}vw` : "200px",
+    minHeight: "200px",
   };
   if (type === "auto") {
     if (transitionFinished) {

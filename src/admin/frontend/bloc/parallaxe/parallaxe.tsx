@@ -38,7 +38,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
           textTransform: "uppercase",
           width: !full ? "45vw" : "100%",
           backgroundAttachment: "fixed",
-          marginTop: `${full ? (isResponsive ? "30px" : "140px") : "30px"}`,
+          marginTop: `${full ? (isResponsive ? "90px" : "140px") : "30px"}`,
           fontSize: isResponsive ? "4vh" : "10vh",
           WebkitTextFillColor: "transparent",
           lineHeight: isResponsive ? "5vh" : "12vh",
@@ -59,7 +59,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
         position: "relative",
         backgroundImage:
           `url(${BASE_URL_SITE}/api/uploadfile/` + bloc.image + `)`,
-        height: "45vh",
+        height: isResponsive || result.matches ? "200px" : "30vh",
         backgroundAttachment: "fixed",
         width: full ? "100vw" : "46vw",
         left: 0,

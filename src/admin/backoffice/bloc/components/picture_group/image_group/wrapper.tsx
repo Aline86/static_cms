@@ -47,7 +47,7 @@ function CardData({
       <div
         className={s.card_app}
         style={{
-          width: `calc(15vw)`,
+          width: `calc(18vw)`,
           height: `fit-content`,
           marginRight: `${gap}px`,
           paddingTop: `15px`,

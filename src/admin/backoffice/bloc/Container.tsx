@@ -12,11 +12,13 @@ export default abstract class Container {
   // à mettre dans un process .env
   BASE_URL: string = BASE_URL_SITE + "/api/index.php?method=";
   token: string | null = localStorage.getItem("authToken");
+  checked: boolean;
 
   constructor(id: number = -1, title: string = "", type: string = "") {
     this.id = id;
     this.title = title;
     this.type = type;
+    this.checked = false;
   }
   /**
    *
@@ -37,7 +39,34 @@ export default abstract class Container {
     });
     return formdata;
   }
+  /**
+   *
+   * @param bloc child Class
+   * @param action add or update
+   * @returns string with promise status to say if data has been correctly sent
+   */
+  public async check_token(): Promise<boolean> {
+    let formdata = new FormData();
+    formdata.append("token", JSON.stringify(this.token));
+    if (!this.checked) {
+      const response = await fetch(
+        BASE_URL_SITE + "/api/user.php?method=check_token",
+        {
+          method: "POST",
+          body: formdata,
+        }
+      ).then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
 
+        return await response.json();
+      });
+      this.checked = Boolean(Number(response[0].is_token));
+      return Boolean(Number(response[0].is_token));
+    }
+    return false;
+  }
   /**
    *
    * @param bloc child Class
@@ -46,25 +75,24 @@ export default abstract class Container {
    */
   public async save_bloc(): Promise<this> {
     const action = this.id > -1 ? "update" : "add";
-    let data_to_send = this._create_form(this);
-    await fetch(
-      this.BASE_URL + action + "_" + this._get_class_api_call_parameters(),
-      {
-        method: "POST",
-        body: data_to_send,
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      }
-    )
-      .then((response) => response)
-      .then((response) => {
-        return this;
-      })
-      .catch((error: any) => {
-        console.error(error.message);
-      });
 
+    if ((await this.check_token()) || this.checked) {
+      let data_to_send = this._create_form(this);
+      await fetch(
+        this.BASE_URL + action + "_" + this._get_class_api_call_parameters(),
+        {
+          method: "POST",
+          body: data_to_send,
+        }
+      )
+        .then((response) => response)
+        .then((response) => {
+          return this;
+        })
+        .catch((error: any) => {
+          console.error(error.message);
+        });
+    }
     return this;
   }
 
@@ -163,16 +191,15 @@ export default abstract class Container {
   }
   public async delete_bloc(): Promise<void | this> {
     try {
-      const response = await fetch(
-        this.BASE_URL + this._get_class_api_call_parameters(),
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-          },
+      if (await this.check_token()) {
+        const response = await fetch(
+          this.BASE_URL + this._get_class_api_call_parameters(),
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.ok) {
         }
-      );
-      if (response.ok) {
       }
     } catch (error: any) {
       console.error(error.message);

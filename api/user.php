@@ -35,31 +35,36 @@ $method = isset($_GET['method']) ? $_GET['method'] : null; //return GET, POST, P
 
 
 if($method === "connexion" && $_POST['email'] !== null && $_POST['password'] !== null) {
-   
-    $requete = 'SELECT email password FROM user WHERE email = :email AND password = :password';
+    
+    $requete = 'SELECT password FROM user WHERE email = :email';
     $resultat = $db->prepare($requete);
     $resultat->bindValue(':email', $_POST['email']);
-    $resultat->bindValue(':password', $_POST['password']);
-    $user = $resultat->execute();  
+    $resultat->execute();  
+    $user = $resultat->fetchAll(PDO::FETCH_ASSOC); 
+        
+   
+    $hashed = password_verify($_POST['password'], $user[0]['password']);
+  
 
-    if($user) {
+    if($hashed) {
         $token = bin2hex(random_bytes(16));
-      
+    
         $requete = 'UPDATE user SET token=:token WHERE email=:email AND password=:password';
         $resultat = $db->prepare($requete);
         $resultat->bindValue(':token',  $token);
         $resultat->bindValue(':email', $_POST['email']);
-        $resultat->bindValue(':password', $_POST['password']);
-        $resultat->execute();  
-
-        $requete2 = 'SELECT * FROM user WHERE email = :email AND password = :password AND token=:token';
+        $resultat->bindValue(':password', $user[0]['password']);
+        $res = $resultat->execute();  
+   
+    
+        $requete2 = 'SELECT token FROM user WHERE email = :email AND password = :password AND token=:token';
         $resultat2 = $db->prepare($requete2);
         $resultat2->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
-        $resultat2->bindParam(':password', $_POST['password'], PDO::PARAM_STR);
+        $resultat2->bindParam(':password', $user[0]['password'], PDO::PARAM_STR);
         $resultat2->bindParam(':token',  $token, PDO::PARAM_STR);
         $resultat2->execute(); 
         $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-      
+       
         echo  json_encode($user);
         exit();
     }
@@ -68,20 +73,23 @@ if($method === "connexion" && $_POST['email'] !== null && $_POST['password'] !==
     }
 }
 if($method === "delete_connexion" && $_POST['email'] !== null && $_POST['password'] !== null) {
-    $requete = 'SELECT email password FROM user WHERE email = :email AND password = :password';
+  
+    $requete = 'SELECT password FROM user WHERE email = :email';
     $resultat = $db->prepare($requete);
     $resultat->bindValue(':email', $_POST['email']);
-    $resultat->bindValue(':password', $_POST['password']);
-    $user = $resultat->execute();  
-
-    if($user) {
+    $user = $resultat->fetchAll(PDO::FETCH_ASSOC); 
+    $hashed = password_verify($_POST['password'], $user[0]['password']);
+  
+  
+    if($hashed) {
         $token = '';
-      
+        $hashed = hash('sha512',  $_POST['password']);
+
         $requete = 'UPDATE user SET token=:token WHERE email=:email AND password=:password';
         $resultat = $db->prepare($requete);
         $resultat->bindValue(':token',  $token);
         $resultat->bindValue(':email', $_POST['email']);
-        $resultat->bindValue(':password', $_POST['password']);
+        $resultat->bindValue(':password', $user[0]['password']);
         $resultat->execute();  
         return true;
         
@@ -92,3 +100,16 @@ if($method === "delete_connexion" && $_POST['email'] !== null && $_POST['passwor
     }
 
 }
+
+if($method === "check_token") {
+   
+    $authorization_header = json_decode($_POST['token']) ?? null;
+    $requete2 = 'SELECT count(token) as is_token FROM user WHERE token=:token';
+    $resultat2 = $db->prepare($requete2);
+    $resultat2->bindParam(':token',  $authorization_header, PDO::PARAM_STR);
+    $resultat2->execute(); 
+    $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+   
+    echo  json_encode($user);
+}
+
