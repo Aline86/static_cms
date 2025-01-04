@@ -64,7 +64,7 @@ function Voir() {
       root.style.paddingBottom = "75px";
     } else if (root !== null) {
       root.style.width = "100vw";
-      root.style.paddingTop = "130px";
+      root.style.paddingTop = "100px";
       root.style.paddingBottom = "75px";
     }
   };
@@ -73,7 +73,7 @@ function Voir() {
   }, [location, refresh]);
 
   const styles = {
-    backgroundColor: common !== null ? `${common?.fond}` : "transparent",
+    backgroundColor: common !== null ? `${common?.fond}` : "#ffffff",
     "--titles": `${common?.titles}` ? `${common?.titles}` : "black",
     "--button-background-color": `${common?.background_color_buttons}`
       ? `${common?.background_color_buttons}`
@@ -119,7 +119,7 @@ function Voir() {
 
       {blocs.map((value, index) => {
         return videoLoaded && value instanceof TextPicture ? (
-          <div className={s.bloc}>
+          <div className={s.bloc} key={index}>
             <Bloc
               index={index}
               bloc={value}
@@ -132,6 +132,7 @@ function Voir() {
           </div>
         ) : videoLoaded && value instanceof Carousel ? (
           <div
+            key={index}
             className={s.carousel}
             style={{
               marginBottom: `${
@@ -150,7 +151,7 @@ function Voir() {
             />
           </div>
         ) : videoLoaded && value instanceof PictureGroup ? (
-          <div className={s.carousel}>
+          <div key={index} className={s.carousel}>
             <PictureGroupVizualisation
               input_bloc={value}
               toggle={toggle}
@@ -160,7 +161,7 @@ function Voir() {
             />
           </div>
         ) : videoLoaded && value instanceof Button ? (
-          <div className={s.carousel}>
+          <div key={index} className={s.carousel}>
             <ButtonVisualization
               input_bloc={value}
               toggle={toggle}
@@ -170,7 +171,7 @@ function Voir() {
             />
           </div>
         ) : value instanceof Video ? (
-          <div className={s.video}>
+          <div key={index} className={s.video}>
             <VideoVizualisation
               bloc={value}
               updateLoaded={undefined}
@@ -183,7 +184,7 @@ function Voir() {
         ) : (
           videoLoaded &&
           value instanceof Parallaxe && (
-            <div className={s.video}>
+            <div key={index} className={s.video}>
               <ParallaxeVizualisation
                 bloc={value}
                 full={true}

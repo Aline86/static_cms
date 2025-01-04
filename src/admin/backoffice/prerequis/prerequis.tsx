@@ -10,6 +10,7 @@ import BlocHeader from "../page/page_template/bloc_components/BlocHeader";
 import BlocFooter from "../page/page_template/bloc_components/BlocFooter";
 import CommonVisualization from "../bloc/components/common/general_settings";
 import { Link } from "react-router-dom";
+import Page from "../page/class/Page";
 
 interface PageParams {}
 
@@ -21,18 +22,13 @@ function Prerequis({}: PageParams) {
   const [footer, setFooter] = useState<Footer>(new Footer());
 
   const savePrerequisites = async () => {
-    await saveHeaderAndFooter(header);
-    await saveHeaderAndFooter(footer);
+    await header.save_bloc();
+    await footer.save_bloc();
+    saveHeaderAndFooter();
   };
 
-  const saveHeaderAndFooter = async (bloc: Header | Footer) => {
-    let update = null;
-    update = await bloc.save_bloc();
-    if (bloc.id === -1) {
-      setRefresh(!refresh);
-    } else {
-      setToggle(!toggle);
-    }
+  const saveHeaderAndFooter = async () => {
+    setRefresh(!refresh);
   };
 
   const updateHeader = async (
@@ -42,29 +38,13 @@ function Prerequis({}: PageParams) {
     id_network: number | undefined = undefined
   ) => {
     if (header !== undefined) {
-      const new_bloc = header.updateHeader(e, field, input, id_network);
-      if (id_network !== undefined) {
-        setToggle(!toggle);
+      const new_bloc = await header.updateHeader(e, field, input, id_network);
+      if (id_network !== undefined && input === "remove") {
+        setRefresh(!refresh);
       } else {
         setHeader(new_bloc);
         setToggle(!toggle);
       }
-    }
-  };
-
-  const remove_bloc = async (bloc: Header | Footer, index: number) => {
-    await bloc.remove_link(index);
-    let result = await bloc.get_bloc();
-
-    if (result !== undefined && result instanceof Footer) {
-      setFooter(result);
-
-      setRefresh(!refresh);
-    }
-
-    if (result !== undefined && result instanceof Header) {
-      setHeader(result);
-      setRefresh(!refresh);
     }
   };
 
@@ -94,15 +74,30 @@ function Prerequis({}: PageParams) {
     input: string,
     id_network: number | undefined = undefined
   ) => {
-    const new_bloc = footer.updateFooter(e, field, input, id_network);
-    if (id_network !== undefined) {
-      setToggle(!toggle);
+    const new_bloc = await footer.updateFooter(e, field, input, id_network);
+    if (id_network !== undefined && input === "remove") {
+      setRefresh(!refresh);
     } else {
       setFooter(new_bloc);
       setToggle(!toggle);
     }
   };
+  // initilization of the first page, it should always exist prior to any action
+  const create_first_page = async () => {
+    let page_type = new Page();
+    let async_result = await page_type.get_pages();
+    console.log("async_result", async_result);
+    if (Array.isArray(async_result) && async_result.length >= 1) {
+    } else if (async_result !== undefined) {
+      let page = new Page(-1, "Accueil");
+      let result = await page.save_bloc();
+      if (result.id > -1) {
+        setRefresh(!refresh);
+      }
+    }
+  };
   useEffect(() => {
+    create_first_page();
     getFooterAndHeader();
   }, []);
 
@@ -121,14 +116,12 @@ function Prerequis({}: PageParams) {
         <BlocHeader
           bloc={header}
           updateHeader={updateHeader}
-          removeBloc={remove_bloc}
           toggle={toggle}
           saveBloc={savePrerequisites}
         />
         <BlocFooter
           bloc={footer}
           updateFooter={updateFooter}
-          removeBloc={remove_bloc}
           toggle={toggle}
           saveBloc={savePrerequisites}
         />

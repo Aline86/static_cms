@@ -1,0 +1,44 @@
+import s from "./style/style.module.css";
+import { BASE_URL_SITE } from "./../../../config";
+import remove from "./../../../assets/remove.png";
+
+interface CardDatas {
+  update: any;
+  bloc: any;
+  index: number | undefined;
+  sub_bloc: any | undefined;
+}
+
+function Picture({ update, bloc, index, sub_bloc }: CardDatas) {
+  return (bloc.image_url !== undefined && bloc.image_url !== "") ||
+    (sub_bloc !== undefined && sub_bloc.image_url !== "") ? (
+    <div>
+      <div className={s.sup_container}>
+        <div className="button_remove_container">
+          <img
+            src={remove}
+            alt="suppression box"
+            onClick={() => {
+              index === undefined
+                ? update(bloc.image_url, "delete_picture", bloc)
+                : update(sub_bloc.image_url, "delete_picture", bloc, index);
+            }}
+          />
+        </div>
+      </div>
+      <div className={s.delete}>
+        <img
+          src={
+            index === undefined
+              ? BASE_URL_SITE + "/api/uploadfile/" + bloc.image_url
+              : BASE_URL_SITE + "/api/uploadfile/" + sub_bloc.image_url
+          }
+          alt="miniature"
+        />
+      </div>
+    </div>
+  ) : (
+    ""
+  );
+}
+export default Picture;

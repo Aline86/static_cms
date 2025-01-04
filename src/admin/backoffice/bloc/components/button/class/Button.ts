@@ -86,7 +86,10 @@ export class Button extends Container {
         }
         this.set_width(width);
         break;
-
+      case "delete_picture":
+        // UploadService.deleteUpload(e, this.token);
+        this.set_image_url("");
+        break;
       case "image_url":
         this.set_image_url(UploadService.sanitizeName(e.target.files[0].name));
         UploadService.handleUpload(e.target.files[0]);

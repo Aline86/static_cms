@@ -10,7 +10,7 @@ export default class Common extends Container {
   parameters: string;
 
   constructor(
-    fond: string = "transparent",
+    fond: string = "#ffffff",
     titles: string = "black",
     background_color_buttons: string = "#2f6091",
     id: number = -1,

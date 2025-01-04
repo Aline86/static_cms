@@ -8,14 +8,14 @@ import Footer from "../Footer";
 interface FooterInfo {
   input_bloc: Footer;
   updateFooter: any;
-  remove_bloc: any;
+
   saveBloc: any;
 }
 
 function FooterInput({
   input_bloc,
   updateFooter,
-  remove_bloc,
+
   saveBloc,
 }: FooterInfo) {
   const [opened, setOpened] = useState(false);
@@ -96,8 +96,7 @@ function FooterInput({
                     src={remove}
                     alt="suppression box"
                     onClick={(e) => {
-                      e.preventDefault();
-                      remove_bloc(input_bloc, key);
+                      updateFooter(e, "social_network", "remove", key);
                     }}
                   />
                 </div>

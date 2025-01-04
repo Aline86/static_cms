@@ -28,7 +28,7 @@ function InsideButton({
   const result = window.matchMedia("(max-width: 700px)");
 
   const checkExternal = async (url: string) => {
-    if (typeof url !== "number") {
+    if (link && typeof url !== "number") {
       isExternalLink(true);
     } else {
       let prefixe = Number(url);

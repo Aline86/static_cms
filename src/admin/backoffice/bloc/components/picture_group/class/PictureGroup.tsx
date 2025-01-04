@@ -108,6 +108,12 @@ export class PictureGroup extends Container {
       case "bloc_number":
         this.set_bloc_number(e);
         break;
+      case "delete_picture":
+        if (index !== undefined) {
+          //UploadService.deleteUpload(e, this.token);
+          this.picture_group_data[index].image_url = "";
+        }
+        break;
       case "ajout":
         this.add_data();
         this.card_number++;

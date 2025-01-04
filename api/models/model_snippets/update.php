@@ -40,9 +40,13 @@
 
     $SQL_string_1 .= implode(', ', $inside_SQL_string_1);
     $SQL_string_2 = ' WHERE id=:id ';
-    if(count($associated_component_ids) <= 0) {
+    if(count($associated_component_ids) >= 0) {
+   
         foreach($associated_component_ids as $associated_component_name => $associated_component_id) {
-            $SQL_string_2 .= ' AND :' . $associated_component_name . ' = ' . $associated_component_id;
+            if(!is_array($associated_component_id)) {
+                $SQL_string_2 .= ' AND :' . $associated_component_name . ' = ' . $associated_component_id;
+            }
+            
         } 
     }
     $full_SQL_string = $SQL_string_1 . $SQL_string_2;
@@ -55,9 +59,11 @@
         $q->bindValue($parameter, $sql_value);
     }
 
-    if(count($associated_component_ids) <= 0) {
+    if($associated_component_ids !== null && count($associated_component_ids) >= 0) {
         foreach($associated_component_ids as $associated_component_name => $associated_component_id) {
-            $q->bindValue(':' . $associated_component_name, $associated_component_id);
+            if(!is_array($associated_component_id)) {
+                $q->bindValue(':' . $associated_component_name, $associated_component_id);
+            }
         } 
     }
 
@@ -87,10 +93,10 @@
                 
                         $this->update_children($data_type_decoded, $id, $associated_table);
                     }
-                    else {
+                   /* else {
                    
                         $this->add_children($data_type_decoded, $id, $associated_table);
-                    }
+                    }*/
                 }
               
             }

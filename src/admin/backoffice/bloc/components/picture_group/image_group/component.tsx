@@ -11,7 +11,6 @@ interface ImageGroupData {
 }
 
 function ImageGroup({ toggle, updatePictureGroupData, bloc }: ImageGroupData) {
-  const result = window.matchMedia("(max-width: 1000px)");
   const show_remove = bloc.picture_group_data.length > 2 ? true : false;
   return (
     <div className={s.body}>

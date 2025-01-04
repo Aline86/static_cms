@@ -25,4 +25,37 @@ export class UploadService {
       return filename;
     }
   };
+  static deleteUpload = async (file: any, token: string | null) => {
+    console.log("token", token);
+    await fetch(
+      BASE_URL_SITE +
+        "/api/uploadfile/index.php?name=" +
+        file +
+        "&token=" +
+        token,
+      {
+        method: "DELETE",
+      }
+    );
+  };
+  static checkImageExists = async (imageUrl: string) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    return await fetch(
+      BASE_URL_SITE + "/api/uploadfile/index.php?name=" + imageUrl,
+      {
+        method: "GET",
+        signal,
+      }
+    )
+      .then(() => {})
+      .catch((error) => {
+        // Catching specific abort errors
+        if (error.name === "AbortError") {
+          return false;
+        } else {
+          return false;
+        }
+      });
+  };
 }

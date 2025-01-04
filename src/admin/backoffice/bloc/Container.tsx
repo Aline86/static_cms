@@ -191,9 +191,12 @@ export default abstract class Container {
   }
   public async delete_bloc(): Promise<void | this> {
     try {
-      if (await this.check_token()) {
+      if ((await this.check_token()) || this.checked) {
         const response = await fetch(
-          this.BASE_URL + this._get_class_api_call_parameters(),
+          this.BASE_URL +
+            this._get_class_api_call_parameters() +
+            "&token=" +
+            this.token,
           {
             method: "DELETE",
           }

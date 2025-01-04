@@ -53,7 +53,16 @@ $id_component = isset($_GET['id_component']) ? $_GET['id_component'] : null;
 $associated_method_for_delete = isset($_GET['associated_table']) ? $_GET['associated_table'] : null;
 
 if(isset($_GET['type'])) {
+
     $methods_to_check = ['add_'. json_decode($_GET['type']), 'update_' . json_decode($_GET['type']), 'delete_' . json_decode($_GET['type']), 'delete_child', 'add_child'];
+    if(in_array($method, $methods_to_check) && ($method === 'add_'. json_decode($_GET['type']) || $method === 'update_' . json_decode($_GET['type']) || $method === 'add_child') && !isset($_POST['token'])) {
+        exit();
+    }
+    if(in_array($method, $methods_to_check) && ($method === 'delete_'. json_decode($_GET['type']) || $method === 'delete_child') && !isset($_GET['token'])) {
+        exit();
+    }
+  
+   
     if(isset($_POST['token'])){
         $token = json_decode($_POST['token']) ?? null;
  
@@ -81,7 +90,35 @@ if(isset($_GET['type'])) {
         
         } 
     }
+
+    if(isset($_GET['token'])){
     
+        $token = $_GET['token'] ?? null;
+     
+        if(in_array($method, $methods_to_check) && $token === null) {
+            exit();
+        }
+        if ($token !== null) {
+            // Bearer token is sent in the format: "Bearer <token>"
+      
+            if(in_array($method, $methods_to_check) && $token === null) {
+                exit();
+            }
+            $requete2 = 'SELECT * FROM user WHERE token=:token';
+            $resultat2 = $db->prepare($requete2);
+            $resultat2->bindParam(':token', $token, PDO::PARAM_STR);
+            $resultat2->execute(); 
+            $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+      
+            if(count($user) > 0 ) {
+                unset($_POST['token']);
+            }
+            else {
+                exit();
+            }
+        
+        } 
+    }
 
  
     if(isset($_POST['BASE_URL'])) {
@@ -122,14 +159,14 @@ if(isset($_GET['type'])) {
     }
 
     foreach($crud as $method_to_call) {
-
+  
         if($method === 'delete_child' && $method_to_call === 'delete_child') {
         
             $method_params['id'] = $id;
             $method_params['associated_table'] = $associated_method_for_delete;
             $class = ucfirst($type);
     
-            $model = new $class($type, $database_name, $host, $user, $passwordt);
+            $model = new $class($type, $database_name, $host, $user, $password);
             echo json_encode($model->$method_to_call($method_params));
             exit();
         }

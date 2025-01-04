@@ -31,7 +31,9 @@ function ShrinkParams({
     <div
       className="blocs"
       draggable={drag}
-      onDragStart={() => setDragBegin(index)}
+      onDragStart={() =>
+        setDragBegin !== undefined ? setDragBegin(index) : ""
+      }
       onDragOver={handleDragOver}
       onDrop={() => updateDragBloc(index)}
       key={index}

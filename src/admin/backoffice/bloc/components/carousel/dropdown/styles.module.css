@@ -5,25 +5,22 @@
   justify-content: center;
   gap: 15px;
   width: calc(100% - 20px);
+  margin: 0 auto;
   border: 1px solid lightgray;
   box-sizing: border-box;
-  padding: 10px;
-  margin: 10px auto;
+  padding: 20px;
 }
 .container input {
   display: inline;
 }
-.type {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  width: calc(100% - 20px);
-}
 
 .container select {
-  height: 25px;
+  height: 35px;
   background-color: white;
   border: 1px solid lightgray;
+  margin: 5px;
+}
+
+.container input {
+  width: 98%;
 }

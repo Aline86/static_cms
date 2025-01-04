@@ -43,13 +43,10 @@ function Front() {
     let bloc_pages = await tools.getAllBlocsPage();
     bloc_pages !== undefined && setBlocs(bloc_pages);
     await footer.get_bloc();
-    // checkIfVideo();
+
     setToggle(!toggle);
   }
 
-  const updateLoaded = (loaded: boolean) => {
-    isVideoLoaded(loaded);
-  };
   const adaptRoot = () => {
     let root = document.getElementById("root");
     if (root !== null && result.matches) {
@@ -62,26 +59,16 @@ function Front() {
       root.style.paddingBottom = "75px";
     } else if (root !== null) {
       root.style.width = "100vw";
-      root.style.paddingTop = "130px";
+      root.style.paddingTop = "100px";
       root.style.paddingBottom = "75px";
     }
   };
   useEffect(() => {
-    setBlocs([]);
-
     asynchronRequestsToPopulateBlocs();
   }, [location]);
-  const checkIfVideo = () => {
-    const result = blocs.filter((bloc) => bloc.type === "video");
 
-    if (result.length === 0) {
-      isVideoLoaded(true);
-    } else if (result.length > 0) {
-      isVideoLoaded(false);
-    }
-  };
   const styles = {
-    backgroundColor: common !== null ? `${common?.fond}` : "transparent",
+    backgroundColor: common !== null ? `${common?.fond}` : "#ffffff",
     "--titles": `${common?.titles}` ? `${common?.titles}` : "black",
     "--button-background-color": `${common?.background_color_buttons}`
       ? `${common?.background_color_buttons}`
@@ -94,9 +81,9 @@ function Front() {
 
   useEffect(() => {
     adaptRoot();
-    // if (blocs.length === 0 || blocs === undefined) {
-    asynchronRequestsToPopulateBlocs();
-    // }
+    if (blocs.length === 0 || blocs === undefined) {
+      asynchronRequestsToPopulateBlocs();
+    }
   }, []);
 
   useEffect(() => {}, [videoLoaded]);
@@ -113,7 +100,7 @@ function Front() {
       />
       {blocs.map((value, index) => {
         return videoLoaded && value instanceof TextPicture ? (
-          <div className={s.bloc}>
+          <div key={index} className={s.bloc}>
             <Bloc
               index={index}
               bloc={value}
@@ -126,6 +113,7 @@ function Front() {
           </div>
         ) : videoLoaded && value instanceof Carousel ? (
           <div
+            key={index}
             className={s.carousel}
             style={{
               marginBottom: value.is_automatique ? `0px` : `30px`,
@@ -140,7 +128,7 @@ function Front() {
             />
           </div>
         ) : videoLoaded && value instanceof PictureGroup ? (
-          <div className={s.carousel}>
+          <div key={index} className={s.carousel}>
             <PictureGroupVizualisation
               input_bloc={value}
               toggle={toggle}
@@ -150,7 +138,7 @@ function Front() {
             />
           </div>
         ) : videoLoaded && value instanceof Button ? (
-          <div className={s.carousel}>
+          <div key={index} className={s.carousel}>
             <ButtonVisualization
               input_bloc={value}
               toggle={toggle}
@@ -161,6 +149,7 @@ function Front() {
           </div>
         ) : value instanceof Video ? (
           <div
+            key={index}
             className={s.video}
             style={{
               marginTop: `${"60px"}`,
@@ -178,7 +167,7 @@ function Front() {
         ) : (
           videoLoaded &&
           value instanceof Parallaxe && (
-            <div className={s.video}>
+            <div key={index} className={s.video}>
               <ParallaxeVizualisation
                 bloc={value}
                 full={true}

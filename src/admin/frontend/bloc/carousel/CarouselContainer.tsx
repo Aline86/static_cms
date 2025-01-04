@@ -314,19 +314,18 @@ function CarouselContainer({
       <div
         className={s.container_class_auto}
         style={{
-          minWidth: `${cardWidth}px`,
           margin: !full ? `${bloc.gap}px auto` : `0px`,
           height: isResponsive ? `230px` : `fit-content`,
           paddingTop: isResponsive ? `120px` : result.matches ? `30px` : `0px`,
           minHeight: isResponsive || result.matches ? `200px` : `fit-content`,
-          width: full ? (isResponsive ? `380px` : `100vw`) : `43vw`,
+          width: full ? (isResponsive ? `380px` : `100vw`) : `45vw`,
           marginBottom: result.matches ? "60px" : isResponsive ? "60px" : "0",
         }}
       >
         <div
           className={s.card_container_auto}
           style={{
-            transform: `translateX(${-cardWidth * 2 + 1.2 * bloc.gap}px)`,
+            transform: `translateX(${-cardWidth * 2 + 1 * bloc.gap}px)`,
             height: `fit-content`,
           }}
         >
@@ -341,7 +340,7 @@ function CarouselContainer({
                     transitionFinished={transitionFinished}
                     trasnsType={"transform 1s ease-in"}
                     transX={move}
-                    width={full ? (isResponsive ? `380px` : `100vw`) : `43vw`}
+                    width={full ? (isResponsive ? `380px` : `100vw`) : `45vw`}
                     gap={bloc.gap}
                     height={bloc.height}
                     value={value}

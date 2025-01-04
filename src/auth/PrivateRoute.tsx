@@ -4,6 +4,7 @@ import AuthContext from "../auth/AuthContext";
 
 const PrivateRoute = () => {
   const user = useContext(AuthContext);
+
   if (
     user.user.token === "" ||
     user.user.token !== localStorage.getItem("authToken")
