@@ -2,7 +2,6 @@ import { Carousel } from "../class/Carousel";
 import CarouselData from "../class/CarouselData";
 import s from "./style/style.module.css";
 import CardData from "./wrapper";
-import ajout from "./../../../../../../assets/ajouter.png";
 
 interface CardDatas {
   toggle: boolean;
@@ -14,15 +13,17 @@ function CarouselOption2({ toggle, updateCarousel, bloc }: CardDatas) {
   const show_remove = bloc.carousel_data.length > 2 ? true : false;
   return (
     <div>
-      <div
+      <label
         className={s.addCard}
         onClick={(e) => {
           e.preventDefault();
           updateCarousel(e, "ajout", bloc);
         }}
       >
-        <img src={ajout} alt="ajout" />
-      </div>
+        <span style={{ textTransform: "uppercase", width: "220px" }}>
+          Ajouter un élément +
+        </span>
+      </label>
       <div
         className={s.container_class}
         style={{

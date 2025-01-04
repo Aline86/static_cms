@@ -48,7 +48,7 @@ export class Video extends Container {
         break;
       case "height":
         let height = e.target.value;
-        console.log(height);
+
         if (e.target.value < 15) {
           height = 15;
         } else if (e.target.value > 100) {
@@ -63,7 +63,7 @@ export class Video extends Container {
         } else if (e.target.value > 100) {
           width = 100;
         }
-        console.log(width);
+
         this.set_width(width);
         break;
       case "video_url":

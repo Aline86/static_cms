@@ -37,9 +37,7 @@ function CardDataShow({
   full,
   isResponsive,
 }: CardDatas) {
-  useEffect(() => {
-    console.log("value", value);
-  }, [toggle]);
+  useEffect(() => {}, [toggle]);
   const result = window.matchMedia("(max-width: 1200px)");
 
   const style_data_transition_finished_auto = {

@@ -33,7 +33,6 @@ function Bouton({
     } else {
       isLink(true);
     }
-    console.log("link", link);
   };
   useEffect(() => {
     checkExternal(bloc.href_url);

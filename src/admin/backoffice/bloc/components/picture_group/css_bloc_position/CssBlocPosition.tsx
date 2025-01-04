@@ -18,15 +18,17 @@ function CssPictureGroupPosition({
 }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-      <div
+      <label
         className={s.addCard}
         onClick={(e) => {
           e.preventDefault();
           updatePictureGroupData(e, "ajout", bloc, undefined);
         }}
       >
-        <img src={ajout} alt="ajout" />
-      </div>
+        <span style={{ textTransform: "uppercase", width: "220px" }}>
+          Ajouter un élément +
+        </span>
+      </label>
       <div className="bouton_container_bloc_css_carousel">
         <div className={s.encart_bloc_name_title}>
           <div className={s.encart_bloc_name_title}>

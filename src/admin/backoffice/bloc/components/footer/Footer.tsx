@@ -54,7 +54,6 @@ export default class Footer extends Container {
   }
 
   public async remove_link(index: number) {
-    console.log("index", index);
     if (index !== undefined) {
       this.set_parameters(
         "delete_child&id=" +

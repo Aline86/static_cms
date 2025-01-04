@@ -84,7 +84,6 @@ export default class Header extends Container {
     input: string | undefined,
     index: number | undefined
   ) {
-    console.log("field", field);
     switch (field) {
       case "title":
         this.set_title(e.target.value);
@@ -134,7 +133,6 @@ export default class Header extends Container {
                 e.target.value);
             break;
           case "remove":
-            console.log("index", index);
             index !== undefined && (await this.remove_link(index));
             break;
           default:

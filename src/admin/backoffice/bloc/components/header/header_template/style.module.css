@@ -51,20 +51,3 @@
 .container_column {
   margin: auto;
 }
-.color input {
-  width: 75px !important;
-  height: 35px !important;
-}
-.delete img {
-  width: 100px;
-}
-.delete .button_remove_container {
-  width: 15px !important;
-}
-.sup_container {
-  width: 100px;
-  position: relative;
-  right: -20px;
-  margin-bottom: 3px;
-  z-index: 3;
-}

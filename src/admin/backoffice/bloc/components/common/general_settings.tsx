@@ -17,6 +17,26 @@ function CommonVisualization({}: PageParams) {
     setFooter(await footer.get_bloc());
     setToggle(!toggle);
   }
+  const isLightOrDark = (hexcolor: string = "#2f6091") => {
+    var c = hexcolor.substring(1); // strip #
+    var rgb = parseInt(c, 16); // convert rrggbb to decimal
+    var r = (rgb >> 16) & 0xff; // extract red
+    var g = (rgb >> 8) & 0xff; // extract green
+    var b = (rgb >> 0) & 0xff; // extract blue
+
+    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+    if (luma < 90) {
+      return "white";
+    }
+    return "black";
+  };
+  const style = {
+    cursor: "pointer",
+    color: "gray",
+    border: "1px solid gray",
+    marginTop: `25px`,
+  };
 
   useEffect(() => {
     saveBloc();
@@ -33,7 +53,10 @@ function CommonVisualization({}: PageParams) {
               {common !== undefined && (
                 <div className={s.flex_row}>
                   <h3>Couleur de fond générale :</h3>
-                  <div className={s.color_display}>
+                  <div
+                    className={s.color_display}
+                    style={{ backgroundColor: common?.fond }}
+                  >
                     <input
                       type="color"
                       value={common?.fond === "" ? "#ffffff" : common?.fond}
@@ -52,6 +75,9 @@ function CommonVisualization({}: PageParams) {
                         updateCommon(e, "titles", common);
                       }}
                     />
+                    <h3 style={{ color: common?.titles }}>
+                      Exemple de titre coloré
+                    </h3>
                   </div>
                   <h3>Couleur de fond des boutons :</h3>
                   <div className={s.color_display}>
@@ -66,6 +92,9 @@ function CommonVisualization({}: PageParams) {
                         updateCommon(e, "background_color_buttons", common);
                       }}
                     />
+                    <button style={style} className="buttons">
+                      Voir
+                    </button>
                   </div>
                 </div>
               )}

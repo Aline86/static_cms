@@ -107,15 +107,17 @@ function Pages({}: PagesParams) {
         </li>
       </div>
 
-      <div
-        className={s.addCard}
+      <label
+        className={s.addLink}
         onClick={(e) => {
           e.preventDefault();
           addPage();
         }}
       >
-        <img src={ajout} alt="ajout" />
-      </div>
+        <span style={{ textTransform: "uppercase", width: "220px" }}>
+          Ajouter un élément +
+        </span>
+      </label>
       {pages !== undefined &&
         pages.length > 0 &&
         pages.map((page, key) => {
@@ -137,7 +139,7 @@ function Pages({}: PagesParams) {
                     onClick={() => {
                       savePage(page);
                     }}
-                    style={{ top: "30px", right: "30px" }}
+                    style={{ top: "60px", right: "60px" }}
                   >
                     <img
                       src={add_to_database}
@@ -148,7 +150,17 @@ function Pages({}: PagesParams) {
                 <Link
                   to={{ pathname: `/admin/page/` + page.id + `/` + page.title }}
                 >
-                  <img src={update} alt="modification" />
+                  <label className={s.addLink}>
+                    <span
+                      style={{
+                        textTransform: "uppercase",
+                        width: "220px",
+                        marginTop: "10px",
+                      }}
+                    >
+                      Modifier la page
+                    </span>
+                  </label>
                 </Link>
                 {key > 0 && (
                   <div

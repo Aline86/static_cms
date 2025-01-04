@@ -11,7 +11,7 @@ function CssFooterPosition({ props }: { props: any }) {
                 textDecoration: "underline",
               }}
             >
-              Bas de page
+              Bloc bas de page
             </h3>
           </div>
         </div>

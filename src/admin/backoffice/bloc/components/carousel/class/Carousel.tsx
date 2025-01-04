@@ -18,7 +18,7 @@ export class Carousel extends Container {
     bloc_number: number,
     id: number = -1,
     is_automatique: boolean = false,
-    card_number: number = 6,
+    card_number: number = 4,
     width: number = 16,
     height: number = 20,
     gap: number = 30,

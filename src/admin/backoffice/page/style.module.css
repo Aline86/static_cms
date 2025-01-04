@@ -1,5 +1,7 @@
 .page {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   width: calc(100% - 62px);
   border: 1px solid lightgray;
   margin-bottom: 30px;
@@ -23,9 +25,9 @@
   display: flex;
   justify-content: space-between;
 }
-.end img {
-  width: 30px;
-  height: 30px;
+.button_save_page img {
+  width: 60px;
+  height: 60px;
 }
 .addCard {
   width: 60px;
@@ -42,6 +44,7 @@
 }
 .button_save_page {
   cursor: pointer;
+  width: 75px;
 }
 .button_save_page:hover img {
   transform: scale(1.2);

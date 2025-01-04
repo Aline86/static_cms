@@ -84,15 +84,17 @@ function FooterInput({
             </div>
           </div>
           <div className={s.add_file}>
-            <h3>Liens externes (ex: réseaux sociaux) :</h3>
-            <div
-              className={s.addLink}
+            <label
+              className={s.addCard}
               onClick={(e) => {
+                e.preventDefault();
                 updateFooter(e, "ajout", undefined, undefined);
               }}
             >
-              <img src={ajout} alt="bouton ajouter" />
-            </div>
+              <span style={{ textTransform: "uppercase", width: "220px" }}>
+                Ajouter un élément +
+              </span>
+            </label>
           </div>
         </div>
       </div>

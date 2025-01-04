@@ -140,7 +140,7 @@ function CarouselContainer({
       className={s.body}
       onTransitionEnd={() => updateTransitionState(false)}
       style={{
-        width: full ? "90vw" : isResponsive ? `360px` : "43vw",
+        width: full ? "90vw" : isResponsive ? `360px` : `50vw`,
         margin: `${bloc.gap}px auto`,
         marginBottom: isResponsive || result.matches ? "0px" : "30px",
         marginLeft: isResponsive || result.matches ? "-15px" : "0",
@@ -252,8 +252,8 @@ function CarouselContainer({
                       : "180px",
                   width:
                     !isResponsive && !result.matches
-                      ? `calc(${bloc.width * (cardNumber - 2)}vw + ${
-                          bloc.gap * (cardNumber - 2)
+                      ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                          bloc.gap * (cardNumber - 1)
                         }px)`
                       : `360px`,
                 }
@@ -285,23 +285,25 @@ function CarouselContainer({
               {data !== undefined &&
                 data.map((value, index) => {
                   return (
-                    <CardDataShow
-                      key={index}
-                      type={type}
-                      cardRef={cardRef}
-                      transitionFinished={transitionFinished}
-                      trasnsType={"transform 0.5s ease-in"}
-                      transX={move}
-                      width={full ? bloc.width : bloc.width}
-                      gap={bloc.gap}
-                      height={bloc.height}
-                      value={value}
-                      trigger={trigger}
-                      toggle={toggle}
-                      resize={resize}
-                      full={full}
-                      isResponsive={isResponsive}
-                    />
+                    <>
+                      <CardDataShow
+                        key={index}
+                        type={type}
+                        cardRef={cardRef}
+                        transitionFinished={transitionFinished}
+                        trasnsType={"transform 0.5s ease-in"}
+                        transX={move}
+                        width={full ? bloc.width : bloc.width}
+                        gap={bloc.gap}
+                        height={bloc.height}
+                        value={value}
+                        trigger={trigger}
+                        toggle={toggle}
+                        resize={resize}
+                        full={full}
+                        isResponsive={isResponsive}
+                      />
+                    </>
                   );
                 })}
             </div>

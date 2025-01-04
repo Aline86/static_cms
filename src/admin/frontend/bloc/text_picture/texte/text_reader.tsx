@@ -97,7 +97,6 @@ function TextReader({
     }
   };
   const setIndexPictureData = (picture_data_: any) => {
-    console.log("picture_data_", picture_data_);
     let picture_data_offset: any = {};
     let picture_data_offset_final: any = {};
     Object.entries(picture_data_).map(([key, picture]) => {
@@ -147,8 +146,6 @@ function TextReader({
       onContentStateChange !== undefined &&
       typeof onContentStateChange === "function" &&
       onContentStateChange(contenState, bloc_input, index);
-
-    console.log("values_map", values_map);
 
     Object.keys(picture_data_offset_final).length > 0 &&
       setPictureOffset(picture_data_offset_final);

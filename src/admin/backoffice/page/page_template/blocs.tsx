@@ -107,7 +107,6 @@ function Blocs({
     setToggle(!toggle);
   };
   const updateParallaxe = (e: any, field: string, input_bloc: Parallaxe) => {
-    console.log("input_bloc", input_bloc);
     const new_Bloc = input_bloc.update(e, field);
 
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
@@ -135,7 +134,7 @@ function Blocs({
     await bloc.remove();
     blocs.map(async (bloc_in_blocs: typeof component_types, index) => {
       bloc_in_blocs.update(index + 1, "bloc_number", undefined);
-      console.log("bloc", bloc_in_blocs);
+
       await bloc_in_blocs.save_bloc();
     });
     setRefresh(!refresh);

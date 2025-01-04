@@ -19,7 +19,7 @@
   top: 0;
 }
 .backdrop::before {
-  background-color: rgba(0, 0, 0, 0.37);
+  background-color: rgba(0, 0, 0, 0.2);
   content: "";
   display: block;
   height: 100%;
