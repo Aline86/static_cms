@@ -1,8 +1,6 @@
 import { Button } from "../class/Button";
 import DropdownData from "../dropdown/Dropdown";
 import s from "./style/style.module.css";
-import { BASE_URL_SITE } from "../../../../../../config";
-import remove from "./../../../../../../assets/remove.png";
 import Picture from "../../../../services/picture";
 
 interface CardDatas {
@@ -69,11 +67,16 @@ function ButtonInput({ updateButton, bloc }: CardDatas) {
                 }}
               />
             </label>
-            <Picture update={updateButton} bloc={bloc} index={undefined} />
+            <Picture
+              update={updateButton}
+              bloc={bloc}
+              index={undefined}
+              sub_bloc={undefined}
+            />
           </div>
           <DropdownData updateButton={updateButton} bloc={bloc} />
-
-          <textarea
+          <h3>Texte du bouton :</h3>
+          <input
             className={s.card_text}
             value={bloc.text}
             placeholder="texte de la carte"

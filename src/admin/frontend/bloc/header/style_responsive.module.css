@@ -2,7 +2,14 @@
   margin: 0;
   font-size: 16px !important;
 }
-
+.backdrop::before {
+  background-color: rgba(0, 0, 0, 0.2);
+  content: "";
+  display: block;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
 .container {
   display: flex;
   height: 75px;

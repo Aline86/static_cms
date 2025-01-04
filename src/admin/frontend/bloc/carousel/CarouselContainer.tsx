@@ -140,27 +140,29 @@ function CarouselContainer({
       className={s.body}
       onTransitionEnd={() => updateTransitionState(false)}
       style={{
-        width: full ? "90vw" : isResponsive ? `360px` : "43vw",
+        width: full ? "90vw" : isResponsive ? `360px` : `50vw`,
         margin: `${bloc.gap}px auto`,
         marginBottom: isResponsive || result.matches ? "0px" : "30px",
         marginLeft: isResponsive || result.matches ? "-15px" : "0",
       }}
+      key={bloc.bloc_number}
     >
       {!result.matches && !isResponsive && (
         <div
           className={s.left_arrows}
           style={{
             width: full
-              ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
-                  bloc.gap * (cardNumber - 1)
-                }px)`
-              : `calc(${bloc.width * 0.85 * (cardNumber - 1)}vw + ${
-                  bloc.gap * (cardNumber - 1)
-                }px)`,
+              ? isResponsive
+                ? "360px"
+                : `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                    bloc.gap * (cardNumber - 1)
+                  }px)`
+              : `43vw`,
           }}
         >
           {type === "carousel" && transitionFinished ? (
             <button
+              key={0}
               className={s.left}
               style={{
                 pointerEvents: "none",
@@ -172,6 +174,7 @@ function CarouselContainer({
             </button>
           ) : (
             <button
+              key={0}
               className={s.left}
               onClick={(e) => {
                 e.preventDefault();
@@ -185,6 +188,7 @@ function CarouselContainer({
 
           {type === "carousel" && transitionFinished ? (
             <button
+              key={1}
               className={s.right}
               style={{
                 /*  marginLeft: `${!result.matches ? bloc.gap : 0}px`,*/
@@ -199,6 +203,7 @@ function CarouselContainer({
             </button>
           ) : (
             <button
+              key={1}
               className={s.right}
               onClick={(e) => {
                 e.preventDefault();
@@ -217,7 +222,7 @@ function CarouselContainer({
       <div
         className={s.arrow_container}
         style={{
-          maxWidth: full ? "90vw" : "43vw",
+          maxWidth: full ? (isResponsive ? "360px" : "90vw") : "43vw",
         }}
       >
         <div
@@ -238,7 +243,7 @@ function CarouselContainer({
                     ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
                         bloc.gap * (cardNumber - 1)
                       }px)`
-                    : `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                    : `calc(${bloc.width}vw + ${
                         bloc.gap * (cardNumber - 1)
                       }px)`,
                 }
@@ -268,7 +273,7 @@ function CarouselContainer({
                   ? `translateX(calc(${-bloc.width}vw - 15px) )`
                   : !isResponsive
                   ? `translateX(0vw)`
-                  : `translateX(${bloc.width * 1.6}vw )`
+                  : `translateX(0vw )`
                 : `translateX(calc(${-bloc.width}vw - 15px) )`,
             }}
           >
@@ -285,23 +290,25 @@ function CarouselContainer({
               {data !== undefined &&
                 data.map((value, index) => {
                   return (
-                    <CardDataShow
-                      key={index}
-                      type={type}
-                      cardRef={cardRef}
-                      transitionFinished={transitionFinished}
-                      trasnsType={"transform 0.5s ease-in"}
-                      transX={move}
-                      width={full ? bloc.width : bloc.width}
-                      gap={bloc.gap}
-                      height={bloc.height}
-                      value={value}
-                      trigger={trigger}
-                      toggle={toggle}
-                      resize={resize}
-                      full={full}
-                      isResponsive={isResponsive}
-                    />
+                    <div key={index}>
+                      <CardDataShow
+                        key={index}
+                        type={type}
+                        cardRef={cardRef}
+                        transitionFinished={transitionFinished}
+                        trasnsType={"transform 0.5s ease-in"}
+                        transX={move}
+                        width={full ? bloc.width : bloc.width}
+                        gap={bloc.gap}
+                        height={bloc.height}
+                        value={value}
+                        trigger={trigger}
+                        toggle={toggle}
+                        resize={resize}
+                        full={full}
+                        isResponsive={isResponsive}
+                      />
+                    </div>
                   );
                 })}
             </div>
@@ -312,6 +319,7 @@ function CarouselContainer({
   ) : (
     type === "auto" && (
       <div
+        key={bloc.bloc_number}
         className={s.container_class_auto}
         style={{
           margin: !full ? `${bloc.gap}px auto` : `0px`,

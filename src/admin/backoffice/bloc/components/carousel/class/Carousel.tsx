@@ -18,9 +18,9 @@ export class Carousel extends Container {
     bloc_number: number,
     id: number = -1,
     is_automatique: boolean = false,
-    card_number: number = 5,
-    width: number = 25,
-    height: number = 30,
+    card_number: number = 4,
+    width: number = 16,
+    height: number = 20,
     gap: number = 30,
     title: string = "",
     type: string = "carousel",
@@ -98,7 +98,7 @@ export class Carousel extends Container {
           (this.carousel_data[index].image_url = UploadService.sanitizeName(
             e.target.files[0].name
           ));
-        UploadService.handleUpload(e.target.files[0]);
+        UploadService.handleUpload(e.target.files[0], this.token);
         break;
       case "color":
         index !== undefined &&

@@ -17,8 +17,8 @@ export class PictureGroup extends Container {
     bloc_number: number,
     id: number = -1,
     card_number: number = 4,
-    width: number = 20,
-    height: number = 25,
+    width: number = 30,
+    height: number = 35,
     gap: number = 30,
     title: string = "",
     type: string = "picture_group",
@@ -99,7 +99,7 @@ export class PictureGroup extends Container {
         index !== undefined &&
           (this.picture_group_data[index].image_url =
             UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0]);
+        UploadService.handleUpload(e.target.files[0], this.token);
         break;
       case "color":
         index !== undefined &&
@@ -154,7 +154,6 @@ export class PictureGroup extends Container {
     return new_bloc;
   }
   public add_picture_group_data(picture_group_data: PictureGroupData) {
-    console.log("picture_group_data", picture_group_data.id);
     this.picture_group_data.push(
       new PictureGroupData(
         Number(picture_group_data.id),

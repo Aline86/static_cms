@@ -1,10 +1,8 @@
 <?php
 
-// Define the path to your .env.local file
-$envFile = './../.env.local';
-
 // Check if the file exists
 if (file_exists($envFile)) {
+
     // Read the file
     $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
@@ -32,6 +30,7 @@ if (file_exists($envFile)) {
 
         // Alternatively, you can populate the $_ENV array
         $_ENV[$key] = $value;
+     
     }
 } 
 

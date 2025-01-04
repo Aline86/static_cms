@@ -54,8 +54,6 @@ function BlocInput({
     setContentState(
       typeof input_bloc.text === "object" ? input_bloc.text : contentState
     );
-
-    console.log("contentState", input_bloc.text);
   }, []);
 
   return (

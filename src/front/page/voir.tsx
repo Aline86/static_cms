@@ -27,7 +27,7 @@ function Front() {
   >([]);
   const { id, name } = useParams();
   const [toggle, setToggle] = useState(false);
-
+  const [resize, setResize] = useState(window.innerWidth);
   const [footer, setFooter] = useState<Footer>(new Footer());
   const [header, setHeader] = useState<Header>(new Header());
   const location = useLocation();
@@ -38,6 +38,7 @@ function Front() {
   const tools = new BlocTools(page_type);
   const { common } = useContext(ColorContext);
   async function asynchronRequestsToPopulateBlocs() {
+    setBlocs([]);
     await header.get_bloc();
 
     let bloc_pages = await tools.getAllBlocsPage();
@@ -86,10 +87,17 @@ function Front() {
     }
   }, []);
 
-  useEffect(() => {}, [videoLoaded]);
+  function updateSize() {
+    window.location.reload();
+  }
   useEffect(() => {
-    localStorage.setItem("authToken", "");
-  }, []);
+    if (!result.matches) {
+      window.addEventListener("resize", updateSize);
+      setResize(window.innerWidth);
+    }
+  }, [result.matches]);
+  useEffect(() => {}, [videoLoaded]);
+
   return (
     <div className={s.blocs_container} style={styles}>
       <HeaderVizualization

@@ -38,10 +38,8 @@ function BlocDisplay({
   page,
 }: BlocData) {
   const addBlocToBDD = async (bloc: any) => {
-    console.log("bloc", bloc);
     await bloc.save_bloc();
-    page.get_blocs();
-    getPage();
+    await getPage(true);
   };
 
   useEffect(() => {}, []);
@@ -64,7 +62,7 @@ function BlocDisplay({
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new TextPicture(-1, blocs.length + 1, page.id));
-                handleScroll();
+
                 setOpen(!open);
               }}
             />
@@ -77,7 +75,7 @@ function BlocDisplay({
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new Carousel(page.id, blocs.length + 1));
-                handleScroll();
+
                 setOpen(!open);
               }}
             />
@@ -90,7 +88,7 @@ function BlocDisplay({
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new Carousel(page.id, blocs.length + 1, -1, true));
-                handleScroll();
+
                 setOpen(!open);
               }}
             />
@@ -103,7 +101,7 @@ function BlocDisplay({
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new Video(page.id, blocs.length + 1));
-                handleScroll();
+
                 setOpen(!open);
               }}
             />
@@ -116,7 +114,7 @@ function BlocDisplay({
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new Parallaxe(page.id, blocs.length + 1));
-                handleScroll();
+
                 setOpen(!open);
               }}
             />
@@ -125,11 +123,11 @@ function BlocDisplay({
             <img src={link} alt="Image plus lien" />
             <input
               type="submit"
-              value="Image + lien"
+              value="Bouton image"
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new Button(page.id, blocs.length + 1));
-                handleScroll();
+
                 setOpen(!open);
               }}
             />
@@ -142,7 +140,7 @@ function BlocDisplay({
               onClick={(e) => {
                 e.preventDefault();
                 addBlocToBDD(new PictureGroup(page.id, blocs.length + 1));
-                handleScroll();
+
                 setOpen(!open);
               }}
             />

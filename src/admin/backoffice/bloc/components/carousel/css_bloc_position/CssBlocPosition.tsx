@@ -25,8 +25,6 @@ function CssCarouselPosition({
           <h2>Bloc numéro : {bloc.bloc_number}</h2>
         </div>
         <div className={s.bouton_container_parent}>
-          <div draggable={draggable}>{props}</div>
-
           <div className={s.bouton_container}>
             {bloc.type === "carousel" && !bloc.is_automatique ? (
               <div className={s.bouton_container_bloc}>
@@ -76,6 +74,7 @@ function CssCarouselPosition({
               </div>
             )}
           </div>
+          <div draggable={draggable}>{props}</div>
         </div>
         <div className="bouton_container_carousel"></div>
         <div

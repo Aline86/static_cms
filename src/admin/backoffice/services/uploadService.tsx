@@ -5,15 +5,18 @@ export class UploadService {
   static sanitizeName = (filename: string) => {
     return sanitize(filename.replace("/.(?=.*.) /", ""));
   };
-  static handleUpload = async (file: any) => {
+  static handleUpload = async (file: any, token: string | null = "") => {
     if (file) {
-      console.log("Uploading file...");
       const formData = new FormData();
       formData.append("file", file);
       let result = null;
       let filename = this.sanitizeName(file.name);
       result = await fetch(
-        BASE_URL_SITE + "/api/uploadfile/index.php?name=" + filename,
+        BASE_URL_SITE +
+          "/api/uploadfile/index.php?name=" +
+          filename +
+          "&token=" +
+          token,
         {
           method: "POST",
           body: formData,
@@ -26,7 +29,6 @@ export class UploadService {
     }
   };
   static deleteUpload = async (file: any, token: string | null) => {
-    console.log("token", token);
     await fetch(
       BASE_URL_SITE +
         "/api/uploadfile/index.php?name=" +

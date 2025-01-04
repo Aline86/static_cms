@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     if (input.email !== "" && input.password !== "") {
       let user_data = await loginAction_starter(input);
-      console.log("user_data", user_data);
+
       if (user_data !== undefined) {
         localStorage.setItem("authToken", user_data.token);
         navigate("/admin");

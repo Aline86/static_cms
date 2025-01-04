@@ -37,7 +37,7 @@ export class Parallaxe extends Container {
         break;
       case "image":
         this.set_image(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0]);
+        UploadService.handleUpload(e.target.files[0], this.token);
         break;
       default:
         null;

@@ -26,9 +26,7 @@ function CardData({
   updatePictureGroupData,
   show_remove,
 }: CardDatas) {
-  useEffect(() => {
-    console.log(data);
-  }, []);
+  useEffect(() => {}, []);
   return (
     <div>
       <div className={s.remove}>

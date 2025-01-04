@@ -29,7 +29,6 @@ function CssButtonPosition({
             : "bouton_container_bloc_css"
         }`}
       >
-        <div draggable={draggable}>{props}</div>
         <div className={s.bouton_container_bloc}>
           <div className={s.encart_bloc_name_title}>
             <h3
@@ -37,9 +36,10 @@ function CssButtonPosition({
                 textDecoration: "underline",
               }}
             >
-              Image lien
+              Bloc Bouton Image
             </h3>
           </div>
+          <div draggable={draggable}>{props}</div>
           <div style={{ display: "flex", gap: "30px" }}>
             <div className={s.bouton_container}>
               <h3>Largeur</h3>
@@ -66,6 +66,7 @@ function CssButtonPosition({
                 : "bouton_container"
             }`}
           ></div>
+
           <div
             className={s.button_save_page}
             onClick={(e) => {

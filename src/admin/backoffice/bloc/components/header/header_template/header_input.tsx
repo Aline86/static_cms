@@ -5,6 +5,7 @@ import remove from "./../../../../../../assets/remove.png";
 import add_to_database from "./../../../../../../assets/add_to_database.png";
 import Header from "./../Header";
 import LinkNetworksAndOthersHeader from "../LinkNetworksAndOthersHeader";
+import DropdownData from "../dropdown/Dropdown";
 
 interface HeaderInfo {
   input_bloc: Header | undefined;
@@ -46,35 +47,21 @@ function HeaderInput({
             </label>
             <label>{input_bloc?.logo_url}</label>
           </div>
-          <div className={s.background_pic}>
-            <h3>Image de fond : </h3>
-            <label>
-              <span>Choisir une image</span>
-              <input
-                type="file"
-                onChange={(e) => {
-                  updateHeader(
-                    e,
-                    "background_url",
-                    undefined,
-                    undefined,
-                    input_bloc
-                  );
-                }}
-              />
-            </label>
-            <label>{input_bloc?.background_url}</label>
-          </div>
+          <DropdownData input_bloc={input_bloc} updateHeader={updateHeader} />
           <div className={s.add_file}>
             <h3>Liens externes (ex: réseaux sociaux): </h3>
-            <div
+
+            <label
               className={s.addLink}
               onClick={(e) => {
+                e.preventDefault();
                 updateHeader(e, "ajout", undefined, undefined);
               }}
             >
-              <img src={ajout} alt="bouton ajouter" />
-            </div>
+              <span style={{ textTransform: "uppercase", width: "220px" }}>
+                Ajouter un élément +
+              </span>
+            </label>
           </div>
         </div>
         <div className={s.social_networks}>

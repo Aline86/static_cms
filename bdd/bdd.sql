@@ -148,7 +148,8 @@ CREATE TABLE IF NOT EXISTS `header` (
     `title` varchar(250)  NOT NULL default "",
     `type` varchar(55)  NOT NULL default "header",   
     `logo_url` varchar(250)  NOT NULL default "",
-    `background_url` varchar(250)  NOT NULL default "",
+    `image_url` varchar(250)  NOT NULL default "",
+    `background_color` varchar(50)  NOT NULL default "",
     PRIMARY KEY  (`id`)
 );
 /* user */
@@ -165,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `footer` (
     `title` varchar(250)  NOT NULL default "",
     `type` varchar(55)  NOT NULL default "footer",         
     `map_iframe_url` text  NOT NULL default "",
-    `background_color` varchar(250)  NOT NULL default "",
+    `background_color` varchar(50)  NOT NULL default "",
 
     PRIMARY KEY  (`id`)
 );

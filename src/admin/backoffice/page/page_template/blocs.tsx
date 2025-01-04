@@ -1,6 +1,6 @@
 import s from "./style.module.css";
 import { useEffect, useState } from "react";
-import { EditorState, RawDraftContentState } from "draft-js";
+import { RawDraftContentState } from "draft-js";
 import { TextPicture } from "../../bloc/components/text_picture/class/TextPicture";
 import { Carousel } from "../../bloc/components/carousel/class/Carousel";
 import { PictureGroup } from "../../bloc/components/picture_group/class/PictureGroup";
@@ -107,7 +107,6 @@ function Blocs({
     setToggle(!toggle);
   };
   const updateParallaxe = (e: any, field: string, input_bloc: Parallaxe) => {
-    console.log("input_bloc", input_bloc);
     const new_Bloc = input_bloc.update(e, field);
 
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
@@ -135,7 +134,7 @@ function Blocs({
     await bloc.remove();
     blocs.map(async (bloc_in_blocs: typeof component_types, index) => {
       bloc_in_blocs.update(index + 1, "bloc_number", undefined);
-      console.log("bloc", bloc_in_blocs);
+
       await bloc_in_blocs.save_bloc();
     });
     setRefresh(!refresh);
@@ -215,21 +214,6 @@ function Blocs({
     }
   };
 
-  const remove_bloc = async (bloc: Header | Footer, index: number) => {
-    await bloc.remove_link(index);
-    let result = await bloc.get_bloc();
-    if (result !== undefined && result instanceof Footer) {
-      setFooter(result);
-
-      setRefresh(!refresh);
-    }
-
-    if (result !== undefined && result instanceof Header) {
-      setHeader(result);
-      setRefresh(!refresh);
-    }
-  };
-
   const getHeader = async () => {
     const new_bloc = await header.get_bloc();
 
@@ -291,6 +275,7 @@ function Blocs({
       {blocs.map((bloc, index) => {
         return bloc.type === "text_picture" ? (
           <BlocTextPicture
+            key={index}
             bloc={bloc}
             setDragBegin={setDragBegin}
             updateDragBloc={updateDragBloc}
@@ -307,6 +292,7 @@ function Blocs({
           />
         ) : bloc.type === "carousel" ? (
           <BlocCarousel
+            key={index}
             bloc={bloc}
             setDragBegin={setDragBegin}
             updateDragBloc={updateDragBloc}
@@ -323,6 +309,7 @@ function Blocs({
           />
         ) : bloc.type === "picture_group" ? (
           <BlocPictureGroup
+            key={index}
             bloc={bloc}
             setDragBegin={setDragBegin}
             updateDragBloc={updateDragBloc}
@@ -337,6 +324,7 @@ function Blocs({
           />
         ) : bloc.type === "button" ? (
           <BlocButton
+            key={index}
             bloc={bloc}
             setDragBegin={setDragBegin}
             updateDragBloc={updateDragBloc}
@@ -351,6 +339,7 @@ function Blocs({
           />
         ) : bloc.type === "video" ? (
           <BlocVideo
+            key={index}
             bloc={bloc}
             setDragBegin={setDragBegin}
             updateDragBloc={updateDragBloc}
@@ -367,6 +356,7 @@ function Blocs({
         ) : (
           bloc.type === "parallaxe" && (
             <BlocParallaxe
+              key={index}
               bloc={bloc}
               setDragBegin={setDragBegin}
               updateDragBloc={updateDragBloc}

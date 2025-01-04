@@ -130,7 +130,6 @@ export default abstract class Container {
    */
   public async get_blocs_for_component(): Promise<Array<any>> {
     let new_bloc: Array<any> = [];
-    console.log(this.BASE_URL + "all_" + this._get_class_api_call_parameters());
     try {
       const response = await fetch(
         this.BASE_URL + "all_" + this._get_class_api_call_parameters()

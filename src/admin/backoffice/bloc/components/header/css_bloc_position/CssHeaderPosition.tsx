@@ -11,7 +11,7 @@ function CssHeaderPosition({ props }: { props: any }) {
                 textDecoration: "underline",
               }}
             >
-              En-tête
+              Bloc en-tête
             </h3>
           </div>
         </div>

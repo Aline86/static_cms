@@ -48,7 +48,7 @@ export class Video extends Container {
         break;
       case "height":
         let height = e.target.value;
-        console.log(height);
+
         if (e.target.value < 15) {
           height = 15;
         } else if (e.target.value > 100) {
@@ -63,7 +63,7 @@ export class Video extends Container {
         } else if (e.target.value > 100) {
           width = 100;
         }
-        console.log(width);
+
         this.set_width(width);
         break;
       case "video_url":
@@ -76,7 +76,7 @@ export class Video extends Container {
           this.set_video_url(
             UploadService.sanitizeName(e.target.files[0].name)
           );
-          UploadService.handleUpload(e.target.files[0]);
+          UploadService.handleUpload(e.target.files[0], this.token);
         }
         break;
       default:

@@ -24,6 +24,7 @@ function Visualization({}: PageParams) {
   const [header, setHeader] = useState<Header>(new Header());
   const { id, name } = useParams();
   const [refresh, setRefresh] = useState(false);
+  const [goTo, setGoTo] = useState(false);
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContextProvider);
   let page_type = new Page(Number(id));
@@ -31,7 +32,7 @@ function Visualization({}: PageParams) {
 
   const [blocs, setBlocs] = useState<Array<any>>([]);
 
-  async function asynchronRequestsToPopulateBlocs() {
+  async function asynchronRequestsToPopulateBlocs(goToB: boolean = false) {
     setBlocs([]);
     await header.get_bloc();
 
@@ -40,16 +41,26 @@ function Visualization({}: PageParams) {
     let bloc_pages = await tools.getAllBlocsPage();
 
     bloc_pages !== undefined && setBlocs(bloc_pages);
-
-    setToggle(!toggle);
+    if (goToB) {
+      setGoTo(!goTo);
+    } else {
+      setToggle(!toggle);
+    }
   }
 
   function handleScroll() {
-    window.scrollTo({
-      top: 2 * Number(document.body.offsetHeight),
-      left: 0,
-      behavior: "smooth",
-    });
+    let timedelay = 0;
+    let scrollId: number;
+    let height: number = 0;
+    let minScrollHeight: number = 100;
+    scrollId = setInterval(function () {
+      if (height <= document.body.scrollHeight) {
+        window.scrollBy(0, minScrollHeight);
+      } else {
+        clearInterval(scrollId);
+      }
+      height += minScrollHeight;
+    }, timedelay);
   }
   const logOut = () => {
     user.logOut();
@@ -72,7 +83,9 @@ function Visualization({}: PageParams) {
     asynchronRequestsToPopulateBlocs();
   }, [refresh]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    handleScroll();
+  }, [goTo]);
   return (
     <div className="page">
       <div className={s.page_container}>
@@ -112,7 +125,7 @@ function Visualization({}: PageParams) {
                 setOpen(false);
               }}
             >
-              Changer l'ordre des blocks
+              Changer l'ordre des blocs
             </div>
           </li>
         </div>

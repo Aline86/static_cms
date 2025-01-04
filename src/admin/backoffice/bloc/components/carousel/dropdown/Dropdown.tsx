@@ -32,15 +32,15 @@ function DropdownData({
   };
   const checkExternal = async (url: string) => {
     let prefixe = url.substring(0, 4);
-    if (prefixe === "http" || prefixe === "") {
+    if (prefixe === "http") {
       isExternalLink("Lien url externe");
-    } else if (/.pdf/.test(url.substring(url.length - 4))) {
-      setToggle(true);
-    } else {
+    } else if (prefixe !== "") {
       isExternalLink("Page interne");
       let prefixe = Number(url.substring(0, 2));
       let pageData = await getPage(prefixe);
       setPage(pageData);
+    } else {
+      isExternalLink("");
     }
   };
   const updateLink = (e: any) => {
@@ -65,7 +65,14 @@ function DropdownData({
         onChange={(e) => updateLink(e)}
         value={choice !== "" ? choice : "Choisir une page de redirection"}
       >
-        <option key={0}>Choisir un type de redirection : </option>
+        <option
+          key={0}
+          onClick={() => {
+            isExternalLink("");
+          }}
+        >
+          Choisir un type de redirection :
+        </option>
 
         <option key={1} value="Lien url externe">
           Cible (url)
@@ -86,7 +93,7 @@ function DropdownData({
             }}
           />
         </div>
-      ) : (
+      ) : choice !== "" ? (
         <div className={s.type}>
           <select
             className={s.select_box}
@@ -108,6 +115,8 @@ function DropdownData({
               })}
           </select>
         </div>
+      ) : (
+        ""
       )}
     </div>
   );

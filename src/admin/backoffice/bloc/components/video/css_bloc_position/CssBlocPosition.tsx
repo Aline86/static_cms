@@ -28,7 +28,15 @@ function CssVideoPosition({
           <h2>Bloc numéro : {bloc.bloc_number}</h2>
         </div>
         <div className={s.bouton_container_parent}>
+          <h3
+            style={{
+              textDecoration: "underline",
+            }}
+          >
+            Bloc vidéo
+          </h3>
           <div draggable={draggable}>{props}</div>
+
           <div
             className={s.button_save_page}
             onClick={(e) => {
