@@ -1,11 +1,29 @@
 <?php
-
-include 'environment_variables.php';
+$envFile = './../../.env.local';
+require './../environment_variables.php';
 $host = getenv('DB_HOST');
 $user = getenv('DB_USER');
 $password = getenv('DB_PASSWORD');
+print_r($password);
 $database_name = getenv('DB_NAME');
 $allowed_prefix = getenv('ALLOWED_ORIGIN');
+// Get the Origin header from the incoming request
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $allowed_prefix : exit();
+class Db {
+  private static $instance = NULL;
+  private function __construct() {}
+  private function __clone() {}
+  public static function getInstance($database_name, $host, $user, $password) {
+      if (!isset(self::$instance)) {
+          $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+          self::$instance = new PDO('mysql:host=' . $host . ';dbname=' . $database_name, $user, $password, $pdo_options);
+      }
+      return self::$instance;
+  }
+}
+
+$db = Db::getInstance($database_name, $host, $user, $password);
+
 function is_encoded($string_to_test) {
     if (urlencode(urldecode($string_to_test)) === $string_to_test){
         return true;
@@ -17,8 +35,7 @@ function is_json($string) {
     json_decode($string);
     return json_last_error() === JSON_ERROR_NONE;
 }
-// Get the Origin header from the incoming request
-$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+
 
 // Check if the origin matches the allowed prefix
 if ($origin && strpos($origin, $allowed_prefix) !== false) {
@@ -45,15 +62,13 @@ if(isset($_GET['token'])){
     
   $token = $_GET['token'] ?? null;
 
-  if(in_array($method, $methods_to_check) && $token === null) {
+  if($token === null) {
       exit();
   }
   if ($token !== null) {
       // Bearer token is sent in the format: "Bearer <token>"
 
-      if(in_array($method, $methods_to_check) && $token === null) {
-          exit();
-      }
+     
       $requete2 = 'SELECT * FROM user WHERE token=:token';
       $resultat2 = $db->prepare($requete2);
       $resultat2->bindParam(':token', $token, PDO::PARAM_STR);
@@ -74,11 +89,11 @@ if(isset($_GET['token'])){
 //$input = file_get_contents("php://input", "r");
 $date = new DateTime();
 $timestamp = $date->getTimestamp();
-$str = utf8_decode(urldecode($_GET['name']));
+$str = isset($_GET['name']) ? utf8_decode(urldecode($_GET['name'])) : exit;
 $str = str_ends_with($str, '=') ? str_replace('=', '', $str) : $str;
 
 $target_dir = "./";
-$target_file = $target_dir . basename($_FILES["file"]["name"]);
+$target_file = isset($_FILES["file"]["name"]) ? $target_dir . basename($_FILES["file"]["name"]) : exit;
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 

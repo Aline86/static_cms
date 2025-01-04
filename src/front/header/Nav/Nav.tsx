@@ -48,9 +48,9 @@ export default function Nav({ opened, isResponsive }: NavInfo) {
     >
       {pages.map((page, index) => {
         return (
-          <ul className={stylePath.ul_menu}>
+          <ul className={stylePath.ul_menu} key={index}>
             <div key={page.id}>
-              <Link to={`/${page.id}/${page.title}`}>
+              <Link to={`/${page.id}/${page.title}`} key={page.id}>
                 <li>
                   <div>
                     {page.title}

@@ -125,7 +125,7 @@ function Visualization({}: PageParams) {
                 setOpen(false);
               }}
             >
-              Changer l'ordre des blocks
+              Changer l'ordre des blocs
             </div>
           </li>
         </div>

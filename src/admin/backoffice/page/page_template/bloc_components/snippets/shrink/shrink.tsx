@@ -43,8 +43,8 @@ function Shrink({ props, bloc, index, isOpen }: ShrinkData) {
                   : bloc.type === "parallaxe"
                   ? "Parallaxe"
                   : bloc.type === "header"
-                  ? "En tête"
-                  : bloc.type === "footer" && "Bas de page"}
+                  ? "Bloc en tête"
+                  : bloc.type === "footer" && "Bloc bas de page"}
               </div>
               <img src={down} alt="fermer" />
             </div>

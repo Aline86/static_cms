@@ -79,6 +79,7 @@ function CardDataShow({
           className={s.card_app_auto}
           style={style_data_transition_finished_auto}
           ref={cardRef}
+          key={value.id}
         >
           {value.text.length > 0 && (
             <div
@@ -104,6 +105,7 @@ function CardDataShow({
           className={s.card_app_auto}
           ref={cardRef}
           style={style_data_transition_start_auto}
+          key={value.id}
         >
           {value.text.length > 0 && (
             <div
@@ -132,6 +134,7 @@ function CardDataShow({
           className={s.card_app_carousel}
           style={style_data_transition_finished_carousel}
           ref={cardRef}
+          key={value.id}
         >
           <InsideCardDataShow
             value={value}
@@ -155,6 +158,7 @@ function CardDataShow({
           className={s.card_app_carousel}
           style={style_data_transition_start_carousel}
           ref={cardRef}
+          key={value.id}
         >
           <InsideCardDataShow
             value={value}

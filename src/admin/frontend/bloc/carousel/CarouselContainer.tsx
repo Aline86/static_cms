@@ -145,6 +145,7 @@ function CarouselContainer({
         marginBottom: isResponsive || result.matches ? "0px" : "30px",
         marginLeft: isResponsive || result.matches ? "-15px" : "0",
       }}
+      key={bloc.bloc_number}
     >
       {!result.matches && !isResponsive && (
         <div
@@ -161,6 +162,7 @@ function CarouselContainer({
         >
           {type === "carousel" && transitionFinished ? (
             <button
+              key={0}
               className={s.left}
               style={{
                 pointerEvents: "none",
@@ -172,6 +174,7 @@ function CarouselContainer({
             </button>
           ) : (
             <button
+              key={0}
               className={s.left}
               onClick={(e) => {
                 e.preventDefault();
@@ -185,6 +188,7 @@ function CarouselContainer({
 
           {type === "carousel" && transitionFinished ? (
             <button
+              key={1}
               className={s.right}
               style={{
                 /*  marginLeft: `${!result.matches ? bloc.gap : 0}px`,*/
@@ -199,6 +203,7 @@ function CarouselContainer({
             </button>
           ) : (
             <button
+              key={1}
               className={s.right}
               onClick={(e) => {
                 e.preventDefault();
@@ -217,7 +222,7 @@ function CarouselContainer({
       <div
         className={s.arrow_container}
         style={{
-          maxWidth: full ? "90vw" : "43vw",
+          maxWidth: full ? (isResponsive ? "360px" : "90vw") : "43vw",
         }}
       >
         <div
@@ -268,7 +273,7 @@ function CarouselContainer({
                   ? `translateX(calc(${-bloc.width}vw - 15px) )`
                   : !isResponsive
                   ? `translateX(0vw)`
-                  : `translateX(${bloc.width * 1.6}vw )`
+                  : `translateX(0vw )`
                 : `translateX(calc(${-bloc.width}vw - 15px) )`,
             }}
           >
@@ -285,7 +290,7 @@ function CarouselContainer({
               {data !== undefined &&
                 data.map((value, index) => {
                   return (
-                    <>
+                    <div key={index}>
                       <CardDataShow
                         key={index}
                         type={type}
@@ -303,7 +308,7 @@ function CarouselContainer({
                         full={full}
                         isResponsive={isResponsive}
                       />
-                    </>
+                    </div>
                   );
                 })}
             </div>
@@ -314,6 +319,7 @@ function CarouselContainer({
   ) : (
     type === "auto" && (
       <div
+        key={bloc.bloc_number}
         className={s.container_class_auto}
         style={{
           margin: !full ? `${bloc.gap}px auto` : `0px`,

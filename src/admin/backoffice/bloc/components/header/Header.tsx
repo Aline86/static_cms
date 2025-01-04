@@ -90,12 +90,12 @@ export default class Header extends Container {
         break;
       case "logo_url":
         this.set_logo_url(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0]);
+        UploadService.handleUpload(e.target.files[0], this.token);
 
         break;
       case "image_url":
         this.set_image_url(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0]);
+        UploadService.handleUpload(e.target.files[0], this.token);
         break;
       case "background_color":
         this.set_background_color(e.target.value);
@@ -123,7 +123,7 @@ export default class Header extends Container {
               (this.link_networks_an_others_header[index].logo_url =
                 UploadService.sanitizeName(e.target.files[0].name));
 
-            UploadService.handleUpload(e.target.files[0]);
+            UploadService.handleUpload(e.target.files[0], this.token);
 
             break;
 

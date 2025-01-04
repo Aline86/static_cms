@@ -110,43 +110,7 @@ function CssTextPicturePosition({
 
           <div className={s.bouton_container}>
             <div className={s.encart_bloc_name}>
-              <h3>Position de l'image :</h3>
               <div className={s.bouton_container_bloc}>
-                <div className={s.bouton_position}>
-                  <img
-                    src={gauche}
-                    alt="Haut gauche"
-                    onClick={(e) => {
-                      e.preventDefault(),
-                        updateBloc(e, "css", "position", bloc);
-                    }}
-                  />
-                  <img
-                    src={centre}
-                    alt="Haut centre"
-                    onClick={(e) => {
-                      e.preventDefault(),
-                        updateBloc(e, "css", "position", bloc);
-                    }}
-                  />
-                  <img
-                    src={droit}
-                    alt="Haut droit"
-                    onClick={(e) => {
-                      e.preventDefault(),
-                        updateBloc(e, "css", "position", bloc);
-                    }}
-                  />
-
-                  <img
-                    src={middle}
-                    alt="Centre centre"
-                    onClick={(e) => {
-                      e.preventDefault(),
-                        updateBloc(e, "css", "position", bloc);
-                    }}
-                  />
-                </div>
                 <div className={s.bouton_position_2}>
                   <div>
                     <h3>Largeur de l'image</h3>

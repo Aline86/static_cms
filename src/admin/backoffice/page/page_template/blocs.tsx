@@ -275,6 +275,7 @@ function Blocs({
       {blocs.map((bloc, index) => {
         return bloc.type === "text_picture" ? (
           <BlocTextPicture
+            key={index}
             bloc={bloc}
             setDragBegin={setDragBegin}
             updateDragBloc={updateDragBloc}
@@ -291,6 +292,7 @@ function Blocs({
           />
         ) : bloc.type === "carousel" ? (
           <BlocCarousel
+            key={index}
             bloc={bloc}
             setDragBegin={setDragBegin}
             updateDragBloc={updateDragBloc}
@@ -307,6 +309,7 @@ function Blocs({
           />
         ) : bloc.type === "picture_group" ? (
           <BlocPictureGroup
+            key={index}
             bloc={bloc}
             setDragBegin={setDragBegin}
             updateDragBloc={updateDragBloc}
@@ -321,6 +324,7 @@ function Blocs({
           />
         ) : bloc.type === "button" ? (
           <BlocButton
+            key={index}
             bloc={bloc}
             setDragBegin={setDragBegin}
             updateDragBloc={updateDragBloc}
@@ -335,6 +339,7 @@ function Blocs({
           />
         ) : bloc.type === "video" ? (
           <BlocVideo
+            key={index}
             bloc={bloc}
             setDragBegin={setDragBegin}
             updateDragBloc={updateDragBloc}
@@ -351,6 +356,7 @@ function Blocs({
         ) : (
           bloc.type === "parallaxe" && (
             <BlocParallaxe
+              key={index}
               bloc={bloc}
               setDragBegin={setDragBegin}
               updateDragBloc={updateDragBloc}

@@ -39,6 +39,7 @@ function CssButtonPosition({
               Bloc Bouton Image
             </h3>
           </div>
+          <div draggable={draggable}>{props}</div>
           <div style={{ display: "flex", gap: "30px" }}>
             <div className={s.bouton_container}>
               <h3>Largeur</h3>
@@ -65,7 +66,6 @@ function CssButtonPosition({
                 : "bouton_container"
             }`}
           ></div>
-          <div draggable={draggable}>{props}</div>
 
           <div
             className={s.button_save_page}

@@ -76,7 +76,7 @@ export class Video extends Container {
           this.set_video_url(
             UploadService.sanitizeName(e.target.files[0].name)
           );
-          UploadService.handleUpload(e.target.files[0]);
+          UploadService.handleUpload(e.target.files[0], this.token);
         }
         break;
       default:

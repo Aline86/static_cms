@@ -67,6 +67,7 @@ function InsideCardDataShow({
 
   return external ? (
     <a
+      key={value.id}
       href={value.href_url}
       target="_blank"
       className={s.card_app}
@@ -92,6 +93,7 @@ function InsideCardDataShow({
       to={{ pathname: `/` + page?.id + `/` + page?.title }}
       style={style_data}
       className={s.card_app}
+      key={value.id}
     >
       {value.text.length > 0 && <div className={s.text}></div>}
     </Link>

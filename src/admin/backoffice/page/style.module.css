@@ -18,6 +18,7 @@
 }
 .end {
   display: flex;
+  flex-direction: row;
   gap: 30px;
   justify-content: space-between;
 }
@@ -77,4 +78,9 @@ li .navigate_2 {
 }
 a {
   text-decoration: none;
+}
+.button_remove_page {
+  position: relative;
+  top: 15px;
+  cursor: pointer;
 }

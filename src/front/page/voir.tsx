@@ -38,6 +38,7 @@ function Front() {
   const tools = new BlocTools(page_type);
   const { common } = useContext(ColorContext);
   async function asynchronRequestsToPopulateBlocs() {
+    setBlocs([]);
     await header.get_bloc();
 
     let bloc_pages = await tools.getAllBlocsPage();

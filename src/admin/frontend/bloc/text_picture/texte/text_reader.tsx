@@ -4,7 +4,6 @@ import s from "./style.module.css";
 import BlockTextParams from "./classes/BlocTextParams";
 import { RawDraftContentState } from "draft-js";
 import { TextPicture } from "../../../../backoffice/bloc/components/text_picture/class/TextPicture";
-import JSanimationH2 from "../../snippets/js_animation_h2";
 
 interface TextParams {
   index: number;
@@ -207,6 +206,7 @@ function TextReader({
       }
       count++;
     }
+
     count = 0;
     let textStrings: any = {};
     while (count < t) {
@@ -291,9 +291,7 @@ function TextReader({
 
     updateConvertToText(contenState.blocks);
   }, [contenState, refresh === 2, entityMapLength]);
-  useEffect(() => {
-    //JSanimationH2(".container_data", "bloc_data");
-  }, [toggle, stringTexts]);
+  useEffect(() => {}, [toggle, stringTexts]);
 
   useEffect(() => {
     if (typeof onContentStateChange !== "function") {
@@ -325,7 +323,7 @@ function TextReader({
             pictures_offset[j].data !== undefined &&
             pictures_offset[j].data.src !== undefined ? (
               <div
-                key={i++}
+                key={j + pictures_offset[j].data.src}
                 className="container_data bloc"
                 style={{
                   display: "inline",
@@ -352,7 +350,7 @@ function TextReader({
               pictures_offset[j].data !== undefined &&
               pictures_offset[j].data.src === undefined && (
                 <div
-                  key={i++}
+                  key={j + pictures_offset[j].data}
                   className="container_data bloc"
                   style={{
                     display: "inline",
@@ -371,24 +369,22 @@ function TextReader({
             headlines[j] !== undefined &&
             headlines[j] === "unordered-list-item" ? (
             <div
-              key={i++}
+              key={j + headlines[j]}
               className="container_data bloc"
               style={{ display: "inline" }}
             >
               <ul>
                 <li key={j} className={`${textAlign[j]}`}>
                   {stringText !== undefined &&
-                    Object.values(stringText).map((value: any, i: number) => {
+                    Object.values(stringText).map((value: any, z: number) => {
                       return (
-                        <>
-                          <div
-                            key={i++}
-                            style={{ display: "inline" }}
-                            className={`${value.value}`}
-                          >
-                            {value.name}
-                          </div>
-                        </>
+                        <div
+                          key={z + value.name}
+                          style={{ display: "inline" }}
+                          className={`${value.value}`}
+                        >
+                          {value.name}
+                        </div>
                       );
                     })}
                 </li>
@@ -399,16 +395,16 @@ function TextReader({
               !read_more) &&
             headlines[j] !== undefined &&
             headlines[j] === "header-two" ? (
-            <h2 key={i++}>
+            <h2 key={j + headlines[j]}>
               <div
                 className="container_data bloc"
                 style={{ display: "inline" }}
               >
                 {stringText !== undefined &&
-                  Object.values(stringText).map((value: any, i: number) => {
+                  Object.values(stringText).map((value: any, z: number) => {
                     return (
                       <div
-                        key={i}
+                        key={z + value.name}
                         style={{ display: "inline" }}
                         className={`${value.value}`}
                       >
@@ -421,17 +417,17 @@ function TextReader({
           ) : (
             ((read_more && ((isToggle && j >= 0) || (!isToggle && j <= 2))) ||
               !read_more) &&
-            headlines[j] !== "atomic" && (
-              <div key={i++} className={`${textAlign[j]}`}>
+            headlines[j] === "unstyled" && (
+              <div key={j + headlines[j]} className={`${textAlign[j]}`}>
                 <div
                   className="container_data bloc"
                   style={{ display: "inline" }}
                 >
                   {stringText !== undefined &&
-                    Object.values(stringText).map((value: any, i: number) => {
+                    Object.values(stringText).map((value: any, z: number) => {
                       return (
                         <div
-                          key={i++}
+                          key={z + value.name}
                           style={{ display: "inline" }}
                           className={`${value.value}`}
                         >
@@ -444,7 +440,7 @@ function TextReader({
             )
           );
         })}
-      <div className={s.button}>
+      <div className={s.button} key={-1}>
         {read_more && stringTexts.length >= 2 ? (
           <button
             onClick={() => setIsToggle(!isToggle)}

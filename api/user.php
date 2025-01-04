@@ -1,4 +1,5 @@
 <?php
+$envFile = './../.env.local';
 include 'environment_variables.php';
 $host = getenv('DB_HOST');
 $user = getenv('DB_USER');
@@ -12,8 +13,8 @@ $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 // Check if the origin matches the allowed prefix
 if ($origin && strpos($origin, $allowed_prefix) !== false) {
     header('Access-Control-Allow-Origin: ' . $origin);
-    header('Access-Control-Allow-Headers: ' . $origin);
-    header('Access-Control-Allow-Methods: ' . $origin);
+    header('Access-Control-Allow-Headers: *');
+    header('Access-Control-Allow-Methods: *');
 }
 
 class Db {

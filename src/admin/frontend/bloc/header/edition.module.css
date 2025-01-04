@@ -1,7 +1,7 @@
 .backdrop {
   position: absolute;
 
-  width: 45%;
+  width: 47.5%;
   height: 75px;
 }
 .container {
@@ -16,7 +16,7 @@
   top: 0;
 }
 .backdrop::before {
-  background-color: rgba(0, 0, 0, 0.37);
+  background-color: rgba(0, 0, 0, 0.2);
   content: "";
   display: block;
   height: 100%;
@@ -84,7 +84,7 @@
   flex-direction: column;
   align-items: center;
   justify-self: center;
-  margin-top: 22px;
+  margin-top: 13px;
   font-size: 12px;
   width: 100%;
 

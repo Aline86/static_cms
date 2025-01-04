@@ -188,7 +188,7 @@ export default class Footer extends Container {
             index !== undefined &&
               (this.links_network_an_others_footer[index].logo_url =
                 UploadService.sanitizeName(e.target.files[0].name));
-            UploadService.handleUpload(e.target.files[0]);
+            UploadService.handleUpload(e.target.files[0], this.token);
             break;
           case "remove":
             index !== undefined && this.remove_link(index);

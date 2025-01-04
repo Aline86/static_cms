@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
 import remove from "./../../../assets/remove.png";
-import ajout from "./../../../assets/ajouter.png";
-import update from "./../../../assets/update.png";
 import add_to_database from "./../../../assets/add_to_database.png";
 import s from "./style.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -115,7 +113,7 @@ function Pages({}: PagesParams) {
         }}
       >
         <span style={{ textTransform: "uppercase", width: "220px" }}>
-          Ajouter un élément +
+          Ajouter une page +
         </span>
       </label>
       {pages !== undefined &&
@@ -164,11 +162,10 @@ function Pages({}: PagesParams) {
                 </Link>
                 {key > 0 && (
                   <div
-                    className="button_remove_page"
+                    className={s.button_remove_page}
                     onClick={() => {
                       removePage(page);
                     }}
-                    style={{ top: "30px", right: "30px" }}
                   >
                     <img src={remove} alt="suppression box" />
                   </div>
