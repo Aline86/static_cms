@@ -7,25 +7,18 @@ import BlockContainer from "./snippets/BlockContainer";
 interface BlocData {
   bloc: Header;
   updateHeader: any;
-  removeBloc: any;
   saveBloc: any;
   toggle: boolean;
 }
 
-function BlocHeader({
-  bloc,
-  removeBloc,
-  updateHeader,
-  saveBloc,
-  toggle,
-}: BlocData) {
+function BlocHeader({ bloc, updateHeader, saveBloc, toggle }: BlocData) {
   return (
     <BlockContainer
       bloc={bloc}
       setDragBegin={undefined}
       updateDragBloc={undefined}
       handleDragOver={undefined}
-      removeBloc={removeBloc}
+      removeBloc={undefined}
       index={-1}
       drag={false}
       isOpen={false}
@@ -43,7 +36,6 @@ function BlocHeader({
             <HeaderInput
               updateHeader={updateHeader}
               input_bloc={bloc}
-              remove_bloc={removeBloc}
               saveBloc={saveBloc}
             />
           }

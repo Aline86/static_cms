@@ -43,9 +43,7 @@ export default class Header extends Container {
   }
 
   public add_link_networks_an_others_header(
-    link_networks_an_others_header: LinkNetworksAndOthersHeader = new LinkNetworksAndOthersHeader(
-      0
-    )
+    link_networks_an_others_header: LinkNetworksAndOthersHeader = new LinkNetworksAndOthersHeader()
   ) {
     this.link_networks_an_others_header.push(
       new LinkNetworksAndOthersHeader(
@@ -67,9 +65,10 @@ export default class Header extends Container {
         this.type +
         "&associated_table=link_networks_an_others_header"
     );
-    index !== undefined && this.link_networks_an_others_header.splice(index, 1);
     await this.delete_bloc();
+    index !== undefined && this.link_networks_an_others_header.splice(index, 1);
     this.set_parameters(this.type + "&id=1&type=" + this.type);
+
     return this;
   }
 
@@ -77,7 +76,7 @@ export default class Header extends Container {
     return this.parameters;
   }
 
-  public updateHeader(
+  public async updateHeader(
     e: any,
     field: string,
     input: string | undefined,
@@ -126,7 +125,10 @@ export default class Header extends Container {
               (this.link_networks_an_others_header[index].name =
                 e.target.value);
             break;
-
+          case "remove":
+            console.log("index", index);
+            index !== undefined && (await this.remove_link(index));
+            break;
           default:
             null;
             break;

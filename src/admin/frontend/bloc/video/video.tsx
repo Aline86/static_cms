@@ -166,7 +166,7 @@ function VideoVizualisation({
               ? "0px"
               : result.matches
               ? "-60px"
-              : "-75px"
+              : "-100px"
             : "0",
           marginBottom: "60px",
         }}

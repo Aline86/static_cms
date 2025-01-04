@@ -1,6 +1,9 @@
 import { Button } from "../class/Button";
 import DropdownData from "../dropdown/Dropdown";
 import s from "./style/style.module.css";
+import { BASE_URL_SITE } from "../../../../../../config";
+import remove from "./../../../../../../assets/remove.png";
+import Picture from "../../../../services/picture";
 
 interface CardDatas {
   updateButton: any;
@@ -8,8 +11,6 @@ interface CardDatas {
 }
 
 function ButtonInput({ updateButton, bloc }: CardDatas) {
-  const result = window.matchMedia("(max-width: 1000px)");
-
   return (
     <div
       className={s.bouton}
@@ -59,7 +60,7 @@ function ButtonInput({ updateButton, bloc }: CardDatas) {
             }}
           >
             <label>
-              <span>Choisir une image</span>
+              <span>Choisir une image de fond</span>
               <input
                 type="file"
                 className={s.image_url}
@@ -68,6 +69,7 @@ function ButtonInput({ updateButton, bloc }: CardDatas) {
                 }}
               />
             </label>
+            <Picture update={updateButton} bloc={bloc} index={undefined} />
           </div>
           <DropdownData updateButton={updateButton} bloc={bloc} />
 

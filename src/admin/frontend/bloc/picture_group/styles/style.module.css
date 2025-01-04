@@ -169,7 +169,9 @@ button {
 .text_image_group:hover {
   text-decoration: underline;
 }
-
+.body_container {
+  margin-top: 30px;
+}
 @media screen and (max-width: 800px) {
   .container_class_image_group {
     overflow-x: scroll;

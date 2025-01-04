@@ -94,11 +94,8 @@ function Blocs({
     const new_Bloc = input_bloc.update(e, field, index);
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
     setBlocs(blocs);
-    if (field === "width" || field === "height") {
-      setRefresh(!refresh);
-    } else {
-      setToggle(!toggle);
-    }
+
+    setToggle(!toggle);
   };
   const updateVideo = (e: any, field: string, input_bloc: Video) => {
     const new_Bloc = input_bloc.update(e, field);
@@ -122,8 +119,9 @@ function Blocs({
   const updatePictureGroupData = (
     e: any,
     field: string,
-    index: number,
-    input_bloc: PictureGroup
+
+    input_bloc: PictureGroup,
+    index: number
   ) => {
     const new_Bloc = input_bloc.update(e, field, index);
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
@@ -207,7 +205,7 @@ function Blocs({
     id_network: number | undefined = undefined
   ) => {
     if (header !== undefined) {
-      const new_bloc = header.updateHeader(e, field, input, id_network);
+      const new_bloc = await header.updateHeader(e, field, input, id_network);
       if (id_network !== undefined) {
         setToggle(!toggle);
       } else {
@@ -257,7 +255,7 @@ function Blocs({
     input: string,
     id_network: number | undefined = undefined
   ) => {
-    const new_bloc = footer.updateFooter(e, field, input, id_network);
+    const new_bloc = await footer.updateFooter(e, field, input, id_network);
     if (id_network !== undefined) {
       setToggle(!toggle);
     } else {
@@ -287,7 +285,6 @@ function Blocs({
       <BlocHeader
         bloc={header}
         updateHeader={updateHeader}
-        removeBloc={remove_bloc}
         toggle={toggle}
         saveBloc={savePrerequisites}
       />
@@ -387,7 +384,6 @@ function Blocs({
       <BlocFooter
         bloc={footer}
         updateFooter={updateFooter}
-        removeBloc={remove_bloc}
         toggle={toggle}
         saveBloc={savePrerequisites}
       />

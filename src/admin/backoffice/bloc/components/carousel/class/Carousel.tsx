@@ -75,7 +75,7 @@ export class Carousel extends Container {
         break;
       case "height":
         let height = e.target.value;
-        console.log(height);
+
         if (e.target.value < 15) {
           height = 15;
         } else if (e.target.value > 100) {
@@ -106,6 +106,12 @@ export class Carousel extends Container {
         break;
       case "bloc_number":
         this.set_bloc_number(e);
+        break;
+      case "delete_picture":
+        if (index !== undefined) {
+          //UploadService.deleteUpload(e, this.token);
+          this.carousel_data[index].image_url = "";
+        }
         break;
       case "ajout":
         this.add_data();

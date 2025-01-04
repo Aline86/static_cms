@@ -1,0 +1,12 @@
+.delete img {
+  width: 100px;
+}
+.delete .button_remove_container {
+  width: 15px !important;
+}
+.sup_container {
+  width: 100px;
+  position: relative;
+  right: -20px;
+  margin-bottom: 3px;
+}

@@ -37,22 +37,28 @@ function CardDataShow({
   full,
   isResponsive,
 }: CardDatas) {
-  useEffect(() => {}, [toggle]);
+  useEffect(() => {
+    console.log("value", value);
+  }, [toggle]);
   const result = window.matchMedia("(max-width: 1200px)");
 
   const style_data_transition_finished_auto = {
-    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
+    background:
+      value.image_url !== ""
+        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`
+        : `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0))`,
     width: width,
     height: `200px`,
     transition: `${trasnsType}`,
     transform: `translateX(${width})`,
-    fontSize: isResponsive ? `18px` : `24px`,
   };
   const style_data_transition_start_auto = {
-    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
+    background:
+      value.image_url !== ""
+        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`
+        : `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0))`,
     width: width,
     height: `200px`,
-    fontSize: isResponsive ? `18px` : `24px`,
   };
   const style_data_transition_finished_carousel = {
     marginRight: `${!result.matches && !isResponsive ? gap : 10}px`,
@@ -67,6 +73,7 @@ function CardDataShow({
     height: !isResponsive && !result.matches ? `${height}vw` : "200px",
     minHeight: "200px",
   };
+
   if (type === "auto") {
     if (transitionFinished) {
       return (
@@ -81,6 +88,11 @@ function CardDataShow({
               style={{
                 lineHeight: `fit-content`,
                 color: `${value.image_url ? "white" : "gray"}`,
+                fontSize: full
+                  ? !isResponsive && !result.matches
+                    ? `36px`
+                    : "22px"
+                  : "22px",
               }}
             >
               {value.text}
@@ -101,6 +113,11 @@ function CardDataShow({
               style={{
                 lineHeight: `100%`,
                 color: `${value.image_url ? "white" : "gray"}`,
+                fontSize: full
+                  ? !isResponsive && !result.matches
+                    ? `36px`
+                    : "22px"
+                  : "22px",
               }}
             >
               {value.text}

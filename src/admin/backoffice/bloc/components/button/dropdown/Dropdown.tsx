@@ -13,7 +13,7 @@ interface DropdownInfo {
 function DropdownData({ bloc, updateButton }: DropdownInfo) {
   const [pages, setPages] = useState<Page[]>();
   const [page, setPage] = useState<Page>(new Page());
-  const [choice, isExternalLink] = useState<boolean>();
+  const [choice, isExternalLink] = useState<string>("");
   const [toggle, setToggle] = useState<boolean>(false);
 
   const getPages = async () => {
@@ -22,13 +22,13 @@ function DropdownData({ bloc, updateButton }: DropdownInfo) {
   };
   const checkExternal = async (url: string) => {
     let prefixe = url.substring(0, 4);
-
     if (prefixe === "http" || prefixe === "") {
-      isExternalLink(true);
+      isExternalLink("Lien url externe");
     } else if (/.pdf/.test(url.substring(url.length - 4))) {
+      isExternalLink("Fichier");
       setToggle(true);
     } else {
-      isExternalLink(false);
+      isExternalLink("Page interne");
       let prefixe = Number(url.substring(0, 2));
       let pageData = await getPage(prefixe);
       setPage(pageData);
@@ -40,6 +40,9 @@ function DropdownData({ bloc, updateButton }: DropdownInfo) {
     let resulting_page = await page.get_bloc();
     return resulting_page;
   };
+  const updateLink = (e: any) => {
+    isExternalLink(e.target.value);
+  };
   useEffect(() => {
     checkExternal(bloc.href_url);
     getPages();
@@ -47,87 +50,78 @@ function DropdownData({ bloc, updateButton }: DropdownInfo) {
   useEffect(() => {}, [choice]);
   return (
     <div className={s.container}>
-      {toggle ? (
-        <h3
-          className={s.explain_redirect}
-          aria-label="Actuellement le bouton redirige vers un fichier. Le click sur le lien ci-dessous donne la possibilité de rediriger vers une page interne ou externe."
-        >
-          Page de redirection
-        </h3>
-      ) : (
-        <h3>Rediriger vers un fichier</h3>
-      )}
-      <input type="checkbox" onClick={() => setToggle(!toggle)} />
-      {!toggle ? (
-        <div className={s.container}>
-          {!choice ? <h3>Lien externe</h3> : <h3>Lien interne</h3>}
-          <input
-            type="checkbox"
-            defaultChecked={choice}
-            onClick={() => isExternalLink(!choice)}
-          />
+      <select
+        className={s.select_box}
+        onChange={(e) => updateLink(e)}
+        value={choice !== "" ? choice : "Choisir une page de redirection"}
+      >
+        <option key={0}>Choisir un type de redirection : </option>
 
-          {choice ? (
-            <div className={s.type}>
-              <h5>Page externe :</h5>
+        <option key={1} value="Lien url externe">
+          Lien url externe
+        </option>
+        <option key={2} value="Page externe">
+          Page externe{" "}
+        </option>
+        <option key={3} value="Fichier">
+          Fichier{" "}
+        </option>
+      </select>
+      {choice === "Lien url externe" ? (
+        <div className={s.type}>
+          <input
+            className={s.href_url}
+            value={bloc.href_url}
+            placeholder="Url de redirection"
+            onChange={(e) => {
+              updateButton(e, "href_url", bloc);
+            }}
+          />
+        </div>
+      ) : choice === "Fichier" ? (
+        <div className={s.type}>
+          <div
+            style={{
+              display: `flex`,
+              flexDirection: `column`,
+              alignItems: `center`,
+              width: "100%",
+            }}
+          >
+            <label>
+              <span>Charger un fichier</span>
               <input
-                className={s.href_url}
-                value={bloc.href_url}
-                placeholder="Url de redirection"
+                type="file"
+                className={s.image_url}
                 onChange={(e) => {
                   updateButton(e, "href_url", bloc);
                 }}
               />
-            </div>
-          ) : (
-            <div className={s.type}>
-              <h5>Page interne :</h5>
-              <select
-                className={s.select_box}
-                onClick={(e) => updateButton(e, "href_url", bloc)}
-                defaultValue={bloc.href_url}
-              >
-                <option key={0}>Choisir une page de redirection</option>
-
-                {pages !== undefined &&
-                  pages.map((value, index) => {
-                    return (
-                      <option
-                        key={index}
-                        value={value.id}
-                        selected={
-                          Number(bloc.href_url) === Number(value.id)
-                            ? true
-                            : false
-                        }
-                      >
-                        {value.title}
-                      </option>
-                    );
-                  })}
-              </select>
-            </div>
-          )}
+            </label>
+          </div>
         </div>
       ) : (
-        <div
-          style={{
-            display: `flex`,
-            flexDirection: `column`,
-            alignItems: `center`,
-            width: "100%",
-          }}
-        >
-          <label>
-            <span>Charger un fichier</span>
-            <input
-              type="file"
-              className={s.image_url}
-              onChange={(e) => {
-                updateButton(e, "href_url", bloc);
-              }}
-            />
-          </label>
+        <div className={s.type}>
+          <select
+            className={s.select_box}
+            onChange={(e) => updateButton(e, "href_url", bloc)}
+            value={
+              typeof Number(bloc.href_url) === "number"
+                ? Number(bloc.href_url)
+                : "Choisir une page de redirection"
+            }
+          >
+            <option key={0}>Choisir une page de redirection</option>
+
+            {pages !== undefined &&
+              pages.map((value, index) => {
+                return (
+                  <option key={index} value={value.id}>
+                    {value.title}
+                  </option>
+                );
+              })}
+          </select>
         </div>
       )}
     </div>

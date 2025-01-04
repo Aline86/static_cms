@@ -4,6 +4,7 @@ import remove from "./../../../../../../assets/remove.png";
 import { PictureGroup } from "../class/PictureGroup";
 import PictureGroupData from "../class/PictureGroupData";
 import DropdownData from "../dropdown/Dropdown";
+import Picture from "../../../../services/picture";
 
 interface CardDatas {
   bloc: PictureGroup;
@@ -25,7 +26,6 @@ function CardData({
   updatePictureGroupData,
   show_remove,
 }: CardDatas) {
-  const result = window.matchMedia("(max-width: 1000px)");
   useEffect(() => {
     console.log(data);
   }, []);
@@ -37,7 +37,7 @@ function CardData({
             src={remove}
             alt="suppression box"
             onClick={(e) => {
-              updatePictureGroupData(e, "remove", index, bloc);
+              updatePictureGroupData(e, "remove", bloc, index);
             }}
           />
         ) : (
@@ -60,6 +60,7 @@ function CardData({
           updateCarousel={updatePictureGroupData}
           bloc={bloc}
         />
+
         <div
           style={{
             display: `flex`,
@@ -85,7 +86,7 @@ function CardData({
                 className={s.color}
                 value={data.background_color}
                 onChange={(e) => {
-                  updatePictureGroupData(e, "color", index, bloc);
+                  updatePictureGroupData(e, "color", bloc, index);
                 }}
               />
             </div>
@@ -104,7 +105,7 @@ function CardData({
                 type="checkbox"
                 defaultChecked={Boolean(data.is_data_button)}
                 onClick={(e) => {
-                  updatePictureGroupData(e, "is_data_button", index, bloc);
+                  updatePictureGroupData(e, "is_data_button", bloc, index);
                 }}
               />
             </div>
@@ -126,10 +127,16 @@ function CardData({
                 className={s.image_url}
                 placeholder="Url de l'image"
                 onChange={(e) => {
-                  updatePictureGroupData(e, "image_url", index, bloc);
+                  updatePictureGroupData(e, "image_url", bloc, index);
                 }}
               />
             </label>
+            <Picture
+              update={updatePictureGroupData}
+              bloc={bloc}
+              index={index}
+              sub_bloc={data}
+            />
           </div>
         )}
 
@@ -138,7 +145,7 @@ function CardData({
           value={data.text}
           placeholder="texte de la carte"
           onChange={(e) => {
-            updatePictureGroupData(e, "text", index, bloc);
+            updatePictureGroupData(e, "text", bloc, index);
           }}
         />
       </div>

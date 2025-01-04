@@ -8,7 +8,7 @@ export default class LinkNetworksAndOthersHeader {
   logo_url: string;
 
   constructor(
-    bloc_number: number,
+    bloc_number: number = -1,
     id: number = -1,
     title: string = "",
     background_url: string = "",

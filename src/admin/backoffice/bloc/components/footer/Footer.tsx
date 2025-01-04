@@ -54,6 +54,7 @@ export default class Footer extends Container {
   }
 
   public async remove_link(index: number) {
+    console.log("index", index);
     if (index !== undefined) {
       this.set_parameters(
         "delete_child&id=" +
@@ -63,10 +64,10 @@ export default class Footer extends Container {
           "&associated_table=links_network_an_others_footer"
       );
       this.links_network_an_others_footer.splice(index, 1);
-      let new_bloc = await this.delete_bloc();
-      console.log(new_bloc);
+      await this.delete_bloc();
       this.set_parameters(this.type + "&id=1&type=" + this.type);
-      return new_bloc;
+
+      return this;
     }
   }
 
@@ -134,7 +135,7 @@ export default class Footer extends Container {
     this.background_color = value;
   }
 
-  updateFooter(
+  async updateFooter(
     e: any,
     field: string,
     input: string,
@@ -188,10 +189,11 @@ export default class Footer extends Container {
             index !== undefined &&
               (this.links_network_an_others_footer[index].logo_url =
                 UploadService.sanitizeName(e.target.files[0].name));
-
             UploadService.handleUpload(e.target.files[0]);
             break;
-
+          case "remove":
+            index !== undefined && this.remove_link(index);
+            break;
           default:
             null;
             break;

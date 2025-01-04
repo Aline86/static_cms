@@ -7,14 +7,14 @@ import Footer from "../../../bloc/components/footer/Footer";
 interface BlocData {
   bloc: Footer;
   updateFooter: any;
-  removeBloc: any;
+
   saveBloc: any;
   toggle: boolean;
 }
 
 function BlocFooter({
   bloc,
-  removeBloc,
+
   updateFooter,
   saveBloc,
   toggle,
@@ -25,7 +25,7 @@ function BlocFooter({
       setDragBegin={undefined}
       updateDragBloc={undefined}
       handleDragOver={undefined}
-      removeBloc={removeBloc}
+      removeBloc={undefined}
       index={-1}
       drag={false}
       isOpen={false}
@@ -43,7 +43,6 @@ function BlocFooter({
             <FooterInput
               updateFooter={updateFooter}
               input_bloc={bloc}
-              remove_bloc={removeBloc}
               saveBloc={saveBloc}
             />
           }

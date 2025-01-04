@@ -93,6 +93,7 @@ button {
   padding-top: 30px;
   margin: 0;
   font-size: 30px;
+  width: 100%;
 }
 .card_app_auto .title {
   width: 100%;

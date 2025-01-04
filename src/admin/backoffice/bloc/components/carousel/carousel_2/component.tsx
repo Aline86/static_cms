@@ -11,7 +11,6 @@ interface CardDatas {
 }
 
 function CarouselOption2({ toggle, updateCarousel, bloc }: CardDatas) {
-  const result = window.matchMedia("(max-width: 1000px)");
   const show_remove = bloc.carousel_data.length > 2 ? true : false;
   return (
     <div>

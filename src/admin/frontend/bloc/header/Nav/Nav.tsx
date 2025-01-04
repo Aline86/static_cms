@@ -48,7 +48,7 @@ export default function Nav({ opened, isResponsive }: NavInfo) {
     >
       {pages.map((page, index) => {
         return (
-          <ul className={stylePath.ul_menu}>
+          <ul key={index} className={stylePath.ul_menu}>
             <div key={page.id}>
               <Link to={`/admin/${page.id}/${page.title}`}>
                 <li>

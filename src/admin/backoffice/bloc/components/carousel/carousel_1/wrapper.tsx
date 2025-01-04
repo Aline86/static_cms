@@ -5,6 +5,7 @@ import remove from "./../../../../../../assets/remove.png";
 import CarouselData from "../class/CarouselData";
 import { Carousel } from "../class/Carousel";
 import DropdownData from "../dropdown/Dropdown";
+import Picture from "../../../../services/picture";
 
 interface CardDatas {
   gap: number;
@@ -88,6 +89,12 @@ function CardData({
             }}
           />
         </label>
+        <Picture
+          update={updateCarousel}
+          bloc={bloc}
+          index={index}
+          sub_bloc={data}
+        />
       </div>
 
       <input

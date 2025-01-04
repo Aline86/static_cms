@@ -29,6 +29,7 @@
   height: 60px;
   cursor: pointer;
 }
+
 @media screen and (max-width: 800px) {
   .container_class {
     overflow-x: scroll;
@@ -114,7 +115,9 @@ button {
   width: 80%;
   margin: 0 auto;
 }
-
+.card_app textarea {
+  height: 130px;
+}
 .carousel_container {
   /* position: fixed;*/
   top: 0;

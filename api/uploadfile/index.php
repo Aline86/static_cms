@@ -10,14 +10,27 @@ if (isset($_SERVER["HTTP_ORIGIN"]) === true) {
 	if (in_array($origin, $allowed_origins, true) === true) {
 		header('Access-Control-Allow-Origin: ' . $origin);
 		header('Access-Control-Allow-Credentials: true');
-		header('Access-Control-Allow-Methods: POST');
+		header('Access-Control-Allow-Methods: POST, DELETE');
 		header('Access-Control-Allow-Headers: Content-Type');
 	}
 	if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 		exit; // OPTIONS request wants only the policy, we can stop here
 	}
 }
-var_dump($_FILES['file']);
+print_r($_GET);
+if ($_SERVER["REQUEST_METHOD"] === 'DELETE' && $_GET['token'] !== null ) {
+  if(file_exists(utf8_decode(urldecode($_GET['name'])))) {
+    // Attempt to delete the file
+    if (unlink(utf8_decode(urldecode($_GET['name'])))) {
+      echo "File deleted successfully.";
+      exit;
+    } else {
+      echo "Error: Could not delete the file.";
+      exit;
+    }
+  }
+  exit;
+} 
 //$input = file_get_contents("php://input", "r");
 $date = new DateTime();
 $timestamp = $date->getTimestamp();

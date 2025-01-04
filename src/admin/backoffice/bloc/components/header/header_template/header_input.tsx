@@ -9,13 +9,13 @@ import LinkNetworksAndOthersHeader from "../LinkNetworksAndOthersHeader";
 interface HeaderInfo {
   input_bloc: Header | undefined;
   updateHeader: any;
-  remove_bloc: any;
+
   saveBloc: any;
 }
 function HeaderInput({
   input_bloc,
   updateHeader,
-  remove_bloc,
+
   saveBloc,
 }: HeaderInfo) {
   useEffect(() => {}, [input_bloc]);
@@ -29,7 +29,7 @@ function HeaderInput({
               type="text"
               value={input_bloc !== undefined ? input_bloc.title : ""}
               onChange={(e) => {
-                updateHeader(e, "title", undefined, undefined, input_bloc);
+                updateHeader(e, "title", undefined, undefined);
               }}
             />
           </div>
@@ -40,7 +40,7 @@ function HeaderInput({
               <input
                 type="file"
                 onChange={(e) => {
-                  updateHeader(e, "logo_url", undefined, undefined, input_bloc);
+                  updateHeader(e, "logo_url", undefined, undefined);
                 }}
               />
             </label>
@@ -70,7 +70,7 @@ function HeaderInput({
             <div
               className={s.addLink}
               onClick={(e) => {
-                updateHeader(e, "ajout", undefined, undefined, input_bloc);
+                updateHeader(e, "ajout", undefined, undefined);
               }}
             >
               <img src={ajout} alt="bouton ajouter" />
@@ -88,8 +88,8 @@ function HeaderInput({
                       <img
                         src={remove}
                         alt="suppression box"
-                        onClick={() => {
-                          remove_bloc(input_bloc, key);
+                        onClick={(e) => {
+                          updateHeader(e, "social_network", "remove", key);
                         }}
                       />
                     </div>
@@ -100,13 +100,7 @@ function HeaderInput({
                         <input
                           type="file"
                           onChange={(e) => {
-                            updateHeader(
-                              e,
-                              "social_network",
-                              "url_logo",
-                              key,
-                              input_bloc
-                            );
+                            updateHeader(e, "social_network", "url_logo", key);
                           }}
                         />
                       </label>
@@ -117,13 +111,7 @@ function HeaderInput({
                         type="text"
                         value={value.name}
                         onChange={(e) => {
-                          updateHeader(
-                            e,
-                            "social_network",
-                            "name",
-                            key,
-                            input_bloc
-                          );
+                          updateHeader(e, "social_network", "name", key);
                         }}
                       />
                     </div>
@@ -148,13 +136,7 @@ function HeaderInput({
                         type="text"
                         value={value.title}
                         onChange={(e) => {
-                          updateHeader(
-                            e,
-                            "social_network",
-                            "title",
-                            key,
-                            input_bloc
-                          );
+                          updateHeader(e, "social_network", "title", key);
                         }}
                       />
                     </div>

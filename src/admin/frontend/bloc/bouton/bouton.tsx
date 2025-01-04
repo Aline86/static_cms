@@ -26,7 +26,6 @@ function Bouton({
   full,
   isResponsive,
 }: CustomButtonInfo) {
-  const result = window.matchMedia("(max-width: 700px)");
   const [link, isLink] = useState(true);
   const checkExternal = async (url: string) => {
     if (/.pdf/.test(url.substring(url.length - 4))) {
@@ -34,6 +33,7 @@ function Bouton({
     } else {
       isLink(true);
     }
+    console.log("link", link);
   };
   useEffect(() => {
     checkExternal(bloc.href_url);
@@ -56,9 +56,15 @@ function Bouton({
 
         width: !full ? "43vw" : isResponsive ? "360px" : "90vw",
         margin: "0 auto",
+        height: bloc.image_url === "" ? "40vh" : "50vh",
       }}
     >
-      <h2 style={{ color: bloc.image_url !== "" ? "#ffffff" : "" }}>
+      <h2
+        style={{
+          color: bloc.image_url !== "" ? "#ffffff" : "",
+          fontStyle: bloc.image_url !== "" ? "" : "italic",
+        }}
+      >
         {bloc.title}
       </h2>
 

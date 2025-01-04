@@ -80,19 +80,8 @@ function Pages({}: PagesParams) {
     navigate("/login");
     localStorage.setItem("authToken", "");
   };
-  // initilization of the first page, it should always exist prior to any action
-  const create_first_page = async () => {
-    let page_type = new Page();
-    let async_result = await page_type.get_pages();
-    console.log("async_result", async_result);
-    if (Array.isArray(async_result) && async_result.length >= 1) {
-    } else if (async_result !== undefined) {
-      let page = new Page(-1, "Accueil");
-      page.save_bloc();
-    }
-  };
+
   useEffect(() => {
-    create_first_page();
     getHeader();
     getPages();
     getFooter();

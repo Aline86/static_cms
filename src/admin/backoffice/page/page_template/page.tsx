@@ -71,6 +71,8 @@ function Visualization({}: PageParams) {
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();
   }, [refresh]);
+
+  useEffect(() => {}, []);
   return (
     <div className="page">
       <div className={s.page_container}>
