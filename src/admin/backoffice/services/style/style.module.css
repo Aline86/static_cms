@@ -9,4 +9,5 @@
   position: relative;
   right: -20px;
   margin-bottom: 3px;
+  z-index: 3;
 }

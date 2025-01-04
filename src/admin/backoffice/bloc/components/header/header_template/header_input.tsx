@@ -5,6 +5,8 @@ import remove from "./../../../../../../assets/remove.png";
 import add_to_database from "./../../../../../../assets/add_to_database.png";
 import Header from "./../Header";
 import LinkNetworksAndOthersHeader from "../LinkNetworksAndOthersHeader";
+import Picture from "../../../../services/picture";
+import { BASE_URL_SITE } from "../../../../../../config";
 
 interface HeaderInfo {
   input_bloc: Header | undefined;
@@ -55,7 +57,7 @@ function HeaderInput({
                 onChange={(e) => {
                   updateHeader(
                     e,
-                    "background_url",
+                    "image_url",
                     undefined,
                     undefined,
                     input_bloc
@@ -63,7 +65,46 @@ function HeaderInput({
                 }}
               />
             </label>
-            <label>{input_bloc?.background_url}</label>
+            {input_bloc !== undefined && input_bloc.image_url !== "" && (
+              <div>
+                <div className={s.sup_container}>
+                  <div className="button_remove_container">
+                    <img
+                      src={remove}
+                      alt="suppression box"
+                      onClick={() => {
+                        updateHeader(
+                          "",
+                          "delete_picture",
+                          undefined,
+                          undefined,
+                          input_bloc
+                        );
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={s.delete}>
+                  <img
+                    src={
+                      BASE_URL_SITE + "/api/uploadfile/" + input_bloc.image_url
+                    }
+                    alt="miniature"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+          <div className={s.color}>
+            <h3 style={{ textDecoration: "underline" }}>Couleur de fond :</h3>
+            <input
+              type="color"
+              className={s.color}
+              value={input_bloc?.background_color}
+              onChange={(e) => {
+                updateHeader(e, "background_color", undefined, undefined);
+              }}
+            />
           </div>
           <div className={s.add_file}>
             <h3>Liens externes (ex: réseaux sociaux): </h3>

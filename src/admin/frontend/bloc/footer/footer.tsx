@@ -24,6 +24,10 @@ function FooterVizualization({
   const result = window.matchMedia("(max-width: 800px)");
   const style_width = {
     width: isResponsive ? "380px" : "100%",
+    backgroundColor:
+      input_bloc.background_color !== ""
+        ? input_bloc.background_color
+        : "#121212",
   };
 
   useEffect(() => {

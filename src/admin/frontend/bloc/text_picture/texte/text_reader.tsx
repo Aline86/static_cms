@@ -39,6 +39,8 @@ function TextReader({
   const [entityMap, setEntityMap] = useState([]);
   const [entityMapLength, setEntityMapLength] = useState(0);
   const [pictures_offset, setPictureOffset] = useState<Array<any>>([]);
+  /** template items counter */
+  let i = 0;
   const updateConvertToText = (blocs: any) => {
     const data_to_show: BlockTextParams[] = [];
     if (blocs !== undefined && blocs.length > 0) {
@@ -326,7 +328,7 @@ function TextReader({
             pictures_offset[j].data !== undefined &&
             pictures_offset[j].data.src !== undefined ? (
               <div
-                key={j}
+                key={i++}
                 className="container_data bloc"
                 style={{
                   display: "inline",
@@ -353,7 +355,7 @@ function TextReader({
               pictures_offset[j].data !== undefined &&
               pictures_offset[j].data.src === undefined && (
                 <div
-                  key={j}
+                  key={i++}
                   className="container_data bloc"
                   style={{
                     display: "inline",
@@ -372,7 +374,7 @@ function TextReader({
             headlines[j] !== undefined &&
             headlines[j] === "unordered-list-item" ? (
             <div
-              key={j}
+              key={i++}
               className="container_data bloc"
               style={{ display: "inline" }}
             >
@@ -383,7 +385,7 @@ function TextReader({
                       return (
                         <>
                           <div
-                            key={i}
+                            key={i++}
                             style={{ display: "inline" }}
                             className={`${value.value}`}
                           >
@@ -400,7 +402,7 @@ function TextReader({
               !read_more) &&
             headlines[j] !== undefined &&
             headlines[j] === "header-two" ? (
-            <h2 key={j}>
+            <h2 key={i++}>
               <div
                 className="container_data bloc"
                 style={{ display: "inline" }}
@@ -423,9 +425,8 @@ function TextReader({
             ((read_more && ((isToggle && j >= 0) || (!isToggle && j <= 2))) ||
               !read_more) &&
             headlines[j] !== "atomic" && (
-              <div key={j} className={`${textAlign[j]}`}>
+              <div key={i++} className={`${textAlign[j]}`}>
                 <div
-                  key={j}
                   className="container_data bloc"
                   style={{ display: "inline" }}
                 >
@@ -433,7 +434,7 @@ function TextReader({
                     Object.values(stringText).map((value: any, i: number) => {
                       return (
                         <div
-                          key={i}
+                          key={i++}
                           style={{ display: "inline" }}
                           className={`${value.value}`}
                         >

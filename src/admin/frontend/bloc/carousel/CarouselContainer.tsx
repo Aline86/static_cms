@@ -151,12 +151,12 @@ function CarouselContainer({
           className={s.left_arrows}
           style={{
             width: full
-              ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
-                  bloc.gap * (cardNumber - 1)
-                }px)`
-              : `calc(${bloc.width * 0.85 * (cardNumber - 1)}vw + ${
-                  bloc.gap * (cardNumber - 1)
-                }px)`,
+              ? isResponsive
+                ? "360px"
+                : `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                    bloc.gap * (cardNumber - 1)
+                  }px)`
+              : `43vw`,
           }}
         >
           {type === "carousel" && transitionFinished ? (
@@ -238,7 +238,7 @@ function CarouselContainer({
                     ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
                         bloc.gap * (cardNumber - 1)
                       }px)`
-                    : `calc(${bloc.width * (cardNumber - 1)}vw + ${
+                    : `calc(${bloc.width}vw + ${
                         bloc.gap * (cardNumber - 1)
                       }px)`,
                 }
@@ -252,8 +252,8 @@ function CarouselContainer({
                       : "180px",
                   width:
                     !isResponsive && !result.matches
-                      ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
-                          bloc.gap * (cardNumber - 1)
+                      ? `calc(${bloc.width * (cardNumber - 2)}vw + ${
+                          bloc.gap * (cardNumber - 2)
                         }px)`
                       : `360px`,
                 }

@@ -39,7 +39,7 @@ function CssTextPicturePosition({
         </div>
         <div className={s.bouton_container_parent}>
           <div>
-            <h3>Type de bloc : </h3>
+            <h3 style={{ textDecoration: "underline" }}>Bloc Paralaxe : </h3>
             <div className={s.flex_row}></div>
             <div draggable={draggable}>{props}</div>
 

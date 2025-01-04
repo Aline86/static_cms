@@ -1,23 +1,32 @@
 <?php
 
-
-if (isset($_SERVER["HTTP_ORIGIN"]) === true) {
-	$origin = $_SERVER["HTTP_ORIGIN"];
-	$allowed_origins = array(
-		"http://localhost:5173",
-
-	);
-	if (in_array($origin, $allowed_origins, true) === true) {
-		header('Access-Control-Allow-Origin: ' . $origin);
-		header('Access-Control-Allow-Credentials: true');
-		header('Access-Control-Allow-Methods: POST, DELETE');
-		header('Access-Control-Allow-Headers: Content-Type');
-	}
-	if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
-		exit; // OPTIONS request wants only the policy, we can stop here
-	}
+include 'environment_variables.php';
+$host = getenv('DB_HOST');
+$user = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
+$database_name = getenv('DB_NAME');
+$allowed_prefix = getenv('ALLOWED_ORIGIN');
+function is_encoded($string_to_test) {
+    if (urlencode(urldecode($string_to_test)) === $string_to_test){
+        return true;
+    } else {
+        return false;
+    }
 }
-print_r($_GET);
+function is_json($string) {
+    json_decode($string);
+    return json_last_error() === JSON_ERROR_NONE;
+}
+// Get the Origin header from the incoming request
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+
+// Check if the origin matches the allowed prefix
+if ($origin && strpos($origin, $allowed_prefix) !== false) {
+    header('Access-Control-Allow-Origin: ' . $origin);
+    header('Access-Control-Allow-Headers: *' );
+    header('Access-Control-Allow-Methods: *');
+}
+
 if ($_SERVER["REQUEST_METHOD"] === 'DELETE' && $_GET['token'] !== null ) {
   if(file_exists(utf8_decode(urldecode($_GET['name'])))) {
     // Attempt to delete the file
@@ -31,6 +40,37 @@ if ($_SERVER["REQUEST_METHOD"] === 'DELETE' && $_GET['token'] !== null ) {
   }
   exit;
 } 
+
+if(isset($_GET['token'])){
+    
+  $token = $_GET['token'] ?? null;
+
+  if(in_array($method, $methods_to_check) && $token === null) {
+      exit();
+  }
+  if ($token !== null) {
+      // Bearer token is sent in the format: "Bearer <token>"
+
+      if(in_array($method, $methods_to_check) && $token === null) {
+          exit();
+      }
+      $requete2 = 'SELECT * FROM user WHERE token=:token';
+      $resultat2 = $db->prepare($requete2);
+      $resultat2->bindParam(':token', $token, PDO::PARAM_STR);
+      $resultat2->execute(); 
+      $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+
+      if(count($user) > 0 ) {
+          unset($_POST['token']);
+      }
+      else {
+          exit();
+      }
+  
+  } else {
+    exit();
+  }
+}
 //$input = file_get_contents("php://input", "r");
 $date = new DateTime();
 $timestamp = $date->getTimestamp();

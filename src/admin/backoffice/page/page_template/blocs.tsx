@@ -1,6 +1,6 @@
 import s from "./style.module.css";
 import { useEffect, useState } from "react";
-import { EditorState, RawDraftContentState } from "draft-js";
+import { RawDraftContentState } from "draft-js";
 import { TextPicture } from "../../bloc/components/text_picture/class/TextPicture";
 import { Carousel } from "../../bloc/components/carousel/class/Carousel";
 import { PictureGroup } from "../../bloc/components/picture_group/class/PictureGroup";
@@ -212,21 +212,6 @@ function Blocs({
         setHeader(new_bloc);
         setToggle(!toggle);
       }
-    }
-  };
-
-  const remove_bloc = async (bloc: Header | Footer, index: number) => {
-    await bloc.remove_link(index);
-    let result = await bloc.get_bloc();
-    if (result !== undefined && result instanceof Footer) {
-      setFooter(result);
-
-      setRefresh(!refresh);
-    }
-
-    if (result !== undefined && result instanceof Header) {
-      setHeader(result);
-      setRefresh(!refresh);
     }
   };
 

@@ -37,7 +37,7 @@ function Shrink({ props, bloc, index, isOpen }: ShrinkData) {
                   : bloc.type === "picture_group"
                   ? "Groupe d'images"
                   : bloc.type === "button"
-                  ? "Image lien"
+                  ? "Bouton Image"
                   : bloc.type === "video"
                   ? "Vidéo"
                   : bloc.type === "parallaxe"

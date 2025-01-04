@@ -9,13 +9,14 @@ export default class Header extends Container {
   parameters: string;
   link_networks_an_others_header: Array<LinkNetworksAndOthersHeader>;
   logo_url: string;
-  background_url: string;
-
+  image_url: string;
+  background_color: string;
   constructor(
     id: number = -1,
     title: string = "",
     type: string = "header",
     logo_url: string = "",
+    image_url: string = "",
     background_color: string = ""
   ) {
     super(id, title, type);
@@ -23,9 +24,10 @@ export default class Header extends Container {
     this.title = title;
     this.type = type;
     this.logo_url = logo_url;
-    this.background_url = background_color;
+    this.image_url = image_url;
     this.link_networks_an_others_header = [];
     this.parameters = this.type + "&id=1&type=" + this.type;
+    this.background_color = background_color;
   }
   public set_link_networks_an_others_header(
     link_networks_an_others_header: Array<any>
@@ -82,6 +84,7 @@ export default class Header extends Container {
     input: string | undefined,
     index: number | undefined
   ) {
+    console.log("field", field);
     switch (field) {
       case "title":
         this.set_title(e.target.value);
@@ -91,11 +94,16 @@ export default class Header extends Container {
         UploadService.handleUpload(e.target.files[0]);
 
         break;
-      case "background_url":
-        this.set_background_url(
-          UploadService.sanitizeName(e.target.files[0].name)
-        );
+      case "image_url":
+        this.set_image_url(UploadService.sanitizeName(e.target.files[0].name));
         UploadService.handleUpload(e.target.files[0]);
+        break;
+      case "background_color":
+        this.set_background_color(e.target.value);
+        break;
+      case "delete_picture":
+        this.set_image_url(e);
+
         break;
       case "social_network":
         switch (input) {
@@ -105,7 +113,7 @@ export default class Header extends Container {
                 e.target.value);
 
             break;
-          case "background_url":
+          case "image_url":
             index !== undefined &&
               (this.link_networks_an_others_header[index].background_url =
                 e.target.value);
@@ -184,10 +192,16 @@ export default class Header extends Container {
     this.logo_url = value;
   }
 
-  public get_background_url(): string {
-    return this.background_url;
+  public get_image_url(): string {
+    return this.image_url;
   }
-  public set_background_url(value: string) {
-    this.background_url = value;
+  public set_image_url(value: string) {
+    this.image_url = value;
+  }
+  public get_background_color(): string {
+    return this.background_color;
+  }
+  public set_background_color(value: string) {
+    this.background_color = value;
   }
 }

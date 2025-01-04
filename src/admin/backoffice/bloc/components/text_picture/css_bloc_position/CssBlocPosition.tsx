@@ -39,7 +39,7 @@ function CssTextPicturePosition({
         </div>
         <div className={s.bouton_container_parent}>
           <div>
-            <h3>Type de bloc : </h3>
+            <h3 style={{ textDecoration: "underline" }}>Bloc texte Image : </h3>
             <div className={s.checkbox_bloc}>
               <div className={s.flex_bloc_type_1}>
                 <div

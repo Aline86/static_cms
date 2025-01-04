@@ -22,23 +22,27 @@ function CssPictureGroupPosition({
         className={s.addCard}
         onClick={(e) => {
           e.preventDefault();
-          updatePictureGroupData(e, "ajout", undefined, bloc);
+          updatePictureGroupData(e, "ajout", bloc, undefined);
         }}
       >
         <img src={ajout} alt="ajout" />
       </div>
       <div className="bouton_container_bloc_css_carousel">
+        <div className={s.encart_bloc_name_title}>
+          <div className={s.encart_bloc_name_title}>
+            <h2>Bloc numéro : {bloc.bloc_number}</h2>
+          </div>
+          <h3
+            style={{
+              textDecoration: "underline",
+              marginTop: "30px",
+            }}
+          >
+            Groupe d'images
+          </h3>
+        </div>
         <div draggable={draggable}>{props}</div>
         <div className={s.bouton_container_bloc}>
-          <div className={s.encart_bloc_name_title}>
-            <h3
-              style={{
-                textDecoration: "underline",
-              }}
-            >
-              Groupe d'images
-            </h3>
-          </div>
           <div style={{ display: "flex", gap: "30px" }}>
             <div className={s.bouton_container}>
               <h3>Largeur</h3>
@@ -46,7 +50,7 @@ function CssPictureGroupPosition({
                 type="number"
                 value={bloc.width}
                 onChange={(e) =>
-                  updatePictureGroupData(e, "width", undefined, bloc)
+                  updatePictureGroupData(e, "width", bloc, undefined)
                 }
               />
             </div>
@@ -56,7 +60,7 @@ function CssPictureGroupPosition({
                 type="number"
                 value={bloc.height}
                 onChange={(e) =>
-                  updatePictureGroupData(e, "height", undefined, bloc)
+                  updatePictureGroupData(e, "height", bloc, undefined)
                 }
               />
             </div>

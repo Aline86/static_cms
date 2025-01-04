@@ -53,9 +53,11 @@ function HeaderVizualization({
       <div
         className={stylePath.backdrop}
         style={{
-          backgroundImage: `url(${
-            BASE_URL_SITE + "/api/uploadfile/" + input_bloc.background_url
-          })`,
+          background: input_bloc.image_url
+            ? `url(${
+                BASE_URL_SITE + "/api/uploadfile/" + input_bloc.image_url
+              })`
+            : input_bloc.background_color,
         }}
       ></div>
       <div className={stylePath.container} style={style_width}>

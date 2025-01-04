@@ -1,6 +1,7 @@
 import s from "./style/style.module.css";
 import { BASE_URL_SITE } from "./../../../config";
 import remove from "./../../../assets/remove.png";
+import { useEffect } from "react";
 
 interface CardDatas {
   update: any;
@@ -20,8 +21,8 @@ function Picture({ update, bloc, index, sub_bloc }: CardDatas) {
             alt="suppression box"
             onClick={() => {
               index === undefined
-                ? update(bloc.image_url, "delete_picture", bloc)
-                : update(sub_bloc.image_url, "delete_picture", bloc, index);
+                ? update("", "delete_picture", bloc)
+                : update("", "delete_picture", bloc, index);
             }}
           />
         </div>

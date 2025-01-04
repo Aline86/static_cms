@@ -24,6 +24,17 @@ function FooterInput({
     <div className={s.container}>
       <div className={s.container_column}>
         <div className={s.top_container}>
+          <div className={s.color}>
+            <h3 style={{ textDecoration: "underline" }}>Couleur de fond :</h3>
+            <input
+              type="color"
+              className={s.color}
+              value={input_bloc.background_color}
+              onChange={(e) => {
+                updateFooter(e, "footer", "background_color", undefined);
+              }}
+            />
+          </div>
           <h3 style={{ textDecoration: "underline" }}>Adresse du site : </h3>
           <div className={s.title_bloc}>
             <h3>Nom : </h3>

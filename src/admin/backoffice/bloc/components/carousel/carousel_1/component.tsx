@@ -14,7 +14,7 @@ function CarouselOption1({ toggle, updateCarousel, bloc }: CardDatas) {
   const show_remove =
     bloc !== undefined &&
     bloc.carousel_data !== undefined &&
-    bloc.carousel_data.length > 4
+    bloc.carousel_data.length > 6
       ? true
       : false;
 
