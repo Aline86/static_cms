@@ -6,9 +6,10 @@ import Page from "../../../admin/backoffice/page/class/Page";
 
 interface NavInfo {
   opened: boolean;
+  setOpen: any;
   isResponsive: boolean;
 }
-export default function Nav({ opened, isResponsive }: NavInfo) {
+export default function Nav({ opened, setOpen, isResponsive }: NavInfo) {
   const [stylePath, setStylePath] = useState(s);
   const [pages, setPages] = useState<Page[]>([]);
   const page_type = new Page();
@@ -50,7 +51,11 @@ export default function Nav({ opened, isResponsive }: NavInfo) {
         return (
           <ul className={stylePath.ul_menu} key={index}>
             <div key={page.id}>
-              <Link to={`/${page.id}/${page.title}`} key={page.id}>
+              <Link
+                to={`/${page.id}/${page.title}`}
+                key={page.id}
+                onClick={() => setOpen(false)}
+              >
                 <li>
                   <div>
                     {page.title}

@@ -73,7 +73,7 @@ function HeaderVizualization({
             <div className={stylePath.menu_btn__burger}></div>
           </div>
           <div>
-            <Nav opened={open} isResponsive={isResponsive} />
+            <Nav opened={open} setOpen={setOpen} isResponsive={isResponsive} />
           </div>
         </div>
         <div className={stylePath.title}>

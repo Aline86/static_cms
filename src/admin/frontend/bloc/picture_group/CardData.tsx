@@ -45,7 +45,6 @@ function CardData({
           ? `350px`
           : `${height}vw`
         : `${height * 0.5}vw`,
-      margin: "0 auto",
 
       marginBottom: "60px",
       boxShadow: "2px 2px 3px rgba(0,0,0,0.2)",

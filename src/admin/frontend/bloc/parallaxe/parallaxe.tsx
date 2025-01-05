@@ -11,7 +11,9 @@ interface BlocParams {
 
 function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
   const result = window.matchMedia("(max-width: 800px)");
-  useEffect(() => {}, [bloc]);
+  useEffect(() => {
+    console.log("bloc", bloc);
+  }, [bloc]);
   useEffect(() => {}, [isResponsive]);
 
   return bloc.title !== "" ? (
@@ -33,8 +35,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
       <h2
         className="show"
         style={{
-          backgroundImage:
-            `url(${BASE_URL_SITE}/api/uploadfile/` + bloc.image + `)`,
+          backgroundImage: `url(${BASE_URL_SITE}/api/uploadfile/${bloc.image})`,
           textTransform: "uppercase",
           width: !full ? "45vw" : "100%",
           backgroundAttachment: "fixed",
@@ -57,8 +58,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
       className={s.image}
       style={{
         position: "relative",
-        backgroundImage:
-          `url(${BASE_URL_SITE}/api/uploadfile/` + bloc.image + `)`,
+        backgroundImage: `url(${BASE_URL_SITE}/api/uploadfile/${bloc.image})`,
         height: isResponsive || result.matches ? "200px" : "30vh",
         backgroundAttachment: "fixed",
         width: full ? "100vw" : "46vw",

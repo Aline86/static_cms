@@ -66,7 +66,11 @@ function VideoVizualisation({
   }, [toggle, window.innerWidth]);
   useEffect(() => {}, [url]);
   return url !== undefined && url.length > 0 && external ? (
-    <div>
+    <div
+      style={{
+        marginTop: bloc.bloc_number === 1 ? "90px" : "0px",
+      }}
+    >
       {bloc.title !== "" ? (
         <div
           className={s.encart}
@@ -83,7 +87,7 @@ function VideoVizualisation({
             style={{
               display: "inline-block",
               textAlign: "center",
-              marginBottom: "0",
+              margin: "0",
             }}
           >
             {bloc.title}
@@ -111,7 +115,7 @@ function VideoVizualisation({
               ? "0px"
               : "30px"
             : "0px",
-          marginBottom: "60px",
+          marginBottom: "30px",
           width: `${
             full
               ? isResponsive || result.matches
@@ -168,7 +172,7 @@ function VideoVizualisation({
               ? "-60px"
               : "-100px"
             : "0",
-          marginBottom: "60px",
+          marginBottom: "30px",
         }}
       >
         <div

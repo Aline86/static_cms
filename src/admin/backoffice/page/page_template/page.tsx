@@ -78,7 +78,9 @@ function Visualization({}: PageParams) {
     setRefresh(!refresh);
   };
 
-  useEffect(() => {}, [toggle, blocs]);
+  useEffect(() => {
+    console.log("blocs", blocs);
+  }, [toggle, blocs]);
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();
   }, [refresh]);
@@ -116,18 +118,20 @@ function Visualization({}: PageParams) {
               Se déconnecter
             </div>
           </li>
-          <li>
-            <div
-              className={s.navigate_2}
-              onClick={(e) => {
-                e.preventDefault();
-                setToDrag(!drag);
-                setOpen(false);
-              }}
-            >
-              Changer l'ordre des blocs
-            </div>
-          </li>
+          {blocs.length > 0 && (
+            <li>
+              <div
+                className={s.navigate_2}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setToDrag(!drag);
+                  setOpen(false);
+                }}
+              >
+                Changer l'ordre des blocs
+              </div>
+            </li>
+          )}
         </div>
 
         <div>
