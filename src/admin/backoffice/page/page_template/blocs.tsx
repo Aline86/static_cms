@@ -85,47 +85,57 @@ function Blocs({
 
     setToggle(!toggle);
   };
-  const updateCarousel = (
+  const updateCarousel = async (
     e: any,
     field: string,
     input_bloc: Carousel,
     index: number
   ) => {
-    const new_Bloc = input_bloc.update(e, field, index);
-    blocs[input_bloc.bloc_number - 1] = new_Bloc;
-    setBlocs(blocs);
+    const new_Bloc = await input_bloc.update(e, field, index);
+    if (new_Bloc !== undefined) {
+      blocs[input_bloc.bloc_number - 1] = new_Bloc;
+      setBlocs(blocs);
 
-    setToggle(!toggle);
+      setToggle(!toggle);
+    }
   };
   const updateVideo = (e: any, field: string, input_bloc: Video) => {
     const new_Bloc = input_bloc.update(e, field);
+    if (new_Bloc !== undefined) {
+      blocs[input_bloc.bloc_number - 1] = new_Bloc;
 
-    blocs[input_bloc.bloc_number - 1] = new_Bloc;
+      setBlocs(blocs);
 
-    setBlocs(blocs);
-
-    setToggle(!toggle);
+      setToggle(!toggle);
+    }
   };
-  const updateParallaxe = (e: any, field: string, input_bloc: Parallaxe) => {
-    const new_Bloc = input_bloc.update(e, field);
+  const updateParallaxe = async (
+    e: any,
+    field: string,
+    input_bloc: Parallaxe
+  ) => {
+    const new_Bloc = await input_bloc.update(e, field);
+    if (new_Bloc !== undefined) {
+      blocs[input_bloc.bloc_number - 1] = new_Bloc;
 
-    blocs[input_bloc.bloc_number - 1] = new_Bloc;
+      setBlocs(blocs);
 
-    setBlocs(blocs);
-
-    setToggle(!toggle);
+      setToggle(!toggle);
+    }
   };
-  const updatePictureGroupData = (
+  const updatePictureGroupData = async (
     e: any,
     field: string,
 
     input_bloc: PictureGroup,
     index: number
   ) => {
-    const new_Bloc = input_bloc.update(e, field, index);
-    blocs[input_bloc.bloc_number - 1] = new_Bloc;
-    setBlocs(blocs);
-    setToggle(!toggle);
+    const new_Bloc = await input_bloc.update(e, field, index);
+    if (new_Bloc !== undefined) {
+      blocs[input_bloc.bloc_number - 1] = new_Bloc;
+      setBlocs(blocs);
+      setToggle(!toggle);
+    }
   };
 
   const removeBloc = async (bloc: typeof component_types) => {

@@ -9,9 +9,9 @@ export class UploadService {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      let result = null;
+
       let filename = this.sanitizeName(file.name);
-      result = await fetch(
+      return await fetch(
         BASE_URL_SITE +
           "/api/uploadfile/index.php?name=" +
           filename +
@@ -21,11 +21,18 @@ export class UploadService {
           method: "POST",
           body: formData,
         }
-      );
-      if (result !== null) {
-        return filename;
-      }
-      return filename;
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          console.log("data", data);
+          if (data !== undefined) {
+            return data;
+          }
+        });
     }
   };
   static deleteUpload = async (file: any, token: string | null) => {
