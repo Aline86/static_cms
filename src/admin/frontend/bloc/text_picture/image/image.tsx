@@ -40,7 +40,7 @@ function Image({
           alignItems: datacss.alignItems,
           margin: "0 auto",
 
-          marginBottom: "30px",
+          marginBottom: isBlocColumn ? "30px" : "5px",
         }}
       >
         <img

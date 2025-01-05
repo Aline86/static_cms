@@ -17,7 +17,7 @@ export default class Header extends Container {
     type: string = "header",
     logo_url: string = "",
     image_url: string = "",
-    background_color: string = ""
+    background_color: string = "#ffffff"
   ) {
     super(id, title, type);
     this.id = id;
@@ -89,13 +89,25 @@ export default class Header extends Container {
         this.set_title(e.target.value);
         break;
       case "logo_url":
-        this.set_logo_url(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0], this.token);
-
+        let picture_name_logo = await UploadService.handleUpload(
+          e.target.files[0],
+          this.token
+        );
+        if (picture_name_logo !== undefined) {
+          this.set_logo_url(
+            picture_name_logo !== undefined ? picture_name_logo : ""
+          );
+        }
         break;
       case "image_url":
-        this.set_image_url(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0], this.token);
+        let picture_name = await UploadService.handleUpload(
+          e.target.files[0],
+          this.token
+        );
+        if (picture_name !== undefined) {
+          this.set_image_url(picture_name !== undefined ? picture_name : "");
+        }
+        break;
         break;
       case "background_color":
         this.set_background_color(e.target.value);
@@ -119,12 +131,14 @@ export default class Header extends Container {
 
             break;
           case "url_logo":
-            index !== undefined &&
-              (this.link_networks_an_others_header[index].logo_url =
-                UploadService.sanitizeName(e.target.files[0].name));
-
-            UploadService.handleUpload(e.target.files[0], this.token);
-
+            if (index !== undefined) {
+              let picture_name = await UploadService.handleUpload(
+                e.target.files[0],
+                this.token
+              );
+              this.link_networks_an_others_header[index].logo_url =
+                picture_name !== undefined ? picture_name : "";
+            }
             break;
 
           case "name":

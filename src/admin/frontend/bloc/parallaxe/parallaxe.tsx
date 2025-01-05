@@ -11,6 +11,7 @@ interface BlocParams {
 
 function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
   const result = window.matchMedia("(max-width: 800px)");
+  const img_url = BASE_URL_SITE + "/api/uploadfile/" + bloc.image;
   useEffect(() => {
     console.log("bloc", bloc);
   }, [bloc]);
@@ -24,6 +25,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        height: isResponsive || result.matches ? "200px" : "12vh",
         marginTop:
           isResponsive || (bloc.bloc_number > 1 && !result.matches)
             ? "-50px"
@@ -35,7 +37,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
       <h2
         className="show"
         style={{
-          backgroundImage: `url(${BASE_URL_SITE}/api/uploadfile/${bloc.image})`,
+          backgroundImage: `url(${img_url})`,
           textTransform: "uppercase",
           width: !full ? "45vw" : "100%",
           backgroundAttachment: "fixed",
@@ -43,6 +45,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
           fontSize: isResponsive ? "4vh" : "10vh",
           WebkitTextFillColor: "transparent",
           lineHeight: isResponsive ? "5vh" : "12vh",
+          height: isResponsive || result.matches ? "150px" : "12vh",
           backgroundClip: "text",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -58,8 +61,8 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
       className={s.image}
       style={{
         position: "relative",
-        backgroundImage: `url(${BASE_URL_SITE}/api/uploadfile/${bloc.image})`,
-        height: isResponsive || result.matches ? "200px" : "30vh",
+        backgroundImage: `url(${img_url})`,
+        height: isResponsive || result.matches ? "150px" : "30vh",
         backgroundAttachment: "fixed",
         width: full ? "100vw" : "46vw",
         left: 0,

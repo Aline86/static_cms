@@ -18,7 +18,7 @@ export default class Footer extends Container {
     title: string = "",
     type: string = "footer",
     map_iframe_url: string = "",
-    background_color: string = ""
+    background_color: string = "#f9f9f9"
   ) {
     super(id, title, type);
     this.id = id;

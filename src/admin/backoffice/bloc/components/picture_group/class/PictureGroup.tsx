@@ -61,7 +61,7 @@ export class PictureGroup extends Container {
     this.set_parameters(this.type + "&id=" + this.id + "&type=" + this.type);
     return new_bloc;
   }
-  public update(e: any, field: string, index: number | undefined) {
+  public async update(e: any, field: string, index: number | undefined) {
     switch (field) {
       case "href_url":
         index !== undefined &&
@@ -96,10 +96,18 @@ export class PictureGroup extends Container {
             : false);
         break;
       case "image_url":
-        index !== undefined &&
-          (this.picture_group_data[index].image_url =
-            UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0], this.token);
+        if (index !== undefined) {
+          let picture_name = await UploadService.handleUpload(
+            e.target.files[0],
+            this.token
+          );
+          if (picture_name !== undefined && picture_name !== "") {
+            this.picture_group_data[index].image_url =
+              picture_name !== undefined ? picture_name : "";
+            return this;
+          }
+        }
+
         break;
       case "color":
         index !== undefined &&

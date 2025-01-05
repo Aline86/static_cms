@@ -110,7 +110,9 @@ function CarouselVisualization({
               isResponsive &&
               input_bloc.bloc_number === 1
             ? "-75px"
-            : "0px"
+            : isResponsive && input_bloc.bloc_number === 1
+            ? "65px"
+            : "0"
         }`,
         marginBottom: `${
           input_bloc.is_automatique &&

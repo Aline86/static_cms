@@ -125,7 +125,8 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
   if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-    echo "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.";
+    echo json_encode(htmlspecialchars( basename( $_FILES["file"]["name"])));
+    exit();
   } else {
     echo "Sorry, there was an error uploading your file.";
   }

@@ -24,7 +24,7 @@ export class Parallaxe extends Container {
     this.parameters = this.type + "&id=" + this.id + "&type=" + this.type;
   }
 
-  public update(e: any, field: string) {
+  public async update(e: any, field: string) {
     switch (field) {
       case "bloc_number":
         this.set_bloc_number(e);
@@ -36,8 +36,15 @@ export class Parallaxe extends Container {
         this.set_alt_image(e.target.value);
         break;
       case "image":
-        this.set_image(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0], this.token);
+        let picture_name = await UploadService.handleUpload(
+          e.target.files[0],
+          this.token
+        );
+        console.log(picture_name);
+        if (picture_name !== undefined && picture_name !== "") {
+          this.set_image(picture_name);
+          return this;
+        }
         break;
       default:
         null;
