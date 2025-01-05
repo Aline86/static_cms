@@ -65,8 +65,9 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
             style={{
               width: `${bloc.bloc_column ? `100%` : `50%`}`,
               paddingTop: "15px",
-              marginLeft: `${!bloc.bloc_column ? `30px` : `0px`}`,
-              marginRight: `${!bloc.bloc_column ? `30px` : `0px`}`,
+              marginLeft: `0px`,
+              marginRight: `0px`,
+              marginBottom: `0px`,
               float: `${bloc.image_right ? "left" : "right"}`,
             }}
           >

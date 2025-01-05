@@ -30,12 +30,16 @@ function PictureGroupContainer({
   return (
     <div
       className={s.body_image_group}
-      style={{ width: full ? "100%" : "fit-content", height: `fit-content` }}
+      style={{
+        width: full ? "100%" : "fit-content",
+        height: `fit-content`,
+        marginTop: "30px",
+      }}
     >
       <div
         className={s.container_class_image_group}
         style={{
-          width: full ? `100%` : "fit-content",
+          width: full ? `100%` : "100%",
           margin: `30 auto`,
           height: `fit-content`,
         }}
@@ -45,10 +49,7 @@ function PictureGroupContainer({
           style={{
             height: `100%`,
             margin: "0 auto",
-            width: !full
-              ? `calc(${bloc.width * 0.5 * 2}vw + 
-                          60px )`
-              : `calc(${bloc.width * 2}vw + 34px )`,
+            maxWidth: !full ? "calc(45vw)" : "calc(90vw)",
             textAlign: "center",
           }}
         >
@@ -59,15 +60,10 @@ function PictureGroupContainer({
                 ? {
                     display: "flex",
                     flexWrap: "wrap",
-
-                    margin: "0 auto",
-
+                    maxWidth: !full ? "calc(45vw )" : "calc(90vw)",
+                    justifyContent: "space-between",
+                    height: `fit-content`,
                     gap: `30px`,
-
-                    width: !full
-                      ? `calc(${bloc.width * 0.5 * 2}vw + 
-                          60px )`
-                      : `calc(${bloc.width * 2}vw + 34px )`,
                   }
                 : {
                     display: "flex",
@@ -75,8 +71,6 @@ function PictureGroupContainer({
                     alignItems: "center",
                     justifyContent: "center",
                     margin: "0 auto",
-
-                    gap: `30px`,
                   }
             }
           >

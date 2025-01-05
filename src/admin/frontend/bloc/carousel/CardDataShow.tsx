@@ -39,11 +39,11 @@ function CardDataShow({
 }: CardDatas) {
   useEffect(() => {}, [toggle]);
   const result = window.matchMedia("(max-width: 1200px)");
-
+  const img_url = BASE_URL_SITE + "/api/uploadfile/" + value.image_url;
   const style_data_transition_finished_auto = {
     background:
       value.image_url !== ""
-        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`
+        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${img_url}) no-repeat center / cover`
         : `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0))`,
     width: width,
     height: `200px`,
@@ -53,7 +53,7 @@ function CardDataShow({
   const style_data_transition_start_auto = {
     background:
       value.image_url !== ""
-        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`
+        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${img_url}) no-repeat center / cover`
         : `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0))`,
     width: width,
     height: `200px`,
@@ -86,7 +86,7 @@ function CardDataShow({
               className={s.card_text}
               style={{
                 lineHeight: `fit-content`,
-                color: `${value.image_url ? "white" : "gray"}`,
+                color: `${value.image_url !== "" ? "white" : "gray"}`,
                 fontSize: full
                   ? !isResponsive && !result.matches
                     ? `36px`
@@ -112,7 +112,7 @@ function CardDataShow({
               className={s.card_text}
               style={{
                 lineHeight: `100%`,
-                color: `${value.image_url ? "white" : "gray"}`,
+                color: `${value.image_url !== "" ? "white" : "gray"}`,
                 fontSize: full
                   ? !isResponsive && !result.matches
                     ? `36px`

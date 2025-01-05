@@ -224,7 +224,7 @@ h2,
   opacity: 1;
   transform: translateY(0);
 }
-/*.show {
+.show {
   opacity: 1 !important;
   transform: translateY(0) !important;
 }
@@ -232,8 +232,8 @@ h2.disappear,
 .container_data.disappear_data {
   opacity: 0;
 
-  transform: translateY(-150px);
-}*/
+  transform: translateY(150px);
+}
 .plus img {
   width: 40px;
   height: 40px;
