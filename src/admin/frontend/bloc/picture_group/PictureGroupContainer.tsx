@@ -45,7 +45,10 @@ function PictureGroupContainer({
           style={{
             height: `100%`,
             margin: "0 auto",
-            width: `100%`,
+            width: !full
+              ? `calc(${bloc.width * 0.5 * 2}vw + 
+                          60px )`
+              : `calc(${bloc.width * 2}vw + 34px )`,
             textAlign: "center",
           }}
         >
@@ -57,12 +60,14 @@ function PictureGroupContainer({
                     display: "flex",
                     flexWrap: "wrap",
 
-                    justifyContent: "space-around",
                     margin: "0 auto",
 
                     gap: `30px`,
 
-                    width: full ? `90vw` : "46vw",
+                    width: !full
+                      ? `calc(${bloc.width * 0.5 * 2}vw + 
+                          60px )`
+                      : `calc(${bloc.width * 2}vw + 34px )`,
                   }
                 : {
                     display: "flex",

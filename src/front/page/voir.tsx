@@ -156,13 +156,7 @@ function Front() {
             />
           </div>
         ) : value instanceof Video ? (
-          <div
-            key={index}
-            className={s.video}
-            style={{
-              marginTop: `${"60px"}`,
-            }}
-          >
+          <div key={index} className={s.video}>
             <VideoVizualisation
               bloc={value}
               updateLoaded={undefined}
