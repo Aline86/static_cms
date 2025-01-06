@@ -184,17 +184,7 @@ function Voir() {
         ) : (
           videoLoaded &&
           value instanceof Parallaxe && (
-            <div
-              key={index}
-              className={s.video}
-              style={{
-                marginTop: `${
-                  (isReponsive || result.matches) && value.bloc_number === 1
-                    ? "90px"
-                    : "0px"
-                }`,
-              }}
-            >
+            <div key={index} className={s.video}>
               <ParallaxeVizualisation
                 bloc={value}
                 full={true}
