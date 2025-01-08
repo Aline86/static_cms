@@ -24,6 +24,7 @@ import { Video } from "../../backoffice/bloc/components/video/class/Video";
 import ColorContext from "../../../ColorContext";
 import { Parallaxe } from "../../backoffice/bloc/components/parallaxe/class/Parallaxe";
 import ParallaxeVizualisation from "../bloc/parallaxe/parallaxe";
+import GridVizualisation from "../bloc/grid/PictureGroup";
 
 function Voir() {
   const [blocs, setBlocs] = useState<
@@ -152,13 +153,23 @@ function Voir() {
           </div>
         ) : videoLoaded && value instanceof PictureGroup ? (
           <div key={index} className={s.carousel}>
-            <PictureGroupVizualisation
-              input_bloc={value}
-              toggle={toggle}
-              refresh={false}
-              full={true}
-              isResponsive={isReponsive}
-            />
+            {!value.is_grid ? (
+              <PictureGroupVizualisation
+                input_bloc={value}
+                toggle={toggle}
+                refresh={false}
+                full={true}
+                isResponsive={isReponsive}
+              />
+            ) : (
+              <GridVizualisation
+                input_bloc={value}
+                toggle={toggle}
+                refresh={false}
+                full={true}
+                isResponsive={isReponsive}
+              />
+            )}
           </div>
         ) : videoLoaded && value instanceof Button ? (
           <div key={index} className={s.carousel}>

@@ -39,7 +39,7 @@ function Visualization({}: PageParams) {
     await footer.get_bloc();
 
     let bloc_pages = await tools.getAllBlocsPage();
-
+    console.log("bloc_pages", bloc_pages);
     bloc_pages !== undefined && setBlocs(bloc_pages);
     if (goToB) {
       setGoTo(!goTo);

@@ -17,6 +17,8 @@ import Header from "../../bloc/components/header/Header";
 import BlocFooter from "./bloc_components/BlocFooter";
 import BlocParallaxe from "./bloc_components/BlocParallaxe";
 import { Parallaxe } from "../../bloc/components/parallaxe/class/Parallaxe";
+import Grid from "../../bloc/components/picture_group/grid/wrapper";
+import BlocGrid from "./bloc_components/BlocGrid";
 
 interface BlocData {
   blocs: Array<any>;
@@ -134,6 +136,7 @@ function Blocs({
     if (new_Bloc !== undefined) {
       blocs[input_bloc.bloc_number - 1] = new_Bloc;
       setBlocs(blocs);
+
       setToggle(!toggle);
     }
   };
@@ -147,7 +150,7 @@ function Blocs({
 
       await bloc_in_blocs.save_bloc();
     });
-    setRefresh(!refresh);
+    setToggle(!toggle);
   };
 
   const saveBlocAll = async () => {
@@ -160,6 +163,7 @@ function Blocs({
     blocs.map(async (bloc_to_save: typeof component_types) => {
       await bloc_to_save.save_bloc();
     });
+    setRefresh(!refresh);
   };
   const updateDragBloc = async (lastKey: number) => {
     const start = dragBegin;
@@ -318,20 +322,38 @@ function Blocs({
             refresh={refresh}
           />
         ) : bloc.type === "picture_group" ? (
-          <BlocPictureGroup
-            key={index}
-            bloc={bloc}
-            setDragBegin={setDragBegin}
-            updateDragBloc={updateDragBloc}
-            handleDragOver={handleDragOver}
-            updatePictureGroupData={updatePictureGroupData}
-            removeBloc={removeBloc}
-            saveBlocAll={saveBlocAll}
-            drag={drag}
-            toggle={toggle}
-            index={index}
-            refresh={refresh}
-          />
+          !bloc.is_grid ? (
+            <BlocPictureGroup
+              key={index}
+              bloc={bloc}
+              setDragBegin={setDragBegin}
+              updateDragBloc={updateDragBloc}
+              handleDragOver={handleDragOver}
+              updatePictureGroupData={updatePictureGroupData}
+              removeBloc={removeBloc}
+              saveBlocAll={saveBlocAll}
+              drag={drag}
+              toggle={toggle}
+              index={index}
+              refresh={refresh}
+            />
+          ) : (
+            <BlocGrid
+              key={index}
+              bloc={bloc}
+              setDragBegin={setDragBegin}
+              updateDragBloc={updateDragBloc}
+              handleDragOver={handleDragOver}
+              updatePictureGroupData={updatePictureGroupData}
+              removeBloc={removeBloc}
+              saveBlocAll={saveBlocAll}
+              drag={drag}
+              toggle={toggle}
+              setToggle={setToggle}
+              index={index}
+              refresh={refresh}
+            />
+          )
         ) : bloc.type === "button" ? (
           <BlocButton
             key={index}
