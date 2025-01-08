@@ -10,6 +10,7 @@ interface CustomCarouselInfo {
   refresh: boolean;
   full: boolean;
   isResponsive: boolean;
+  blocs: any;
 }
 function GridVizualisation({
   input_bloc,
@@ -17,6 +18,7 @@ function GridVizualisation({
   refresh,
   full,
   isResponsive,
+  blocs,
 }: CustomCarouselInfo) {
   const [dataValue, setData] = useState<PictureGroupCard[]>();
 
@@ -26,8 +28,8 @@ function GridVizualisation({
         .fill(elRefs)
         .map((_, i) => input_bloc.picture_group_data[i] || createRef())
     );
-  }, [toggle, refresh]);
-  useEffect(() => {}, [isResponsive, dataValue]);
+  }, [toggle, refresh, input_bloc]);
+  useEffect(() => {}, [isResponsive, dataValue, blocs]);
   return (
     <div className={s.body_container}>
       {dataValue !== undefined && (

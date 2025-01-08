@@ -10,7 +10,7 @@ interface GridData {
   bloc: PictureGroup;
   data: PictureGroupData;
   gap: number;
-
+  blocs: any;
   index: number;
   updatePictureGroupData: any;
   show_remove: boolean;
@@ -23,8 +23,9 @@ function Grid({
   index,
   updatePictureGroupData,
   show_remove,
+  blocs,
 }: GridData) {
-  useEffect(() => {}, []);
+  useEffect(() => {}, [bloc, blocs]);
   return (
     <div className={s.card}>
       <div className={s.remove}>
@@ -58,6 +59,7 @@ function Grid({
               width: "100%",
             }}
           >
+            <div>N° {Number(data.card_number + 1)}</div>
             <label>
               <span>Choisir une image</span>
               <input

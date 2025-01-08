@@ -202,8 +202,7 @@ function Blocs({
   };
 
   const saveHeaderAndFooter = async (bloc: Header | Footer) => {
-    let update = null;
-    update = await bloc.save_bloc();
+    await bloc.save_bloc();
     if (bloc.id === -1) {
       setRefresh(!refresh);
     } else {
@@ -276,8 +275,8 @@ function Blocs({
 
   useEffect(() => {
     getFooterAndHeader();
-  }, [refresh]);
-  useEffect(() => {}, [refresh, toggle, blocs]);
+  }, [refresh, blocs]);
+  useEffect(() => {}, [toggle, blocs]);
   return (
     <div className={s.blocs_container}>
       <BlocHeader
@@ -325,7 +324,7 @@ function Blocs({
           !bloc.is_grid ? (
             <BlocPictureGroup
               key={index}
-              bloc={bloc}
+              bloc={blocs[index]}
               setDragBegin={setDragBegin}
               updateDragBloc={updateDragBloc}
               handleDragOver={handleDragOver}

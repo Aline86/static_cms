@@ -1,7 +1,7 @@
 import s from "./style/style.module.css";
 import { PictureGroup } from "../class/PictureGroup";
 import PictureGroupData from "../class/PictureGroupData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Grid from "./wrapper";
 import Picture from "../../../../services/picture";
 
@@ -10,6 +10,7 @@ interface ImageGroupData {
   updatePictureGroupData: any;
   bloc: PictureGroup;
   setToggle: any;
+  blocs: any;
 }
 
 function GridGroup({
@@ -17,13 +18,14 @@ function GridGroup({
   updatePictureGroupData,
   bloc,
   setToggle,
+  blocs,
 }: ImageGroupData) {
-  console.log("bloc", bloc);
+  console.log("bloc", blocs);
   const show_remove = bloc.picture_group_data.length > 2 ? true : false;
   const [dragBegin, setDragBegin] = useState(0);
-  const [blocData, setBlocData] = useState(bloc);
-
-  const updateDragBloc = async (lastKey: number) => {
+  //const [blocData, setBlocData] = useState(bloc);
+  useEffect(() => {}, [blocs]);
+  /* const updateDragBloc = async (lastKey: number) => {
     const start = dragBegin;
     const end = lastKey;
     moveElements(start, end);
@@ -46,7 +48,7 @@ function GridGroup({
   };
   const handleDragOver = (event: any) => {
     event.preventDefault();
-  };
+  };*/
   return (
     <div className={s.body}>
       <div
@@ -80,6 +82,7 @@ function GridGroup({
                   index={index}
                   updatePictureGroupData={updatePictureGroupData}
                   show_remove={show_remove}
+                  blocs={blocs}
                 />
               </div>
             );

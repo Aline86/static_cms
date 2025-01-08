@@ -149,9 +149,13 @@ export class PictureGroup extends Container {
     this.card_number++;
 
     this.picture_group_data.push(
-      new PictureGroupData(-1, this.picture_group_data.length, this.id)
+      new PictureGroupData(
+        -1,
+        this.picture_group_data[this.picture_group_data.length - 1]
+          .card_number + 1,
+        this.id
+      )
     );
-    console.log("this.picture_group_data", this.picture_group_data);
   }
 
   public async remove_link(index: number) {
@@ -163,9 +167,13 @@ export class PictureGroup extends Container {
         "&associated_table=picture_group_data"
     );
 
-    let new_bloc = await this.delete_bloc();
+    await this.delete_bloc();
+    this.picture_group_data.map((value, index) => {
+      this.picture_group_data[index].card_number = index;
+    });
     this.set_parameters(this.type + "&id=" + this.id + "&type=" + this.type);
-    return new_bloc;
+
+    return this;
   }
   public add_picture_group_data(picture_group_data: PictureGroupData) {
     this.picture_group_data.push(
@@ -187,6 +195,7 @@ export class PictureGroup extends Container {
   remove_data(index: number | undefined) {
     index !== undefined && this.remove_link(index);
     index !== undefined && this.picture_group_data.splice(index, 1);
+    this.card_number = this.picture_group_data.length;
     return this;
   }
   public set_is_grid(is_grid: boolean) {

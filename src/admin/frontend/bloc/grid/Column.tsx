@@ -11,7 +11,9 @@ function Column({ props }: ColumnData) {
   return (
     <div className={s.column}>
       {props.map((value: PictureGroupData, index: number) => {
-        return <CardDataGrid key={index} data={value} />;
+        return (
+          <CardDataGrid key={index} data={value} index={value.card_number} />
+        );
       })}
     </div>
   );
