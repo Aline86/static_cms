@@ -80,6 +80,7 @@ function Voir() {
       ? `${common?.background_color_buttons}`
       : "#2f6091",
     height: "fit-content",
+    minHeight: "100vh",
     paddingBottom: "30px",
   };
   useEffect(() => {
@@ -168,6 +169,7 @@ function Voir() {
                 refresh={false}
                 full={true}
                 isResponsive={isReponsive}
+                blocs={undefined}
               />
             )}
           </div>

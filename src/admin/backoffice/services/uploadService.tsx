@@ -35,6 +35,34 @@ export class UploadService {
         });
     }
   };
+
+  static handleUploadImg = async (file: any) => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      let filename = this.sanitizeName(file.name);
+      return await fetch(
+        BASE_URL_SITE + "/api/uploadfile/index.php?name=" + filename,
+
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          console.log("data", data);
+          if (data !== undefined) {
+            return data;
+          }
+        });
+    }
+  };
   static deleteUpload = async (file: any, token: string | null) => {
     await fetch(
       BASE_URL_SITE +

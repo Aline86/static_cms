@@ -76,6 +76,7 @@ function Front() {
       ? `${common?.background_color_buttons}`
       : "#2f6091",
     height: "fit-content",
+    minHeight: "100vh",
   };
   useEffect(() => {
     adaptRoot();
@@ -153,6 +154,7 @@ function Front() {
                 refresh={false}
                 full={true}
                 isResponsive={false}
+                blocs={undefined}
               />
             )}
           </div>

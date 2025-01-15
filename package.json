@@ -16,6 +16,7 @@
     "draft-js-export-html": "^1.4.1",
     "draft-js-exporter": "^0.0.5",
     "draft-js-import-html": "^1.4.1",
+    "html-react-parser": "^5.2.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-draft-wysiwyg": "^1.15.0",

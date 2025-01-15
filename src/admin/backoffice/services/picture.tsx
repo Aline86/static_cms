@@ -11,9 +11,7 @@ interface CardDatas {
 }
 
 function Picture({ update, bloc, index, sub_bloc }: CardDatas) {
-  useEffect(() => {
-    console.log(BASE_URL_SITE + "/api/uploadfile/" + sub_bloc.image_url);
-  }, []);
+  useEffect(() => {}, []);
   return (bloc.image_url !== undefined && bloc.image_url !== "") ||
     (sub_bloc !== undefined && sub_bloc.image_url !== "") ? (
     <div>

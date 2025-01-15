@@ -124,7 +124,7 @@ export default class Header extends Container {
                 e.target.value);
 
             break;
-          case "image_url":
+          case "background_url":
             index !== undefined &&
               (this.link_networks_an_others_header[index].background_url =
                 e.target.value);
