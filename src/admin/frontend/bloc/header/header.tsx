@@ -24,9 +24,25 @@ function HeaderVizualization({
   const [trigger_show_link, setTrigger_show_link] = useState(true);
   const [stylePath, setStylePath] = useState(s);
   const result = window.matchMedia("(max-width: 800px)");
+  const isLightOrDark = (hexcolor: string = "#2f6091") => {
+    var c = hexcolor.substring(1); // strip #
+    var rgb = parseInt(c, 16); // convert rrggbb to decimal
+    var r = (rgb >> 16) & 0xff; // extract red
+    var g = (rgb >> 8) & 0xff; // extract green
+    var b = (rgb >> 0) & 0xff; // extract blue
+
+    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+    if (luma < 90) {
+      return "white";
+    }
+    return "black";
+  };
   const style_width = {
     width: isResponsive ? "380px" : "100%",
+    color: isLightOrDark(input_bloc.background_color),
   };
+
   const handleShowLinks = () => {
     setTrigger_show_link(!trigger_show_link);
   };

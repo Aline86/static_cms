@@ -146,7 +146,13 @@ function Pages({}: PagesParams) {
                   </div>
                 )}
                 <Link
-                  to={{ pathname: `/admin/page/` + page.id + `/` + page.title }}
+                  to={{
+                    pathname:
+                      `/admin/page/` +
+                      page.id +
+                      `/` +
+                      page.title.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "_"),
+                  }}
                 >
                   <label className={s.addLink}>
                     <span

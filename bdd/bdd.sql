@@ -224,3 +224,4 @@ CREATE TABLE IF NOT EXISTS `common` (
     `background_color_buttons` varchar(11)  NOT NULL default "",
     PRIMARY KEY  (`id`)
 );
+INSERT INTO `user` (`id`, `email`, `password`, `token`) VALUES (NULL, 'cahaestie@gmail.com', '$2y$10$TcCbuk5kNo9upr9BHM/0ouB3F0vLcnUcTMn.31LNK16NtjECJ/hmu', '');
