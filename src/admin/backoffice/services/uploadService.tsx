@@ -5,7 +5,7 @@ export class UploadService {
   static sanitizeName = (filename: string) => {
     return sanitize(filename.replace("/.(?=.*.) /", ""));
   };
-  static handleUpload = async (file: any, token: string | null = "") => {
+  static handleUpload = async (file: any) => {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
@@ -16,9 +16,10 @@ export class UploadService {
           "/api/uploadfile/index.php?name=" +
           filename +
           "&token=" +
-          token,
+          localStorage.getItem("authToken"),
         {
           method: "POST",
+          credentials: "include",
           body: formData,
         }
       )
@@ -28,7 +29,6 @@ export class UploadService {
           }
         })
         .then((data) => {
-          console.log("data", data);
           if (data !== undefined) {
             return data;
           }
@@ -72,6 +72,7 @@ export class UploadService {
         token,
       {
         method: "DELETE",
+        credentials: "include",
       }
     );
   };
