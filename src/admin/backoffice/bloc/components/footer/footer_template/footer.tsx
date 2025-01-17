@@ -19,6 +19,7 @@ function FooterInput({
   saveBloc,
 }: FooterInfo) {
   const [opened, setOpened] = useState(false);
+
   useEffect(() => {}, [input_bloc]);
   return (
     <div className={s.container}>

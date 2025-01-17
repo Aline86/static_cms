@@ -53,6 +53,7 @@ export default abstract class Container {
         BASE_URL_SITE + "/api/user.php?method=check_token",
         {
           method: "POST",
+          credentials: "include",
           body: formdata,
         }
       ).then(async (response) => {
@@ -62,8 +63,14 @@ export default abstract class Container {
 
         return await response.json();
       });
-      this.checked = Boolean(Number(response[0].is_token));
-      return Boolean(Number(response[0].is_token));
+      console.log(JSON.parse(response));
+      console.log(localStorage.getItem("authToken"));
+      if (JSON.parse(response) === localStorage.getItem("authToken")) {
+        this.checked = true;
+        return true;
+      } else {
+        return false;
+      }
     }
     return false;
   }
@@ -82,6 +89,7 @@ export default abstract class Container {
         this.BASE_URL + action + "_" + this._get_class_api_call_parameters(),
         {
           method: "POST",
+          credentials: "include",
           body: data_to_send,
         }
       )
@@ -198,6 +206,7 @@ export default abstract class Container {
             this.token,
           {
             method: "DELETE",
+            credentials: "include",
           }
         );
         if (response.ok) {

@@ -23,15 +23,9 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
       style={{
         width: !full ? "43vw" : "auto",
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: isResponsive || result.matches ? "200px" : "12vh",
-        marginTop:
-          isResponsive || (bloc.bloc_number > 1 && !result.matches)
-            ? "-50px"
-            : bloc.bloc_number === 1
-            ? "-35px"
-            : "-170px",
       }}
     >
       <h2
@@ -41,16 +35,25 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
           textTransform: "uppercase",
           width: !full ? "45vw" : "100%",
           backgroundAttachment: "fixed",
-          marginTop: `${full ? (isResponsive ? "90px" : "140px") : "30px"}`,
-          fontSize: isResponsive ? "4vh" : "10vh",
+          marginTop: `${
+            full
+              ? isResponsive
+                ? "90px"
+                : bloc.bloc_number === 1
+                ? "140px"
+                : "0px"
+              : "30px"
+          }`,
+          fontSize: isResponsive ? "4vh" : "12vh",
           WebkitTextFillColor: "transparent",
-          lineHeight: isResponsive ? "5vh" : "12vh",
-          height: isResponsive || result.matches ? "150px" : "12vh",
+          lineHeight: "100%",
+          height: !isResponsive && !result.matches ? "110px" : "30px",
           backgroundClip: "text",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundOrigin: "center",
           marginLeft: !full && !isResponsive ? "30px" : "0",
+          marginBottom: "0",
         }}
       >
         {bloc.title}

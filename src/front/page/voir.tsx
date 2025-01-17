@@ -20,6 +20,7 @@ import { Video } from "../../admin/backoffice/bloc/components/video/class/Video"
 import ColorContext from "../../ColorContext";
 import { Parallaxe } from "../../admin/backoffice/bloc/components/parallaxe/class/Parallaxe";
 import ParallaxeVizualisation from "../../admin/frontend/bloc/parallaxe/parallaxe";
+import GridVizualisation from "../../admin/frontend/bloc/grid/PictureGroup";
 
 function Front() {
   const [blocs, setBlocs] = useState<
@@ -75,6 +76,7 @@ function Front() {
       ? `${common?.background_color_buttons}`
       : "#2f6091",
     height: "fit-content",
+    minHeight: "100vh",
   };
   useEffect(() => {
     adaptRoot();
@@ -137,13 +139,24 @@ function Front() {
           </div>
         ) : videoLoaded && value instanceof PictureGroup ? (
           <div key={index} className={s.carousel}>
-            <PictureGroupVizualisation
-              input_bloc={value}
-              toggle={toggle}
-              refresh={false}
-              full={true}
-              isResponsive={false}
-            />
+            {!value.is_grid ? (
+              <PictureGroupVizualisation
+                input_bloc={value}
+                toggle={toggle}
+                refresh={false}
+                full={true}
+                isResponsive={false}
+              />
+            ) : (
+              <GridVizualisation
+                input_bloc={value}
+                toggle={toggle}
+                refresh={false}
+                full={true}
+                isResponsive={false}
+                blocs={undefined}
+              />
+            )}
           </div>
         ) : videoLoaded && value instanceof Button ? (
           <div key={index} className={s.carousel}>

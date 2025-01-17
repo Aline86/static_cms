@@ -67,10 +67,7 @@ export class Video extends Container {
         this.set_width(width);
         break;
       case "video_url":
-        if (
-          e.target.value.includes("https") &&
-          e.target.value.includes("youtube")
-        ) {
+        if (e.target.value.includes("https")) {
           this.set_video_url(e.target.value);
         } else if (e.target.files !== null) {
           this.set_video_url(

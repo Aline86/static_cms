@@ -11,11 +11,13 @@ export class PictureGroup extends Container {
   picture_group_data: Array<PictureGroupData>;
   parameters: string;
   page_id: number;
+  is_grid: boolean;
 
   constructor(
     page_id: number,
     bloc_number: number,
     id: number = -1,
+    is_grid: boolean = false,
     card_number: number = 4,
     width: number = 30,
     height: number = 35,
@@ -33,6 +35,7 @@ export class PictureGroup extends Container {
     this.height = height;
     this.bloc_number = bloc_number;
     this.gap = gap;
+    this.is_grid = is_grid;
 
     if (picture_group_data.length === 0) {
       this.picture_group_data = this.init_datas();
@@ -124,7 +127,7 @@ export class PictureGroup extends Container {
         break;
       case "ajout":
         this.add_data();
-        this.card_number++;
+
         break;
       case "remove":
         index !== undefined &&
@@ -143,8 +146,15 @@ export class PictureGroup extends Container {
     });
   }
   public add_data() {
+    this.card_number++;
+
     this.picture_group_data.push(
-      new PictureGroupData(-1, this.picture_group_data.length - 1, this.id)
+      new PictureGroupData(
+        -1,
+        this.picture_group_data[this.picture_group_data.length - 1]
+          .card_number + 1,
+        this.id
+      )
     );
   }
 
@@ -157,9 +167,13 @@ export class PictureGroup extends Container {
         "&associated_table=picture_group_data"
     );
 
-    let new_bloc = await this.delete_bloc();
+    await this.delete_bloc();
+    this.picture_group_data.map((value, index) => {
+      this.picture_group_data[index].card_number = index;
+    });
     this.set_parameters(this.type + "&id=" + this.id + "&type=" + this.type);
-    return new_bloc;
+
+    return this;
   }
   public add_picture_group_data(picture_group_data: PictureGroupData) {
     this.picture_group_data.push(
@@ -181,7 +195,14 @@ export class PictureGroup extends Container {
   remove_data(index: number | undefined) {
     index !== undefined && this.remove_link(index);
     index !== undefined && this.picture_group_data.splice(index, 1);
-    this.card_number--;
+    this.card_number = this.picture_group_data.length;
+    return this;
+  }
+  public set_is_grid(is_grid: boolean) {
+    this.is_grid = is_grid;
+  }
+  public get_is_grid() {
+    return this.is_grid;
   }
 
   public get_data_number(): number {

@@ -1,4 +1,5 @@
 <?php
+session_start();
 $envFile = './../.env.local';
 
 require './environment_variables.php';
@@ -18,14 +19,42 @@ function is_json($string) {
     json_decode($string);
     return json_last_error() === JSON_ERROR_NONE;
 }
+// Function to decrypt data using AES (similar to CryptoJS)
+function decryptData($encryptedData, $secretKey) {
+    // Decode the base64 encoded ciphertext
+    $ciphertext = base64_decode($encryptedData);
+
+    // Define the encryption method
+    $method = 'aes-256-cbc';
+
+    // Initialize the key and IV (Initialization Vector)
+    // In CryptoJS, AES uses a fixed size key and IV
+    // For PHP, we need to derive the key and IV from the secret key
+
+    $key = hash('sha256', $secretKey, true); // Derive key from secret key
+    $iv = substr(hash('sha256', $secretKey), 0, 16); // Derive IV from secret key
+
+    // Decrypt the data using OpenSSL
+    $decrypted = openssl_decrypt($ciphertext, $method, $key, OPENSSL_RAW_DATA, $iv);
+
+    // Return the decrypted data
+    return json_decode($decrypted, true);
+}
+
 // Get the Origin header from the incoming request
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+ 
 
 // Check if the origin matches the allowed prefix
 if ($origin && strpos($origin, $allowed_prefix) !== false) {
     header('Access-Control-Allow-Origin: ' . $origin);
     header('Access-Control-Allow-Headers: *' );
-    header('Access-Control-Allow-Methods: *');
+    header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
+    header('Access-Control-Allow-Credentials: true');
+    header("Access-Control-Allow-Headers: Content-Type, Authorization");
+}
+else {
+    die();
 }
 
 class Db {
@@ -42,86 +71,66 @@ class Db {
 }
 
 $db = Db::getInstance($database_name, $host, $user, $password);
+function check_token($token, $db) {
+   
+ 
 
+    $requete2 = 'SELECT token FROM user';
+    $resultat2 = $db->query($requete2);
+    
+    $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+    echo "user<pre>";
+    print_r($user[0]['token']);
+    echo "</pre>";
+
+    echo "token<pre>";
+    print_r($token);
+    echo "</pre>";
+    //$hash = hash('sha256', $user[0]['token']);
+// print_r($hash);
+    if($token === $user[0]['token']) {
+        
+        http_response_code(200);
+        return true;
+        
+    }else {
+        http_response_code(403);
+        return false;
+    }
+        
+    
+}
 $pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer', 'common', 'picture_group', 'button', 'video', 'parallaxe'];
 foreach($pages_array as $page_name) {
     include_once "./models/"  . $page_name . ".php";
 }
 $crud = ['get_', 'add_', 'update_', 'delete_', 'delete_child', 'all_'];
-$method = isset($_GET['method']) ? $_GET['method'] : null; //return GET, POST, PUT, DELETE
-$type = isset($_GET['type']) ? $_GET['type'] : null;
-$id = isset($_GET['id']) ? $_GET['id'] : null;
-$id_component = isset($_GET['id_component']) ? $_GET['id_component'] : null;
-$associated_method_for_delete = isset($_GET['associated_table']) ? $_GET['associated_table'] : null;
+$method = isset($_GET['method']) && htmlspecialchars(strip_tags($_GET['method'])) !== null ? htmlspecialchars(strip_tags($_GET['method'])) : null; //return GET, POST, PUT, DELETE
+$type = isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null ? htmlspecialchars(strip_tags($_GET['type'])) : null;
+$id = isset($_GET['id']) && htmlspecialchars(strip_tags($_GET['id'])) !== null ? htmlspecialchars(strip_tags($_GET['id'])) : null;
+$id_component = isset($_GET['id_component']) && htmlspecialchars(strip_tags($_GET['id_component'])) !== null ? htmlspecialchars(strip_tags($_GET['id_component'])) : null;
+$associated_method_for_delete = isset($_GET['associated_table']) && htmlspecialchars(strip_tags($_GET['associated_table'])) !== null ? htmlspecialchars(strip_tags($_GET['associated_table'])) : null;
 
-if(isset($_GET['type'])) {
-
-    $methods_to_check = ['add_'. json_decode($_GET['type']), 'update_' . json_decode($_GET['type']), 'delete_' . json_decode($_GET['type']), 'delete_child', 'add_child'];
-    if(in_array($method, $methods_to_check) && ($method === 'add_'. json_decode($_GET['type']) || $method === 'update_' . json_decode($_GET['type']) || $method === 'add_child') && !isset($_POST['token'])) {
-        exit();
-    }
-    if(in_array($method, $methods_to_check) && ($method === 'delete_'. json_decode($_GET['type']) || $method === 'delete_child') && !isset($_GET['token'])) {
-        exit();
-    }
-  
+if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null) {
+    
+    $methods_to_check = ['add_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'update_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'delete_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'delete_child', 'add_child'];
    
-    if(isset($_POST['token'])){
-        $token = json_decode($_POST['token']) ?? null;
- 
-        if(in_array($method, $methods_to_check) && $token === null) {
-            exit();
-        }
-        if ($token !== null) {
-            // Bearer token is sent in the format: "Bearer <token>"
-    
-            if(in_array($method, $methods_to_check) && $token === null) {
-                exit();
-            }
-            $requete2 = 'SELECT * FROM user WHERE token=:token';
-            $resultat2 = $db->prepare($requete2);
-            $resultat2->bindParam(':token', $token, PDO::PARAM_STR);
-            $resultat2->execute(); 
-            $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-    
-            if(count($user) > 0 ) {
-                unset($_POST['token']);
-            }
-            else {
-                exit();
-            }
-        
-        } 
-    }
-
-    if(isset($_GET['token'])){
-    
-        $token = $_GET['token'] ?? null;
+   
+    if(in_array($method, $methods_to_check))  {
      
-        if(in_array($method, $methods_to_check) && $token === null) {
+        if(empty($_SESSION['user'])) {
+           
+            http_response_code(403);
             exit();
         }
-        if ($token !== null) {
-            // Bearer token is sent in the format: "Bearer <token>"
-      
-            if(in_array($method, $methods_to_check) && $token === null) {
-                exit();
-            }
-            $requete2 = 'SELECT * FROM user WHERE token=:token';
-            $resultat2 = $db->prepare($requete2);
-            $resultat2->bindParam(':token', $token, PDO::PARAM_STR);
-            $resultat2->execute(); 
-            $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-      
-            if(count($user) > 0 ) {
-                unset($_POST['token']);
-            }
-            else {
-                exit();
-            }
-        
-        } 
     }
-
+    
+    if(in_array($method, $methods_to_check) && ($method === 'add_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'update_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'add_child') && (htmlspecialchars(strip_tags($_POST['token'])) === null || empty($_SESSION['user']))) {
+        exit();
+    }
+    if(in_array($method, $methods_to_check) && ($method === 'delete_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'delete_child') && (htmlspecialchars(strip_tags($_POST['token'] === null) ) || empty($_SESSION['user']))) {
+        exit();
+    }
  
     if(isset($_POST['BASE_URL'])) {
         unset($_POST['BASE_URL']);
@@ -136,24 +145,25 @@ if(isset($_GET['type'])) {
         unset($_POST['token']);
     }
     $method_constructor = [];
+    
     foreach ($_POST as $parameter => $data_sent) {
     
         if($parameter !== 'BASE_URL' || $parameter !== 'parameters' || $parameter !== 'checked') {
             if(is_json($data_sent)) {
-                $method_params[$parameter] = json_decode($data_sent, true);
+                $method_params[$parameter] = json_decode(strip_tags($data_sent), true);
             }
             else if(is_encoded($data_sent)) {
-                $method_params[$parameter] = urldecode($data_sent);
+                $method_params[$parameter] = urldecode(strip_tags($data_sent));
             }
             else if(!is_encoded($data_sent)) {
                 $is_data_defined = utf8_encode($data_sent);
             
                 if(isset($is_data_defined)) {
                     $string = "[" . trim($is_data_defined) . "]";
-                    $method_params[$parameter] = json_decode(json_encode($string));
+                    $method_params[$parameter] = json_decode(json_encode(strip_tags($string)));
                 }
                 else {
-                    $method_params[$parameter] = $data_sent;
+                    $method_params[$parameter] = strip_tags($data_sent);
                 }
             }
         }
@@ -162,43 +172,57 @@ if(isset($_GET['type'])) {
 
     foreach($crud as $method_to_call) {
   
-        if($method === 'delete_child' && $method_to_call === 'delete_child') {
+        if($method === 'delete_child' && $method_to_call === 'delete_child' && isset($_SESSION['user'])) {
+            $can_access = check_token($_SESSION['user'][0]['token'], $db);
+            if($can_access) {
+                $method_params['id'] = $id;
+                $method_params['associated_table'] = $associated_method_for_delete;
+                $class = ucfirst($type);
         
-            $method_params['id'] = $id;
-            $method_params['associated_table'] = $associated_method_for_delete;
-            $class = ucfirst($type);
-    
-            $model = new $class($type, $database_name, $host, $user, $password);
-            echo json_encode($model->$method_to_call($method_params));
+                $model = new $class($type, $database_name, $host, $user, $password);
+                echo json_encode($model->$method_to_call($method_params));
+            }
+            else {
+                http_response_code(403);
+            }
             exit();
         }
-        if($method === 'delete' && $method_to_call === 'delete_' ) {
-            $method_params['id'] = $id;
-            $method_params['id_component'] = $id_component;
-            $method_params['associated_table'] = $associated_method_for_delete;
-            $method_name_to_call = $method_to_call . $type;
-        
-            $class = ucfirst($type);
-            $model = new $class($type, $database_name, $host, $user, $password);
-            echo json_encode($model->$method_name_to_call($method_params));
-            exit();
+        if($method === 'delete' && $method_to_call === 'delete_' && isset($_SESSION['user'])) {
+            $can_access = check_token($_SESSION['user'][0]['token'], $db);
+            if($can_access) {
+                $method_params['id'] = $id;
+                $method_params['id_component'] = $id_component;
+                $method_params['associated_table'] = $associated_method_for_delete;
+                $method_name_to_call = $method_to_call . $type;
+            
+                $class = ucfirst($type);
+                $model = new $class($type, $database_name, $host, $user, $password);
+                echo json_encode($model->$method_name_to_call($method_params));
+                exit();
+            } else {
+                http_response_code(403);
+            }
+          
         }
         if($method === $method_to_call . $type) {
-    
-            $class = ucfirst($type);
-    
-            $model = new $class($type, $database_name, $host, $user, $password);
-        
-            $method_name_to_call = $method_to_call . $type;
-        
+
             if ($method_to_call === 'get_') {
+                $class = ucfirst($type);
+    
+                $model = new $class($type, $database_name, $host, $user, $password);
+            
+                $method_name_to_call = $method_to_call . $type;
                 $method_params['id'] = $id;
             
                 echo json_encode($model->$method_name_to_call($method_params));
                 exit();
             }
             else if ($method_to_call === 'all_') {
-                
+                $class = ucfirst($type);
+    
+                $model = new $class($type, $database_name, $host, $user, $password);
+            
+                $method_name_to_call = $method_to_call . $type;
                 $method_params['component'] = $type;
                 if($id !== null) {
                     $method_params['id_component'] = $id;
@@ -207,14 +231,31 @@ if(isset($_GET['type'])) {
                 include 'models/additional_base.php';
                 exit();
             }
-            else {
-                $method_params['id'] = $id;
-                echo json_encode($model->$method_name_to_call($method_params));
-                exit();
+            else if(isset($_SESSION['user'])){
+                echo "<pre>session";
+                print_r($_SESSION['user'][0]['token']);
+                echo "</pre>";
+                $can_access = check_token($_SESSION['user'][0]['token'], $db);
+                print_r($can_access);
+                if($can_access) {
+                    $class = ucfirst($type);
+        
+                    $model = new $class($type, $database_name, $host, $user, $password);
+                
+                    $method_name_to_call = $method_to_call . $type;
+                    $method_params['id'] = $id;
+                    echo json_encode($model->$method_name_to_call($method_params));
+                    exit();
+                }
+                else {
+                    http_response_code(403);
+                }
+              
             }
             
         }
     }
+
 
     
 }

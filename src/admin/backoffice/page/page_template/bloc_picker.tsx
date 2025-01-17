@@ -139,7 +139,24 @@ function BlocDisplay({
               value="Groupe d'images"
               onClick={(e) => {
                 e.preventDefault();
-                addBlocToBDD(new PictureGroup(page.id, blocs.length + 1));
+                addBlocToBDD(
+                  new PictureGroup(page.id, blocs.length + 1, -1, false)
+                );
+
+                setOpen(!open);
+              }}
+            />
+          </div>
+          <div className={s.container_auto}>
+            <img src={couches} alt="grille d'image" />
+            <input
+              type="submit"
+              value="Grille d'images"
+              onClick={(e) => {
+                e.preventDefault();
+                addBlocToBDD(
+                  new PictureGroup(page.id, blocs.length + 1, -1, true)
+                );
 
                 setOpen(!open);
               }}

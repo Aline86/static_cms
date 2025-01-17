@@ -82,7 +82,7 @@
                     
                             $this->update_children($data_item, $id, $associated_table);
                         }
-                        else {
+                        else if ($data_item['id'] === -1){
                             $this->add_children($data_item, $id, $associated_table);
                         }
                     }
@@ -90,6 +90,7 @@
             } else  {
                 if(is_array($data_type_decoded)) {
                     if(isset($data_type_decoded['id']) && $data_type_decoded['id'] >= 1) {
+                       
                 
                         $this->update_children($data_type_decoded, $id, $associated_table);
                     }

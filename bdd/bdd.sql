@@ -4,10 +4,12 @@ CREATE TABLE IF NOT EXISTS `page` (
   `type` varchar(55)  NOT NULL default "page",    
    PRIMARY KEY  (`id`) 
 );
+
 CREATE TABLE IF NOT EXISTS `picture_group` (
     `id` int(11) NOT NULL auto_increment,        
     `title` varchar(250)  NOT NULL default "",           
     `card_number` int(8)  NOT NULL , 
+    `is_grid` boolean,   
     `type` varchar(55)  NOT NULL default "picture_group",     
     `width` int(11)  NOT NULL default 21,
     `height` int(11)  NOT NULL default 250,
@@ -18,8 +20,6 @@ CREATE TABLE IF NOT EXISTS `picture_group` (
     PRIMARY KEY  (`id`),
     FOREIGN KEY (`page_id`) REFERENCES page(`id`) ON DELETE CASCADE
 );
-
-
 
 CREATE TABLE IF NOT EXISTS `picture_group_data` (
     `id` int(11) NOT NULL auto_increment,   
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `carousel` (
     `id` int(11) NOT NULL auto_increment,        
     `title` varchar(250)  NOT NULL default "",  
     `type` varchar(55)  NOT NULL default "carousel",           
-    `is_automatique` boolean  ,     
+    `is_automatique` boolean,     
     `card_number` int(8)  NOT NULL , 
 
     `width` int(11)  NOT NULL default 21,
@@ -224,3 +224,4 @@ CREATE TABLE IF NOT EXISTS `common` (
     `background_color_buttons` varchar(11)  NOT NULL default "",
     PRIMARY KEY  (`id`)
 );
+INSERT INTO `user` (`id`, `email`, `password`, `token`) VALUES (NULL, 'cahaestie@gmail.com', '$2y$10$TcCbuk5kNo9upr9BHM/0ouB3F0vLcnUcTMn.31LNK16NtjECJ/hmu', '');

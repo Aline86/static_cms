@@ -132,7 +132,9 @@ function BlocInput({
 
                       reader.readAsDataURL(file);
                       reader.onload = async () => {
-                        let filename = await UploadService.handleUpload(file);
+                        let filename = await UploadService.handleUploadImg(
+                          file
+                        );
                         resolve({
                           data: {
                             link: BASE_URL_SITE + "/api/uploadfile/" + filename,

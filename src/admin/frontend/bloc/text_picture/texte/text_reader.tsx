@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-
-import s from "./style.module.css";
+import ReactDOMServer from "react-dom/server";
 import BlockTextParams from "./classes/BlocTextParams";
-import { RawDraftContentState } from "draft-js";
+import { convertFromRaw, RawDraftContentState } from "draft-js";
 import { TextPicture } from "../../../../backoffice/bloc/components/text_picture/class/TextPicture";
-
+import { stateToHTML } from "draft-js-export-html";
+import InnerHTML from "./innerHTML";
+import s from "./style.module.css";
 interface TextParams {
   index: number;
   bloc_input: TextPicture;
@@ -38,8 +39,29 @@ function TextReader({
   const [entityMap, setEntityMap] = useState([]);
   const [entityMapLength, setEntityMapLength] = useState(0);
   const [pictures_offset, setPictureOffset] = useState<Array<any>>([]);
+  const [htmlString, setHtmlString] = useState("");
+
+  const renderToStringHandler = () => {
+    const string = ReactDOMServer.renderToString(
+      <InnerHTML
+        stringTexts={stringTexts}
+        headlines={headlines}
+        textAlign={textAlign}
+        isToggle={isToggle}
+        read_more={read_more}
+        pictures_offset={pictures_offset}
+        toggle={toggle}
+        isResponsive={isResponsive}
+        setIsToggle={setIsToggle}
+        color={color}
+      />
+    );
+    setHtmlString(string);
+  };
+  // Convert ContentState to HTML
+
   /** template items counter */
-  let i = 0;
+
   const updateConvertToText = (blocs: any) => {
     const data_to_show: BlockTextParams[] = [];
     if (blocs !== undefined && blocs.length > 0) {
@@ -162,87 +184,91 @@ function TextReader({
   };
   const beginToSetToClassData = (textBlocks: Array<BlockTextParams>) => {
     let arr_string_toshow: any = [];
-    let letters_str = [];
+    let letters_str = "";
     textBlocks !== undefined &&
       Object.entries(textBlocks).map(([key, bloc], i) => {
         letters_str = retrieveDataFromBlock(bloc);
         arr_string_toshow.push(letters_str);
-        letters_str = [];
+        letters_str = "";
       });
     setStringTexts(arr_string_toshow);
   };
   const retrieveDataFromBlock = (textBlock: BlockTextParams) => {
-    const t: number = textBlock.text.length;
     const str_text = textBlock.text;
+    let result = "";
+    let tagStack: string[] = [];
+
+    // Parcours caractère par caractère
     let count = 0;
-    let letter: string;
-    let letters_array: any = {};
-    while (count < t) {
-      letter = str_text[count];
-      if (
-        textBlock.inlineStyleRanges !== undefined &&
-        textBlock.inlineStyleRanges.length > 0
-      ) {
-        textBlock.inlineStyleRanges.map((text_chunk: any) => {
-          if (
-            count >= text_chunk.offset &&
-            count < text_chunk.offset + text_chunk.length
-          ) {
-            const chunk = textBlock.text.slice(
-              text_chunk.offset,
-              parseInt(text_chunk.offset + text_chunk.length)
-            );
-            if (chunk.includes(letter) && letters_array[count] === undefined) {
-              letters_array[count] = [];
-              letters_array[count].push(return_style(text_chunk.style));
-            } else if (
-              letters_array[count] !== undefined &&
-              chunk.includes(letter)
-            ) {
-              letters_array[count].push(return_style(text_chunk.style));
+    while (count < str_text.length) {
+      let letter = str_text[count];
+
+      // Vérifier les balises actives pour ce caractère
+      textBlock.inlineStyleRanges?.forEach((text_chunk: any) => {
+        const balise = return_style(text_chunk.style); // Identifier la balise pour le style
+
+        // Si le caractère est dans la plage de la balise (si le style s'applique ici)
+        if (
+          count >= text_chunk.offset &&
+          count < text_chunk.offset + text_chunk.length
+        ) {
+          // Ouvrir la balise si elle n'a pas encore été ouverte
+          if (!tagStack.includes(balise)) {
+            if (balise === "bold") {
+              result += "<strong>";
+              tagStack.push("bold");
+            } else if (balise === "italic") {
+              result += "<i>";
+              tagStack.push("italic");
+            } else if (balise === "underline") {
+              result += "<u>";
+              tagStack.push("underline");
             }
           }
-        });
-      }
+        }
+      });
+
+      // Ajouter le caractère au texte
+      result += letter;
+
+      // Vérifier si nous sommes à la fin de la plage de la balise pour la fermer
+      textBlock.inlineStyleRanges?.forEach((text_chunk: any) => {
+        const balise = return_style(text_chunk.style);
+
+        // Si on arrive à la fin de la plage de la balise, on la ferme
+        if (count === text_chunk.offset + text_chunk.length - 1) {
+          if (balise === "bold" && tagStack.includes("bold")) {
+            result += "</strong>";
+            tagStack = tagStack.filter((tag) => tag !== "bold");
+          } else if (balise === "italic" && tagStack.includes("italic")) {
+            result += "</i>";
+            tagStack = tagStack.filter((tag) => tag !== "italic");
+          } else if (balise === "underline" && tagStack.includes("underline")) {
+            result += "</u>";
+            tagStack = tagStack.filter((tag) => tag !== "underline");
+          }
+        }
+      });
+
+      // Avancer au caractère suivant
       count++;
     }
 
-    count = 0;
-    let textStrings: any = {};
-    while (count < t) {
-      let name_letter: string = str_text[count];
-      if (letters_array[count] !== undefined) {
-        textStrings[count] = {
-          name: name_letter,
-          value: [],
-        };
-        if (name_letter === " ") {
-          textStrings[count].value = letters_array[count].join(" ");
-          textStrings[count].value += " no-class-white-space";
-        } else {
-          textStrings[count].value = letters_array[count].join(" ");
-        }
-      } else {
-        textStrings[count] = {
-          name: name_letter,
-          value: [],
-        };
-
-        if (name_letter === " ") {
-          textStrings[count] = {
-            name: name_letter,
-            value: [],
-          };
-          textStrings[count].value = "no-class-white-space";
-        } else {
-          textStrings[count].value = "no-class";
-        }
+    // Après le passage du texte, fermer toutes les balises restantes
+    while (tagStack.length > 0) {
+      const tag = tagStack.pop();
+      if (tag === "bold") {
+        result += "</strong>";
+      } else if (tag === "italic") {
+        result += "</i>";
+      } else if (tag === "underline") {
+        result += "</u>";
       }
-      count++;
     }
 
-    return textStrings;
+    return result;
   };
+
   const return_style = (field: string): string => {
     switch (field) {
       case "BOLD":
@@ -284,6 +310,53 @@ function TextReader({
       setEntityMap(pictures_data);
     }
   };
+  const unstyles = (j: number) => {
+    let prev = "";
+    let strings: any = "";
+    let count = 0;
+    let balise = "";
+    stringTexts !== undefined &&
+      headlines[j] === "unstyled" &&
+      stringTexts[j] !== undefined &&
+      Object.values(stringTexts[j]).map((value: any, z: number) => {
+        console.log("value", value);
+        if (prev !== value.value) {
+          prev = value.value;
+          console.log("count ", count);
+          if (z === count) {
+            if (prev !== "bold") {
+              strings += `</strong>`;
+            }
+            if (prev !== "none") {
+              strings += `</div>`;
+            }
+          }
+          count = 0;
+          if (count === 0) {
+            if (value.value.includes("bold") && balise !== "bold") {
+              strings += `<strong>`;
+              balise = "bold";
+            }
+            if (value.value === "no-class" && balise !== "none") {
+              strings += `<div>`;
+              balise = "none";
+            }
+            strings += value.name;
+            count++;
+          }
+        } else if (prev === value.value) {
+          if (value.value === " no-class-white-space") {
+            strings += " ";
+          } else {
+            strings += value.name;
+          }
+
+          count++;
+        }
+      });
+
+    return strings;
+  };
   useEffect(() => {
     setPictureOffset([]);
     setPictures([]);
@@ -291,7 +364,9 @@ function TextReader({
 
     updateConvertToText(contenState.blocks);
   }, [contenState, refresh === 2, entityMapLength]);
-  useEffect(() => {}, [toggle, stringTexts]);
+  useEffect(() => {
+    renderToStringHandler();
+  }, [toggle, stringTexts]);
 
   useEffect(() => {
     if (typeof onContentStateChange !== "function") {
@@ -375,18 +450,13 @@ function TextReader({
             >
               <ul>
                 <li key={j} className={`${textAlign[j]}`}>
-                  {stringText !== undefined &&
-                    Object.values(stringText).map((value: any, z: number) => {
-                      return (
-                        <div
-                          key={z + value.name}
-                          style={{ display: "inline" }}
-                          className={`${value.value}`}
-                        >
-                          {value.name}
-                        </div>
-                      );
-                    })}
+                  {stringText !== undefined && (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: stringText,
+                      }}
+                    />
+                  )}
                 </li>
               </ul>
             </div>
@@ -419,27 +489,20 @@ function TextReader({
               !read_more) &&
             headlines[j] === "unstyled" && (
               <div key={j + headlines[j]} className={`${textAlign[j]}`}>
-                <div
-                  className="container_data bloc"
-                  style={{ display: "inline" }}
-                >
-                  {stringText !== undefined &&
-                    Object.values(stringText).map((value: any, z: number) => {
-                      return (
-                        <div
-                          key={z + value.name}
-                          style={{ display: "inline" }}
-                          className={`${value.value}`}
-                        >
-                          {value.name}
-                        </div>
-                      );
-                    })}
+                <div className="container_data bloc">
+                  {stringText !== undefined && (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: stringText,
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             )
           );
         })}
+
       <div className={s.button} key={-1}>
         {read_more && stringTexts.length >= 2 ? (
           <button

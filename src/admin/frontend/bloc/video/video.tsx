@@ -170,7 +170,7 @@ function VideoVizualisation({
               ? "0px"
               : result.matches
               ? "-60px"
-              : "-100px"
+              : "0px"
             : "0",
           marginBottom: "30px",
         }}
@@ -213,7 +213,7 @@ function VideoVizualisation({
               color: "white",
 
               textAlign: "center",
-              fontSize: `${full ? (!isResponsive ? "72px" : "35px") : "72px"}`,
+              fontSize: `${full ? (!isResponsive ? "100px" : "42px") : "72px"}`,
               opacity: "0.5",
             }}
           >

@@ -55,7 +55,9 @@ body {
 }
 
 h2 {
-  text-align: center;
+  text-align: left;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 .bouton_container_bloc_css_carousel,
 .bouton_container_bloc_css {
