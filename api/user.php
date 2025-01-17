@@ -18,7 +18,9 @@ if ($origin && strpos($origin, $allowed_prefix) !== false) {
     header('Access-Control-Allow-Credentials: true');
     header("Access-Control-Allow-Headers: Content-Type, Authorization");
 }
-
+else {
+    exit();
+}
 class Db {
     private static $instance = NULL;
     private function __construct() {}
@@ -36,6 +38,29 @@ $db = Db::getInstance($database_name, $host, $user, $password);
 
 $method = htmlspecialchars(strip_tags($_GET['method'])) !== null ? $_GET['method'] : null; //return GET, POST, PUT, DELETE
 
+
+
+// Function to decrypt data using AES (similar to CryptoJS)
+function decryptData($encryptedData, $secretKey) {
+    // Decode the base64 encoded ciphertext
+    $ciphertext = base64_decode($encryptedData);
+
+    // Define the encryption method
+    $method = 'aes-256-cbc';
+
+    // Initialize the key and IV (Initialization Vector)
+    // In CryptoJS, AES uses a fixed size key and IV
+    // For PHP, we need to derive the key and IV from the secret key
+
+    $key = hash('sha256', $secretKey, true); // Derive key from secret key
+    $iv = substr(hash('sha256', $secretKey), 0, 16); // Derive IV from secret key
+
+    // Decrypt the data using OpenSSL
+    $decrypted = openssl_decrypt($ciphertext, $method, $key, OPENSSL_RAW_DATA, $iv);
+   
+    // Return the decrypted data
+    return json_decode($decrypted, true);
+}
 
 if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== null && htmlspecialchars(strip_tags($_POST['password'])) !== null) {
     
@@ -123,21 +148,22 @@ if($method === "delete_connexion" && isset($_POST['email'])  && isset($_POST['pa
 }
 
 if($method === "check_token" && $_POST['token'] !== null) {
-  
-    $authorization_header = json_decode($_POST['token']) ?? null;
-    $requete2 = 'SELECT count(token) as is_token FROM user WHERE token=:token';
-    $resultat2 = $db->prepare($requete2);
-    $resultat2->bindParam(':token',  $authorization_header, PDO::PARAM_STR);
-    $resultat2->execute(); 
-    $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+ 
+    $token = strip_tags($_POST['token']);
 
-    if($user[0]['is_token'] === '1') {
+    $requete2 = 'SELECT token FROM user';
+    $resultat2 = $db->query($requete2);
+  
+    $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+    $hash = hash('sha256', $user[0]['token']);
+
+    if($hash === json_decode($_POST['token'])) {
         http_response_code(200);
-        echo  json_encode($user);
+        echo  json_encode($_POST['token']);
        
-    }else if($user[0]['is_token'] === '0'){
+    }else {
         http_response_code(403);
-        echo  json_encode($user);
+    
     }
     
 }

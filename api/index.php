@@ -19,7 +19,27 @@ function is_json($string) {
     json_decode($string);
     return json_last_error() === JSON_ERROR_NONE;
 }
+// Function to decrypt data using AES (similar to CryptoJS)
+function decryptData($encryptedData, $secretKey) {
+    // Decode the base64 encoded ciphertext
+    $ciphertext = base64_decode($encryptedData);
 
+    // Define the encryption method
+    $method = 'aes-256-cbc';
+
+    // Initialize the key and IV (Initialization Vector)
+    // In CryptoJS, AES uses a fixed size key and IV
+    // For PHP, we need to derive the key and IV from the secret key
+
+    $key = hash('sha256', $secretKey, true); // Derive key from secret key
+    $iv = substr(hash('sha256', $secretKey), 0, 16); // Derive IV from secret key
+
+    // Decrypt the data using OpenSSL
+    $decrypted = openssl_decrypt($ciphertext, $method, $key, OPENSSL_RAW_DATA, $iv);
+
+    // Return the decrypted data
+    return json_decode($decrypted, true);
+}
 
 // Get the Origin header from the incoming request
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
@@ -52,19 +72,33 @@ class Db {
 
 $db = Db::getInstance($database_name, $host, $user, $password);
 function check_token($token, $db) {
-    $authorization_header = $token ?? null;
-    $requete2 = 'SELECT count(token) as is_token FROM user WHERE token=:token';
-    $resultat2 = $db->prepare($requete2);
-    $resultat2->bindParam(':token',  $authorization_header, PDO::PARAM_STR);
-    $resultat2->execute(); 
-    $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+   
+ 
 
-    if($user[0]['is_token'] === '1') {
-        return true;
+    $requete2 = 'SELECT token FROM user';
+    $resultat2 = $db->query($requete2);
     
-    }else if($user[0]['is_token'] === '0'){
+    $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+    echo "user<pre>";
+    print_r($user[0]['token']);
+    echo "</pre>";
+
+    echo "token<pre>";
+    print_r($token);
+    echo "</pre>";
+    //$hash = hash('sha256', $user[0]['token']);
+// print_r($hash);
+    if($token === $user[0]['token']) {
+        
+        http_response_code(200);
+        return true;
+        
+    }else {
+        http_response_code(403);
         return false;
     }
+        
+    
 }
 $pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer', 'common', 'picture_group', 'button', 'video', 'parallaxe'];
 foreach($pages_array as $page_name) {
@@ -83,7 +117,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
    
    
     if(in_array($method, $methods_to_check))  {
-        session_start();
+     
         if(empty($_SESSION['user'])) {
            
             http_response_code(403);
@@ -198,9 +232,11 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
                 exit();
             }
             else if(isset($_SESSION['user'])){
-                print_r($_SESSION['user']);
+                echo "<pre>session";
+                print_r($_SESSION['user'][0]['token']);
+                echo "</pre>";
                 $can_access = check_token($_SESSION['user'][0]['token'], $db);
-                
+                print_r($can_access);
                 if($can_access) {
                     $class = ucfirst($type);
         

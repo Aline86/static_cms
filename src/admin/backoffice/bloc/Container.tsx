@@ -63,8 +63,14 @@ export default abstract class Container {
 
         return await response.json();
       });
-      this.checked = Boolean(Number(response[0].is_token));
-      return Boolean(Number(response[0].is_token));
+      console.log(JSON.parse(response));
+      console.log(localStorage.getItem("authToken"));
+      if (JSON.parse(response) === localStorage.getItem("authToken")) {
+        this.checked = true;
+        return true;
+      } else {
+        return false;
+      }
     }
     return false;
   }

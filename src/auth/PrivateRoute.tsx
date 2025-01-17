@@ -1,22 +1,27 @@
 import { Component, useContext, useEffect, useState } from "react";
 import { Navigate, Outlet, Route } from "react-router-dom";
 import AuthContextProvider from "../auth/AuthContext";
+import CryptoJS from "crypto-js";
 
 const PrivateRoute = () => {
   const { setUser, user } = useContext(AuthContextProvider);
   const [isAccess, setAccess] = useState(false);
   const [loading, setLoading] = useState(true);
+
   const returnState = async () => {
+    const secretMessage = localStorage.getItem("authToken");
+    /// A CACHER DANS .ENV
+
     try {
       if (
-        "" !== localStorage.getItem("authToken") &&
-        localStorage.getItem("authToken") !== null &&
-        localStorage.getItem("authToken") !== undefined
+        secretMessage !== null &&
+        secretMessage !== undefined &&
+        secretMessage.length > 10
       ) {
         user.set_auth_token(localStorage.getItem("authToken"));
         setUser(user);
         // setUser(user);
-        console.log("res", user.authToken);
+        console.log("res", user);
         let res = await user.check_token();
         console.log("res", res);
         if (res === false) {
@@ -28,8 +33,9 @@ const PrivateRoute = () => {
         setAccess(false);
       }
     } catch (error) {
-      console.log("res", error);
       setAccess(false);
+
+      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -37,9 +43,7 @@ const PrivateRoute = () => {
   useEffect(() => {
     returnState();
   }, []);
-  useEffect(() => {
-    console.log("isaccess", isAccess);
-  }, [isAccess]);
+  useEffect(() => {}, [isAccess]);
   if (loading) {
     return <div>Chargement...</div>; // Or a spinner/loading component
   }

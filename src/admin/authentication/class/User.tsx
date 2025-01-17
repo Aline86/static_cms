@@ -28,8 +28,10 @@ export default class User {
       }
       this.email = data.email;
       this.password = data.password;
+
       return await response.json();
     });
+
     return response;
   }
   async logOut() {
@@ -55,8 +57,6 @@ export default class User {
   async check_token(): Promise<boolean> {
     let formdata = new FormData();
 
-    console.log("this.token", this.token);
-
     formdata.append("token", JSON.stringify(this.token));
     const response = await fetch(
       BASE_URL_SITE + "/api/user.php?method=check_token",
@@ -73,9 +73,50 @@ export default class User {
       return await response.json();
     });
 
-    return Boolean(Number(response[0].is_token));
+    return response;
   }
   set_auth_token(token: string) {
     this.token = token;
+  }
+  retrieveHashedPassword() {
+    const storedHashedPassword = localStorage.getItem("authToken");
+    if (storedHashedPassword) {
+      return storedHashedPassword;
+    } else {
+      return null;
+    }
+  }
+
+  async hashPassword(password: string | undefined) {
+    // Convert the password into a Uint8Array
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+
+    // Use the Web Crypto API to hash the password with SHA-256
+    const hashBuffer = await window.crypto.subtle.digest("SHA-256", data);
+
+    // Convert the ArrayBuffer to a hex string
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map((byte) => byte.toString(16).padStart(2, "0"))
+      .join("");
+
+    return hashHex;
+  }
+
+  async decryptData(enteredPassword: string | undefined, storedHash: string) {
+    // Convert the entered password into a Uint8Array
+    const encoder = new TextEncoder();
+    const data = encoder.encode(enteredPassword);
+
+    // Hash the entered password using SHA-256
+    const hashBuffer = await window.crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map((byte) => byte.toString(16).padStart(2, "0"))
+      .join("");
+
+    // Compare the hashed password with the stored hash
+    return hashHex === storedHash;
   }
 }

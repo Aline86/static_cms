@@ -45,9 +45,9 @@ if ($origin && strpos($origin, $allowed_prefix) !== false) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === 'DELETE' && $_GET['token'] !== null ) {
-  if(file_exists(utf8_decode(urldecode($_GET['name'])))) {
+  if(file_exists(utf8_decode(urldecode(strip_tags($_GET['name']))))) {
     // Attempt to delete the file
-    if (unlink(utf8_decode(urldecode($_GET['name'])))) {
+    if (unlink(utf8_decode(urldecode(strip_tags($_GET['name']))))) {
       echo "File deleted successfully.";
       exit;
     } else {
