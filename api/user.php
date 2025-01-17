@@ -110,14 +110,22 @@ if($method === "delete_connexion" && $_POST['email'] !== null && $_POST['passwor
 }
 
 if($method === "check_token") {
-   
+  
     $authorization_header = json_decode($_POST['token']) ?? null;
     $requete2 = 'SELECT count(token) as is_token FROM user WHERE token=:token';
     $resultat2 = $db->prepare($requete2);
     $resultat2->bindParam(':token',  $authorization_header, PDO::PARAM_STR);
     $resultat2->execute(); 
     $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-   
-    echo  json_encode($user);
+
+    if($user[0]['is_token'] === '1') {
+        http_response_code(200);
+        echo  json_encode($user);
+       
+    }else if($user[0]['is_token'] === '0'){
+        http_response_code(403);
+        echo  json_encode($user);
+    }
+    
 }
 

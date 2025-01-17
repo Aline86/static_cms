@@ -52,6 +52,9 @@ export default class User {
   }
   async check_token(): Promise<boolean> {
     let formdata = new FormData();
+
+    console.log("this.token", this.token);
+
     formdata.append("token", JSON.stringify(this.token));
     const response = await fetch(
       BASE_URL_SITE + "/api/user.php?method=check_token",
@@ -68,5 +71,8 @@ export default class User {
     });
 
     return Boolean(Number(response[0].is_token));
+  }
+  set_auth_token(token: string) {
+    this.token = token;
   }
 }

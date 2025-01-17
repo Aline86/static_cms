@@ -51,9 +51,9 @@
                         $this->add_children($data_type, $parent_id, $associated_table_name);
                     }
                 }
-                else {
+               /* else {
                     $this->add_children($all_data_blocs, $parent_id, $associated_table_name);
-                }
+                }*/
               
 
             }
