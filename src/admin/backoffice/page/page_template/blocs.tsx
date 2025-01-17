@@ -17,7 +17,6 @@ import Header from "../../bloc/components/header/Header";
 import BlocFooter from "./bloc_components/BlocFooter";
 import BlocParallaxe from "./bloc_components/BlocParallaxe";
 import { Parallaxe } from "../../bloc/components/parallaxe/class/Parallaxe";
-import Grid from "../../bloc/components/picture_group/grid/wrapper";
 import BlocGrid from "./bloc_components/BlocGrid";
 
 interface BlocData {
@@ -62,6 +61,7 @@ function Blocs({
     input_bloc: TextPicture,
     index: number
   ) => {
+    console.log("contentState", contentState);
     input_bloc.text = contentState;
     blocs[index] = input_bloc;
     setBlocs(blocs);

@@ -50,4 +50,23 @@ export default class User {
     });
     return response;
   }
+  async check_token(): Promise<boolean> {
+    let formdata = new FormData();
+    formdata.append("token", JSON.stringify(this.token));
+    const response = await fetch(
+      BASE_URL_SITE + "/api/user.php?method=check_token",
+      {
+        method: "POST",
+        body: formdata,
+      }
+    ).then(async (response) => {
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      return await response.json();
+    });
+
+    return Boolean(Number(response[0].is_token));
+  }
 }

@@ -1,4 +1,5 @@
 <?php
+ob_start();
 $envFile = './../.env.local';
 
 require './environment_variables.php';
@@ -26,6 +27,11 @@ if ($origin && strpos($origin, $allowed_prefix) !== false) {
     header('Access-Control-Allow-Origin: ' . $origin);
     header('Access-Control-Allow-Headers: *' );
     header('Access-Control-Allow-Methods: *');
+    header('Access-Control-Allow-Credentials: true');
+    header("Access-Control-Allow-Headers: Content-Type, Authorization");
+}
+else {
+    exit();
 }
 
 class Db {
@@ -57,10 +63,10 @@ $associated_method_for_delete = isset($_GET['associated_table']) ? $_GET['associ
 if(isset($_GET['type'])) {
 
     $methods_to_check = ['add_'. json_decode($_GET['type']), 'update_' . json_decode($_GET['type']), 'delete_' . json_decode($_GET['type']), 'delete_child', 'add_child'];
-    if(in_array($method, $methods_to_check) && ($method === 'add_'. json_decode($_GET['type']) || $method === 'update_' . json_decode($_GET['type']) || $method === 'add_child') && !isset($_POST['token'])) {
+    if(in_array($method, $methods_to_check) && ($method === 'add_'. json_decode($_GET['type']) || $method === 'update_' . json_decode($_GET['type']) || $method === 'add_child') && !isset($_POST['token']) && empty($_SESSION['user'])) {
         exit();
     }
-    if(in_array($method, $methods_to_check) && ($method === 'delete_'. json_decode($_GET['type']) || $method === 'delete_child') && !isset($_GET['token'])) {
+    if(in_array($method, $methods_to_check) && ($method === 'delete_'. json_decode($_GET['type']) || $method === 'delete_child') && !isset($_GET['token']) && empty($_SESSION['user'])) {
         exit();
     }
   

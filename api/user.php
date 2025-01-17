@@ -15,6 +15,8 @@ if ($origin && strpos($origin, $allowed_prefix) !== false) {
     header('Access-Control-Allow-Origin: ' . $origin);
     header('Access-Control-Allow-Headers: *');
     header('Access-Control-Allow-Methods: *');
+    header('Access-Control-Allow-Credentials: true');
+    header("Access-Control-Allow-Headers: Content-Type, Authorization");
 }
 
 class Db {
@@ -65,11 +67,14 @@ if($method === "connexion" && $_POST['email'] !== null && $_POST['password'] !==
         $resultat2->bindParam(':token',  $token, PDO::PARAM_STR);
         $resultat2->execute(); 
         $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-       
+        session_start();
+        $_SESSION['user'] = $user;
+        http_response_code(200);
         echo  json_encode($user);
         exit();
     }
     else {
+        http_response_code(403);
         return false;
     }
 }
@@ -91,7 +96,9 @@ if($method === "delete_connexion" && $_POST['email'] !== null && $_POST['passwor
         $resultat->bindValue(':token',  $token);
         $resultat->bindValue(':email', $_POST['email']);
         $resultat->bindValue(':password', $user[0]['password']);
-        $resultat->execute();  
+        $resultat->execute(); 
+
+        session_destroy(); 
         return true;
         
         exit();

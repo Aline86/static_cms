@@ -1,17 +1,20 @@
 import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import AuthContext from "../auth/AuthContext";
+import AuthContextProvider from "../auth/AuthContext";
 
 const PrivateRoute = () => {
-  const user = useContext(AuthContext);
+  const { setUser, user } = useContext(AuthContextProvider);
 
-  if (
-    user.user.token === "" ||
-    user.user.token !== localStorage.getItem("authToken")
-  ) {
-    return <Navigate to="/login" />;
+  if ("" !== localStorage.getItem("authToken")) {
+    console.log("user", user);
+    user.authToken = localStorage.getItem("authToken");
+    // setUser(user);
+    if (!user.check_token) {
+      return <Navigate to="/login" />;
+    }
+    return <Outlet />;
   }
-  return <Outlet />;
+  return <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

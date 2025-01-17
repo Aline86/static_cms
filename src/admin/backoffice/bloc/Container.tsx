@@ -82,6 +82,7 @@ export default abstract class Container {
         this.BASE_URL + action + "_" + this._get_class_api_call_parameters(),
         {
           method: "POST",
+          credentials: "include",
           body: data_to_send,
         }
       )
@@ -198,6 +199,7 @@ export default abstract class Container {
             this.token,
           {
             method: "DELETE",
+            credentials: "include",
           }
         );
         if (response.ok) {
