@@ -53,6 +53,7 @@ export default abstract class Container {
         BASE_URL_SITE + "/api/user.php?method=check_token",
         {
           method: "POST",
+          credentials: "include",
           body: formdata,
         }
       ).then(async (response) => {

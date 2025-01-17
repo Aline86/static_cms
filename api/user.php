@@ -34,10 +34,10 @@ class Db {
 
 $db = Db::getInstance($database_name, $host, $user, $password);
 
-$method = isset($_GET['method']) ? $_GET['method'] : null; //return GET, POST, PUT, DELETE
+$method = htmlspecialchars(strip_tags($_GET['method'])) !== null ? $_GET['method'] : null; //return GET, POST, PUT, DELETE
 
 
-if($method === "connexion" && $_POST['email'] !== null && $_POST['password'] !== null) {
+if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== null && htmlspecialchars(strip_tags($_POST['password'])) !== null) {
     
     $requete = 'SELECT password FROM user WHERE email = :email';
     $resultat = $db->prepare($requete);
@@ -67,8 +67,21 @@ if($method === "connexion" && $_POST['email'] !== null && $_POST['password'] !==
         $resultat2->bindParam(':token',  $token, PDO::PARAM_STR);
         $resultat2->execute(); 
         $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+       
+      
+        session_set_cookie_params([
+            'lifetime' => 3600, // 1 hour
+            'path' => '/',
+            'domain' => $origin,  // Set this for your domain
+            'secure' => true,  // Use true for HTTPS in production
+            'httponly' => true,
+            'samesite' => 'None',  // Necessary for cross-site cookies
+           
+            
+        ]);
         session_start();
         $_SESSION['user'] = $user;
+     
         http_response_code(200);
         echo  json_encode($user);
         exit();
@@ -78,8 +91,8 @@ if($method === "connexion" && $_POST['email'] !== null && $_POST['password'] !==
         return false;
     }
 }
-if($method === "delete_connexion" && $_POST['email'] !== null && $_POST['password'] !== null) {
-  
+if($method === "delete_connexion" && isset($_POST['email'])  && isset($_POST['password'])) {
+
     $requete = 'SELECT password FROM user WHERE email = :email';
     $resultat = $db->prepare($requete);
     $resultat->bindValue(':email', $_POST['email']);
@@ -109,7 +122,7 @@ if($method === "delete_connexion" && $_POST['email'] !== null && $_POST['passwor
 
 }
 
-if($method === "check_token") {
+if($method === "check_token" && $_POST['token'] !== null) {
   
     $authorization_header = json_decode($_POST['token']) ?? null;
     $requete2 = 'SELECT count(token) as is_token FROM user WHERE token=:token';

@@ -19,6 +19,7 @@ export default class User {
       BASE_URL_SITE + "/api/user.php?method=connexion",
       {
         method: "POST",
+        credentials: "include",
         body: formdata,
       }
     ).then(async (response) => {
@@ -41,6 +42,7 @@ export default class User {
       BASE_URL_SITE + "/api/user.php?method=delete_connexion",
       {
         method: "DELETE",
+        credentials: "include",
         body: formdata,
       }
     ).then(async (response) => {
@@ -60,6 +62,7 @@ export default class User {
       BASE_URL_SITE + "/api/user.php?method=check_token",
       {
         method: "POST",
+        credentials: "include",
         body: formdata,
       }
     ).then(async (response) => {
