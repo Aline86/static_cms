@@ -201,12 +201,14 @@ function Blocs({
   const handleDragOver = (event: any) => {
     event.preventDefault();
 
-    event.target.style.backgroundColor = "red";
+    event.target.style.backgroundColor = "white";
+    event.currentTarget.style.fontSize = "50px";
+    event.target.style.border = "3px solid lightgray";
   };
   const handleDragLeave = (event: any) => {
     event.preventDefault();
-
-    event.target.style.backgroundColor = "white";
+    event.target.style.fontSize = "25px";
+    event.target.style.border = "1px solid white";
   };
   const [header, setHeader] = useState<Header>(new Header());
   const [footer, setFooter] = useState<Footer>(new Footer());
@@ -316,6 +318,7 @@ function Blocs({
             toggle={toggle}
             page_id={page_id}
             index={index}
+            handleDragLeave={handleDragLeave}
             isOpen={
               highlight !== undefined &&
               highlight.bloc_number === bloc.bloc_number
@@ -337,6 +340,7 @@ function Blocs({
             page_id={page_id}
             index={index}
             refresh={refresh}
+            handleDragLeave={handleDragLeave}
             isOpen={
               highlight !== undefined &&
               highlight.bloc_number === bloc.bloc_number
@@ -357,6 +361,7 @@ function Blocs({
               toggle={toggle}
               index={index}
               refresh={refresh}
+              handleDragLeave={handleDragLeave}
               isOpen={
                 highlight !== undefined &&
                 highlight.bloc_number === bloc.bloc_number
@@ -376,6 +381,7 @@ function Blocs({
               toggle={toggle}
               setToggle={setToggle}
               index={index}
+              handleDragLeave={handleDragLeave}
               refresh={refresh}
               isOpen={
                 highlight !== undefined &&
@@ -396,6 +402,7 @@ function Blocs({
             drag={drag}
             toggle={toggle}
             index={index}
+            handleDragLeave={handleDragLeave}
             refresh={refresh}
             isOpen={
               highlight !== undefined &&
@@ -417,6 +424,7 @@ function Blocs({
             refresh={refresh}
             reload_blocs={reload_blocs}
             index={index}
+            handleDragLeave={handleDragLeave}
             isOpen={
               highlight !== undefined &&
               highlight.bloc_number === bloc.bloc_number
@@ -436,6 +444,7 @@ function Blocs({
               drag={drag}
               toggle={toggle}
               index={index}
+              handleDragLeave={handleDragLeave}
               isOpen={
                 highlight !== undefined &&
                 highlight.bloc_number === bloc.bloc_number

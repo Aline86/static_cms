@@ -20,6 +20,7 @@ interface BlocData {
   toggle: boolean;
   index: number;
   isOpen: boolean;
+  handleDragLeave: any;
 }
 
 function BlocParallaxe({
@@ -34,12 +35,14 @@ function BlocParallaxe({
   toggle,
   index,
   isOpen,
+  handleDragLeave,
 }: BlocData) {
   return (
     <BlockContainer
       bloc={bloc}
       setDragBegin={setDragBegin}
       updateDragBloc={updateDragBloc}
+      handleDragLeave={handleDragLeave}
       handleDragOver={handleDragOver}
       removeBloc={removeBloc}
       index={index}

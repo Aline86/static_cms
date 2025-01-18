@@ -17,6 +17,7 @@ interface BlocData {
   index: number;
   refresh: boolean;
   isOpen: boolean;
+  handleDragLeave: any;
 }
 
 function BlocButton({
@@ -32,12 +33,14 @@ function BlocButton({
   index,
   refresh,
   isOpen,
+  handleDragLeave,
 }: BlocData) {
   return (
     <BlockContainer
       bloc={bloc}
       setDragBegin={setDragBegin}
       updateDragBloc={updateDragBloc}
+      handleDragLeave={handleDragLeave}
       handleDragOver={handleDragOver}
       removeBloc={removeBloc}
       drag={drag}

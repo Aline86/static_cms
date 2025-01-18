@@ -21,6 +21,7 @@ interface BlocData {
   refresh: boolean;
   setToggle: any;
   isOpen: boolean;
+  handleDragLeave: any;
 }
 
 function BlocGridGroup({
@@ -37,12 +38,14 @@ function BlocGridGroup({
   index,
   refresh,
   setToggle,
+  handleDragLeave,
 }: BlocData) {
   return (
     <BlockContainer
       bloc={bloc}
       setDragBegin={setDragBegin}
       updateDragBloc={updateDragBloc}
+      handleDragLeave={handleDragLeave}
       handleDragOver={handleDragOver}
       removeBloc={removeBloc}
       index={index}

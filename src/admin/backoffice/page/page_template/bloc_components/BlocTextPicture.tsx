@@ -20,6 +20,7 @@ interface BlocData {
   page_id: number;
   index: number;
   isOpen: boolean;
+  handleDragLeave: any;
 }
 
 function BlocTextPicture({
@@ -37,6 +38,7 @@ function BlocTextPicture({
   page_id,
   index,
   isOpen,
+  handleDragLeave,
 }: BlocData) {
   useEffect(() => {}, [isOpen]);
   return (
@@ -44,6 +46,7 @@ function BlocTextPicture({
       bloc={bloc}
       setDragBegin={setDragBegin}
       updateDragBloc={updateDragBloc}
+      handleDragLeave={handleDragLeave}
       handleDragOver={handleDragOver}
       removeBloc={removeBloc}
       index={index}

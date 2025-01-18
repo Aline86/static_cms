@@ -12,6 +12,7 @@ interface BlocData {
   component_visualization: any;
   css_position: any;
   isOpen: boolean;
+  handleDragLeave: any;
 }
 
 function BlockContainer({
@@ -25,6 +26,7 @@ function BlockContainer({
   component_visualization,
   css_position,
   isOpen,
+  handleDragLeave,
 }: BlocData) {
   useEffect(() => {}, [isOpen]);
   return (
@@ -33,6 +35,7 @@ function BlockContainer({
       draggable={drag}
       onDragStart={() => setDragBegin(index)}
       onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
       onDrop={() => updateDragBloc(index)}
       key={index}
     >
