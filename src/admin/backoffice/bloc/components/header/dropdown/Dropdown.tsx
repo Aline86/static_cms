@@ -84,7 +84,9 @@ function DropdownData({ input_bloc, updateHeader }: DropdownInfo) {
           </div>
         ) : (
           <div className={s.color}>
-            <h3 style={{ textDecoration: "underline" }}>Couleur de fond :</h3>
+            <h3 style={{ textDecoration: "underline" }}>
+              Couleur de fond du bandeau :
+            </h3>
             <input
               type="color"
               className={s.color}

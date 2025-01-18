@@ -56,9 +56,18 @@ function check_token($token, $db) {
     
     $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
     $hash = hash('sha256', $user[0]['token']);
-  
+    echo "<pre>hash";
+    print_r($hash);
+    echo "</pre>";
+ 
     $session_hash = hash('sha256', $_SESSION['user'][0]['token']);
+    echo "<pre>session";
+    print_r($session_hash);
+    echo "</pre>";
 
+    echo "<pre>token";
+    print_r($token);
+    echo "</pre>";
     if($token === $hash  && $hash === $session_hash) {
         
         http_response_code(200);
@@ -113,9 +122,12 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
         unset($_POST['checked']);
     }
     if(isset($_POST['token'])) {
-        $token = json_decode($_POST['token']);
+        $token = json_decode(strip_tags($_POST['token']));
         unset($_POST['token']);
       
+    }
+    if(isset($_GET['token'])) {
+        $token = strip_tags($_GET['token']);
     }
     $method_constructor = [];
     

@@ -42,7 +42,7 @@ function BlocVideo({
       removeBloc={removeBloc}
       index={index}
       drag={drag}
-      isOpen={true}
+      isOpen={false}
       component_visualization={
         <VideoVizualisation
           bloc={bloc}

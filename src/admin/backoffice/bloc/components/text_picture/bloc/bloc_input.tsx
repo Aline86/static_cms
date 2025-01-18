@@ -18,8 +18,6 @@ import Draft, {
   RawDraftEntityRange,
 } from "draft-js";
 import { UploadService } from "../../../../services/uploadService";
-import { Link } from "react-router-dom";
-import LinkData from "./link/HyperLink";
 import { BASE_URL_SITE } from "../../../../../../config";
 
 function BlocInput({

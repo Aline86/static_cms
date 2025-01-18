@@ -18,27 +18,16 @@ import { Parallaxe } from "../../bloc/components/parallaxe/class/Parallaxe";
 
 interface BlocData {
   getPage: any;
-  handleScroll: any;
   blocs: Array<any>;
-  setToDrag: any;
-  drag: boolean;
   open: boolean;
   setOpen: any;
   page: Page;
 }
 
-function BlocDisplay({
-  getPage,
-  handleScroll,
-  blocs,
-  setToDrag,
-  drag,
-  open,
-  setOpen,
-  page,
-}: BlocData) {
+function BlocDisplay({ getPage, blocs, open, setOpen, page }: BlocData) {
   const addBlocToBDD = async (bloc: any) => {
     await bloc.save_bloc();
+
     await getPage(true);
   };
 

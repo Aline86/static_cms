@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ShrinkParams from "./shrink_params";
 
 interface BlocData {
@@ -25,6 +26,7 @@ function BlockContainer({
   css_position,
   isOpen,
 }: BlocData) {
+  useEffect(() => {}, [isOpen]);
   return (
     <div
       className="blocs"

@@ -40,7 +40,7 @@ function BlocButton({
       removeBloc={removeBloc}
       drag={drag}
       index={index}
-      isOpen={true}
+      isOpen={false}
       component_visualization={
         <ButtonVisualization
           input_bloc={bloc}

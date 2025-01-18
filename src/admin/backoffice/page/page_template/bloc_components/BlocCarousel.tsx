@@ -46,7 +46,7 @@ function BlocCarousel({
       removeBloc={removeBloc}
       drag={drag}
       index={index}
-      isOpen={true}
+      isOpen={false}
       component_visualization={
         <CarouselVisualization
           input_bloc={bloc}

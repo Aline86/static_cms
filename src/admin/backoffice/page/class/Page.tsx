@@ -2,12 +2,18 @@ import Container from "../../bloc/Container";
 
 export default class Page extends Container {
   parameters: string;
-
-  constructor(id: number = -1, title: string = "", type: string = "page") {
+  page_number: number;
+  constructor(
+    id: number = -1,
+    page_number: number = -1,
+    title: string = "",
+    type: string = "page"
+  ) {
     super(id, title, type);
     this.id = id;
     this.title = title;
     this.type = type;
+    this.page_number = page_number;
     this.parameters = this.type + "&id=" + this.id + "&type=" + this.type;
   }
   _get_class_api_call_parameters(): string {
@@ -28,7 +34,9 @@ export default class Page extends Container {
     let page_array: Page[] = [];
     let pages = await this.get_blocs();
     pages.forEach((page) => {
-      page_array.push(new Page(page.id, page.title, page.type));
+      page_array.push(
+        new Page(page.id, page.page_number, page.title, page.type)
+      );
     });
     this.set_parameters(this.type + "&id=" + this.id + "&type=" + this.type);
     return page_array;
@@ -61,5 +69,11 @@ export default class Page extends Container {
   }
   public set_parameters(value: string) {
     this.parameters = value;
+  }
+  public get_page_number(): number {
+    return this.page_number;
+  }
+  public set_page_number(value: number) {
+    this.page_number = value;
   }
 }

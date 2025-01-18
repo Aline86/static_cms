@@ -31,7 +31,7 @@ function Visualization({}: PageParams) {
   const tools = new BlocTools(page_type);
 
   const [blocs, setBlocs] = useState<Array<any>>([]);
-
+  const [highlight, setHightlight] = useState<any>();
   async function asynchronRequestsToPopulateBlocs(goToB: boolean = false) {
     setBlocs([]);
     await header.get_bloc();
@@ -78,9 +78,7 @@ function Visualization({}: PageParams) {
     setRefresh(!refresh);
   };
 
-  useEffect(() => {
-    console.log("blocs", blocs);
-  }, [toggle, blocs]);
+  useEffect(() => {}, [toggle, blocs]);
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();
   }, [refresh]);
@@ -88,6 +86,7 @@ function Visualization({}: PageParams) {
   useEffect(() => {
     handleScroll();
   }, [goTo]);
+
   return (
     <div className="page">
       <div className={s.page_container}>
@@ -136,10 +135,7 @@ function Visualization({}: PageParams) {
 
         <div>
           <BlocDisplay
-            handleScroll={handleScroll}
             blocs={blocs}
-            setToDrag={setToDrag}
-            drag={drag}
             open={open}
             setOpen={setOpen}
             page={page_type}

@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS `page` (
-  `id` int(11) NOT NULL auto_increment,        
+  `id` int(11) NOT NULL auto_increment,  
+  `page_number` int(8)  NOT NULL ,       
   `title` varchar(250)  NOT NULL default "",  
   `type` varchar(55)  NOT NULL default "page",    
    PRIMARY KEY  (`id`) 

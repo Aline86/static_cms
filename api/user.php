@@ -100,7 +100,7 @@ if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== 
             'domain' => $origin,  // Set this for your domain
             'secure' => true,  // Use true for HTTPS in production
             'httponly' => true,
-            'samesite' => 'None',  // Necessary for cross-site cookies
+            'samesite' => 'True',  // Necessary for cross-site cookies
            
             
         ]);

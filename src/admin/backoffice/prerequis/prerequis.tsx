@@ -29,7 +29,23 @@ function Prerequis({}: PageParams) {
 
   const saveHeaderAndFooter = async () => {
     setRefresh(!refresh);
+    handleScroll();
   };
+
+  function handleScroll() {
+    let timedelay = 0;
+    let scrollId: number;
+    let height: number = 0;
+    let minScrollHeight: number = 100;
+    scrollId = setInterval(function () {
+      if (height <= document.body.scrollHeight) {
+        window.scrollBy(0, minScrollHeight);
+      } else {
+        clearInterval(scrollId);
+      }
+      height += minScrollHeight;
+    }, timedelay);
+  }
 
   const updateHeader = async (
     e: any,

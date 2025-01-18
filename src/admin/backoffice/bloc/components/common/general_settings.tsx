@@ -66,7 +66,11 @@ function CommonVisualization({}: PageParams) {
                       Exemple de titre coloré
                     </h3>
                   </div>
-                  <h3>Couleur de fond des boutons :</h3>
+                  <h3>
+                    Couleur de fond des boutons :<br />
+                    <br />
+                    (le bouton d'exemple ci-dessous est non cliquable)
+                  </h3>
                   <div className={s.color_display}>
                     <input
                       type="color"

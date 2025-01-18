@@ -1,5 +1,5 @@
 import s from "./style.module.css";
-import ajout from "./../../../../../../assets/ajouter.png";
+
 import { useEffect } from "react";
 import remove from "./../../../../../../assets/remove.png";
 import add_to_database from "./../../../../../../assets/add_to_database.png";
@@ -49,7 +49,7 @@ function HeaderInput({
           </div>
           <DropdownData input_bloc={input_bloc} updateHeader={updateHeader} />
           <div className={s.add_file}>
-            <h3>Liens externes (ex: réseaux sociaux): </h3>
+            <h3>Liens externes (ex: réseaux sociaux) : </h3>
 
             <label
               className={s.addLink}

@@ -46,7 +46,7 @@ function BlocGridGroup({
       removeBloc={removeBloc}
       index={index}
       drag={drag}
-      isOpen={true}
+      isOpen={false}
       component_visualization={
         <GridVizualisation
           input_bloc={bloc}

@@ -40,7 +40,7 @@ function BlocPictureGroup({
       removeBloc={removeBloc}
       index={index}
       drag={drag}
-      isOpen={true}
+      isOpen={false}
       component_visualization={
         <PictureGroupVizualisation
           input_bloc={bloc}

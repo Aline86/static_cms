@@ -42,7 +42,7 @@ function BlocParallaxe({
       removeBloc={removeBloc}
       index={index}
       drag={drag}
-      isOpen={true}
+      isOpen={false}
       component_visualization={
         <ParallaxeVizualisation bloc={bloc} full={false} isResponsive={false} />
       }

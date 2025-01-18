@@ -10,7 +10,7 @@ interface GridData {
   bloc: PictureGroup;
   data: PictureGroupData;
   gap: number;
-  blocs: any;
+
   index: number;
   updatePictureGroupData: any;
   show_remove: boolean;
@@ -23,9 +23,8 @@ function Grid({
   index,
   updatePictureGroupData,
   show_remove,
-  blocs,
 }: GridData) {
-  useEffect(() => {}, [bloc, blocs]);
+  useEffect(() => {}, [bloc]);
   return (
     <div className={s.card}>
       <div className={s.remove}>
