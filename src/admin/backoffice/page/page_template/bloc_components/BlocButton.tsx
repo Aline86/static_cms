@@ -16,6 +16,7 @@ interface BlocData {
   toggle: boolean;
   index: number;
   refresh: boolean;
+  isOpen: boolean;
 }
 
 function BlocButton({
@@ -30,6 +31,7 @@ function BlocButton({
   toggle,
   index,
   refresh,
+  isOpen,
 }: BlocData) {
   return (
     <BlockContainer
@@ -40,7 +42,7 @@ function BlocButton({
       removeBloc={removeBloc}
       drag={drag}
       index={index}
-      isOpen={false}
+      isOpen={isOpen}
       component_visualization={
         <ButtonVisualization
           input_bloc={bloc}

@@ -149,6 +149,11 @@ li .navigate_2 {
   margin-top: 12px;
   cursor: pointer;
 }
+
+li .navigate_2:hover,
+li .navigate:hover {
+  background: #0d45a5;
+}
 li .navigate {
   width: 250px;
 }

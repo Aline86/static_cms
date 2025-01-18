@@ -21,6 +21,7 @@ interface BlocData {
   page_id: number;
   index: number;
   refresh: boolean;
+  isOpen: boolean;
 }
 
 function BlocCarousel({
@@ -35,6 +36,7 @@ function BlocCarousel({
   toggle,
   index,
   refresh,
+  isOpen,
 }: BlocData) {
   useEffect(() => {}, []);
   return (
@@ -46,7 +48,7 @@ function BlocCarousel({
       removeBloc={removeBloc}
       drag={drag}
       index={index}
-      isOpen={false}
+      isOpen={isOpen}
       component_visualization={
         <CarouselVisualization
           input_bloc={bloc}

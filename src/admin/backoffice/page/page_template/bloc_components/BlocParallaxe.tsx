@@ -19,6 +19,7 @@ interface BlocData {
   drag: boolean;
   toggle: boolean;
   index: number;
+  isOpen: boolean;
 }
 
 function BlocParallaxe({
@@ -32,6 +33,7 @@ function BlocParallaxe({
   drag,
   toggle,
   index,
+  isOpen,
 }: BlocData) {
   return (
     <BlockContainer
@@ -42,7 +44,7 @@ function BlocParallaxe({
       removeBloc={removeBloc}
       index={index}
       drag={drag}
-      isOpen={false}
+      isOpen={isOpen}
       component_visualization={
         <ParallaxeVizualisation bloc={bloc} full={false} isResponsive={false} />
       }

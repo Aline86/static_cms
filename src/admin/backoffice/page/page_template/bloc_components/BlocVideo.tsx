@@ -17,6 +17,7 @@ interface BlocData {
   refresh: boolean;
   toggle: boolean;
   index: number;
+  isOpen: boolean;
 }
 
 function BlocVideo({
@@ -32,6 +33,7 @@ function BlocVideo({
   refresh,
   toggle,
   index,
+  isOpen,
 }: BlocData) {
   return (
     <BlockContainer
@@ -42,7 +44,7 @@ function BlocVideo({
       removeBloc={removeBloc}
       index={index}
       drag={drag}
-      isOpen={false}
+      isOpen={isOpen}
       component_visualization={
         <VideoVizualisation
           bloc={bloc}

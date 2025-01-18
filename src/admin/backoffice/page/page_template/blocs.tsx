@@ -31,6 +31,8 @@ interface BlocData {
   page_id: number;
   refresh: boolean;
   reload_blocs: any;
+  highlight: any;
+  setHighlight: any;
 }
 
 function Blocs({
@@ -45,8 +47,10 @@ function Blocs({
   setToggle,
   page_id,
   reload_blocs,
+  highlight,
+  setHighlight,
 }: BlocData) {
-  const [contentState, setContentState] = useState<RawDraftContentState>();
+  const [, setContentState] = useState<RawDraftContentState>();
 
   // edit with new component type when you add a bloc
   let component_types:
@@ -61,7 +65,6 @@ function Blocs({
     input_bloc: TextPicture,
     index: number
   ) => {
-    console.log("contentState", contentState);
     input_bloc.text = contentState;
     blocs[index] = input_bloc;
     setBlocs(blocs);
@@ -74,14 +77,14 @@ function Blocs({
     input_bloc: TextPicture
   ) => {
     const new_Bloc = input_bloc.update(e, field, input);
-
+    blocs !== undefined && setHighlight(new_Bloc);
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
     setBlocs(blocs);
     setToggle(!toggle);
   };
-  const updateButton = (e: any, field: string, input_bloc: Button) => {
-    const new_Bloc = input_bloc.update(e, field);
-
+  const updateButton = async (e: any, field: string, input_bloc: Button) => {
+    const new_Bloc = await input_bloc.update(e, field);
+    blocs !== undefined && setHighlight(new_Bloc);
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
     setBlocs(blocs);
 
@@ -95,6 +98,7 @@ function Blocs({
   ) => {
     const new_Bloc = await input_bloc.update(e, field, index);
     if (new_Bloc !== undefined) {
+      blocs !== undefined && setHighlight(new_Bloc);
       blocs[input_bloc.bloc_number - 1] = new_Bloc;
       setBlocs(blocs);
 
@@ -104,6 +108,7 @@ function Blocs({
   const updateVideo = (e: any, field: string, input_bloc: Video) => {
     const new_Bloc = input_bloc.update(e, field);
     if (new_Bloc !== undefined) {
+      blocs !== undefined && setHighlight(new_Bloc);
       blocs[input_bloc.bloc_number - 1] = new_Bloc;
 
       setBlocs(blocs);
@@ -118,6 +123,7 @@ function Blocs({
   ) => {
     const new_Bloc = await input_bloc.update(e, field);
     if (new_Bloc !== undefined) {
+      blocs !== undefined && setHighlight(new_Bloc);
       blocs[input_bloc.bloc_number - 1] = new_Bloc;
 
       setBlocs(blocs);
@@ -134,6 +140,7 @@ function Blocs({
   ) => {
     const new_Bloc = await input_bloc.update(e, field, index);
     if (new_Bloc !== undefined) {
+      blocs !== undefined && setHighlight(new_Bloc);
       blocs[input_bloc.bloc_number - 1] = new_Bloc;
       setBlocs(blocs);
 
@@ -193,6 +200,13 @@ function Blocs({
   };
   const handleDragOver = (event: any) => {
     event.preventDefault();
+
+    event.target.style.backgroundColor = "red";
+  };
+  const handleDragLeave = (event: any) => {
+    event.preventDefault();
+
+    event.target.style.backgroundColor = "white";
   };
   const [header, setHeader] = useState<Header>(new Header());
   const [footer, setFooter] = useState<Footer>(new Footer());
@@ -276,7 +290,7 @@ function Blocs({
   useEffect(() => {
     getFooterAndHeader();
   }, [refresh, blocs]);
-  useEffect(() => {}, [toggle, blocs]);
+  useEffect(() => {}, [toggle, blocs, highlight]);
   return (
     <div className={s.blocs_container}>
       <BlocHeader
@@ -302,6 +316,10 @@ function Blocs({
             toggle={toggle}
             page_id={page_id}
             index={index}
+            isOpen={
+              highlight !== undefined &&
+              highlight.bloc_number === bloc.bloc_number
+            }
           />
         ) : bloc.type === "carousel" ? (
           <BlocCarousel
@@ -319,6 +337,10 @@ function Blocs({
             page_id={page_id}
             index={index}
             refresh={refresh}
+            isOpen={
+              highlight !== undefined &&
+              highlight.bloc_number === bloc.bloc_number
+            }
           />
         ) : bloc.type === "picture_group" ? (
           !bloc.is_grid ? (
@@ -335,6 +357,10 @@ function Blocs({
               toggle={toggle}
               index={index}
               refresh={refresh}
+              isOpen={
+                highlight !== undefined &&
+                highlight.bloc_number === bloc.bloc_number
+              }
             />
           ) : (
             <BlocGrid
@@ -351,6 +377,10 @@ function Blocs({
               setToggle={setToggle}
               index={index}
               refresh={refresh}
+              isOpen={
+                highlight !== undefined &&
+                highlight.bloc_number === bloc.bloc_number
+              }
             />
           )
         ) : bloc.type === "button" ? (
@@ -367,6 +397,10 @@ function Blocs({
             toggle={toggle}
             index={index}
             refresh={refresh}
+            isOpen={
+              highlight !== undefined &&
+              highlight.bloc_number === bloc.bloc_number
+            }
           />
         ) : bloc.type === "video" ? (
           <BlocVideo
@@ -383,6 +417,10 @@ function Blocs({
             refresh={refresh}
             reload_blocs={reload_blocs}
             index={index}
+            isOpen={
+              highlight !== undefined &&
+              highlight.bloc_number === bloc.bloc_number
+            }
           />
         ) : (
           bloc.type === "parallaxe" && (
@@ -398,6 +436,10 @@ function Blocs({
               drag={drag}
               toggle={toggle}
               index={index}
+              isOpen={
+                highlight !== undefined &&
+                highlight.bloc_number === bloc.bloc_number
+              }
             />
           )
         );

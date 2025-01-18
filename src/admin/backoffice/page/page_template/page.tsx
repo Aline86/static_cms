@@ -20,18 +20,20 @@ function Visualization({}: PageParams) {
   const [drag, setToDrag] = useState(false);
   const [dragBegin, setDragBegin] = useState(0);
   const [open, setOpen] = useState(false);
-  const [footer, setFooter] = useState<Footer>(new Footer());
-  const [header, setHeader] = useState<Header>(new Header());
+  const [footer] = useState<Footer>(new Footer());
+  const [header] = useState<Header>(new Header());
+  const [focus, setFocus] = useState<boolean>(false);
   const { id, name } = useParams();
   const [refresh, setRefresh] = useState(false);
   const [goTo, setGoTo] = useState(false);
+
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContextProvider);
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
 
   const [blocs, setBlocs] = useState<Array<any>>([]);
-  const [highlight, setHightlight] = useState<any>();
+  const [highlight, setHighlight] = useState<any>();
   async function asynchronRequestsToPopulateBlocs(goToB: boolean = false) {
     setBlocs([]);
     await header.get_bloc();
@@ -42,6 +44,7 @@ function Visualization({}: PageParams) {
     console.log("bloc_pages", bloc_pages);
     bloc_pages !== undefined && setBlocs(bloc_pages);
     if (goToB) {
+      blocs !== undefined && setHighlight(bloc_pages[bloc_pages.length - 1]);
       setGoTo(!goTo);
     } else {
       setToggle(!toggle);
@@ -75,6 +78,7 @@ function Visualization({}: PageParams) {
     let bloc_pages = await tools.getAllBlocsPage();
 
     bloc_pages !== undefined && setBlocs(bloc_pages);
+
     setRefresh(!refresh);
   };
 
@@ -87,6 +91,7 @@ function Visualization({}: PageParams) {
     handleScroll();
   }, [goTo]);
 
+  useEffect(() => {}, [highlight]);
   return (
     <div className="page">
       <div className={s.page_container}>
@@ -121,10 +126,12 @@ function Visualization({}: PageParams) {
             <li>
               <div
                 className={s.navigate_2}
+                style={{ backgroundColor: focus ? "#0d45a5" : "" }}
                 onClick={(e) => {
                   e.preventDefault();
                   setToDrag(!drag);
                   setOpen(false);
+                  setFocus(!focus);
                 }}
               >
                 Changer l'ordre des blocs
@@ -155,6 +162,8 @@ function Visualization({}: PageParams) {
             refresh={refresh}
             setToggle={setToggle}
             page_id={Number(id)}
+            highlight={highlight}
+            setHighlight={setHighlight}
           />
         </div>
       </div>

@@ -20,6 +20,7 @@ interface BlocData {
   index: number;
   refresh: boolean;
   setToggle: any;
+  isOpen: boolean;
 }
 
 function BlocGridGroup({
@@ -32,7 +33,7 @@ function BlocGridGroup({
   saveBlocAll,
   drag,
   toggle,
-
+  isOpen,
   index,
   refresh,
   setToggle,
@@ -46,7 +47,7 @@ function BlocGridGroup({
       removeBloc={removeBloc}
       index={index}
       drag={drag}
-      isOpen={false}
+      isOpen={isOpen}
       component_visualization={
         <GridVizualisation
           input_bloc={bloc}

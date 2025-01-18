@@ -16,6 +16,7 @@ interface BlocData {
   toggle: boolean;
   index: number;
   refresh: boolean;
+  isOpen: boolean;
 }
 
 function BlocPictureGroup({
@@ -30,6 +31,7 @@ function BlocPictureGroup({
   toggle,
   index,
   refresh,
+  isOpen,
 }: BlocData) {
   return (
     <BlockContainer
@@ -40,7 +42,7 @@ function BlocPictureGroup({
       removeBloc={removeBloc}
       index={index}
       drag={drag}
-      isOpen={false}
+      isOpen={isOpen}
       component_visualization={
         <PictureGroupVizualisation
           input_bloc={bloc}
