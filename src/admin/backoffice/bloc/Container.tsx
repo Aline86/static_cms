@@ -63,9 +63,8 @@ export default abstract class Container {
 
         return await response.json();
       });
-      console.log(JSON.parse(response));
-      console.log(localStorage.getItem("authToken"));
-      if (JSON.parse(response) === localStorage.getItem("authToken")) {
+
+      if (response === localStorage.getItem("authToken")) {
         this.checked = true;
         return true;
       } else {

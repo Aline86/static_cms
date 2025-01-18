@@ -106,7 +106,8 @@ if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== 
         ]);
         session_start();
         $_SESSION['user'] = $user;
-     
+        $hash = hash('sha256', $user[0]['token']);
+        $user[0]['token'] = $hash;
         http_response_code(200);
         echo  json_encode($user);
         exit();
@@ -159,12 +160,11 @@ if($method === "check_token" && $_POST['token'] !== null) {
 
     if($hash === json_decode($_POST['token'])) {
         http_response_code(200);
-        echo  json_encode($_POST['token']);
+        echo  json_encode($hash);
        
     }else {
         http_response_code(403);
     
     }
-    
 }
 

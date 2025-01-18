@@ -55,8 +55,11 @@ function check_token($token, $db) {
     $resultat2 = $db->query($requete2);
     
     $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
- 
-    if($token === $user[0]['token']) {
+    $hash = hash('sha256', $user[0]['token']);
+  
+    $session_hash = hash('sha256', $_SESSION['user'][0]['token']);
+
+    if($token === $hash  && $hash === $session_hash) {
         
         http_response_code(200);
         return true;
@@ -78,7 +81,7 @@ $type = isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== 
 $id = isset($_GET['id']) && htmlspecialchars(strip_tags($_GET['id'])) !== null ? htmlspecialchars(strip_tags($_GET['id'])) : null;
 $id_component = isset($_GET['id_component']) && htmlspecialchars(strip_tags($_GET['id_component'])) !== null ? htmlspecialchars(strip_tags($_GET['id_component'])) : null;
 $associated_method_for_delete = isset($_GET['associated_table']) && htmlspecialchars(strip_tags($_GET['associated_table'])) !== null ? htmlspecialchars(strip_tags($_GET['associated_table'])) : null;
-
+$token = "";
 if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null) {
     
     $methods_to_check = ['add_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'update_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'delete_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'delete_child', 'add_child'];
@@ -110,7 +113,9 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
         unset($_POST['checked']);
     }
     if(isset($_POST['token'])) {
+        $token = json_decode($_POST['token']);
         unset($_POST['token']);
+      
     }
     $method_constructor = [];
     
@@ -141,7 +146,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
     foreach($crud as $method_to_call) {
   
         if($method === 'delete_child' && $method_to_call === 'delete_child' && isset($_SESSION['user'])) {
-            $can_access = check_token($_SESSION['user'][0]['token'], $db);
+            $can_access = check_token($token, $db);
             if($can_access) {
                 $method_params['id'] = $id;
                 $method_params['associated_table'] = $associated_method_for_delete;
@@ -156,7 +161,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
             exit();
         }
         if($method === 'delete' && $method_to_call === 'delete_' && isset($_SESSION['user'])) {
-            $can_access = check_token($_SESSION['user'][0]['token'], $db);
+            $can_access = check_token($token, $db);
             if($can_access) {
                 $method_params['id'] = $id;
                 $method_params['id_component'] = $id_component;
@@ -200,11 +205,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
                 exit();
             }
             else if(isset($_SESSION['user'])){
-                echo "<pre>session";
-                print_r($_SESSION['user'][0]['token']);
-                echo "</pre>";
-                $can_access = check_token($_SESSION['user'][0]['token'], $db);
-                print_r($can_access);
+                $can_access = check_token($token, $db);
                 if($can_access) {
                     $class = ucfirst($type);
         
