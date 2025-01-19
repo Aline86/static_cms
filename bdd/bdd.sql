@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `picture_group_data` (
 );
 
 
-
+test
 
 CREATE TABLE IF NOT EXISTS `button` (
 
