@@ -63,7 +63,7 @@ function CardData({
       borderRadius: "1px",
       height: full
         ? isResponsive || result.matches
-          ? `350px`
+          ? `fit-content`
           : `fit-content`
         : `fit-content`,
       border: "none",
