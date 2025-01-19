@@ -75,7 +75,7 @@ export default class BlocTools {
   };
 
   getBloc = (promise: Promise<any>) => {
-    return new Promise(async function (resolve, reject) {
+    return new Promise(async function (resolve) {
       resolve(await promise);
     });
   };

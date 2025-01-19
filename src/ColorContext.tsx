@@ -3,7 +3,7 @@ import Common from "./admin/backoffice/bloc/components/common/class/Common";
 
 const getBloc = async () => {
   let common = new Common();
-  return new Promise(async function (resolve, reject) {
+  return new Promise(async function (resolve, _) {
     let result = await common.get_bloc();
     resolve(result);
     if (result.id >= 1) {
@@ -18,7 +18,7 @@ const getBloc = async () => {
 
 const saveBloc = async () => {
   let common = new Common();
-  return new Promise(async function (resolve, reject) {
+  return new Promise(async function (resolve, _) {
     let result = await common.get_bloc();
     resolve(result);
     if (result.id >= 1) {

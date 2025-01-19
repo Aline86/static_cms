@@ -304,10 +304,6 @@ function TextReader({
         return "fontsize-12";
       case "fontsize-14":
         return "fontsize-14";
-      case "fontsize-24":
-        return "fontsize-24";
-      case "fontsize-30":
-        return "fontsize-30";
       case "fontsize-18":
         return "fontsize-18";
       case "fontsize-16":

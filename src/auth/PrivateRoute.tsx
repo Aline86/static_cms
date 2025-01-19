@@ -1,7 +1,6 @@
-import { Component, useContext, useEffect, useState } from "react";
-import { Navigate, Outlet, Route } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 import AuthContextProvider from "../auth/AuthContext";
-import CryptoJS from "crypto-js";
 
 const PrivateRoute = () => {
   const { setUser, user } = useContext(AuthContextProvider);

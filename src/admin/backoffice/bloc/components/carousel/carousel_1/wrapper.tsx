@@ -1,7 +1,5 @@
 import s from "./style/style.module.css";
-import { useEffect } from "react";
 import remove from "./../../../../../../assets/remove.png";
-
 import CarouselData from "../class/CarouselData";
 import { Carousel } from "../class/Carousel";
 import DropdownData from "../dropdown/Dropdown";
@@ -57,7 +55,6 @@ function CardData({
       <DropdownData
         bloc={bloc}
         data={data}
-        type={"carousel"}
         index={index}
         updateCarousel={updateCarousel}
       />

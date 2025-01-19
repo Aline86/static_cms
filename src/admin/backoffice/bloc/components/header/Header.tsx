@@ -90,8 +90,7 @@ export default class Header extends Container {
         break;
       case "logo_url":
         let picture_name_logo = await UploadService.handleUpload(
-          e.target.files[0],
-          this.token
+          e.target.files[0]
         );
         if (picture_name_logo !== undefined) {
           this.set_logo_url(
@@ -100,10 +99,7 @@ export default class Header extends Container {
         }
         break;
       case "image_url":
-        let picture_name = await UploadService.handleUpload(
-          e.target.files[0],
-          this.token
-        );
+        let picture_name = await UploadService.handleUpload(e.target.files[0]);
         if (picture_name !== undefined) {
           this.set_image_url(picture_name !== undefined ? picture_name : "");
         }
@@ -133,8 +129,7 @@ export default class Header extends Container {
           case "url_logo":
             if (index !== undefined) {
               let picture_name = await UploadService.handleUpload(
-                e.target.files[0],
-                this.token
+                e.target.files[0]
               );
               this.link_networks_an_others_header[index].logo_url =
                 picture_name !== undefined ? picture_name : "";
