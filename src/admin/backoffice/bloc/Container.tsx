@@ -204,7 +204,9 @@ export default abstract class Container {
             "&token=" +
             this.token,
           {
-            method: "DELETE",
+            referrerPolicy: "strict-origin-when-cross-origin", // n
+            mode: "cors",
+            method: "GET",
             credentials: "include",
           }
         );
@@ -212,7 +214,7 @@ export default abstract class Container {
         }
       }
     } catch (error: any) {
-      console.error(error.message);
+      console.error("error", error.message);
     }
   }
 

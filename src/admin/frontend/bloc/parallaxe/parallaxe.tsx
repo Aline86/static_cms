@@ -47,7 +47,8 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
           fontSize: isResponsive ? "4vh" : "12vh",
           WebkitTextFillColor: "transparent",
           lineHeight: "100%",
-          height: !isResponsive && !result.matches ? "110px" : "30px",
+          height:
+            !isResponsive && !result.matches ? "fit-content" : "fit-content",
           backgroundClip: "text",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",

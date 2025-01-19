@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 $envFile = './../.env.local';
 
@@ -8,6 +9,7 @@ $user = getenv('DB_USER');
 $password = getenv('DB_PASSWORD');
 $database_name = getenv('DB_NAME');
 $allowed_prefix = getenv('ALLOWED_ORIGIN');
+
 function is_encoded($string_to_test) {
     if (urlencode(urldecode($string_to_test)) === $string_to_test){
         return true;
@@ -22,17 +24,17 @@ function is_json($string) {
 
 // Get the Origin header from the incoming request
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
- 
 
 // Check if the origin matches the allowed prefix
 if ($origin && strpos($origin, $allowed_prefix) !== false) {
-    header('Access-Control-Allow-Origin: ' . $origin);
+    header('Access-Control-Allow-Origin: ' . $allowed_prefix);
     header('Access-Control-Allow-Headers: *' );
     header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
     header('Access-Control-Allow-Credentials: true');
     header("Access-Control-Allow-Headers: Content-Type, Authorization");
 }
 else {
+
     die();
 }
 
@@ -105,10 +107,10 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
         }
     }
     
-    if(in_array($method, $methods_to_check) && ($method === 'add_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'update_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'add_child') && (htmlspecialchars(strip_tags($_POST['token'])) === null || empty($_SESSION['user']))) {
+    if(in_array($method, $methods_to_check) && ($method === 'add_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'update_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'add_child') && (htmlspecialchars(strip_tags($token)) === null || empty($_SESSION['user']))) {
         exit();
     }
-    if(in_array($method, $methods_to_check) && ($method === 'delete_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'delete_child') && (htmlspecialchars(strip_tags($_POST['token'] === null) ) || empty($_SESSION['user']))) {
+    if(in_array($method, $methods_to_check) && ($method === 'delete_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'delete_child') && (htmlspecialchars(strip_tags($token)=== null)  || empty($_SESSION['user']))) {
         exit();
     }
  
@@ -128,6 +130,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
     }
     if(isset($_GET['token'])) {
         $token = strip_tags($_GET['token']);
+        
     }
     $method_constructor = [];
     
