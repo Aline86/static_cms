@@ -49,7 +49,7 @@ function ShrinkParams({
               {removeBloc !== undefined && (
                 <div
                   className="button_remove_container"
-                  onClick={(e) => {
+                  onClick={() => {
                     removeBloc(bloc);
                   }}
                   style={{ top: "30px", right: "30px" }}

@@ -4,21 +4,13 @@ import { Video } from "../class/Video";
 
 function CssVideoPosition({
   props,
-  updateVideo,
-  context,
   bloc,
   draggable,
-  saveBloc,
-  page_id,
   saveBlocAll,
 }: {
   props: any;
-  updateVideo: any;
-  context: string;
   bloc: Video;
   draggable: boolean;
-  saveBloc: any;
-  page_id: number;
   saveBlocAll: any;
 }) {
   return (

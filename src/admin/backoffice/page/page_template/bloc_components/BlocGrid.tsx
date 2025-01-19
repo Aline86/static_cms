@@ -1,9 +1,6 @@
 import { PictureGroup } from "../../../bloc/components/picture_group/class/PictureGroup";
 import CssPictureGroupPosition from "../../../bloc/components/picture_group/css_bloc_position/CssBlocPosition";
-import ImageGroup from "../../../bloc/components/picture_group/image_group/component";
-import PictureGroupVizualisation from "../../../../frontend/bloc/picture_group/PictureGroup";
 import BlockContainer from "./snippets/BlockContainer";
-import Grid from "../../../bloc/components/picture_group/grid/wrapper";
 import GridVizualisation from "../../../../frontend/bloc/grid/PictureGroup";
 import GridGroup from "../../../bloc/components/picture_group/grid/component";
 
@@ -56,7 +53,6 @@ function BlocGridGroup({
           input_bloc={bloc}
           toggle={toggle}
           refresh={refresh}
-          full={false}
           isResponsive={false}
         />
       }

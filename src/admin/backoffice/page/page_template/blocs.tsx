@@ -403,7 +403,6 @@ function Blocs({
             toggle={toggle}
             index={index}
             handleDragLeave={handleDragLeave}
-            refresh={refresh}
             isOpen={
               highlight !== undefined &&
               highlight.bloc_number === bloc.bloc_number

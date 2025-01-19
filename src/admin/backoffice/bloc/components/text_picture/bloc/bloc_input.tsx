@@ -1,22 +1,8 @@
 import { useEffect, useState } from "react";
 import s from "./style.module.css";
-import createLinkPlugin from "@draft-js-plugins/anchor";
-
 import { Editor } from "react-draft-wysiwyg";
 import { TextPicture } from "../class/TextPicture";
-import Draft, {
-  ContentState,
-  convertFromRaw,
-  convertToRaw,
-  convertFromHTML,
-  EditorState,
-  Modifier,
-  RawDraftContentState,
-  RichUtils,
-  AtomicBlockUtils,
-  ContentBlock,
-  RawDraftEntityRange,
-} from "draft-js";
+import { RawDraftContentState } from "draft-js";
 import { UploadService } from "../../../../services/uploadService";
 import { BASE_URL_SITE } from "../../../../../../config";
 
@@ -26,14 +12,12 @@ function BlocInput({
   draggable,
   onContentStateChange,
   index,
-  toggle,
 }: {
   input_bloc: TextPicture;
   draggable: boolean;
   updateBloc: any;
   onContentStateChange: any;
   index: number;
-  toggle: boolean;
 }) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
   const [, setFocus] = useState<boolean>(true);

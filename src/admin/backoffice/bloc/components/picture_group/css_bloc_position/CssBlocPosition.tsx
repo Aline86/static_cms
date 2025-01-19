@@ -1,6 +1,5 @@
 import s from "./style.module.css";
 import add_to_database from "./../../../../../../assets/add_to_database.png";
-import ajout from "./../../../../../../assets/ajouter.png";
 import { PictureGroup } from "../class/PictureGroup";
 
 function CssPictureGroupPosition({

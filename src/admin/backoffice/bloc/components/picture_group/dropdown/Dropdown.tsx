@@ -7,18 +7,11 @@ import PictureGroupData from "../class/PictureGroupData";
 interface DropdownInfo {
   bloc: PictureGroup;
   data: PictureGroupData;
-  type: string;
   index: number;
   updateCarousel: any;
 }
 
-function DropdownData({
-  bloc,
-  data,
-  type,
-  index,
-  updateCarousel,
-}: DropdownInfo) {
+function DropdownData({ bloc, data, index, updateCarousel }: DropdownInfo) {
   const [pages, setPages] = useState<Page[]>();
   const [page, setPage] = useState<Page>(new Page());
   const [choice, isExternalLink] = useState<string>("");

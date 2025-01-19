@@ -55,7 +55,6 @@ function CardData({
       <DropdownData
         bloc={bloc}
         data={data}
-        type={"carousel"}
         index={index}
         updateCarousel={updateCarousel}
       />

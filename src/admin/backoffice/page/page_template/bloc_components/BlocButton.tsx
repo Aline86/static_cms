@@ -15,7 +15,6 @@ interface BlocData {
   drag: boolean;
   toggle: boolean;
   index: number;
-  refresh: boolean;
   isOpen: boolean;
   handleDragLeave: any;
 }
@@ -31,7 +30,6 @@ function BlocButton({
   drag,
   toggle,
   index,
-  refresh,
   isOpen,
   handleDragLeave,
 }: BlocData) {
@@ -50,7 +48,6 @@ function BlocButton({
         <ButtonVisualization
           input_bloc={bloc}
           toggle={toggle}
-          refresh={refresh}
           full={false}
           isResponsive={false}
         />

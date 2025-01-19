@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef, createRef } from "react";
-
 import CarouselContainer from "./CarouselContainer";
 import s from "./styles/style.module.css";
 import { Carousel } from "../../../backoffice/bloc/components/carousel/class/Carousel";
@@ -25,7 +24,6 @@ function CarouselVisualization({
   const [transitionFinished, setTransitionFinished] = useState(false);
   const [cardWidth, setCardWidth] = useState<number>(0);
   const cardRef = useRef<HTMLDivElement>();
-  const [resize, setResize] = useState(window.innerWidth);
   const result = window.matchMedia("(max-width: 1200px)");
   function updateCardRef() {
     const cardWidth: number | undefined = cardRef.current?.clientWidth;
@@ -136,7 +134,6 @@ function CarouselVisualization({
           cardRef={cardRef}
           cardNumber={input_bloc.card_number}
           data={dataValue}
-          resize={resize}
           type={type}
           toggle={toggle}
           full={full}

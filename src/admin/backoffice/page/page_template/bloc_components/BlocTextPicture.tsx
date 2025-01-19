@@ -30,12 +30,10 @@ function BlocTextPicture({
   handleDragOver,
   removeBloc,
   updateBloc,
-  saveBloc,
   saveBlocAll,
   onContentStateChange,
   drag,
   toggle,
-  page_id,
   index,
   isOpen,
   handleDragLeave,
@@ -71,16 +69,12 @@ function BlocTextPicture({
               draggable={drag}
               updateBloc={updateBloc}
               onContentStateChange={onContentStateChange}
-              toggle={toggle}
               index={index}
             />
           }
           updateBloc={updateBloc}
-          context={"bloc"}
           bloc={bloc}
           draggable={drag}
-          saveBloc={saveBloc}
-          page_id={page_id}
           saveBlocAll={saveBlocAll}
         />
       }

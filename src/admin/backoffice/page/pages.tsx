@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-
 import remove from "./../../../assets/remove.png";
 import add_to_database from "./../../../assets/add_to_database.png";
 import s from "./style.module.css";
@@ -20,7 +19,6 @@ function Pages({}: PagesParams) {
   const { user, setUser } = useContext(AuthContextProvider);
   const page_type = new Page();
   const [footer, setFooter] = useState<Footer>(new Footer());
-  const [drag, setToDrag] = useState(false);
   const [dragBegin, setDragBegin] = useState(0);
   const navigate = useNavigate();
 

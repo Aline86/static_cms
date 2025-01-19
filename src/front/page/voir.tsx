@@ -151,7 +151,6 @@ function Front() {
                 input_bloc={value}
                 toggle={toggle}
                 refresh={false}
-                full={true}
                 isResponsive={false}
               />
             )}
@@ -161,7 +160,6 @@ function Front() {
             <ButtonVisualization
               input_bloc={value}
               toggle={toggle}
-              refresh={false}
               full={true}
               isResponsive={false}
             />

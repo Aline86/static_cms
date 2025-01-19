@@ -12,10 +12,8 @@ interface CardDatas {
   bloc: PictureGroup;
   gap: number;
   data: PictureGroupData;
-  toggle: boolean;
   index: number;
   updatePictureGroupData: any;
-
   show_remove: boolean;
 }
 
@@ -23,21 +21,19 @@ function CardData({
   bloc,
   gap,
   data,
-  toggle,
   index,
   updatePictureGroupData,
   show_remove,
 }: CardDatas) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
   const [mounted, setMounted] = useState(false);
-  const [focus, setFocus] = useState(false);
+  const [, setFocus] = useState(false);
   const onContentStateChange = (
     contentState: any,
-    input_bloc: PictureGroup,
+    bloc: PictureGroup,
     index: number
   ) => {
     updatePictureGroupData(contentState, "text", bloc, index);
-    //setContentState(contentState);
   };
   const updateMounted = () => {
     setMounted(!mounted);
@@ -84,7 +80,6 @@ function CardData({
       >
         <DropdownData
           data={data}
-          type={"images_group"}
           index={index}
           updateCarousel={updatePictureGroupData}
           bloc={bloc}

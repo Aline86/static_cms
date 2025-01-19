@@ -1,5 +1,5 @@
 import s from "./style/style.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import remove from "./../../../../../../assets/remove.png";
 import { PictureGroup } from "../class/PictureGroup";
 import PictureGroupData from "../class/PictureGroupData";

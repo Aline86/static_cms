@@ -5,12 +5,11 @@ import { PictureGroup } from "../class/PictureGroup";
 import PictureGroupData from "../class/PictureGroupData";
 
 interface ImageGroupData {
-  toggle: boolean;
   updatePictureGroupData: any;
   bloc: PictureGroup;
 }
 
-function ImageGroup({ toggle, updatePictureGroupData, bloc }: ImageGroupData) {
+function ImageGroup({ updatePictureGroupData, bloc }: ImageGroupData) {
   const show_remove = bloc.picture_group_data.length > 2 ? true : false;
   return (
     <div className={s.body}>
@@ -38,7 +37,6 @@ function ImageGroup({ toggle, updatePictureGroupData, bloc }: ImageGroupData) {
                   gap={bloc.gap}
                   bloc={bloc}
                   data={value}
-                  toggle={toggle}
                   index={index}
                   updatePictureGroupData={updatePictureGroupData}
                   show_remove={show_remove}

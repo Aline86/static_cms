@@ -21,7 +21,7 @@ function FooterVizualization({
   const [stylePath, setStylePath] = useState(s);
   const root_map: string =
     input_bloc.map_iframe_url; /*.replace("watch?v=", "v/");*/
-  const result = window.matchMedia("(max-width: 800px)");
+
   const isLightOrDark = (hexcolor: string = "#2f6091") => {
     var c = hexcolor.substring(1); // strip #
     var rgb = parseInt(c, 16); // convert rrggbb to decimal

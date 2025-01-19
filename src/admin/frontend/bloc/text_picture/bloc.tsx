@@ -2,7 +2,6 @@ import s from "./style.module.css";
 import Image from "./image/image";
 import Titre from "./titre/titre";
 import TextReader from "./texte/text_reader";
-
 import { useEffect, useState } from "react";
 import { RawDraftContentState } from "draft-js";
 import OptionCss from "../../../backoffice/bloc/components/text_picture/class/OptionsCss";
@@ -18,7 +17,7 @@ interface BlocParams {
   isResponsive: boolean;
 }
 
-function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
+function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
   const result = window.matchMedia("(max-width: 800px)");
   useEffect(() => {
@@ -72,13 +71,10 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
             }}
           >
             <Image
-              full={full}
               image={bloc.image}
               alt_image={bloc.alt_image}
               css={css}
-              titre={bloc.title}
               isBlocColumn={bloc.bloc_column}
-              isResponsive={isResponsive}
             />
           </div>
         )}
@@ -98,14 +94,10 @@ function Bloc({ index, bloc, css, toggle, full, isResponsive }: BlocParams) {
             }}
           >
             <TextReader
-              bloc_input={bloc}
-              index={index}
               read_more={bloc.text_button_more}
               color={bloc.background_color}
               toggle={toggle}
               contenState={contentState}
-              setContentState={undefined}
-              onContentStateChange={undefined}
               isResponsive={isResponsive}
             />
           </div>

@@ -14,8 +14,6 @@ interface CardDatas {
   height: number;
   gap: number;
   value: CarouselData;
-  trigger: boolean;
-  resize: number;
   toggle: boolean;
   full: boolean;
   isResponsive: boolean;
@@ -31,8 +29,6 @@ function CardDataShow({
   gap,
   height,
   value,
-  trigger,
-  resize,
   toggle,
   full,
   isResponsive,
@@ -140,7 +136,6 @@ function CardDataShow({
             value={value}
             width={width}
             height={height}
-            full={full}
             result={result}
             isResponsive={isResponsive}
           />
@@ -164,7 +159,6 @@ function CardDataShow({
             value={value}
             width={width}
             height={height}
-            full={full}
             result={result}
             isResponsive={isResponsive}
           />

@@ -1,34 +1,21 @@
 import { useEffect, useState } from "react";
-import ReactDOMServer from "react-dom/server";
 import BlockTextParams from "./classes/BlocTextParams";
-import { convertFromRaw, RawDraftContentState } from "draft-js";
-import { TextPicture } from "../../../../backoffice/bloc/components/text_picture/class/TextPicture";
-import { stateToHTML } from "draft-js-export-html";
-import InnerHTML from "./innerHTML";
+import { RawDraftContentState } from "draft-js";
 import s from "./style.module.css";
-import { PictureGroup } from "../../../../backoffice/bloc/components/picture_group/class/PictureGroup";
+
 interface TextParams {
-  index: number;
-  bloc_input: TextPicture | PictureGroup | undefined;
   contenState: RawDraftContentState;
-  setContentState: any;
   read_more: boolean;
   color: string;
   toggle: boolean;
-  onContentStateChange: any | undefined;
   isResponsive: boolean;
 }
 
 function TextReader({
-  index,
-  bloc_input,
-
   read_more,
   color,
   toggle,
   contenState,
-  setContentState,
-  onContentStateChange,
   isResponsive,
 }: TextParams) {
   const [stringTexts, setStringTexts] = useState<any>([]);
@@ -37,29 +24,9 @@ function TextReader({
   const [isToggle, setIsToggle] = useState(false);
   const [refresh, setRefresh] = useState(0);
   const [pictures, setPictures] = useState<Array<any>>([]);
-  const [entityMap, setEntityMap] = useState([]);
+  const [, setEntityMap] = useState([]);
   const [entityMapLength, setEntityMapLength] = useState(0);
   const [pictures_offset, setPictureOffset] = useState<Array<any>>([]);
-  const [htmlString, setHtmlString] = useState("");
-
-  const renderToStringHandler = () => {
-    const string = ReactDOMServer.renderToString(
-      <InnerHTML
-        stringTexts={stringTexts}
-        headlines={headlines}
-        textAlign={textAlign}
-        isToggle={isToggle}
-        read_more={read_more}
-        pictures_offset={pictures_offset}
-        toggle={toggle}
-        isResponsive={isResponsive}
-        setIsToggle={setIsToggle}
-        color={color}
-      />
-    );
-    setHtmlString(string);
-  };
-  // Convert ContentState to HTML
 
   /** template items counter */
 
@@ -75,7 +42,7 @@ function TextReader({
       let picture_data: number[] = [];
       let picture_data_offset: any = {};
       let i: number = 0;
-      blocs.map((bloc: any, index: number) => {
+      blocs.map((bloc: any) => {
         /** Arrangement des images en fonction de si elles sont présentes dans l'éditeur donc dans entityRange */
         if (bloc.type === "atomic" && pictures[0] !== undefined) {
           head.push(bloc.type);
@@ -133,10 +100,9 @@ function TextReader({
     let values_map: any = Object.values(contenState.entityMap);
 
     values_map.length > 0 &&
-      keys_map.map((key_map: string | number, k: number) => {
+      keys_map.map(({}, k: number) => {
         let i = 0;
-        const key_data = key_map;
-        const str = String(key_data);
+
         headlines.map((head: any, index: number) => {
           if (head === "atomic") {
             if (
@@ -164,11 +130,6 @@ function TextReader({
       setRefresh(2);
     }
 
-    values_map.length > 0 &&
-      onContentStateChange !== undefined &&
-      typeof onContentStateChange === "function" &&
-      onContentStateChange(contenState, bloc_input, index);
-
     Object.keys(picture_data_offset_final).length > 0 &&
       setPictureOffset(picture_data_offset_final);
   };
@@ -187,7 +148,7 @@ function TextReader({
     let arr_string_toshow: any = [];
     let letters_str = "";
     textBlocks !== undefined &&
-      Object.entries(textBlocks).map(([key, bloc], i) => {
+      Object.entries(textBlocks).map(([, bloc]) => {
         letters_str = retrieveDataFromBlock(bloc);
         arr_string_toshow.push(letters_str);
         letters_str = "";
@@ -335,53 +296,7 @@ function TextReader({
       setEntityMap(pictures_data);
     }
   };
-  const unstyles = (j: number) => {
-    let prev = "";
-    let strings: any = "";
-    let count = 0;
-    let balise = "";
-    stringTexts !== undefined &&
-      headlines[j] === "unstyled" &&
-      stringTexts[j] !== undefined &&
-      Object.values(stringTexts[j]).map((value: any, z: number) => {
-        console.log("value", value);
-        if (prev !== value.value) {
-          prev = value.value;
-          console.log("count ", count);
-          if (z === count) {
-            if (prev !== "bold") {
-              strings += `</strong>`;
-            }
-            if (prev !== "none") {
-              strings += `</div>`;
-            }
-          }
-          count = 0;
-          if (count === 0) {
-            if (value.value.includes("bold") && balise !== "bold") {
-              strings += `<strong>`;
-              balise = "bold";
-            }
-            if (value.value === "no-class" && balise !== "none") {
-              strings += `<div>`;
-              balise = "none";
-            }
-            strings += value.name;
-            count++;
-          }
-        } else if (prev === value.value) {
-          if (value.value === " no-class-white-space") {
-            strings += " ";
-          } else {
-            strings += value.name;
-          }
 
-          count++;
-        }
-      });
-
-    return strings;
-  };
   useEffect(() => {
     setPictureOffset([]);
     setPictures([]);
@@ -389,17 +304,7 @@ function TextReader({
 
     updateConvertToText(contenState.blocks);
   }, [contenState, refresh === 2, entityMapLength]);
-  useEffect(() => {
-    renderToStringHandler();
-  }, [toggle, stringTexts]);
-
-  useEffect(() => {
-    if (typeof onContentStateChange !== "function") {
-      getPictures(contenState.entityMap);
-
-      updateConvertToText(contenState.blocks);
-    }
-  }, []);
+  useEffect(() => {}, [toggle, stringTexts]);
 
   return (
     <div
