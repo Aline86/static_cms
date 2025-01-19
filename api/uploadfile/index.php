@@ -48,7 +48,7 @@ function is_json($string) {
 
 if(isset($_GET['token'])){
     
-  $token = $_GET['token'] ?? null;
+  $token = strip_tags($_GET['token']) ?? null;
 
   if($token === null) {
       exit();
@@ -61,7 +61,12 @@ if(isset($_GET['token'])){
     
     $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
  
-    if($_SESSION['user'][0]['token'] === $user[0]['token']) {
+    
+    $hash = hash('sha256', $user[0]['token']);
+  
+    $session_hash = hash('sha256', $_SESSION['user'][0]['token']);
+
+    if($token === $hash  && $hash === $session_hash) {
         
      
         

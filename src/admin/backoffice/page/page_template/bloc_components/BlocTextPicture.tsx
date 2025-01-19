@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Bloc from "../../../../frontend/bloc/text_picture/bloc";
 import BlocInput from "../../../bloc/components/text_picture/bloc/bloc_input";
 import { TextPicture } from "../../../bloc/components/text_picture/class/TextPicture";
@@ -18,6 +19,8 @@ interface BlocData {
   toggle: boolean;
   page_id: number;
   index: number;
+  isOpen: boolean;
+  handleDragLeave: any;
 }
 
 function BlocTextPicture({
@@ -34,17 +37,21 @@ function BlocTextPicture({
   toggle,
   page_id,
   index,
+  isOpen,
+  handleDragLeave,
 }: BlocData) {
+  useEffect(() => {}, [isOpen]);
   return (
     <BlockContainer
       bloc={bloc}
       setDragBegin={setDragBegin}
       updateDragBloc={updateDragBloc}
+      handleDragLeave={handleDragLeave}
       handleDragOver={handleDragOver}
       removeBloc={removeBloc}
       index={index}
       drag={drag}
-      isOpen={true}
+      isOpen={isOpen}
       component_visualization={
         <Bloc
           bloc={bloc}

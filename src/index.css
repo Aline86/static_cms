@@ -51,7 +51,7 @@ body {
 
 .container_data {
   display: block !important;
-  margin-bottom: 30px;
+  margin-top: 30px;
 }
 
 h2 {
@@ -161,7 +161,7 @@ label span {
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 12px 12px;
-  background: #084cdf;
+  background: #464646;
   color: #fff;
   cursor: pointer;
   border-radius: 2px;
@@ -224,18 +224,18 @@ h2,
   transition: all 0.3s ease-in-out;
 
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
-.show {
+/*.show {
   opacity: 1 !important;
-  transform: translateY(0) !important;
+  transform: translateX(0) !important;
 }
 h2.disappear,
 .container_data.disappear_data {
   opacity: 0;
 
-  transform: translateY(150px);
-}
+  transform: translateX(150px);
+}*/
 .plus img {
   width: 40px;
   height: 40px;

@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 import Page from "../../../backoffice/page/class/Page";
 import { BASE_URL_SITE } from "../../../../config";
+import { RawDraftContentState } from "react-draft-wysiwyg";
+import TextReader from "../text_picture/texte/text_reader";
 
 interface CardDatas {
   width: number;
@@ -31,6 +33,7 @@ function CardData({
   const [external, isExternalLink] = useState<boolean>(true);
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
+  const [contentState, setContentState] = useState<RawDraftContentState>();
   let style_data: any = undefined;
   if (!Boolean(data.is_data_button)) {
     style_data = {
@@ -60,12 +63,12 @@ function CardData({
       borderRadius: "1px",
       height: full
         ? isResponsive || result.matches
-          ? `350px`
-          : `${height}vw`
-        : `${height * 0.5}vw`,
+          ? `fit-content`
+          : `fit-content`
+        : `fit-content`,
       border: "none",
       backgroundColor: `${data.background_color}`,
-
+      paddingTop: "15px",
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
@@ -113,6 +116,12 @@ function CardData({
   useEffect(() => {
     id !== undefined && localStorage.setItem("previous_page_id", id);
   }, []);
+  useEffect(() => {
+    setContentState(typeof data.text === "object" ? data.text : contentState);
+  }, [data.text]);
+  useEffect(() => {
+    setContentState(typeof data.text === "object" ? data.text : contentState);
+  }, []);
   return external ? (
     <a
       target="_blank"
@@ -121,9 +130,29 @@ function CardData({
       style={style_data}
     >
       {!Boolean(data.is_data_button) ? (
-        <div className={s.text_image_group}>{data.text}</div>
+        <div className={s.text_image_group}>
+          {contentState !== undefined ? (
+            <TextReader
+              bloc_input={undefined}
+              index={data.card_number}
+              read_more={false}
+              color={data.background_color}
+              toggle={toggle}
+              contenState={contentState}
+              setContentState={undefined}
+              onContentStateChange={undefined}
+              isResponsive={isResponsive}
+            />
+          ) : (
+            data.text
+          )}
+        </div>
       ) : (
-        <InsideCardData data={data} isLightOrDark={isLightOrDark} />
+        <InsideCardData
+          data={data}
+          isLightOrDark={isLightOrDark}
+          isResponsive={isResponsive}
+        />
       )}
     </a>
   ) : (
@@ -134,9 +163,29 @@ function CardData({
       className={s.card_app_image_group}
     >
       {!Boolean(data.is_data_button) ? (
-        <div className={s.text_image_group}>{data.text}</div>
+        <div className={s.text_image_group}>
+          {contentState !== undefined ? (
+            <TextReader
+              bloc_input={undefined}
+              index={data.card_number}
+              read_more={false}
+              color={data.background_color}
+              toggle={toggle}
+              contenState={contentState}
+              setContentState={undefined}
+              onContentStateChange={undefined}
+              isResponsive={isResponsive}
+            />
+          ) : (
+            data.text
+          )}
+        </div>
       ) : (
-        <InsideCardData data={data} isLightOrDark={isLightOrDark} />
+        <InsideCardData
+          data={data}
+          isLightOrDark={isLightOrDark}
+          isResponsive={isResponsive}
+        />
       )}
     </Link>
   );

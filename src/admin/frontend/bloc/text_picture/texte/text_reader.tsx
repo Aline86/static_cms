@@ -6,9 +6,10 @@ import { TextPicture } from "../../../../backoffice/bloc/components/text_picture
 import { stateToHTML } from "draft-js-export-html";
 import InnerHTML from "./innerHTML";
 import s from "./style.module.css";
+import { PictureGroup } from "../../../../backoffice/bloc/components/picture_group/class/PictureGroup";
 interface TextParams {
   index: number;
-  bloc_input: TextPicture;
+  bloc_input: TextPicture | PictureGroup | undefined;
   contenState: RawDraftContentState;
   setContentState: any;
   read_more: boolean;
@@ -206,7 +207,16 @@ function TextReader({
       // Vérifier les balises actives pour ce caractère
       textBlock.inlineStyleRanges?.forEach((text_chunk: any) => {
         const balise = return_style(text_chunk.style); // Identifier la balise pour le style
-
+        let fontS = "";
+        if (!tagStack.includes(balise)) {
+          if (balise.includes("fontsize") && count === text_chunk.offset) {
+            console.log("inside");
+            let font = balise.split("-");
+            fontS = "font-size:" + font[1] + "px!important;";
+            result += "<div style=" + fontS + ">";
+            tagStack.push("fontsize");
+          }
+        }
         // Si le caractère est dans la plage de la balise (si le style s'applique ici)
         if (
           count >= text_chunk.offset &&
@@ -215,13 +225,13 @@ function TextReader({
           // Ouvrir la balise si elle n'a pas encore été ouverte
           if (!tagStack.includes(balise)) {
             if (balise === "bold") {
-              result += "<strong>";
+              result += "<strong style='font-size: inherit;'>";
               tagStack.push("bold");
             } else if (balise === "italic") {
-              result += "<i>";
+              result += "<i style='font-size: inherit;'>";
               tagStack.push("italic");
             } else if (balise === "underline") {
-              result += "<u>";
+              result += "<u style='font-size: inherit;'>";
               tagStack.push("underline");
             }
           }
@@ -246,6 +256,9 @@ function TextReader({
           } else if (balise === "underline" && tagStack.includes("underline")) {
             result += "</u>";
             tagStack = tagStack.filter((tag) => tag !== "underline");
+          } else if (balise.includes("fontsize")) {
+            result += "</div>";
+            tagStack.push("fontsize");
           }
         }
       });
@@ -263,6 +276,8 @@ function TextReader({
         result += "</i>";
       } else if (tag === "underline") {
         result += "</u>";
+      } else if (tag === "fontsize") {
+        result += "</div>";
       }
     }
 
@@ -297,6 +312,20 @@ function TextReader({
         return "fontsize-18";
       case "fontsize-16":
         return "fontsize-16";
+      case "fontsize-72":
+        return "fontsize-72";
+      case "fontsize-24":
+        return "fontsize-24";
+      case "fontsize-30":
+        return "fontsize-30";
+      case "fontsize-36":
+        return "fontsize-36";
+      case "fontsize-48":
+        return "fontsize-48";
+      case "fontsize-60":
+        return "fontsize-60";
+      case "fontsize-96":
+        return "fontsize-96";
       case "undefined":
         return "no-class";
       default:
@@ -470,18 +499,13 @@ function TextReader({
                 className="container_data bloc"
                 style={{ display: "inline" }}
               >
-                {stringText !== undefined &&
-                  Object.values(stringText).map((value: any, z: number) => {
-                    return (
-                      <div
-                        key={z + value.name}
-                        style={{ display: "inline" }}
-                        className={`${value.value}`}
-                      >
-                        {value.name}
-                      </div>
-                    );
-                  })}
+                {stringText !== undefined && (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: stringText,
+                    }}
+                  />
+                )}
               </div>
             </h2>
           ) : (

@@ -52,12 +52,16 @@ export class Button extends Container {
     this.set_parameters(this.type + "&id=" + this.id + "&type=" + this.type);
     return new_bloc;
   }
-  public update(e: any, field: string) {
+  public async update(e: any, field: string) {
     switch (field) {
       case "href_url":
         if (e.target.files !== null) {
-          this.set_href_url(UploadService.sanitizeName(e.target.files[0].name));
-          UploadService.handleUpload(e.target.files[0], this.token);
+          let picture_name = await UploadService.handleUpload(
+            e.target.files[0]
+          );
+          if (picture_name !== undefined && picture_name !== "") {
+            this.set_href_url(picture_name);
+          }
         } else {
           this.set_href_url(e.target.value);
         }
@@ -91,8 +95,11 @@ export class Button extends Container {
         this.set_image_url("");
         break;
       case "image_url":
-        this.set_image_url(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0], this.token);
+        let picture_name = await UploadService.handleUpload(e.target.files[0]);
+        if (picture_name !== undefined && picture_name !== "") {
+          this.set_image_url(picture_name);
+        }
+
         break;
       case "background_color":
         this.set_background_color(e.target.value);

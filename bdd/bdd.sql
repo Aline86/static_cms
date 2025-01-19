@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS `page` (
-  `id` int(11) NOT NULL auto_increment,        
+  `id` int(11) NOT NULL auto_increment,  
+  `page_number` int(8)  NOT NULL ,       
   `title` varchar(250)  NOT NULL default "",  
   `type` varchar(55)  NOT NULL default "page",    
    PRIMARY KEY  (`id`) 
@@ -27,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `picture_group_data` (
     `type` varchar(55)  NOT NULL default "picture_group_data",     
     `href_url` varchar(250)  NOT NULL default "",  
     `image_url` varchar(250)  NOT NULL default "",     
-    `text` varchar(250)  NOT NULL default "",     
+    `text` text  NOT NULL default "",     
     `background_color` varchar(250)  NOT NULL default "",     
     `text_color` varchar(250)  NOT NULL default "",     
     `card_number` int(11)  NOT NULL,   

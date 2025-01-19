@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ShrinkParams from "./shrink_params";
 
 interface BlocData {
@@ -11,6 +12,7 @@ interface BlocData {
   component_visualization: any;
   css_position: any;
   isOpen: boolean;
+  handleDragLeave: any;
 }
 
 function BlockContainer({
@@ -24,13 +26,16 @@ function BlockContainer({
   component_visualization,
   css_position,
   isOpen,
+  handleDragLeave,
 }: BlocData) {
+  useEffect(() => {}, [isOpen]);
   return (
     <div
       className="blocs"
       draggable={drag}
       onDragStart={() => setDragBegin(index)}
       onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
       onDrop={() => updateDragBloc(index)}
       key={index}
     >

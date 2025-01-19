@@ -14,6 +14,7 @@ import Prerequis from "./admin/backoffice/prerequis/prerequis";
 import PrivateRoute from "./auth/PrivateRoute";
 import Login from "./admin/authentication/login";
 import { AuthContextProvider } from "./auth/AuthContext";
+import NotFoundPage from "./auth/NotFoundPage";
 
 export default function ThemeContextProvider({}: { children: any }) {
   return (
@@ -43,6 +44,7 @@ export default function ThemeContextProvider({}: { children: any }) {
               Paramètres généraux
             </Route>
           </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AuthContextProvider>
     </HashRouter>

@@ -140,7 +140,7 @@ li {
 li .navigate,
 li .navigate_2 {
   color: white;
-  background-color: #084cdf;
+  background-color: #464646;
   padding: 15px;
 
   text-align: center;
@@ -148,6 +148,11 @@ li .navigate_2 {
   font-size: 25px;
   margin-top: 12px;
   cursor: pointer;
+}
+
+li .navigate_2:hover,
+li .navigate:hover {
+  background: #0d45a5;
 }
 li .navigate {
   width: 250px;

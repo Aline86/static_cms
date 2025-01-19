@@ -20,6 +20,14 @@ function Shrink({ props, bloc, index, isOpen }: ShrinkData) {
         onClick={(e) => {
           setOpen(!open);
         }}
+        style={{
+          backgroundColor: `
+          ${
+            bloc.type === "header" || bloc.type === "footer"
+              ? "#f4f4f4"
+              : "white"
+          }`,
+        }}
       >
         {bloc.type !== "text_picture" &&
           (!open ? (

@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 $envFile = './../.env.local';
 
@@ -8,6 +9,7 @@ $user = getenv('DB_USER');
 $password = getenv('DB_PASSWORD');
 $database_name = getenv('DB_NAME');
 $allowed_prefix = getenv('ALLOWED_ORIGIN');
+
 function is_encoded($string_to_test) {
     if (urlencode(urldecode($string_to_test)) === $string_to_test){
         return true;
@@ -22,17 +24,17 @@ function is_json($string) {
 
 // Get the Origin header from the incoming request
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
- 
 
 // Check if the origin matches the allowed prefix
 if ($origin && strpos($origin, $allowed_prefix) !== false) {
-    header('Access-Control-Allow-Origin: ' . $origin);
+    header('Access-Control-Allow-Origin: ' . $allowed_prefix);
     header('Access-Control-Allow-Headers: *' );
     header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
     header('Access-Control-Allow-Credentials: true');
     header("Access-Control-Allow-Headers: Content-Type, Authorization");
 }
 else {
+
     die();
 }
 
@@ -55,8 +57,20 @@ function check_token($token, $db) {
     $resultat2 = $db->query($requete2);
     
     $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+    $hash = hash('sha256', $user[0]['token']);
+    echo "<pre>hash";
+    print_r($hash);
+    echo "</pre>";
  
-    if($token === $user[0]['token']) {
+    $session_hash = hash('sha256', $_SESSION['user'][0]['token']);
+    echo "<pre>session";
+    print_r($session_hash);
+    echo "</pre>";
+
+    echo "<pre>token";
+    print_r($token);
+    echo "</pre>";
+    if($token === $hash  && $hash === $session_hash) {
         
         http_response_code(200);
         return true;
@@ -78,7 +92,7 @@ $type = isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== 
 $id = isset($_GET['id']) && htmlspecialchars(strip_tags($_GET['id'])) !== null ? htmlspecialchars(strip_tags($_GET['id'])) : null;
 $id_component = isset($_GET['id_component']) && htmlspecialchars(strip_tags($_GET['id_component'])) !== null ? htmlspecialchars(strip_tags($_GET['id_component'])) : null;
 $associated_method_for_delete = isset($_GET['associated_table']) && htmlspecialchars(strip_tags($_GET['associated_table'])) !== null ? htmlspecialchars(strip_tags($_GET['associated_table'])) : null;
-
+$token = "";
 if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null) {
     
     $methods_to_check = ['add_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'update_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'delete_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'delete_child', 'add_child'];
@@ -93,10 +107,10 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
         }
     }
     
-    if(in_array($method, $methods_to_check) && ($method === 'add_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'update_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'add_child') && (htmlspecialchars(strip_tags($_POST['token'])) === null || empty($_SESSION['user']))) {
+    if(in_array($method, $methods_to_check) && ($method === 'add_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'update_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'add_child') && (htmlspecialchars(strip_tags($token)) === null || empty($_SESSION['user']))) {
         exit();
     }
-    if(in_array($method, $methods_to_check) && ($method === 'delete_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'delete_child') && (htmlspecialchars(strip_tags($_POST['token'] === null) ) || empty($_SESSION['user']))) {
+    if(in_array($method, $methods_to_check) && ($method === 'delete_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'delete_child') && (htmlspecialchars(strip_tags($token)=== null)  || empty($_SESSION['user']))) {
         exit();
     }
  
@@ -110,7 +124,13 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
         unset($_POST['checked']);
     }
     if(isset($_POST['token'])) {
+        $token = json_decode(strip_tags($_POST['token']));
         unset($_POST['token']);
+      
+    }
+    if(isset($_GET['token'])) {
+        $token = strip_tags($_GET['token']);
+        
     }
     $method_constructor = [];
     
@@ -141,7 +161,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
     foreach($crud as $method_to_call) {
   
         if($method === 'delete_child' && $method_to_call === 'delete_child' && isset($_SESSION['user'])) {
-            $can_access = check_token($_SESSION['user'][0]['token'], $db);
+            $can_access = check_token($token, $db);
             if($can_access) {
                 $method_params['id'] = $id;
                 $method_params['associated_table'] = $associated_method_for_delete;
@@ -156,7 +176,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
             exit();
         }
         if($method === 'delete' && $method_to_call === 'delete_' && isset($_SESSION['user'])) {
-            $can_access = check_token($_SESSION['user'][0]['token'], $db);
+            $can_access = check_token($token, $db);
             if($can_access) {
                 $method_params['id'] = $id;
                 $method_params['id_component'] = $id_component;
@@ -200,11 +220,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
                 exit();
             }
             else if(isset($_SESSION['user'])){
-                echo "<pre>session";
-                print_r($_SESSION['user'][0]['token']);
-                echo "</pre>";
-                $can_access = check_token($_SESSION['user'][0]['token'], $db);
-                print_r($can_access);
+                $can_access = check_token($token, $db);
                 if($can_access) {
                     $class = ucfirst($type);
         

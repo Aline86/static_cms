@@ -63,9 +63,8 @@ export default abstract class Container {
 
         return await response.json();
       });
-      console.log(JSON.parse(response));
-      console.log(localStorage.getItem("authToken"));
-      if (JSON.parse(response) === localStorage.getItem("authToken")) {
+
+      if (response === localStorage.getItem("authToken")) {
         this.checked = true;
         return true;
       } else {
@@ -205,7 +204,9 @@ export default abstract class Container {
             "&token=" +
             this.token,
           {
-            method: "DELETE",
+            referrerPolicy: "strict-origin-when-cross-origin", // n
+            mode: "cors",
+            method: "GET",
             credentials: "include",
           }
         );
@@ -213,7 +214,7 @@ export default abstract class Container {
         }
       }
     } catch (error: any) {
-      console.error(error.message);
+      console.error("error", error.message);
     }
   }
 

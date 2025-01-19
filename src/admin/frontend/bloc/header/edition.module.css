@@ -78,27 +78,17 @@
   text-transform: uppercase;
   display: inline-block;
   width: fit-content;
-  height: 25px;
-
+  height: 100%;
+  line-height: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-self: center;
-  margin-top: 13px;
+
   font-size: 12px;
   width: 100%;
 
   color: white;
-}
-.title .title_container span {
-  display: inline-block;
-  position: relative;
-  top: -10px;
-  width: 100%;
-  /*animation-iteration-count: infinite;*/
-  animation-duration: 5s;
-  animation-name: slidein;
-  border-bottom: 1px solid white;
 }
 
 .end,
@@ -157,5 +147,5 @@
   margin: 0 auto;
   font-weight: 400;
   font-size: 22px;
-  margin-bottom: 0 !important;
+  margin-top: 18px !important;
 }
