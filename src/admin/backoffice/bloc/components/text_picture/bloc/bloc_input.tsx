@@ -36,7 +36,7 @@ function BlocInput({
   toggle: boolean;
 }) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
-  const [focus, setFocus] = useState<boolean>(true);
+  const [, setFocus] = useState<boolean>(true);
   const [mounted, setMounted] = useState(false);
 
   const updateMounted = () => {

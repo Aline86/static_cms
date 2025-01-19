@@ -38,4 +38,8 @@ export default class PictureGroupData {
     this.text_color = text_color;
     this.is_data_button = is_data_button;
   }
+
+  set_text(text: any) {
+    this.text = JSON.stringify(text);
+  }
 }

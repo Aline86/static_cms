@@ -87,7 +87,7 @@ export class TextPicture extends Container {
         break;
       case "image":
         this.set_image(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0], this.token);
+        UploadService.handleUpload(e.target.files[0]);
         break;
       case "css":
         switch (css_type) {

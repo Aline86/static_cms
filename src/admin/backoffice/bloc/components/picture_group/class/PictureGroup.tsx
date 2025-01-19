@@ -71,8 +71,12 @@ export class PictureGroup extends Container {
           (this.picture_group_data[index].href_url = e.target.value);
         break;
       case "text":
-        index !== undefined &&
-          (this.picture_group_data[index].text = e.target.value);
+        index !== undefined && !this.picture_group_data[index].is_data_button
+          ? (this.picture_group_data[index].text = e.target.value)
+          : index !== undefined &&
+            this.picture_group_data[index].is_data_button &&
+            (this.picture_group_data[index].text = JSON.stringify(e));
+
         break;
       case "height":
         let height = e.target.value;
@@ -93,10 +97,12 @@ export class PictureGroup extends Container {
         this.set_width(width);
         break;
       case "is_data_button":
-        index !== undefined &&
-          (this.picture_group_data[index].is_data_button = e.target.checked
+        if (index !== undefined) {
+          this.picture_group_data[index].text = "";
+          this.picture_group_data[index].is_data_button = e.target.checked
             ? true
-            : false);
+            : false;
+        }
         break;
       case "image_url":
         if (index !== undefined) {

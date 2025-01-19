@@ -1,10 +1,12 @@
 import s from "./style/style.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import remove from "./../../../../../../assets/remove.png";
 import { PictureGroup } from "../class/PictureGroup";
 import PictureGroupData from "../class/PictureGroupData";
 import DropdownData from "../dropdown/Dropdown";
 import Picture from "../../../../services/picture";
+import ContentText from "./content_text";
+import { RawDraftContentState } from "react-draft-wysiwyg";
 
 interface CardDatas {
   bloc: PictureGroup;
@@ -26,7 +28,36 @@ function CardData({
   updatePictureGroupData,
   show_remove,
 }: CardDatas) {
-  useEffect(() => {}, []);
+  const [contentState, setContentState] = useState<RawDraftContentState>();
+  const [mounted, setMounted] = useState(false);
+  const [focus, setFocus] = useState(false);
+  const onContentStateChange = (
+    contentState: any,
+    input_bloc: PictureGroup,
+    index: number
+  ) => {
+    updatePictureGroupData(contentState, "text", bloc, index);
+    //setContentState(contentState);
+  };
+  const updateMounted = () => {
+    setMounted(!mounted);
+  };
+
+  useEffect(() => {
+    if (!mounted) {
+      updateMounted();
+    }
+  }, [mounted]);
+  useEffect(() => {
+    data.is_data_button &&
+      setContentState(
+        typeof data.text === "object"
+          ? data.text
+          : typeof data.text === "string" && data.text !== ""
+          ? JSON.parse(data.text)
+          : contentState
+      );
+  }, []);
   return (
     <div>
       <div className={s.remove}>
@@ -137,15 +168,25 @@ function CardData({
             />
           </div>
         )}
-
-        <textarea
-          className={s.card_text}
-          value={data.text}
-          placeholder="texte de la carte"
-          onChange={(e) => {
-            updatePictureGroupData(e, "text", bloc, index);
-          }}
-        />
+        {data.is_data_button ? (
+          <ContentText
+            index={index}
+            bloc={bloc}
+            mounted={mounted}
+            onContentStateChange={onContentStateChange}
+            contentState={contentState}
+            setFocus={setFocus}
+          />
+        ) : (
+          <textarea
+            className={s.card_text}
+            value={data.text}
+            placeholder="texte de la carte"
+            onChange={(e) => {
+              updatePictureGroupData(e, "text", bloc, index);
+            }}
+          />
+        )}
       </div>
     </div>
   );

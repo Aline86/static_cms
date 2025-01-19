@@ -23,6 +23,9 @@
     $q = self::$db->prepare($full_SQL_string);
 
     foreach($data_bind_content as $param => $sql_value) {
+        if(is_array($sql_value)) {
+            $sql_value = json_encode($sql_value);
+        }
         $q->bindValue($param, $sql_value);
     }
 
