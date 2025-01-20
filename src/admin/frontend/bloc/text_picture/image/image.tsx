@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-
+import { useEffect } from "react";
 import s from "./style.module.css";
 import CssPosition from "../classes/cssPosition";
 import OptionCss from "../../../../backoffice/bloc/components/text_picture/class/OptionsCss";
@@ -8,24 +7,11 @@ import { BASE_URL_SITE } from "../../../../../config";
 interface ImageParams {
   image: string;
   alt_image: string;
-  full: boolean;
   css: OptionCss;
-
   isBlocColumn: boolean;
-  titre: string;
-  isResponsive: boolean;
 }
 
-function Image({
-  image,
-  alt_image,
-  full,
-  css,
-
-  isBlocColumn,
-  titre,
-  isResponsive,
-}: ImageParams) {
+function Image({ image, alt_image, css, isBlocColumn }: ImageParams) {
   let datacss = CssPosition.returnPosition(css.position);
 
   useEffect(() => {}, []);

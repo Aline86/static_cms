@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import s from "./styles.module.css";
 import v from "./style_responsive.module.css";
 import { useEffect, useState } from "react";

@@ -1,16 +1,14 @@
 import { Carousel } from "../class/Carousel";
 import CarouselData from "../class/CarouselData";
 import s from "./style/style.module.css";
-
 import CardData from "./wrapper";
 
 interface CardDatas {
-  toggle: boolean;
   updateCarousel: any;
   bloc: Carousel;
 }
 
-function CarouselOption1({ toggle, updateCarousel, bloc }: CardDatas) {
+function CarouselOption1({ updateCarousel, bloc }: CardDatas) {
   const show_remove =
     bloc !== undefined &&
     bloc.carousel_data !== undefined &&

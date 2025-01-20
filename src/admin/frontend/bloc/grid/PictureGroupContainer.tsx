@@ -1,31 +1,20 @@
 import s from "./styles/style.module.css";
-
 import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
-
 import Column from "./Column";
-import { Key, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface CarouselData {
   data: PictureGroupCard[] | undefined;
-  full: boolean;
   toggle: boolean;
 }
 
-function PictureGroupContainer({ data, full, toggle }: CarouselData) {
+function PictureGroupContainer({ data, toggle }: CarouselData) {
   const [data_break, set_data_break] = useState<any[]>([]);
   const divider = data !== undefined ? Math.ceil(data.length / 2) : undefined;
   const breakpoints =
     data !== undefined && divider !== undefined
       ? Math.ceil(data.length / divider)
       : undefined;
-
-  /*const rest =
-    data !== undefined &&
-    breakpoints !== undefined &&
-    divider !== undefined &&
-    data[breakpoints * divider] !== undefined
-      ? data[breakpoints * divider].card_number
-      : undefined;*/
 
   const add_data = () => {
     if (

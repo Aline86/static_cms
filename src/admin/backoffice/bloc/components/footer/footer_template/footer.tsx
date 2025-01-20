@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import s from "./styles.module.css";
-import ajout from "./../../../../../../assets/ajouter.png";
 import remove from "./../../../../../../assets/remove.png";
 import add_to_database from "./../../../../../../assets/add_to_database.png";
 import Footer from "../Footer";
@@ -163,7 +162,7 @@ function FooterInput({
       </div>
       <div
         className={s.button_save_page}
-        onClick={(e) => {
+        onClick={() => {
           saveBloc(input_bloc);
         }}
         style={{ top: "30px", right: "30px" }}

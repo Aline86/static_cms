@@ -40,7 +40,6 @@ CREATE TABLE IF NOT EXISTS `picture_group_data` (
 
 
 
-
 CREATE TABLE IF NOT EXISTS `button` (
 
 `id` int(11) NOT NULL auto_increment,        

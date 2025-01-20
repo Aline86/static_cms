@@ -60,7 +60,6 @@ function BlocPictureGroup({
           props={
             <ImageGroup
               updatePictureGroupData={updatePictureGroupData}
-              toggle={toggle}
               bloc={bloc}
             />
           }

@@ -1,10 +1,4 @@
-import {
-  BrowserRouter,
-  HashRouter,
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import Voir from "./admin/frontend/page/voir";
 import Pages from "./admin/backoffice/page/pages";

@@ -6,32 +6,22 @@ import DropdownData from "../dropdown/Dropdown";
 import Picture from "../../../../services/picture";
 
 interface CardDatas {
-  width: number;
-  height: number;
   gap: number;
   bloc: Carousel;
   data: CarouselData;
-  toggle: boolean;
   index: number;
   updateCarousel: any;
-  type: string;
   show_remove: boolean;
 }
 
 function CardData({
-  width,
-  height,
   gap,
   data,
   bloc,
-  toggle,
   index,
   updateCarousel,
-  type,
   show_remove,
 }: CardDatas) {
-  const result = window.matchMedia("(max-width: 1000px)");
-
   return (
     <div
       className={s.card_app}
@@ -65,7 +55,6 @@ function CardData({
       <DropdownData
         bloc={bloc}
         data={data}
-        type={"carousel"}
         index={index}
         updateCarousel={updateCarousel}
       />

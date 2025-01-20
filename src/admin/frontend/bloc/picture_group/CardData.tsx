@@ -133,14 +133,10 @@ function CardData({
         <div className={s.text_image_group}>
           {contentState !== undefined ? (
             <TextReader
-              bloc_input={undefined}
-              index={data.card_number}
               read_more={false}
               color={data.background_color}
               toggle={toggle}
               contenState={contentState}
-              setContentState={undefined}
-              onContentStateChange={undefined}
               isResponsive={isResponsive}
             />
           ) : (
@@ -166,14 +162,10 @@ function CardData({
         <div className={s.text_image_group}>
           {contentState !== undefined ? (
             <TextReader
-              bloc_input={undefined}
-              index={data.card_number}
               read_more={false}
               color={data.background_color}
               toggle={toggle}
               contenState={contentState}
-              setContentState={undefined}
-              onContentStateChange={undefined}
               isResponsive={isResponsive}
             />
           ) : (

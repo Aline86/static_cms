@@ -17,7 +17,7 @@ function Shrink({ props, bloc, index, isOpen }: ShrinkData) {
     <div className={s.shrink_bloc} key={index}>
       <div
         className={s.container_up}
-        onClick={(e) => {
+        onClick={() => {
           setOpen(!open);
         }}
         style={{

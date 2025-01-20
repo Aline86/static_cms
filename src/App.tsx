@@ -2,9 +2,7 @@ import { useContext, useEffect } from "react";
 import ThemeContextProvider from "./RoutesElements";
 import ColorContext from "./ColorContext";
 import Prerequis from "./admin/backoffice/prerequis/prerequis";
-
 import { AuthContextProvider } from "./auth/AuthContext";
-import Page from "./admin/backoffice/page/class/Page";
 
 function App() {
   const { common } = useContext(ColorContext);
@@ -16,7 +14,13 @@ function App() {
   };
 
   useEffect(() => {}, [common]);
-
+  useEffect(() => {
+    /*if (window.location.protocol !== "https:") {
+      window.location.replace(
+        "https://" + window.location.href.split("://")[1]
+      );
+    }*/
+  }, []);
   return (
     common !== null && (
       <AuthContextProvider>

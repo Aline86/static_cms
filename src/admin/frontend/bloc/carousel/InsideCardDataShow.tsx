@@ -10,7 +10,6 @@ interface CardDatas {
   value: CarouselData;
   width: number | string;
   height: number;
-  full: boolean;
   result: any;
   isResponsive: boolean;
 }
@@ -19,7 +18,6 @@ function InsideCardDataShow({
   value,
   width,
   height,
-  full,
   result,
   isResponsive,
 }: CardDatas) {

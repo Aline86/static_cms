@@ -12,7 +12,7 @@ interface BlocData {
   component_visualization: any;
   css_position: any;
   isOpen: boolean;
-  handleDragLeave: any;
+  handleDragLeave: any | undefined;
 }
 
 function BlockContainer({

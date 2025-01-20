@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, createRef } from "react";
+import { useEffect, useState, createRef } from "react";
 import s from "./styles/style.module.css";
 import { PictureGroup } from "../../../backoffice/bloc/components/picture_group/class/PictureGroup";
 import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";

@@ -8,17 +8,17 @@ interface BlocParams {
   bloc: Video;
 
   toggle: boolean;
-  updateLoaded: any;
+
   full: boolean;
-  videoLoaded: boolean;
+
   isResponsive: boolean;
 }
 
 function VideoVizualisation({
   bloc,
-  updateLoaded,
+
   full,
-  videoLoaded,
+
   isResponsive,
 
   toggle,
@@ -38,7 +38,6 @@ function VideoVizualisation({
     if (blocHeight !== undefined && blocWidth !== undefined) {
       setblocHeight(blocHeight);
       setblocWidth(blocWidth);
-      updateLoaded !== undefined && updateLoaded(true);
     }
   }
   const checkExternal = async (url: string) => {
@@ -53,10 +52,9 @@ function VideoVizualisation({
   };
   useEffect(() => {
     updateblocRef();
-  }, []);
-  useEffect(() => {
     checkExternal(bloc.video_url);
-  }, [videoLoaded]);
+  }, []);
+
   useEffect(() => {
     updateblocRef();
   }, [external, url, isResponsive]);
@@ -147,9 +145,6 @@ function VideoVizualisation({
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
-          onLoad={() => {
-            updateLoaded !== undefined && updateLoaded(true);
-          }}
         ></iframe>
       </div>
     </div>

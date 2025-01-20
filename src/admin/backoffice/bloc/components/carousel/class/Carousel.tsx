@@ -96,8 +96,7 @@ export class Carousel extends Container {
       case "image_url":
         if (index !== undefined) {
           let picture_name = await UploadService.handleUpload(
-            e.target.files[0],
-            this.token
+            e.target.files[0]
           );
 
           if (picture_name !== undefined && picture_name !== "") {

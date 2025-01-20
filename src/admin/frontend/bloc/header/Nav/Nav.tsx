@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import s from "./styles.module.css";
 import v from "./style_responsive.module.css";
 import { useEffect, useState } from "react";
@@ -20,13 +20,7 @@ export default function Nav({ opened, isResponsive }: NavInfo) {
       setPages(async_result);
     }
   };
-  /*if (
-    localStorage.getItem("previous_page_id") !== null &&
-    localStorage.getItem("previous_page_id") !== id
-  ) {
-    localStorage.removeItem("previous_page_id");
-    window.location.reload();
-  }*/
+
   useEffect(() => {
     if (isResponsive) {
       setStylePath(v);

@@ -1,9 +1,7 @@
 import s from "./style/style.module.css";
 import { PictureGroup } from "../class/PictureGroup";
 import PictureGroupData from "../class/PictureGroupData";
-import { useEffect, useState } from "react";
 import Grid from "./wrapper";
-import Picture from "../../../../services/picture";
 
 interface ImageGroupData {
   toggle: boolean;

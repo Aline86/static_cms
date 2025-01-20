@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import s from "./style.module.css";
-import HeaderVizualization from "../../frontend/bloc/header/header";
-import FooterVizualization from "../../frontend/bloc/footer/footer";
 import Header from "../bloc/components/header/Header";
 import Footer from "../bloc/components/footer/Footer";
-import HeaderInput from "../bloc/components/header/header_template/header_input";
-import FooterInput from "../bloc/components/footer/footer_template/footer";
 import BlocHeader from "../page/page_template/bloc_components/BlocHeader";
 import BlocFooter from "../page/page_template/bloc_components/BlocFooter";
 import CommonVisualization from "../bloc/components/common/general_settings";
@@ -104,7 +100,7 @@ function Prerequis({}: PageParams) {
     let async_result = await page_type.get_pages();
     if (Array.isArray(async_result) && async_result.length >= 1) {
     } else if (async_result !== undefined) {
-      let page = new Page(-1, "Accueil");
+      let page = new Page(-1, 1, "Accueil");
       let result = await page.save_bloc();
       if (result.id > -1) {
         setRefresh(!refresh);

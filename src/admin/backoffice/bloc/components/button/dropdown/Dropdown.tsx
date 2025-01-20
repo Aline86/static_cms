@@ -14,7 +14,7 @@ function DropdownData({ bloc, updateButton }: DropdownInfo) {
   const [pages, setPages] = useState<Page[]>();
   const [page, setPage] = useState<Page>(new Page());
   const [choice, isExternalLink] = useState<string>("");
-  const [toggle, setToggle] = useState<boolean>(false);
+  const [, setToggle] = useState<boolean>(false);
 
   const getPages = async () => {
     let pages = await page.get_pages();

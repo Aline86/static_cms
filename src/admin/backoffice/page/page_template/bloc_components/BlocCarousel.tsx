@@ -3,7 +3,7 @@ import CssCarouselPosition from "../../../bloc/components/carousel/css_bloc_posi
 import CarouselOption2 from "../../../bloc/components/carousel/carousel_2/component";
 import CarouselOption1 from "../../../bloc/components/carousel/carousel_1/component";
 import CarouselVisualization from "../../../../frontend/bloc/carousel/Carousel";
-import ShrinkParams from "./snippets/shrink_params";
+
 import { useEffect } from "react";
 import BlockContainer from "./snippets/BlockContainer";
 
@@ -65,17 +65,9 @@ function BlocCarousel({
         <CssCarouselPosition
           props={
             bloc.is_automatique ? (
-              <CarouselOption2
-                updateCarousel={updateCarousel}
-                toggle={toggle}
-                bloc={bloc}
-              />
+              <CarouselOption2 updateCarousel={updateCarousel} bloc={bloc} />
             ) : (
-              <CarouselOption1
-                updateCarousel={updateCarousel}
-                toggle={toggle}
-                bloc={bloc}
-              />
+              <CarouselOption1 updateCarousel={updateCarousel} bloc={bloc} />
             )
           }
           updateCarousel={updateCarousel}

@@ -173,7 +173,7 @@ export class PictureGroup extends Container {
     );
 
     await this.delete_bloc();
-    this.picture_group_data.map((value, index) => {
+    this.picture_group_data.map((_, index) => {
       this.picture_group_data[index].card_number = index;
     });
     this.set_parameters(this.type + "&id=" + this.id + "&type=" + this.type);

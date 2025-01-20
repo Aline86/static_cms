@@ -41,6 +41,7 @@ function BlocHeader({ bloc, updateHeader, saveBloc, toggle }: BlocData) {
           }
         />
       }
+      handleDragLeave={undefined}
     />
   );
 }

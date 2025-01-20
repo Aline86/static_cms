@@ -64,14 +64,10 @@ function InsideCardData({ data, isLightOrDark, isResponsive }: CardDatas) {
       >
         {contentState !== undefined && (
           <TextReader
-            bloc_input={undefined}
-            index={data.card_number}
             read_more={false}
             color={data.background_color}
             toggle={false}
             contenState={contentState}
-            setContentState={undefined}
-            onContentStateChange={undefined}
             isResponsive={isResponsive}
           />
         )}

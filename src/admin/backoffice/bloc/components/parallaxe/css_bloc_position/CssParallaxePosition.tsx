@@ -1,28 +1,16 @@
 import s from "./style.module.css";
-import middle from "./../../../../../../assets/middle.png";
-import centre from "./../../../../../../assets/centre.png";
-import gauche from "./../../../../../../assets/gauche.png";
-import droit from "./../../../../../../assets/droit.png";
 import add_to_database from "./../../../../../../assets/add_to_database.png";
 import { Parallaxe } from "../class/Parallaxe";
 
-function CssTextPicturePosition({
+function CssParallaxePosition({
   props,
-  updateParallaxe,
-  context,
   bloc,
   draggable,
-  saveBloc,
-  page_id,
   saveBlocAll,
 }: {
   props: any;
-  updateParallaxe: any;
-  context: string;
   bloc: any;
   draggable: boolean;
-  saveBloc: any;
-  page_id: number;
   saveBlocAll: any;
 }) {
   return (
@@ -61,4 +49,4 @@ function CssTextPicturePosition({
   );
 }
 
-export default CssTextPicturePosition;
+export default CssParallaxePosition;

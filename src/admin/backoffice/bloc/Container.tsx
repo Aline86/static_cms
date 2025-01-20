@@ -93,7 +93,7 @@ export default abstract class Container {
         }
       )
         .then((response) => response)
-        .then((response) => {
+        .then(() => {
           return this;
         })
         .catch((error: any) => {

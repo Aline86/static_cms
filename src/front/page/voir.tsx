@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import s from "./styles.module.css";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { TextPicture } from "../../admin/backoffice/bloc/components/text_picture/class/TextPicture";
 import { Carousel } from "../../admin/backoffice/bloc/components/carousel/class/Carousel";
 import Footer from "../../admin/backoffice/bloc/components/footer/Footer";
@@ -26,14 +26,14 @@ function Front() {
   const [blocs, setBlocs] = useState<
     Array<Carousel | TextPicture | PictureGroup | Button | Video | Parallaxe>
   >([]);
-  const { id, name } = useParams();
+  const { id } = useParams();
   const [toggle, setToggle] = useState(false);
-  const [resize, setResize] = useState(window.innerWidth);
-  const [footer, setFooter] = useState<Footer>(new Footer());
-  const [header, setHeader] = useState<Header>(new Header());
+  const [, setResize] = useState(window.innerWidth);
+  const [footer] = useState<Footer>(new Footer());
+  const [header] = useState<Header>(new Header());
   const location = useLocation();
   const result_mid = window.matchMedia("(max-width: 1200px)");
-  const [videoLoaded, isVideoLoaded] = useState<boolean>(true);
+
   const result = window.matchMedia("(max-width: 800px)");
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
@@ -98,7 +98,6 @@ function Front() {
       setResize(window.innerWidth);
     }
   }, [result.matches]);
-  useEffect(() => {}, [videoLoaded]);
 
   return (
     <div className={s.blocs_container} style={styles}>
@@ -109,7 +108,7 @@ function Front() {
         isResponsive={false}
       />
       {blocs.map((value, index) => {
-        return videoLoaded && value instanceof TextPicture ? (
+        return value instanceof TextPicture ? (
           <div key={index} className={s.bloc}>
             <Bloc
               index={index}
@@ -121,7 +120,7 @@ function Front() {
               isResponsive={false}
             />
           </div>
-        ) : videoLoaded && value instanceof Carousel ? (
+        ) : value instanceof Carousel ? (
           <div
             key={index}
             className={s.carousel}
@@ -137,7 +136,7 @@ function Front() {
               isResponsive={false}
             />
           </div>
-        ) : videoLoaded && value instanceof PictureGroup ? (
+        ) : value instanceof PictureGroup ? (
           <div key={index} className={s.carousel}>
             {!value.is_grid ? (
               <PictureGroupVizualisation
@@ -152,18 +151,15 @@ function Front() {
                 input_bloc={value}
                 toggle={toggle}
                 refresh={false}
-                full={true}
                 isResponsive={false}
-                blocs={undefined}
               />
             )}
           </div>
-        ) : videoLoaded && value instanceof Button ? (
+        ) : value instanceof Button ? (
           <div key={index} className={s.carousel}>
             <ButtonVisualization
               input_bloc={value}
               toggle={toggle}
-              refresh={false}
               full={true}
               isResponsive={false}
             />
@@ -172,15 +168,12 @@ function Front() {
           <div key={index} className={s.video}>
             <VideoVizualisation
               bloc={value}
-              updateLoaded={undefined}
               full={true}
               isResponsive={false}
-              videoLoaded={videoLoaded}
               toggle={toggle}
             />
           </div>
         ) : (
-          videoLoaded &&
           value instanceof Parallaxe && (
             <div key={index} className={s.video}>
               <ParallaxeVizualisation

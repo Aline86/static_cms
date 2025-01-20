@@ -1,5 +1,5 @@
 import s from "./style.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { Parallaxe } from "../../../backoffice/bloc/components/parallaxe/class/Parallaxe";
 import { BASE_URL_SITE } from "../../../../config";
 

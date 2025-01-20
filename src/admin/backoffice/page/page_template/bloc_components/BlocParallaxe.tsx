@@ -1,7 +1,3 @@
-import { Video } from "../../../bloc/components/video/class/Video";
-import CssVideoPosition from "../../../bloc/components/video/css_bloc_position/CssBlocPosition";
-import VideoInput from "../../../bloc/components/video/video_template/video_input";
-import VideoVizualisation from "../../../../frontend/bloc/video/video";
 import BlockContainer from "./snippets/BlockContainer";
 import { Parallaxe } from "../../../bloc/components/parallaxe/class/Parallaxe";
 import ParallaxeVizualisation from "../../../../frontend/bloc/parallaxe/parallaxe";
@@ -61,13 +57,9 @@ function BlocParallaxe({
               draggable={drag}
             />
           }
-          updateParallaxe={updateParallaxe}
           bloc={bloc}
           draggable={drag}
           saveBlocAll={saveBlocAll}
-          context={""}
-          saveBloc={undefined}
-          page_id={bloc.page_id}
         />
       }
     />

@@ -1,10 +1,6 @@
-import { SetStateAction, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import s from "./styles.module.css";
-
 import { Link, useLocation, useParams } from "react-router-dom";
-
-import { RawDraftContentState } from "draft-js";
-
 import { TextPicture } from "../../backoffice/bloc/components/text_picture/class/TextPicture";
 import { Carousel } from "../../backoffice/bloc/components/carousel/class/Carousel";
 import Footer from "../../backoffice/bloc/components/footer/Footer";
@@ -32,12 +28,12 @@ function Voir() {
   >([]);
   const { id, name } = useParams();
   const [toggle, setToggle] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  const [refresh] = useState(false);
   const [isReponsive, setResponsive] = useState(false);
-  const [footer, setFooter] = useState<Footer>(new Footer());
-  const [header, setHeader] = useState<Header>(new Header());
+  const [footer] = useState<Footer>(new Footer());
+  const [header] = useState<Header>(new Header());
   const location = useLocation();
-  const [videoLoaded, isVideoLoaded] = useState<boolean>(true);
+  const [videoLoaded] = useState<boolean>(true);
   const result = window.matchMedia("(max-width: 800px)");
   const result_mid = window.matchMedia("(max-width: 1200px)");
   let page_type = new Page(Number(id));
@@ -167,9 +163,7 @@ function Voir() {
                 input_bloc={value}
                 toggle={toggle}
                 refresh={false}
-                full={true}
                 isResponsive={isReponsive}
-                blocs={undefined}
               />
             )}
           </div>
@@ -178,7 +172,6 @@ function Voir() {
             <ButtonVisualization
               input_bloc={value}
               toggle={toggle}
-              refresh={false}
               full={true}
               isResponsive={isReponsive}
             />
@@ -187,10 +180,8 @@ function Voir() {
           <div key={index} className={s.video}>
             <VideoVizualisation
               bloc={value}
-              updateLoaded={undefined}
               full={true}
               isResponsive={isReponsive}
-              videoLoaded={videoLoaded}
               toggle={refresh}
             />
           </div>

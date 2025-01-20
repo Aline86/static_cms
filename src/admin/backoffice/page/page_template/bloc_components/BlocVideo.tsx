@@ -51,10 +51,8 @@ function BlocVideo({
       component_visualization={
         <VideoVizualisation
           bloc={bloc}
-          updateLoaded={undefined}
           full={false}
           isResponsive={false}
-          videoLoaded={false}
           toggle={toggle}
         />
       }
@@ -69,13 +67,9 @@ function BlocVideo({
               reload_blocs={reload_blocs}
             />
           }
-          updateVideo={updateVideo}
           bloc={bloc}
           draggable={drag}
           saveBlocAll={saveBlocAll}
-          context={""}
-          saveBloc={undefined}
-          page_id={bloc.page_id}
         />
       }
     />

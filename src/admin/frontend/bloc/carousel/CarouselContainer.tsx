@@ -15,10 +15,8 @@ interface CarouselData {
   updateDataValue: any;
   cardRef: any;
   updateTransitionState: any;
-
   cardNumber: number;
   data: CarouselCard[];
-  resize: number;
   type: string;
   toggle: boolean;
   full: boolean;
@@ -35,7 +33,6 @@ function CarouselContainer({
   updateDataValue,
   cardNumber,
   data,
-  resize,
   type,
   toggle,
   full,
@@ -209,7 +206,6 @@ function CarouselContainer({
                 e.preventDefault();
                 moveLeft();
               }}
-              /* style={{ marginLeft: `${bloc.gap}px` }}*/
             >
               <img
                 src={right}
@@ -249,8 +245,6 @@ function CarouselContainer({
                 }
               : {
                   minWidth: `${cardWidth}px`,
-                  /* margin: `${bloc.gap}px auto`,*/
-
                   height:
                     !isResponsive && !result.matches
                       ? `calc(${bloc.height}vw)`
@@ -302,9 +296,7 @@ function CarouselContainer({
                         gap={bloc.gap}
                         height={bloc.height}
                         value={value}
-                        trigger={trigger}
                         toggle={toggle}
-                        resize={resize}
                         full={full}
                         isResponsive={isResponsive}
                       />
@@ -352,9 +344,7 @@ function CarouselContainer({
                     gap={bloc.gap}
                     height={bloc.height}
                     value={value}
-                    trigger={trigger}
                     toggle={toggle}
-                    resize={resize}
                     full={full}
                     isResponsive={isResponsive}
                   />

@@ -1,28 +1,18 @@
 import s from "./style.module.css";
-import middle from "./../../../../../../assets/middle.png";
-import centre from "./../../../../../../assets/centre.png";
-import gauche from "./../../../../../../assets/gauche.png";
-import droit from "./../../../../../../assets/droit.png";
 import add_to_database from "./../../../../../../assets/add_to_database.png";
 import { TextPicture } from "../class/TextPicture";
 
 function CssTextPicturePosition({
   props,
   updateBloc,
-  context,
   bloc,
   draggable,
-  saveBloc,
-  page_id,
   saveBlocAll,
 }: {
   props: any;
   updateBloc: any;
-  context: string;
   bloc: any;
   draggable: boolean;
-  saveBloc: any;
-  page_id: number;
   saveBlocAll: any;
 }) {
   return (
@@ -78,7 +68,7 @@ function CssTextPicturePosition({
               <div className={s.flex_bloc_type_2}>
                 <div
                   className={s.see_text}
-                  onClick={(e) => {
+                  onClick={() => {
                     updateBloc(true, "bloc_column", undefined, bloc);
                   }}
                 >

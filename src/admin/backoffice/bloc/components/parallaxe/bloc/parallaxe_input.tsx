@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import s from "./style.module.css";
 import { Parallaxe } from "../class/Parallaxe";
 

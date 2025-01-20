@@ -4,12 +4,11 @@ import s from "./style/style.module.css";
 import CardData from "./wrapper";
 
 interface CardDatas {
-  toggle: boolean;
   updateCarousel: any;
   bloc: Carousel;
 }
 
-function CarouselOption2({ toggle, updateCarousel, bloc }: CardDatas) {
+function CarouselOption2({ updateCarousel, bloc }: CardDatas) {
   const show_remove = bloc.carousel_data.length > 2 ? true : false;
   return (
     <div>
@@ -41,14 +40,10 @@ function CarouselOption2({ toggle, updateCarousel, bloc }: CardDatas) {
             >
               <CardData
                 key={index}
-                width={bloc.width * 0.5}
                 gap={bloc.gap}
-                height={bloc.height * 0.5}
                 data={value}
-                toggle={toggle}
                 index={index}
                 updateCarousel={updateCarousel}
-                type={"carousel"}
                 show_remove={show_remove}
                 bloc={bloc}
               />
