@@ -11,9 +11,19 @@ export default class User {
   }
   public async loginAction(data: any) {
     let formdata = new FormData();
-
-    formdata.append("email", data.email);
-    formdata.append("password", data.password);
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    // Test de l'input avec la regex
+    if (emailRegex.test(data.email)) {
+      formdata.append("email", data.email);
+    } else {
+      return false;
+    }
+    if (passwordRegex.test(data.password)) {
+      formdata.append("password", data.password);
+    } else {
+      return false;
+    }
 
     const response = await fetch(
       BASE_URL_SITE + "/api/user.php?method=connexion",
@@ -35,17 +45,17 @@ export default class User {
     return response;
   }
   async logOut() {
-    let formdata = new FormData();
-
-    formdata.append("email", this.email);
-    formdata.append("password", this.password);
-
     const response = await fetch(
       BASE_URL_SITE + "/api/user.php?method=delete_connexion",
       {
-        method: "DELETE",
+        referrerPolicy: "strict-origin-when-cross-origin", // n
+        mode: "cors",
+        method: "POST",
         credentials: "include",
-        body: formdata,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `${localStorage.getItem("authToken")}`, // notice the Bearer before your token
+        },
       }
     ).then(async (response) => {
       if (!response.ok) {
@@ -55,15 +65,17 @@ export default class User {
     return response;
   }
   async check_token(): Promise<boolean> {
-    let formdata = new FormData();
-
-    formdata.append("token", JSON.stringify(this.token));
     const response = await fetch(
       BASE_URL_SITE + "/api/user.php?method=check_token",
       {
+        referrerPolicy: "strict-origin-when-cross-origin", // n
+        mode: "cors",
         method: "POST",
         credentials: "include",
-        body: formdata,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `${localStorage.getItem("authToken")}`, // notice the Bearer before your token
+        },
       }
     ).then(async (response) => {
       if (!response.ok) {
@@ -85,38 +97,5 @@ export default class User {
     } else {
       return null;
     }
-  }
-
-  async hashPassword(password: string | undefined) {
-    // Convert the password into a Uint8Array
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-
-    // Use the Web Crypto API to hash the password with SHA-256
-    const hashBuffer = await window.crypto.subtle.digest("SHA-256", data);
-
-    // Convert the ArrayBuffer to a hex string
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray
-      .map((byte) => byte.toString(16).padStart(2, "0"))
-      .join("");
-
-    return hashHex;
-  }
-
-  async decryptData(enteredPassword: string | undefined, storedHash: string) {
-    // Convert the entered password into a Uint8Array
-    const encoder = new TextEncoder();
-    const data = encoder.encode(enteredPassword);
-
-    // Hash the entered password using SHA-256
-    const hashBuffer = await window.crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray
-      .map((byte) => byte.toString(16).padStart(2, "0"))
-      .join("");
-
-    // Compare the hashed password with the stored hash
-    return hashHex === storedHash;
   }
 }

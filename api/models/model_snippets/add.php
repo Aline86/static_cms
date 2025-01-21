@@ -51,11 +51,6 @@
                         $this->add_children($data_type, $parent_id, $associated_table_name);
                     }
                 }
-               /* else {
-                    $this->add_children($all_data_blocs, $parent_id, $associated_table_name);
-                }*/
-              
-
             }
             else if(is_object($all_data_blocs)) {
                 $this->add_children($all_data_blocs, $parent_id, $associated_table_name);
@@ -63,9 +58,5 @@
             
         }
     }
-        
-        
-    
-    
-
+  
     return $query_result;

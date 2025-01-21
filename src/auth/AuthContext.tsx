@@ -10,10 +10,14 @@ function AuthContextProvider(children: any) {
     try {
       let response = await user.loginAction(data);
 
-      if (response !== undefined && response[0].token !== undefined) {
+      if (
+        response !== undefined &&
+        response[0] !== undefined &&
+        response[0].token !== undefined
+      ) {
         let token = response[0].token;
 
-        let user_data = new User(user.email, user.password, token);
+        let user_data = new User("", "", token);
         setUser(user_data);
 
         return user_data;

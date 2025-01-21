@@ -22,11 +22,11 @@ function InsideCardDataShow({
   isResponsive,
 }: CardDatas) {
   const [external, isExternalLink] = useState<boolean>(true);
-
+  const image = BASE_URL_SITE + "/api/uploadfile/" + value.image_url;
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
   const style_data = {
-    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
+    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${image}) no-repeat center / cover`,
     width: `${
       !result.matches && !isResponsive
         ? `${width}vw`
@@ -61,6 +61,7 @@ function InsideCardDataShow({
     checkExternal(value.href_url);
 
     id !== undefined && localStorage.setItem("previous_page_id", id);
+    console.log("image", image);
   }, []);
 
   return external ? (
@@ -69,20 +70,7 @@ function InsideCardDataShow({
       href={value.href_url}
       target="_blank"
       className={s.card_app}
-      style={{
-        background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${value.image_url}) no-repeat center / cover`,
-        width: `${
-          !result.matches && !isResponsive
-            ? `${width}vw`
-            : isResponsive
-            ? `200px`
-            : `200px`
-        }`,
-
-        height: `${height}vw`,
-        minHeight: "200px",
-        border: value.image_url !== "" ? "" : "1px solid rgb(168, 166, 166)",
-      }}
+      style={style_data}
     >
       {value.text.length > 0 && <div className={s.text}></div>}
     </a>

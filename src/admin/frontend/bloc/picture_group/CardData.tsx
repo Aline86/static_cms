@@ -2,14 +2,16 @@ import { Link, useParams } from "react-router-dom";
 
 import InsideCardData from "./InsideCardData";
 import s from "./styles/style.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 
 import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 import Page from "../../../backoffice/page/class/Page";
 import { BASE_URL_SITE } from "../../../../config";
 import { RawDraftContentState } from "react-draft-wysiwyg";
-import TextReader from "../text_picture/texte/text_reader";
 
+const TextReaderComponent = lazy(
+  () => import("../text_picture/texte/text_reader")
+);
 interface CardDatas {
   width: number;
   height: number;
@@ -132,13 +134,15 @@ function CardData({
       {!Boolean(data.is_data_button) ? (
         <div className={s.text_image_group}>
           {contentState !== undefined ? (
-            <TextReader
-              read_more={false}
-              color={data.background_color}
-              toggle={toggle}
-              contenState={contentState}
-              isResponsive={isResponsive}
-            />
+            <Suspense fallback={<div>Chargement...</div>}>
+              <TextReaderComponent
+                read_more={false}
+                color={data.background_color}
+                toggle={toggle}
+                contenState={contentState}
+                isResponsive={isResponsive}
+              />
+            </Suspense>
           ) : (
             data.text
           )}
@@ -161,13 +165,15 @@ function CardData({
       {!Boolean(data.is_data_button) ? (
         <div className={s.text_image_group}>
           {contentState !== undefined ? (
-            <TextReader
-              read_more={false}
-              color={data.background_color}
-              toggle={toggle}
-              contenState={contentState}
-              isResponsive={isResponsive}
-            />
+            <Suspense fallback={<div>Chargement...</div>}>
+              <TextReaderComponent
+                read_more={false}
+                color={data.background_color}
+                toggle={toggle}
+                contenState={contentState}
+                isResponsive={isResponsive}
+              />
+            </Suspense>
           ) : (
             data.text
           )}

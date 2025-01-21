@@ -42,12 +42,12 @@
             }
         } */
         
-        echo json_encode($all_components_data);
+        echo html_entity_decode(htmlspecialchars(json_encode($all_components_data)));
     }
     else {
       
         $data_components_to_build = new AllDataComponents($component, $database_name, $host, $user, $password);
         $data_to_process = $data_components_to_build->get_components_without_id();
        
-        echo json_encode($data_to_process);
+        echo html_entity_decode(htmlspecialchars(json_encode($data_to_process)));
     }

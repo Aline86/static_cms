@@ -5,7 +5,7 @@ import Prerequis from "./admin/backoffice/prerequis/prerequis";
 import { AuthContextProvider } from "./auth/AuthContext";
 
 function App() {
-  const { common } = useContext(ColorContext);
+  const { common, initCommon } = useContext(ColorContext);
   const styles: any = {
     "--titles": `${common?.titles}` ? `${common?.titles}` : "black",
     "--button-background-color": `${common?.background_color_buttons}`
@@ -20,6 +20,7 @@ function App() {
         "https://" + window.location.href.split("://")[1]
       );
     }*/
+    initCommon();
   }, []);
   return (
     common !== null && (

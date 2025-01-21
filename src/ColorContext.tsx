@@ -53,12 +53,12 @@ function ColorContextProvider(children: any) {
     });
   }
 
-  useEffect(() => {
-    initCommon();
-  }, []);
+  useEffect(() => {}, []);
   useEffect(() => {}, [common]);
   return (
-    <ColorContext.Provider value={{ common, updateCommon, saveBloc }}>
+    <ColorContext.Provider
+      value={{ common, updateCommon, saveBloc, initCommon }}
+    >
       {children.children}
     </ColorContext.Provider>
   );
