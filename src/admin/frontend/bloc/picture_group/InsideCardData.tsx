@@ -1,8 +1,9 @@
 import { RawDraftContentState } from "react-draft-wysiwyg";
 import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
-import TextReader from "../text_picture/texte/text_reader";
-import { useEffect, useState } from "react";
-
+import { lazy, Suspense, useEffect, useState } from "react";
+const TextReaderComponent = lazy(
+  () => import("../text_picture/texte/text_reader")
+);
 interface CardDatas {
   data: PictureGroupCard;
   isLightOrDark: any;
@@ -63,13 +64,15 @@ function InsideCardData({ data, isLightOrDark, isResponsive }: CardDatas) {
         }}
       >
         {contentState !== undefined && (
-          <TextReader
-            read_more={false}
-            color={data.background_color}
-            toggle={false}
-            contenState={contentState}
-            isResponsive={isResponsive}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <TextReaderComponent
+              read_more={false}
+              color={data.background_color}
+              toggle={false}
+              contenState={contentState}
+              isResponsive={isResponsive}
+            />
+          </Suspense>
         )}
       </div>
 

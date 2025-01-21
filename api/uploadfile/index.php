@@ -56,19 +56,23 @@ if(isset($_GET['token'])){
   if ($token !== null) {
       // Bearer token is sent in the format: "Bearer <token>"
  
-    $requete2 = 'SELECT token FROM user';
-    $resultat2 = $db->query($requete2);
+      $requete2 = 'SELECT token FROM user';
+      $resultat2 = $db->query($requete2);
+      $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+     //$hash = hash('sha256', $user[0]['token']);
+      $session_hash = $_SESSION['user'][0]['token'];
+      $hashed = password_verify($session_hash, $user[0]['token']);
     
-    $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
- 
-    
-    $hash = hash('sha256', $user[0]['token']);
-  
-    $session_hash = hash('sha256', $_SESSION['user'][0]['token']);
-
-    if($token === $hash  && $hash === $session_hash) {
+      if($token === $_SESSION['set_tok'] && $user[0]['token'] === $session_hash) {
+          
         
-     
+          
+      }else {
+          http_response_code(403);
+          exit();
+      }
+        
+    
         
     }else {
       exit();
@@ -78,15 +82,15 @@ if(isset($_GET['token'])){
   } else {
     exit();
   }
-}
+
 //$input = file_get_contents("php://input", "r");
 $date = new DateTime();
 $timestamp = $date->getTimestamp();
-$str = isset($_GET['name']) ? utf8_decode(urldecode($_GET['name'])) : exit;
+$str = isset($_GET['name']) ? utf8_decode(urldecode(html_entity_decode(htmlspecialchars(strip_tags($_GET['name']))))) : exit;
 $str = str_ends_with($str, '=') ? str_replace('=', '', $str) : $str;
 
 $target_dir = "./";
-$target_file = isset($_FILES["file"]["name"]) ? $target_dir . basename($_FILES["file"]["name"]) : exit;
+$target_file = $_FILES["file"]["name"] ? $target_dir . basename(html_entity_decode(htmlspecialchars(strip_tags($_FILES["file"]["name"])))) : exit;
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -118,7 +122,7 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
   if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-    echo json_encode(htmlspecialchars( basename( $_FILES["file"]["name"])));
+    echo json_encode( basename( html_entity_decode(htmlspecialchars(strip_tags($_FILES["file"]["name"])))));
     exit();
   } else {
     echo "Sorry, there was an error uploading your file.";

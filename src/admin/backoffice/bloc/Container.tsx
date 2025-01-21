@@ -11,7 +11,6 @@ export default abstract class Container {
   type: string;
   // à mettre dans un process .env
   BASE_URL: string = BASE_URL_SITE + "/api/index.php?method=";
-  token: string | null = localStorage.getItem("authToken");
   checked: boolean;
 
   constructor(id: number = -1, title: string = "", type: string = "") {
@@ -39,40 +38,7 @@ export default abstract class Container {
     });
     return formdata;
   }
-  /**
-   *
-   * @param bloc child Class
-   * @param action add or update
-   * @returns string with promise status to say if data has been correctly sent
-   */
-  public async check_token(): Promise<boolean> {
-    let formdata = new FormData();
-    formdata.append("token", JSON.stringify(this.token));
-    if (!this.checked) {
-      const response = await fetch(
-        BASE_URL_SITE + "/api/user.php?method=check_token",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formdata,
-        }
-      ).then(async (response) => {
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }
 
-        return await response.json();
-      });
-
-      if (response === localStorage.getItem("authToken")) {
-        this.checked = true;
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return false;
-  }
   /**
    *
    * @param bloc child Class
@@ -82,24 +48,29 @@ export default abstract class Container {
   public async save_bloc(): Promise<this> {
     const action = this.id > -1 ? "update" : "add";
 
-    if ((await this.check_token()) || this.checked) {
-      let data_to_send = this._create_form(this);
-      await fetch(
-        this.BASE_URL + action + "_" + this._get_class_api_call_parameters(),
-        {
-          method: "POST",
-          credentials: "include",
-          body: data_to_send,
-        }
-      )
-        .then((response) => response)
-        .then(() => {
-          return this;
-        })
-        .catch((error: any) => {
-          console.error(error.message);
-        });
-    }
+    let data_to_send = this._create_form(this);
+    await fetch(
+      this.BASE_URL + action + "_" + this._get_class_api_call_parameters(),
+      {
+        method: "POST",
+        credentials: "include",
+
+        referrerPolicy: "strict-origin-when-cross-origin", // n
+        mode: "cors",
+        headers: {
+          Authorization: `${localStorage.getItem("authToken")}`, // notice the Bearer before your token
+        },
+        body: data_to_send,
+      }
+    )
+      .then((response) => response)
+      .then(() => {
+        return this;
+      })
+      .catch((error: any) => {
+        console.error(error.message);
+      });
+
     return this;
   }
 
@@ -113,7 +84,11 @@ export default abstract class Container {
 
     try {
       const response = await fetch(
-        this.BASE_URL + "all_" + this._get_class_api_call_parameters()
+        this.BASE_URL + "all_" + this._get_class_api_call_parameters(),
+        {
+          referrerPolicy: "strict-origin-when-cross-origin", // n
+          mode: "cors",
+        }
       );
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
@@ -139,7 +114,11 @@ export default abstract class Container {
     let new_bloc: Array<any> = [];
     try {
       const response = await fetch(
-        this.BASE_URL + "all_" + this._get_class_api_call_parameters()
+        this.BASE_URL + "all_" + this._get_class_api_call_parameters(),
+        {
+          referrerPolicy: "strict-origin-when-cross-origin", // n
+          mode: "cors",
+        }
       );
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
@@ -163,7 +142,11 @@ export default abstract class Container {
     let new_bloc: this = this;
     try {
       const response = await fetch(
-        this.BASE_URL + "get_" + this._get_class_api_call_parameters()
+        this.BASE_URL + "get_" + this._get_class_api_call_parameters(),
+        {
+          referrerPolicy: "strict-origin-when-cross-origin", // n
+          mode: "cors",
+        }
       );
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
@@ -197,21 +180,20 @@ export default abstract class Container {
   }
   public async delete_bloc(): Promise<void | this> {
     try {
-      if ((await this.check_token()) || this.checked) {
-        const response = await fetch(
-          this.BASE_URL +
-            this._get_class_api_call_parameters() +
-            "&token=" +
-            this.token,
-          {
-            referrerPolicy: "strict-origin-when-cross-origin", // n
-            mode: "cors",
-            method: "GET",
-            credentials: "include",
-          }
-        );
-        if (response.ok) {
+      const response = await fetch(
+        this.BASE_URL + this._get_class_api_call_parameters(),
+        {
+          referrerPolicy: "strict-origin-when-cross-origin", // n
+          mode: "cors",
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `${localStorage.getItem("authToken")}`, // notice the Bearer before your token
+          },
         }
+      );
+      if (response.ok) {
       }
     } catch (error: any) {
       console.error("error", error.message);

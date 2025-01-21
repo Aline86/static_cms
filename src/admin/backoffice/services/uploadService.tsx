@@ -3,7 +3,8 @@ import { BASE_URL_SITE } from "../../../config";
 export class UploadService {
   constructor() {}
   static sanitizeName = (filename: string) => {
-    return sanitize(filename.replace("/.(?=.*.) /", ""));
+    let result = filename.replace(/\(.*?\)/g, "");
+    return sanitize(result);
   };
   static handleUpload = async (file: any) => {
     if (file) {

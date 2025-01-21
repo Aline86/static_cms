@@ -7,16 +7,10 @@ import Footer from "../Footer";
 interface FooterInfo {
   input_bloc: Footer;
   updateFooter: any;
-
   saveBloc: any;
 }
 
-function FooterInput({
-  input_bloc,
-  updateFooter,
-
-  saveBloc,
-}: FooterInfo) {
+function FooterInput({ input_bloc, updateFooter, saveBloc }: FooterInfo) {
   const [opened, setOpened] = useState(false);
 
   useEffect(() => {}, [input_bloc]);

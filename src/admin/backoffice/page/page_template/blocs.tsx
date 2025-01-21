@@ -1,24 +1,33 @@
 import s from "./style.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 import { RawDraftContentState } from "draft-js";
 import { TextPicture } from "../../bloc/components/text_picture/class/TextPicture";
 import { Carousel } from "../../bloc/components/carousel/class/Carousel";
 import { PictureGroup } from "../../bloc/components/picture_group/class/PictureGroup";
 import { Button } from "../../bloc/components/button/class/Button";
 import { Video } from "../../bloc/components/video/class/Video";
-import BlocTextPicture from "./bloc_components/BlocTextPicture";
-import BlocCarousel from "./bloc_components/BlocCarousel";
-import BlocPictureGroup from "./bloc_components/BlocPictureGroup";
-import BlocButton from "./bloc_components/BlocButton";
-import BlocVideo from "./bloc_components/BlocVideo";
 import BlocHeader from "./bloc_components/BlocHeader";
 import Footer from "../../bloc/components/footer/Footer";
 import Header from "../../bloc/components/header/Header";
 import BlocFooter from "./bloc_components/BlocFooter";
-import BlocParallaxe from "./bloc_components/BlocParallaxe";
 import { Parallaxe } from "../../bloc/components/parallaxe/class/Parallaxe";
-import BlocGrid from "./bloc_components/BlocGrid";
 
+const BlocTextPictureComponent = lazy(
+  () => import("./bloc_components/BlocTextPicture")
+);
+const BlocCarouselComponent = lazy(
+  () => import("./bloc_components/BlocCarousel")
+);
+const BlocPictureGroupComponent = lazy(
+  () => import("./bloc_components/BlocPictureGroup")
+);
+const BlocButtonComponent = lazy(() => import("./bloc_components/BlocButton"));
+const BlocVideoComponent = lazy(() => import("./bloc_components/BlocVideo"));
+
+const BlocParallaxeComponent = lazy(
+  () => import("./bloc_components/BlocParallaxe")
+);
+const BlocGridComponent = lazy(() => import("./bloc_components/BlocGrid"));
 interface BlocData {
   blocs: Array<any>;
   setDragBegin: any;
@@ -303,141 +312,109 @@ function Blocs({
       />
       {blocs.map((bloc, index) => {
         return bloc.type === "text_picture" ? (
-          <BlocTextPicture
-            key={index}
-            bloc={bloc}
-            setDragBegin={setDragBegin}
-            updateDragBloc={updateDragBloc}
-            handleDragOver={handleDragOver}
-            removeBloc={removeBloc}
-            updateBloc={updateBloc}
-            saveBloc={saveBloc}
-            saveBlocAll={saveBlocAll}
-            onContentStateChange={onContentStateChange}
-            drag={drag}
-            toggle={toggle}
-            page_id={page_id}
-            index={index}
-            handleDragLeave={handleDragLeave}
-            isOpen={
-              highlight !== undefined &&
-              highlight.bloc_number === bloc.bloc_number
-            }
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <BlocTextPictureComponent
+              key={index}
+              bloc={bloc}
+              setDragBegin={setDragBegin}
+              updateDragBloc={updateDragBloc}
+              handleDragOver={handleDragOver}
+              removeBloc={removeBloc}
+              updateBloc={updateBloc}
+              saveBloc={saveBloc}
+              saveBlocAll={saveBlocAll}
+              onContentStateChange={onContentStateChange}
+              drag={drag}
+              toggle={toggle}
+              page_id={page_id}
+              index={index}
+              handleDragLeave={handleDragLeave}
+              isOpen={
+                highlight !== undefined &&
+                highlight.bloc_number === bloc.bloc_number
+              }
+            />
+          </Suspense>
         ) : bloc.type === "carousel" ? (
-          <BlocCarousel
-            key={index}
-            bloc={bloc}
-            setDragBegin={setDragBegin}
-            updateDragBloc={updateDragBloc}
-            handleDragOver={handleDragOver}
-            updateCarousel={updateCarousel}
-            removeBloc={removeBloc}
-            saveBloc={saveBloc}
-            saveBlocAll={saveBlocAll}
-            drag={drag}
-            toggle={toggle}
-            page_id={page_id}
-            index={index}
-            refresh={refresh}
-            handleDragLeave={handleDragLeave}
-            isOpen={
-              highlight !== undefined &&
-              highlight.bloc_number === bloc.bloc_number
-            }
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <BlocCarouselComponent
+              key={index}
+              bloc={bloc}
+              setDragBegin={setDragBegin}
+              updateDragBloc={updateDragBloc}
+              handleDragOver={handleDragOver}
+              updateCarousel={updateCarousel}
+              removeBloc={removeBloc}
+              saveBloc={saveBloc}
+              saveBlocAll={saveBlocAll}
+              drag={drag}
+              toggle={toggle}
+              page_id={page_id}
+              index={index}
+              refresh={refresh}
+              handleDragLeave={handleDragLeave}
+              isOpen={
+                highlight !== undefined &&
+                highlight.bloc_number === bloc.bloc_number
+              }
+            />
+          </Suspense>
         ) : bloc.type === "picture_group" ? (
           !bloc.is_grid ? (
-            <BlocPictureGroup
-              key={index}
-              bloc={blocs[index]}
-              setDragBegin={setDragBegin}
-              updateDragBloc={updateDragBloc}
-              handleDragOver={handleDragOver}
-              updatePictureGroupData={updatePictureGroupData}
-              removeBloc={removeBloc}
-              saveBlocAll={saveBlocAll}
-              drag={drag}
-              toggle={toggle}
-              index={index}
-              refresh={refresh}
-              handleDragLeave={handleDragLeave}
-              isOpen={
-                highlight !== undefined &&
-                highlight.bloc_number === bloc.bloc_number
-              }
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <BlocPictureGroupComponent
+                key={index}
+                bloc={blocs[index]}
+                setDragBegin={setDragBegin}
+                updateDragBloc={updateDragBloc}
+                handleDragOver={handleDragOver}
+                updatePictureGroupData={updatePictureGroupData}
+                removeBloc={removeBloc}
+                saveBlocAll={saveBlocAll}
+                drag={drag}
+                toggle={toggle}
+                index={index}
+                refresh={refresh}
+                handleDragLeave={handleDragLeave}
+                isOpen={
+                  highlight !== undefined &&
+                  highlight.bloc_number === bloc.bloc_number
+                }
+              />
+            </Suspense>
           ) : (
-            <BlocGrid
-              key={index}
-              bloc={bloc}
-              setDragBegin={setDragBegin}
-              updateDragBloc={updateDragBloc}
-              handleDragOver={handleDragOver}
-              updatePictureGroupData={updatePictureGroupData}
-              removeBloc={removeBloc}
-              saveBlocAll={saveBlocAll}
-              drag={drag}
-              toggle={toggle}
-              setToggle={setToggle}
-              index={index}
-              handleDragLeave={handleDragLeave}
-              refresh={refresh}
-              isOpen={
-                highlight !== undefined &&
-                highlight.bloc_number === bloc.bloc_number
-              }
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <BlocGridComponent
+                key={index}
+                bloc={bloc}
+                setDragBegin={setDragBegin}
+                updateDragBloc={updateDragBloc}
+                handleDragOver={handleDragOver}
+                updatePictureGroupData={updatePictureGroupData}
+                removeBloc={removeBloc}
+                saveBlocAll={saveBlocAll}
+                drag={drag}
+                toggle={toggle}
+                setToggle={setToggle}
+                index={index}
+                handleDragLeave={handleDragLeave}
+                refresh={refresh}
+                isOpen={
+                  highlight !== undefined &&
+                  highlight.bloc_number === bloc.bloc_number
+                }
+              />
+            </Suspense>
           )
         ) : bloc.type === "button" ? (
-          <BlocButton
-            key={index}
-            bloc={bloc}
-            setDragBegin={setDragBegin}
-            updateDragBloc={updateDragBloc}
-            handleDragOver={handleDragOver}
-            updateButton={updateButton}
-            removeBloc={removeBloc}
-            saveBlocAll={saveBlocAll}
-            drag={drag}
-            toggle={toggle}
-            index={index}
-            handleDragLeave={handleDragLeave}
-            isOpen={
-              highlight !== undefined &&
-              highlight.bloc_number === bloc.bloc_number
-            }
-          />
-        ) : bloc.type === "video" ? (
-          <BlocVideo
-            key={index}
-            bloc={bloc}
-            setDragBegin={setDragBegin}
-            updateDragBloc={updateDragBloc}
-            handleDragOver={handleDragOver}
-            updateVideo={updateVideo}
-            removeBloc={removeBloc}
-            saveBlocAll={saveBlocAll}
-            drag={drag}
-            toggle={toggle}
-            refresh={refresh}
-            reload_blocs={reload_blocs}
-            index={index}
-            handleDragLeave={handleDragLeave}
-            isOpen={
-              highlight !== undefined &&
-              highlight.bloc_number === bloc.bloc_number
-            }
-          />
-        ) : (
-          bloc.type === "parallaxe" && (
-            <BlocParallaxe
+          <Suspense fallback={<div>Loading...</div>}>
+            <BlocButtonComponent
               key={index}
               bloc={bloc}
               setDragBegin={setDragBegin}
               updateDragBloc={updateDragBloc}
               handleDragOver={handleDragOver}
-              updateParallaxe={updateParallaxe}
+              updateButton={updateButton}
               removeBloc={removeBloc}
               saveBlocAll={saveBlocAll}
               drag={drag}
@@ -449,9 +426,56 @@ function Blocs({
                 highlight.bloc_number === bloc.bloc_number
               }
             />
+          </Suspense>
+        ) : bloc.type === "video" ? (
+          <Suspense fallback={<div>Loading...</div>}>
+            <BlocVideoComponent
+              key={index}
+              bloc={bloc}
+              setDragBegin={setDragBegin}
+              updateDragBloc={updateDragBloc}
+              handleDragOver={handleDragOver}
+              updateVideo={updateVideo}
+              removeBloc={removeBloc}
+              saveBlocAll={saveBlocAll}
+              drag={drag}
+              toggle={toggle}
+              refresh={refresh}
+              reload_blocs={reload_blocs}
+              index={index}
+              handleDragLeave={handleDragLeave}
+              isOpen={
+                highlight !== undefined &&
+                highlight.bloc_number === bloc.bloc_number
+              }
+            />
+          </Suspense>
+        ) : (
+          bloc.type === "parallaxe" && (
+            <Suspense fallback={<div>Loading...</div>}>
+              <BlocParallaxeComponent
+                key={index}
+                bloc={bloc}
+                setDragBegin={setDragBegin}
+                updateDragBloc={updateDragBloc}
+                handleDragOver={handleDragOver}
+                updateParallaxe={updateParallaxe}
+                removeBloc={removeBloc}
+                saveBlocAll={saveBlocAll}
+                drag={drag}
+                toggle={toggle}
+                index={index}
+                handleDragLeave={handleDragLeave}
+                isOpen={
+                  highlight !== undefined &&
+                  highlight.bloc_number === bloc.bloc_number
+                }
+              />
+            </Suspense>
           )
         );
       })}
+
       <BlocFooter
         bloc={footer}
         updateFooter={updateFooter}

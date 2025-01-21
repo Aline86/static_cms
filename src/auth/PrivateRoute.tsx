@@ -9,10 +9,10 @@ const PrivateRoute = () => {
 
   const returnState = async () => {
     const secretMessage = localStorage.getItem("authToken");
-    /// A CACHER DANS .ENV
 
     try {
       if (
+        secretMessage !== "" &&
         secretMessage !== null &&
         secretMessage !== undefined &&
         secretMessage.length > 10

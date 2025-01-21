@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import s from "./style.module.css";
 import Header from "../bloc/components/header/Header";
 import Footer from "../bloc/components/footer/Footer";
@@ -7,13 +7,14 @@ import BlocFooter from "../page/page_template/bloc_components/BlocFooter";
 import CommonVisualization from "../bloc/components/common/general_settings";
 import { Link } from "react-router-dom";
 import Page from "../page/class/Page";
+import ColorContext from "../../../ColorContext";
 
 interface PageParams {}
 
 function Prerequis({}: PageParams) {
   const [toggle, setToggle] = useState(false);
   const [refresh, setRefresh] = useState(false);
-
+  const { initCommon } = useContext(ColorContext);
   const [header, setHeader] = useState<Header>(new Header());
   const [footer, setFooter] = useState<Footer>(new Footer());
 
@@ -108,6 +109,7 @@ function Prerequis({}: PageParams) {
     }
   };
   useEffect(() => {
+    initCommon();
     create_first_page();
     getFooterAndHeader();
   }, []);

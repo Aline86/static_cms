@@ -69,7 +69,7 @@
 
 
     $SQL_result = $q->execute(); 
-  
+ 
     if(count($associated_table_with_data) > 0) {
     
         foreach($associated_table_with_data as $associated_table => $data_type_decoded) {
@@ -79,7 +79,9 @@
                   
                     if(is_array($data_item)) {
                         if($data_item['id'] >= 1) {
-                    
+                            echo "<pre>";
+                            print_r($data_item);
+                            echo "</pre>";
                             $this->update_children($data_item, $id, $associated_table);
                         }
                         else if ($data_item['id'] === -1){
@@ -89,6 +91,9 @@
                 }
             } else  {
                 if(is_array($data_type_decoded)) {
+                    echo "data_type_decoded<pre>";
+                    print_r($data_type_decoded);
+                    echo "</pre>";
                     if(isset($data_type_decoded['id']) && $data_type_decoded['id'] >= 1) {
                        
                 

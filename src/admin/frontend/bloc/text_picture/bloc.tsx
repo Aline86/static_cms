@@ -1,12 +1,11 @@
 import s from "./style.module.css";
 import Image from "./image/image";
 import Titre from "./titre/titre";
-import TextReader from "./texte/text_reader";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 import { RawDraftContentState } from "draft-js";
 import OptionCss from "../../../backoffice/bloc/components/text_picture/class/OptionsCss";
 import { TextPicture } from "../../../backoffice/bloc/components/text_picture/class/TextPicture";
-
+const TextReaderComponent = lazy(() => import("./texte/text_reader"));
 interface BlocParams {
   index: number;
   bloc: TextPicture;
@@ -93,13 +92,15 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
               margin: "0 auto",
             }}
           >
-            <TextReader
-              read_more={bloc.text_button_more}
-              color={bloc.background_color}
-              toggle={toggle}
-              contenState={contentState}
-              isResponsive={isResponsive}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <TextReaderComponent
+                read_more={bloc.text_button_more}
+                color={bloc.background_color}
+                toggle={toggle}
+                contenState={contentState}
+                isResponsive={isResponsive}
+              />
+            </Suspense>
           </div>
         )}
       </div>

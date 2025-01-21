@@ -30,8 +30,7 @@
     foreach($data_bind_content as $param => $sql_value) {
         $q->bindValue($param, $sql_value);
     }
-   // $q->bindValue(':' . $this->type . '_id', $id);
-   // $q->bindValue(':'. $this->type . '_id', $parent_id);
+
     $SQL_result = $q->execute();   
     
     

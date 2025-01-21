@@ -38,48 +38,80 @@ $db = Db::getInstance($database_name, $host, $user, $password);
 
 $method = htmlspecialchars(strip_tags($_GET['method'])) !== null ? $_GET['method'] : null; //return GET, POST, PUT, DELETE
 
+$n = 6; 
 
-
-// Function to decrypt data using AES (similar to CryptoJS)
-function decryptData($encryptedData, $secretKey) {
-    // Decode the base64 encoded ciphertext
-    $ciphertext = base64_decode($encryptedData);
-
-    // Define the encryption method
-    $method = 'aes-256-cbc';
-
-    // Initialize the key and IV (Initialization Vector)
-    // In CryptoJS, AES uses a fixed size key and IV
-    // For PHP, we need to derive the key and IV from the secret key
-
-    $key = hash('sha256', $secretKey, true); // Derive key from secret key
-    $iv = substr(hash('sha256', $secretKey), 0, 16); // Derive IV from secret key
-
-    // Decrypt the data using OpenSSL
-    $decrypted = openssl_decrypt($ciphertext, $method, $key, OPENSSL_RAW_DATA, $iv);
-   
-    // Return the decrypted data
-    return json_decode($decrypted, true);
+function getAuthorizationHeader(){
+    $headers = null;
+    if (isset($_SERVER['Authorization'])) {
+        $headers = trim($_SERVER["Authorization"]);
+    }
+    else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI
+        $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
+    } elseif (function_exists('apache_request_headers')) {
+        $requestHeaders = apache_request_headers();
+        // Server-side fix for bug in old Android versions (a nice side-effect of this fix means we don't care about capitalization for Authorization)
+        $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+        //print_r($requestHeaders);
+        if (isset($requestHeaders['Authorization'])) {
+            $headers = trim($requestHeaders['Authorization']);
+        }
+    }
+    return $headers;
 }
+function generateNumericOTP($n) { 
+      
+    // Take a generator string which consist of 
+    // all numeric digits 
+    $generator = "1357902468"; 
+  
+    // Iterate for n-times and pick a single character 
+    // from generator and append it to $result 
+      
+    // Login for generating a random character from generator 
+    //     ---generate a random number 
+    //     ---take modulus of same with length of generator (say i) 
+    //     ---append the character at place (i) from generator to result 
+  
+    $result = ""; 
+  
+    for ($i = 1; $i <= $n; $i++) { 
+        $result .= substr($generator, (rand()%(strlen($generator))), 1); 
+    } 
+  
+    // Return result 
+    return $result; 
+} 
 
 if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== null && htmlspecialchars(strip_tags($_POST['password'])) !== null) {
     
     $requete = 'SELECT password FROM user WHERE email = :email';
     $resultat = $db->prepare($requete);
-    $resultat->bindValue(':email', $_POST['email']);
+    $resultat->bindValue(':email', htmlspecialchars(strip_tags($_POST['email'])));
     $resultat->execute();  
     $user = $resultat->fetchAll(PDO::FETCH_ASSOC); 
         
-   
-    $hashed = password_verify($_POST['password'], $user[0]['password']);
   
+    $hashed = password_verify($_POST['password'], $user[0]['password']);
+
 
     if($hashed) {
-        $token = bin2hex(random_bytes(16));
+      
+        $res = mail(
+
+            'ca.haestie@gmail.com',
+        
+            'test',
+        
+            generateNumericOTP($n)
+    
+        
+        );
+    
+        $token_for_bdd = bin2hex(random_bytes(16));
     
         $requete = 'UPDATE user SET token=:token WHERE email=:email AND password=:password';
         $resultat = $db->prepare($requete);
-        $resultat->bindValue(':token',  $token);
+        $resultat->bindValue(':token',  $token_for_bdd);
         $resultat->bindValue(':email', $_POST['email']);
         $resultat->bindValue(':password', $user[0]['password']);
         $res = $resultat->execute();  
@@ -89,7 +121,7 @@ if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== 
         $resultat2 = $db->prepare($requete2);
         $resultat2->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
         $resultat2->bindParam(':password', $user[0]['password'], PDO::PARAM_STR);
-        $resultat2->bindParam(':token',  $token, PDO::PARAM_STR);
+        $resultat2->bindParam(':token',  $token_for_bdd, PDO::PARAM_STR);
         $resultat2->execute(); 
         $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
        
@@ -105,62 +137,42 @@ if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== 
             
         ]);
         session_start();
+        
         $_SESSION['user'] = $user;
-        $hash = hash('sha256', $user[0]['token']);
-        $user[0]['token'] = $hash;
+        $hash_front_token = bin2hex(random_bytes(16));
+        $_SESSION['set_tok'] = $hash_front_token;
+        $data = [];
+        $data[0]['token'] = $hash_front_token;
         http_response_code(200);
-        echo  json_encode($user);
+        echo  json_encode($data);
         exit();
     }
     else {
         http_response_code(403);
-        return false;
+        echo false;
     }
 }
-if($method === "delete_connexion" && isset($_POST['email'])  && isset($_POST['password'])) {
-
-    $requete = 'SELECT password FROM user WHERE email = :email';
-    $resultat = $db->prepare($requete);
-    $resultat->bindValue(':email', $_POST['email']);
-    $user = $resultat->fetchAll(PDO::FETCH_ASSOC); 
-    $hashed = password_verify($_POST['password'], $user[0]['password']);
-  
-  
-    if($hashed) {
-        $token = '';
-        $hashed = hash('sha512',  $_POST['password']);
-
-        $requete = 'UPDATE user SET token=:token WHERE email=:email AND password=:password';
-        $resultat = $db->prepare($requete);
-        $resultat->bindValue(':token',  $token);
-        $resultat->bindValue(':email', $_POST['email']);
-        $resultat->bindValue(':password', $user[0]['password']);
-        $resultat->execute(); 
-
-        session_destroy(); 
-        return true;
-        
-        exit();
-    }
-    else {
-        return false;
-    }
-
+$token = getAuthorizationHeader();
+if($method === "delete_connexion" && $token !== null) {
+    session_destroy(); 
+    return true;
+    
+    exit();
 }
 
-if($method === "check_token" && $_POST['token'] !== null) {
- 
-    $token = strip_tags($_POST['token']);
+if($method === "check_token" && $token !== null) {
+    session_start(); 
+
+   
 
     $requete2 = 'SELECT token FROM user';
     $resultat2 = $db->query($requete2);
   
     $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-    $hash = hash('sha256', $user[0]['token']);
 
-    if($hash === json_decode($_POST['token'])) {
+    if($_SESSION['user'][0]['token'] === $user[0]['token']) {
         http_response_code(200);
-        echo  json_encode($hash);
+        echo  json_encode($_SESSION['set_tok'] );
        
     }else {
         http_response_code(403);
