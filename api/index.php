@@ -110,18 +110,11 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
    
     if(in_array($method, $methods_to_check))  {
         $token = getAuthorizationHeader();
-        if(empty($_SESSION['user']) && $token === null) {
+        if(empty($_SESSION['user']) || $token === null) {
          
             http_response_code(403);
             exit();
         }
-    }
-    
-    if(in_array($method, $methods_to_check) && ($method === 'add_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'update_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'add_child') && ($token=== null || empty($_SESSION['user']))) {
-        exit();
-    }
-    if(in_array($method, $methods_to_check) && ($method === 'delete_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))) || $method === 'delete_child') && ($token === null || empty($_SESSION['user']))) {
-        exit();
     }
  
     if(isset($_POST['BASE_URL'])) {

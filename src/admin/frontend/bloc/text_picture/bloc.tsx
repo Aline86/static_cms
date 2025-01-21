@@ -92,7 +92,7 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
               margin: "0 auto",
             }}
           >
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>Chargement...</div>}>
               <TextReaderComponent
                 read_more={bloc.text_button_more}
                 color={bloc.background_color}

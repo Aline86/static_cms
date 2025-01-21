@@ -64,7 +64,7 @@ function InsideCardData({ data, isLightOrDark, isResponsive }: CardDatas) {
         }}
       >
         {contentState !== undefined && (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Chargement...</div>}>
             <TextReaderComponent
               read_more={false}
               color={data.background_color}

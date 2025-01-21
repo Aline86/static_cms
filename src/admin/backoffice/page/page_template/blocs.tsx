@@ -312,7 +312,7 @@ function Blocs({
       />
       {blocs.map((bloc, index) => {
         return bloc.type === "text_picture" ? (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Chargement...</div>}>
             <BlocTextPictureComponent
               key={index}
               bloc={bloc}
@@ -336,7 +336,7 @@ function Blocs({
             />
           </Suspense>
         ) : bloc.type === "carousel" ? (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Chargement...</div>}>
             <BlocCarouselComponent
               key={index}
               bloc={bloc}
@@ -361,7 +361,7 @@ function Blocs({
           </Suspense>
         ) : bloc.type === "picture_group" ? (
           !bloc.is_grid ? (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>Chargement...</div>}>
               <BlocPictureGroupComponent
                 key={index}
                 bloc={blocs[index]}
@@ -383,7 +383,7 @@ function Blocs({
               />
             </Suspense>
           ) : (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>Chargement...</div>}>
               <BlocGridComponent
                 key={index}
                 bloc={bloc}
@@ -407,7 +407,7 @@ function Blocs({
             </Suspense>
           )
         ) : bloc.type === "button" ? (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Chargement...</div>}>
             <BlocButtonComponent
               key={index}
               bloc={bloc}
@@ -428,7 +428,7 @@ function Blocs({
             />
           </Suspense>
         ) : bloc.type === "video" ? (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Chargement...</div>}>
             <BlocVideoComponent
               key={index}
               bloc={bloc}
@@ -452,7 +452,7 @@ function Blocs({
           </Suspense>
         ) : (
           bloc.type === "parallaxe" && (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>Chargement...</div>}>
               <BlocParallaxeComponent
                 key={index}
                 bloc={bloc}

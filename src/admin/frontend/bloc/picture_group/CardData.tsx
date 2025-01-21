@@ -134,7 +134,7 @@ function CardData({
       {!Boolean(data.is_data_button) ? (
         <div className={s.text_image_group}>
           {contentState !== undefined ? (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>Chargement...</div>}>
               <TextReaderComponent
                 read_more={false}
                 color={data.background_color}
@@ -165,7 +165,7 @@ function CardData({
       {!Boolean(data.is_data_button) ? (
         <div className={s.text_image_group}>
           {contentState !== undefined ? (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>Chargement...</div>}>
               <TextReaderComponent
                 read_more={false}
                 color={data.background_color}
