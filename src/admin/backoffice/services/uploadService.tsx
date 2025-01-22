@@ -13,14 +13,16 @@ export class UploadService {
 
       let filename = this.sanitizeName(file.name);
       return await fetch(
-        BASE_URL_SITE +
-          "/api/uploadfile/index.php?name=" +
-          filename +
-          "&token=" +
-          localStorage.getItem("authToken"),
+        BASE_URL_SITE + "/api/uploadfile/index.php?name=" + filename,
         {
           method: "POST",
           credentials: "include",
+
+          referrerPolicy: "strict-origin-when-cross-origin", // n
+          mode: "cors",
+          headers: {
+            Authorization: `${localStorage.getItem("authToken")}`, // notice the Bearer before your token
+          },
           body: formData,
         }
       )
@@ -48,6 +50,13 @@ export class UploadService {
 
         {
           method: "POST",
+          credentials: "include",
+
+          referrerPolicy: "strict-origin-when-cross-origin", // n
+          mode: "cors",
+          headers: {
+            Authorization: `${localStorage.getItem("authToken")}`, // notice the Bearer before your token
+          },
           body: formData,
         }
       )

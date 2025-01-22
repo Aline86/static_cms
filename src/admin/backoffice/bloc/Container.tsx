@@ -11,13 +11,11 @@ export default abstract class Container {
   type: string;
   // à mettre dans un process .env
   BASE_URL: string = BASE_URL_SITE + "/api/index.php?method=";
-  checked: boolean;
 
   constructor(id: number = -1, title: string = "", type: string = "") {
     this.id = id;
     this.title = title;
     this.type = type;
-    this.checked = false;
   }
   /**
    *

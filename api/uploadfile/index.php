@@ -5,7 +5,6 @@ require './../environment_variables.php';
 $host = getenv('DB_HOST');
 $user = getenv('DB_USER');
 $password = getenv('DB_PASSWORD');
-print_r($password);
 $database_name = getenv('DB_NAME');
 $allowed_prefix = getenv('ALLOWED_ORIGIN');
 // Get the Origin header from the incoming request
@@ -45,87 +44,96 @@ function is_json($string) {
     return json_last_error() === JSON_ERROR_NONE;
 }
 
-
-if(isset($_GET['token'])){
-    
-  $token = strip_tags($_GET['token']) ?? null;
-
-  if($token === null) {
-      exit();
+function getAuthorizationHeader(){
+  $headers = null;
+  if (isset($_SERVER['Authorization'])) {
+      $headers = trim($_SERVER["Authorization"]);
   }
-  if ($token !== null) {
-      // Bearer token is sent in the format: "Bearer <token>"
- 
-      $requete2 = 'SELECT token FROM user';
-      $resultat2 = $db->query($requete2);
-      $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-     //$hash = hash('sha256', $user[0]['token']);
-      $session_hash = $_SESSION['user'][0]['token'];
-      $hashed = password_verify($session_hash, $user[0]['token']);
-    
-      if($token === $_SESSION['set_tok'] && $user[0]['token'] === $session_hash) {
-          
-        
-          
-      }else {
-          http_response_code(403);
-          exit();
+  else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI
+      $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
+  } elseif (function_exists('apache_request_headers')) {
+      $requestHeaders = apache_request_headers();
+      // Server-side fix for bug in old Android versions (a nice side-effect of this fix means we don't care about capitalization for Authorization)
+      $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+      //print_r($requestHeaders);
+      if (isset($requestHeaders['Authorization'])) {
+          $headers = trim($requestHeaders['Authorization']);
       }
-        
+  }
+  return $headers;
+}
+if (isset($_COOKIE['set_tok'])) {
+
+  $set_tok = $_COOKIE['set_tok'];
+  $header = getAuthorizationHeader();
+  if(isset($_SESSION['user'])){
+      
+    $token = $_SESSION['user'][0]['token'];
+
+    if($set_tok === null) {
+        exit();
+    }
+    if ($token !== null) {
+        // Bearer token is sent in the format: "Bearer <token>"
+  
+        $requete2 = 'SELECT token FROM user';
+        $resultat2 = $db->query($requete2);
+        $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
     
-        
-    }else {
+    
+        if($set_tok === $header && $user[0]['token'] === $token) {
+        }else {
+            http_response_code(403);
+            exit();
+        }   
+      }else {
+        exit();
+      }
+    //$input = file_get_contents("php://input", "r");
+  $date = new DateTime();
+  $timestamp = $date->getTimestamp();
+  $str = isset($_GET['name']) ? utf8_decode(urldecode(html_entity_decode(htmlspecialchars(strip_tags($_GET['name']))))) : exit;
+  $str = str_ends_with($str, '=') ? str_replace('=', '', $str) : $str;
+
+  $target_dir = "./";
+  $target_file = $_GET["name"] ? $target_dir . basename(html_entity_decode(htmlspecialchars(strip_tags($_GET["name"])))) : exit;
+  $uploadOk = 1;
+  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+  // Check if image file is a actual image or fake image
+  if(isset($_FILES["file"]["tmp_name"])) {
+    $check = getimagesize($_FILES["file"]["tmp_name"]);
+    if($check !== false) {
+    
+    } else {
+      echo "File is not an image.";
+      http_response_code(403);
       exit();
+
+    }
+  }
+    $extensions_array = ["jpg", "png", "jpeg", "pdf", "gif", "mp3", "mp4", "wav", "wma"];
+    // Allow certain file formats
+    if(!in_array($imageFileType, $extensions_array)) {
+      echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+      $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+      echo "Sorry, your file was not uploaded.";
+    // if everything is ok, try to upload file
+    } else {
+      if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+        echo json_encode(basename( html_entity_decode(htmlspecialchars(strip_tags($_GET["name"])))));
+        exit();
+      } else {
+        echo "Sorry, there was an error uploading your file.";
+      }
     }
   
-  
   } else {
+    http_response_code(403);
     exit();
   }
-
-//$input = file_get_contents("php://input", "r");
-$date = new DateTime();
-$timestamp = $date->getTimestamp();
-$str = isset($_GET['name']) ? utf8_decode(urldecode(html_entity_decode(htmlspecialchars(strip_tags($_GET['name']))))) : exit;
-$str = str_ends_with($str, '=') ? str_replace('=', '', $str) : $str;
-
-$target_dir = "./";
-$target_file = $_FILES["file"]["name"] ? $target_dir . basename(html_entity_decode(htmlspecialchars(strip_tags($_FILES["file"]["name"])))) : exit;
-$uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-// Check if image file is a actual image or fake image
-if(isset($_POST["submit"])) {
-  $check = getimagesize($_FILES["file"]["tmp_name"]);
-  if($check !== false) {
-    echo "File is an image - " . $check["mime"] . ".";
-    $uploadOk = 1;
-  } else {
-    echo "File is not an image.";
-    $uploadOk = 0;
-  }
 }
-
-// Check if file already exists
-
-
-$extensions_array = ["jpg", "png", "jpeg", "pdf", "gif", "mp3", "mp4", "wav", "wma"];
-// Allow certain file formats
-if(!in_array($imageFileType, $extensions_array)) {
-  echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-  $uploadOk = 0;
-}
-
-// Check if $uploadOk is set to 0 by an error
-if ($uploadOk == 0) {
-  echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
-} else {
-  if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-    echo json_encode( basename( html_entity_decode(htmlspecialchars(strip_tags($_FILES["file"]["name"])))));
-    exit();
-  } else {
-    echo "Sorry, there was an error uploading your file.";
-  }
-}
-
