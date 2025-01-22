@@ -125,22 +125,19 @@ if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== 
         $resultat2->execute(); 
         $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
        
-      
-        session_set_cookie_params([
-            'lifetime' => 3600, // 1 hour
-            'path' => '/',
-            'domain' => $origin,  // Set this for your domain
-            'secure' => true,  // Use true for HTTPS in production
-            'httponly' => true,
-            'samesite' => 'True',  // Necessary for cross-site cookies
-           
-            
-        ]);
-        session_start();
-        
-        $_SESSION['user'] = $user;
+       
         $hash_front_token = bin2hex(random_bytes(16));
-        $_SESSION['set_tok'] = $hash_front_token;
+
+        // Set a cookie to store the token
+        $cookie_name = "set_tok";
+        $cookie_value = $hash_front_token;
+        $cookie_expire = time() + 3600;  // Set to expire in 1 hour (3600 seconds)
+        $cookie_path = "*/admin";  // Make the cookie accessible throughout the entire website
+        
+        // Set the cookie with secure and HttpOnly flags
+        setcookie($cookie_name, $cookie_value, $cookie_expire, $cookie_path, '', true, true);
+        session_start();
+        $_SESSION['user'] = $user;
         $data = [];
         $data[0]['token'] = $hash_front_token;
         http_response_code(200);
@@ -161,22 +158,26 @@ if($method === "delete_connexion" && $token !== null) {
 }
 
 if($method === "check_token" && $token !== null) {
-    session_start(); 
-
-   
-
-    $requete2 = 'SELECT token FROM user';
-    $resultat2 = $db->query($requete2);
-  
-    $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-
-    if($_SESSION['user'][0]['token'] === $user[0]['token']) {
-        http_response_code(200);
-        echo  json_encode($_SESSION['set_tok'] );
-       
-    }else {
-        http_response_code(403);
+ 
+    if (isset($_COOKIE['set_tok'])) {
+        session_start(); 
+        $set_tok = $_COOKIE['set_tok'];
+        $requete2 = 'SELECT token FROM user';
+        $resultat2 = $db->query($requete2);
     
+        $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+
+        if($_SESSION['user'][0]['token'] === $user[0]['token']) {
+            http_response_code(200);
+            echo  json_encode($_SESSION['user'][0]['token']);
+            exit();
+        }else {
+            http_response_code(403);
+            exit();
+        }
+    } else {
+        http_response_code(403);
+        exit();
     }
 }
 

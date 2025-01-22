@@ -27,13 +27,15 @@ $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
 // Check if the origin matches the allowed prefix
 if ($origin && strpos($origin, $allowed_prefix) !== false) {
-    header('Access-Control-Allow-Origin: ' . $allowed_prefix);
+    header('Access-Control-Allow-Origin: ' . $origin);
     header('Access-Control-Allow-Headers: *' );
     header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
     header('Access-Control-Allow-Credentials: true');
-    header("Access-Control-Allow-Headers: Content-Type, Authorization");
-    session_start();
-
+    header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        http_response_code(200);
+        exit();
+    }
 }
 else {
 
@@ -58,7 +60,7 @@ function getAuthorizationHeader(){
     }
     return $headers;
 }
-$token = getAuthorizationHeader();
+$token = null;
 class Db {
     private static $instance = NULL;
     private function __construct() {}
@@ -77,11 +79,12 @@ function check_token($token, $db) {
     $requete2 = 'SELECT token FROM user';
     $resultat2 = $db->query($requete2);
     $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-   //$hash = hash('sha256', $user[0]['token']);
-    $session_hash = $_SESSION['user'][0]['token'];
-    $hashed = password_verify($session_hash, $user[0]['token']);
-  
-    if($token === $_SESSION['set_tok'] && $user[0]['token'] === $session_hash) {
+    $auth = getAuthorizationHeader();
+
+
+    $set_tok = $_COOKIE['set_tok'];
+   
+    if($set_tok === $auth && $user[0]['token'] === $token) {
         
         http_response_code(200);
         return true;
@@ -97,6 +100,7 @@ $pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer',
 foreach($pages_array as $page_name) {
     include_once "./models/"  . $page_name . ".php";
 }
+
 $crud = ['get_', 'add_', 'update_', 'delete_', 'delete_child', 'all_'];
 $method = isset($_GET['method']) && htmlspecialchars(strip_tags($_GET['method'])) !== null ? htmlspecialchars(strip_tags($_GET['method'])) : null; //return GET, POST, PUT, DELETE
 $type = isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null ? htmlspecialchars(strip_tags($_GET['type'])) : null;
@@ -104,14 +108,14 @@ $id = isset($_GET['id']) && htmlspecialchars(strip_tags($_GET['id'])) !== null ?
 $id_component = isset($_GET['id_component']) && htmlspecialchars(strip_tags($_GET['id_component'])) !== null ? htmlspecialchars(strip_tags($_GET['id_component'])) : null;
 $associated_method_for_delete = isset($_GET['associated_table']) && htmlspecialchars(strip_tags($_GET['associated_table'])) !== null ? htmlspecialchars(strip_tags($_GET['associated_table'])) : null;
 if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null) {
-    
-    $methods_to_check = ['add_'. json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'update_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'delete_' . json_decode(htmlspecialchars(strip_tags($_GET['type']))), 'delete_child', 'add_child'];
-   
-   
-    if(in_array($method, $methods_to_check))  {
-        $token = getAuthorizationHeader();
-        if(empty($_SESSION['user']) || $token === null) {
-         
+ 
+    if(str_contains($method, 'add') || str_contains($method, 'update') || str_contains($method, 'delete'))  {
+        session_start();
+      
+        $token = $_SESSION['user'][0]['token'];
+       
+        if(empty($_COOKIE['set_tok']) || $token === null) {
+           
             http_response_code(403);
             exit();
         }
@@ -126,10 +130,15 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
     if(isset($_POST['checked'])) {
         unset($_POST['checked']);
     }
-   
+    if(isset($_POST['token'])) {
+        unset($_POST['token']);
+    }
+    if(isset($_GET['token'])) {
+        unset($_GET['token']);
+    }
     
     $method_constructor = [];
-
+    $method_params = [];
     foreach ($_POST as $parameter => $data_sent) {
     
         if($parameter !== 'BASE_URL' || $parameter !== 'parameters' || $parameter !== 'checked') {
@@ -156,7 +165,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
  
     foreach($crud as $method_to_call) {
   
-        if($method === 'delete_child' && $method_to_call === 'delete_child' && isset($_SESSION['user'])) {
+        if($method === 'delete_child' && $method_to_call === 'delete_child' && $token !== null) {
             $can_access = check_token($token, $db);
             if($can_access) {
                 $method_params['id'] = $id;
@@ -172,7 +181,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
             }
            
         }
-        if($method === 'delete' && $method_to_call === 'delete_' && isset($_SESSION['user'])) {
+        if($method === 'delete' && $method_to_call === 'delete_' && $token !== null) {
             $can_access = check_token($token, $db);
             if($can_access) {
                 $method_params['id'] = $id;
@@ -216,7 +225,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
                 include 'models/additional_base.php';
                 exit();
             }
-            else if(isset($_SESSION['user'])){
+            else if($token !== null){
              
                 $can_access = check_token($token, $db);
             

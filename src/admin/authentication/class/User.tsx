@@ -28,6 +28,8 @@ export default class User {
     const response = await fetch(
       BASE_URL_SITE + "/api/user.php?method=connexion",
       {
+        referrerPolicy: "strict-origin-when-cross-origin", // n
+        mode: "cors",
         method: "POST",
         credentials: "include",
         body: formdata,
