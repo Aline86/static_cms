@@ -77,6 +77,7 @@ function Front() {
       : "#2f6091",
     height: "fit-content",
     minHeight: "100vh",
+    "--background": `${common?.fond}` ? `${common?.fond}` : "white",
   };
   useEffect(() => {
     adaptRoot();

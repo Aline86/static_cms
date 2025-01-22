@@ -5,7 +5,7 @@ import { TextPicture } from "../class/TextPicture";
 import { RawDraftContentState } from "draft-js";
 import { UploadService } from "../../../../services/uploadService";
 import { BASE_URL_SITE } from "../../../../../../config";
-
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 function BlocInput({
   input_bloc,
   updateBloc,
@@ -103,6 +103,9 @@ function BlocInput({
                 minHeight: "150px",
                 padding: "10px",
               }}
+              toolbarClassName={s.toolbar}
+              wrapperClassName={s.wrapper}
+              editorClassName={s.editor}
               localization={{ locale: "fr" }}
               contentState={contentState}
               toolbar={{
@@ -155,9 +158,6 @@ function BlocInput({
                   options: ["Normal", "H2"],
                 },
               }}
-              toolbarClassName={s.toolbar}
-              wrapperClassName={s.wrapper}
-              editorClassName={s.editor}
               onContentStateChange={(e: any) =>
                 onContentStateChange(e, input_bloc, index)
               }

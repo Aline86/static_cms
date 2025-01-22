@@ -7,6 +7,9 @@
   align-items: center;
   margin-bottom: 30px;
 }
+.app_container {
+  background-color: var(--background);
+}
 .video {
   height: auto;
 }

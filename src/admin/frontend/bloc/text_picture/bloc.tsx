@@ -26,6 +26,7 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
     setContentState(typeof bloc.text === "object" ? bloc.text : contentState);
   }, []);
   useEffect(() => {}, [bloc, result.matches]);
+
   return (
     <div
       className={s.bloc}
@@ -39,10 +40,11 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
             ? "100px"
             : "30px",
         paddingLeft: full ? `0px` : !bloc.bloc_column ? `30px` : `0px`,
+        height: bloc.bloc_column && bloc.text === "" ? "100vh" : "",
       }}
     >
       <div className={s.titre}>
-        <Titre titre={bloc.title} />
+        <Titre bloc={bloc} full={full} isResponsive={isResponsive} />
       </div>
 
       <div
@@ -70,10 +72,10 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
             }}
           >
             <Image
-              image={bloc.image}
-              alt_image={bloc.alt_image}
+              bloc={bloc}
               css={css}
-              isBlocColumn={bloc.bloc_column}
+              full={full}
+              isResponsive={isResponsive}
             />
           </div>
         )}

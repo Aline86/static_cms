@@ -78,6 +78,7 @@ function Voir() {
     height: "fit-content",
     minHeight: "100vh",
     paddingBottom: "30px",
+    "--background": `${common?.fond}` ? `${common?.fond}` : "white",
   };
   useEffect(() => {
     adaptRoot();

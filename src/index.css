@@ -219,6 +219,9 @@ label span:hover {
 h2 {
   color: var(--titles);
 }
+.app_container {
+  min-height: 100%;
+}
 h2,
 .container_data {
   transition: all 0.3s ease-in-out;
