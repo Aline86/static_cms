@@ -50,7 +50,7 @@ function CardData({
           ? `350px`
           : `${height}vw`
         : `${height * 0.5}vw`,
-
+      cursor: "pointer",
       marginBottom: "60px",
       boxShadow: "2px 2px 3px rgba(0,0,0,0.2)",
     };
@@ -61,7 +61,7 @@ function CardData({
           ? `350px`
           : `${width}vw`
         : `${width * 0.5}vw`,
-
+      pointerEvents: "none",
       borderRadius: "1px",
       height: full
         ? isResponsive || result.matches

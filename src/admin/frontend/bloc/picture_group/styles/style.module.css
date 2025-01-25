@@ -140,7 +140,6 @@ button {
   border-radius: 3px;
   border: none;
   transition: all 0.5s;
-  pointer-events: none;
 }
 
 .text_image_group {
