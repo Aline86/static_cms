@@ -11,10 +11,7 @@
   height: 100px;
   z-index: 100;
 }
-#nav.active,
-#nav.active .backdrop {
-  height: 60px !important;
-}
+
 .container {
   display: block;
 
@@ -28,9 +25,7 @@
   opacity: 0.8;
   box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.3);
 }
-#nav.active .container {
-  height: 60px !important;
-}
+
 .backdrop::before {
   background-color: rgba(0, 0, 0, 0.2);
   content: "";
@@ -203,6 +198,13 @@
   margin-bottom: 0 !important;
 }
 @media screen and (min-width: 800px) {
+  #nav.active,
+  #nav.active .backdrop {
+    height: 60px !important;
+  }
+  #nav.active .container {
+    height: 60px !important;
+  }
   #nav.active .menu_btn .open {
     border: 3px solid black;
   }

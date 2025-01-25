@@ -1,7 +1,3 @@
-#nav {
-  transition: height 0.3s ease-in-out;
-}
-
 .backdrop {
   position: fixed;
   left: 0;
@@ -189,6 +185,86 @@
   font-weight: 400;
   font-size: 45px;
   margin-bottom: 0 !important;
+}
+@media screen and (min-width: 800px) {
+  #nav.active,
+  #nav.active .backdrop {
+    height: 60px !important;
+  }
+  #nav.active .container {
+    height: 60px !important;
+  }
+  #nav.active .menu_btn .open {
+    border: 3px solid black;
+  }
+  #nav.active .title_container h1 {
+    font-size: 25px;
+    margin-top: -3px !important;
+  }
+  #nav.active .logo {
+    height: 35px;
+    top: -3px;
+  }
+  #nav.active .facebook {
+    height: 60px;
+    margin-top: 8px;
+  }
+  #nav.active .facebook img {
+    height: 35px;
+    width: 35px;
+  }
+
+  #nav.active .title {
+    height: 18px;
+
+    color: white;
+  }
+
+  #nav.active .menu_btn {
+    height: 40px;
+
+    margin-top: 6px;
+  }
+
+  #nav.active .menu_btn__burger {
+    width: 25px;
+    height: 2px;
+  }
+
+  #nav.active .menu_btn__burger::before,
+  #nav.active .menu_btn__burger::after,
+  #nav.active {
+    width: 25px;
+    height: 2px;
+  }
+
+  #nav.active .menu_btn__burger::before {
+    transform: translateY(-8px);
+  }
+
+  #nav.active .menu_btn__burger::after {
+    transform: translateY(8px);
+  }
+
+  #nav.active .menu_btn .open {
+    border: 3px solid black;
+  }
+  .menu_btn.open .menu_btn__burger::before,
+  #nav.active .menu_btn.open .menu_btn__burger::before {
+    transform: rotate(45deg) translate(35px, -35px);
+    background: black;
+  }
+
+  .menu_btn.open .menu_btn__burger::after,
+  #nav.active .menu_btn.open .menu_btn__burger::after {
+    transform: rotate(-45deg) translate(35px, 35px);
+    background: black;
+  }
+
+  .menu_btn .open,
+  #nav.active .menu_btn .open {
+    border: 3px solid black;
+  }
 }
 @media screen and (max-width: 1200px) {
   .container {

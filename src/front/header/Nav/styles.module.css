@@ -38,7 +38,7 @@
   border: 1px solid black;
 }
 .ul_menu a li:hover span {
-  animation-duration: 0.3s;
+  animation-duration: 0.5s;
   animation-name: slidein;
 }
 

@@ -63,7 +63,6 @@ function Voir() {
       root.style.width = "100vw";
       root.style.paddingTop = "100px";
       root.style.paddingBottom = "0px";
-      root.style.margin = "0px";
     }
   };
   useEffect(() => {

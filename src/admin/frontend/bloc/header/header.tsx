@@ -48,12 +48,14 @@ function HeaderVizualization({
   };
 
   const nav_animation = () => {
-    const nav = document.getElementById("nav");
+    const nav = document.getElementById(stylePath.nav);
 
     window.addEventListener("scroll", function () {
       if (nav !== undefined && nav !== null) {
-        if (window.scrollY > nav.offsetHeight + 150) {
-          nav.classList.add(stylePath.active);
+        if (window.scrollY > nav.offsetHeight + 350) {
+          if (!nav.className.includes("active")) {
+            nav.classList.add(stylePath.active);
+          }
         } else {
           nav.classList.remove(stylePath.active);
         }
