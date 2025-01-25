@@ -92,14 +92,15 @@ function Front() {
   }, []);
 
   return (
-    <div className={s.blocs_container} style={styles}>
-      <HeaderVizualization
-        input_bloc={header}
-        toggle={toggle}
-        full={true}
-        isResponsive={false}
-      />
-      <main>
+    <div>
+      <div id="container" className={s.blocs_container} style={styles}>
+        <HeaderVizualization
+          input_bloc={header}
+          toggle={toggle}
+          full={true}
+          isResponsive={false}
+        />
+
         {blocs.map((value, index) => {
           return value instanceof TextPicture ? (
             <div key={index} className={s.bloc}>
@@ -178,8 +179,7 @@ function Front() {
             )
           );
         })}
-      </main>
-
+      </div>
       <FooterVizualization
         input_bloc={footer}
         toggle={toggle}

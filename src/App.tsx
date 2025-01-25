@@ -8,7 +8,19 @@ function App() {
   const { common, initCommon } = useContext(ColorContext);
   const [resize, setResize] = useState(window.innerWidth);
   const result = window.matchMedia("(max-width: 1200px)");
-
+  const set_position_footer = () => {
+    let footer = document.querySelector("footer");
+    let container = document.getElementById("container");
+    if (
+      container !== undefined &&
+      container !== null &&
+      container.clientHeight < 800 &&
+      footer !== undefined &&
+      footer !== null
+    ) {
+      footer.classList.add("fixed");
+    }
+  };
   function updateSize() {
     setResize(window.innerWidth);
   }
@@ -26,6 +38,9 @@ function App() {
   useEffect(() => {}, [common, resize]);
   useEffect(() => {
     initCommon();
+  }, []);
+  useEffect(() => {
+    set_position_footer();
   }, []);
   return (
     common !== null && (

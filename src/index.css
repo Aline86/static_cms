@@ -1,6 +1,19 @@
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#container {
+  grid-row: 1; /* Place le footer sur la deuxième ligne */
+}
+
+footer {
+  grid-row: 2;
+}
 body,
-#root,
-main {
+#root {
   margin: 0;
   padding: 0;
   overflow-x: hidden;

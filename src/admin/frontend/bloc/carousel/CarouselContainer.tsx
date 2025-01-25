@@ -220,10 +220,11 @@ function CarouselContainer({
           style={
             isResponsive || result.matches
               ? {
-                  minWidth: `${cardWidth}px`,
+                  minWidth: "360px",
                   /*  margin: `${bloc.gap}px auto`,*/
 
-                  overflow: "overlay",
+                  overflowY: "hidden",
+                  overflowX: "scroll",
                   height: full
                     ? !result.matches && !isResponsive
                       ? `${Number(bloc.height)}vw`
@@ -232,7 +233,7 @@ function CarouselContainer({
                   marginLeft: `15px`,
                   width: full
                     ? ``
-                    : `calc(${bloc.width}vw + ${
+                    : `calc(${bloc.width * bloc.card_number}vw + ${
                         bloc.gap * (cardNumber - 1)
                       }px)`,
                 }
@@ -242,18 +243,24 @@ function CarouselContainer({
                     !isResponsive && !result.matches
                       ? `calc(${bloc.height}vw)`
                       : "180px",
-                  width:
-                    !isResponsive && !result.matches
-                      ? `calc(${bloc.width * 3}vw + ${bloc.gap * 2}px)`
-                      : `360px`,
+                  width: isResponsive
+                    ? `360px`
+                    : `calc(${bloc.width * 3}vw + ${bloc.gap * 2}px)`,
                 }
           }
         >
           <div
             className={s.card_container}
             style={{
-              maxWidth: "calc(100% - 60px)",
-              marginLeft: "-15px",
+              width: result.matches ? "95vw" : "",
+              maxWidth: full && !result.matches ? "calc(100% - 60px)" : "",
+              marginLeft:
+                full && !result.matches
+                  ? "-15px"
+                  : result.matches
+                  ? "15px"
+                  : "",
+
               height: `fit-content`,
               transform: full
                 ? !result.matches && !isResponsive
