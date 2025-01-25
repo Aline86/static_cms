@@ -1,7 +1,6 @@
 .page_container {
   display: flex;
   flex-direction: column;
-  width: 100%;
 }
 .shrink_bloc div {
   display: flex;

@@ -44,20 +44,7 @@ function FooterVizualization({
         : "#121212",
     color: isLightOrDark(input_bloc.background_color),
   };
-  const set_position_footer = () => {
-    let footer = document.querySelector("footer");
-    let container = document.getElementById("container");
-    console.log("container", container?.clientHeight);
-    if (
-      container !== undefined &&
-      container !== null &&
-      container.clientHeight < 800 &&
-      footer !== undefined &&
-      footer !== null
-    ) {
-      footer.classList.add(stylePath.fixed);
-    }
-  };
+
   useEffect(() => {
     if (isResponsive) {
       setStylePath(v);
@@ -68,9 +55,7 @@ function FooterVizualization({
     }
   }, [isResponsive]);
   useEffect(() => {}, [toggle]);
-  useEffect(() => {
-    set_position_footer();
-  }, []);
+  useEffect(() => {}, []);
   return (
     <footer className={stylePath.container} style={style_width}>
       <div className={stylePath.facebook_container}>

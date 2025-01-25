@@ -96,7 +96,7 @@ function check_token($token, $db) {
         
     
 }
-$pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer', 'common', 'picture_group', 'button', 'video', 'parallaxe'];
+$pages_array = ['pages', 'page', 'text_picture', 'carousel', 'header', 'footer', 'common', 'picture_group', 'button', 'video', 'parallaxe', 'screen'];
 foreach($pages_array as $page_name) {
     include_once "./models/"  . $page_name . ".php";
 }

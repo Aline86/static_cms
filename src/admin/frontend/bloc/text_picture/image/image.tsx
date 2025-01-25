@@ -18,7 +18,7 @@ function Image({ bloc, css }: ImageParams) {
       <div
         className={s.image}
         style={{
-          padding: bloc.bloc_column ? "0 0 15px 0" : "0 15px 0 15px",
+          padding: bloc.bloc_column ? "0 0 0 0" : "0 15px 0 15px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

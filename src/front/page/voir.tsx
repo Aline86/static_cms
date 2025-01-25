@@ -17,14 +17,24 @@ import ButtonVisualization from "../../admin/frontend/bloc/bouton/Button";
 import VideoVizualisation from "../../admin/frontend/bloc/video/video";
 import { Button } from "../../admin/backoffice/bloc/components/button/class/Button";
 import { Video } from "../../admin/backoffice/bloc/components/video/class/Video";
+import { Screen } from "../../admin/backoffice/bloc/components/screen/class/Screen";
 import ColorContext from "../../ColorContext";
 import { Parallaxe } from "../../admin/backoffice/bloc/components/parallaxe/class/Parallaxe";
 import ParallaxeVizualisation from "../../admin/frontend/bloc/parallaxe/parallaxe";
 import GridVizualisation from "../../admin/frontend/bloc/grid/PictureGroup";
+import ScreenVizualisation from "../../admin/frontend/bloc/screen/screen";
 
 function Front() {
   const [blocs, setBlocs] = useState<
-    Array<Carousel | TextPicture | PictureGroup | Button | Video | Parallaxe>
+    Array<
+      | Carousel
+      | TextPicture
+      | PictureGroup
+      | Button
+      | Video
+      | Parallaxe
+      | Screen
+    >
   >([]);
   const { id } = useParams();
   const [toggle, setToggle] = useState(false);
@@ -167,13 +177,21 @@ function Front() {
                 toggle={toggle}
               />
             </div>
+          ) : value instanceof Parallaxe ? (
+            <div key={index} className={s.parallaxe}>
+              <ParallaxeVizualisation
+                bloc={value}
+                full={true}
+                isResponsive={false}
+              />
+            </div>
           ) : (
-            value instanceof Parallaxe && (
-              <div key={index} className={s.parallaxe}>
-                <ParallaxeVizualisation
+            value instanceof Screen && (
+              <div key={index} className={s.screen}>
+                <ScreenVizualisation
                   bloc={value}
-                  full={true}
                   isResponsive={false}
+                  toggle={false}
                 />
               </div>
             )

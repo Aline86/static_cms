@@ -17,14 +17,24 @@ import ButtonVisualization from "../bloc/bouton/Button";
 import VideoVizualisation from "../bloc/video/video";
 import { Button } from "../../backoffice/bloc/components/button/class/Button";
 import { Video } from "../../backoffice/bloc/components/video/class/Video";
+import { Screen } from "../../backoffice/bloc/components/screen/class/Screen";
 import ColorContext from "../../../ColorContext";
 import { Parallaxe } from "../../backoffice/bloc/components/parallaxe/class/Parallaxe";
 import ParallaxeVizualisation from "../bloc/parallaxe/parallaxe";
 import GridVizualisation from "../bloc/grid/PictureGroup";
+import ScreenVizualisation from "../bloc/screen/screen";
 
 function Voir() {
   const [blocs, setBlocs] = useState<
-    Array<Carousel | TextPicture | PictureGroup | Button | Video | Parallaxe>
+    Array<
+      | Carousel
+      | TextPicture
+      | PictureGroup
+      | Button
+      | Video
+      | Parallaxe
+      | Screen
+    >
   >([]);
   const { id, name } = useParams();
   const [toggle, setToggle] = useState(false);
@@ -186,14 +196,21 @@ function Voir() {
               toggle={refresh}
             />
           </div>
+        ) : value instanceof Parallaxe ? (
+          <div key={index} className={s.video}>
+            <ParallaxeVizualisation
+              bloc={value}
+              full={true}
+              isResponsive={isReponsive}
+            />
+          </div>
         ) : (
-          videoLoaded &&
-          value instanceof Parallaxe && (
-            <div key={index} className={s.video}>
-              <ParallaxeVizualisation
+          value instanceof Screen && (
+            <div key={index} className={s.screen}>
+              <ScreenVizualisation
                 bloc={value}
-                full={true}
                 isResponsive={isReponsive}
+                toggle={false}
               />
             </div>
           )

@@ -15,6 +15,7 @@ import { PictureGroup } from "../../bloc/components/picture_group/class/PictureG
 import Page from "../class/Page";
 import { Video } from "../../bloc/components/video/class/Video";
 import { Parallaxe } from "../../bloc/components/parallaxe/class/Parallaxe";
+import { Screen } from "../../bloc/components/screen/class/Screen";
 
 interface BlocData {
   getPage: any;
@@ -146,6 +147,19 @@ function BlocDisplay({ getPage, blocs, open, setOpen, page }: BlocData) {
                 addBlocToBDD(
                   new PictureGroup(page.id, blocs.length + 1, -1, true)
                 );
+
+                setOpen(!open);
+              }}
+            />
+          </div>
+          <div className={s.container_auto}>
+            <img src={text_image} alt="Image de couverture" />
+            <input
+              type="submit"
+              value="Image de couverture"
+              onClick={(e) => {
+                e.preventDefault();
+                addBlocToBDD(new Screen(page.id, blocs.length + 1, -1, true));
 
                 setOpen(!open);
               }}

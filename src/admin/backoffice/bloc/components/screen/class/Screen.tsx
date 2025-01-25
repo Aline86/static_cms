@@ -1,37 +1,29 @@
 import { UploadService } from "../../../../services/uploadService";
 import Container from "../../../Container";
 
-export class Video extends Container {
+export class Screen extends Container {
   text: string;
-  width: number;
-  height: number;
   bloc_number: number;
   overlay: boolean;
   parameters: string;
   page_id: number;
-  video_url;
+  screen_url;
   constructor(
     page_id: number,
-
     bloc_number: number,
     id: number = -1,
     overlay: boolean = true,
     text: string = "",
-    width: number = 100,
-    height: number = 100,
     title: string = "",
-    type: string = "video",
-    video_url: string = ""
+    type: string = "screen",
+    screen_url: string = ""
   ) {
     super(id, title, type);
-
     this.bloc_number = bloc_number;
     this.page_id = page_id;
     this.overlay = overlay;
-    this.width = width;
-    this.height = height;
     this.text = text;
-    this.video_url = video_url;
+    this.screen_url = screen_url;
     this.parameters = this.type + "&id=" + this.id + "&type=" + this.type;
   }
 
@@ -46,40 +38,15 @@ export class Video extends Container {
       case "text":
         this.set_text(e.target.value);
         break;
-      case "height":
-        let height = e.target.value;
-
-        if (e.target.value < 15) {
-          height = 15;
-        } else if (e.target.value > 100) {
-          height = 100;
-        }
-        this.set_height(height);
-        break;
-      case "width":
-        let width = e.target.value;
-        if (e.target.value < 25) {
-          width = 25;
-        } else if (e.target.value > 100) {
-          width = 100;
-        }
-
-        this.set_width(width);
-        break;
-      case "video_url":
-        if (e.target.value.includes("https")) {
-          this.set_video_url(e.target.value);
-        } else if (e.target.files !== null) {
-          if (e.target.files !== null) {
-            let picture_name = await UploadService.handleUpload(
-              e.target.files[0]
-            );
-            if (picture_name !== undefined && picture_name !== "") {
-              this.set_video_url(picture_name);
-            }
+      case "screen_url":
+        if (e.target.files !== null) {
+          let picture_name = await UploadService.handleUpload(
+            e.target.files[0]
+          );
+          if (picture_name !== undefined && picture_name !== "") {
+            this.set_screen_url(picture_name);
           }
         }
-
         break;
       default:
         null;
@@ -111,25 +78,11 @@ export class Video extends Container {
   public set_parameters(value: string) {
     this.parameters = value;
   }
-  public get_video_url(): string {
+  public get_screen_url(): string {
     return this.parameters;
   }
-  public set_video_url(value: string) {
-    this.video_url = value;
-  }
-
-  public get_width(): number {
-    return this.width;
-  }
-  public set_width(value: number) {
-    this.width = value;
-  }
-
-  public get_height(): number {
-    return this.height;
-  }
-  public set_height(value: number) {
-    this.height = value;
+  public set_screen_url(value: string) {
+    this.screen_url = value;
   }
 
   public _text(): string {

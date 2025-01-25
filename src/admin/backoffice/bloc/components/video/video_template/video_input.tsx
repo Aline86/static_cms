@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import s from "./style.module.css";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Video } from "../class/Video";
 
 function VideoInput({
