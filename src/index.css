@@ -1,5 +1,6 @@
 body,
-#root {
+#root,
+main {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -197,6 +198,8 @@ label span:hover {
   background-color: transparent;
   position: relative;
   z-index: 1;
+  pointer-events: auto;
+  cursor: "pointer" !important;
 }
 .buttons::before {
   content: "";

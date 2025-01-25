@@ -56,7 +56,7 @@ function FooterVizualization({
   }, [isResponsive]);
   useEffect(() => {}, [toggle]);
   return (
-    <div className={stylePath.container} style={style_width}>
+    <footer className={stylePath.container} style={style_width}>
       <div className={stylePath.facebook_container}>
         <div className={stylePath.end}>
           {input_bloc.links_network_an_others_footer.length > 0 &&
@@ -117,7 +117,7 @@ function FooterVizualization({
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
 

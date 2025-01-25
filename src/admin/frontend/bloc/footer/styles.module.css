@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
 
-  position: static;
   left: 0;
   right: 0;
   height: 75px;
@@ -41,7 +40,7 @@
 .full_back_drop .drop {
   background-color: black;
   opacity: 0.3;
-  position: static;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -56,12 +55,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: static;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 12;
+  z-index: 101;
 }
 
 .see_map {
@@ -79,7 +78,7 @@
 .statut,
 .map {
   height: 75px;
-  width: 25%;
+
   line-height: 75px;
   text-align: center;
   font-size: 25px;
@@ -147,7 +146,7 @@
   }
   .address {
     height: 75px;
-    position: static;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -197,7 +196,7 @@
   .full_back_drop .drop {
     background-color: black;
     opacity: 0.3;
-    position: static;
+
     top: 0;
     left: 0;
     right: 0;
@@ -212,7 +211,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: static;
+
     top: 0;
     left: 0;
     right: 0;
@@ -288,7 +287,7 @@
   .full_back_drop .drop {
     background-color: black;
     opacity: 0.3;
-    position: static;
+   
     top: 0;
     left: 0;
     right: 0;
@@ -303,7 +302,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: static;
+   
     top: 0;
     left: 0;
     right: 0;

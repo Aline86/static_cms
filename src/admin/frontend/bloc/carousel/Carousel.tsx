@@ -112,6 +112,7 @@ function CarouselVisualization({
             ? "65px"
             : "0"
         }`,
+        width: full && !result.matches ? "50%" : "",
         marginBottom: `${
           input_bloc.is_automatique &&
           input_bloc.bloc_number === 1 &&

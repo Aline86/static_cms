@@ -42,9 +42,11 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
         paddingLeft: full ? `0px` : !bloc.bloc_column ? `30px` : `0px`,
       }}
     >
-      <div className={s.titre}>
-        <Titre bloc={bloc} />
-      </div>
+      {bloc.title !== "" && (
+        <div className={s.titre}>
+          <Titre bloc={bloc} />
+        </div>
+      )}
 
       <div
         className={s.bloc_content}

@@ -52,7 +52,7 @@ function HeaderVizualization({
 
     window.addEventListener("scroll", function () {
       if (nav !== undefined && nav !== null) {
-        if (window.scrollY > nav.offsetHeight + 350) {
+        if (window.scrollY > nav.offsetHeight + 400) {
           if (!nav.className.includes("active")) {
             nav.classList.add(stylePath.active);
           }

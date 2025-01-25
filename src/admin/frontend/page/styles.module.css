@@ -1,3 +1,11 @@
+main {
+  min-height: calc(100vh - 60px);
+}
+
+footer {
+  grid-row: 2; /* Place le footer sur la deuxième ligne */
+}
+
 .carousel {
   height: fit-content;
   width: 100%;

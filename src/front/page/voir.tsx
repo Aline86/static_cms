@@ -99,84 +99,87 @@ function Front() {
         full={true}
         isResponsive={false}
       />
-      {blocs.map((value, index) => {
-        return value instanceof TextPicture ? (
-          <div key={index} className={s.bloc}>
-            <Bloc
-              index={index}
-              bloc={value}
-              css={value.css}
-              num_bloc={index}
-              toggle={toggle}
-              full={true}
-              isResponsive={false}
-            />
-          </div>
-        ) : value instanceof Carousel ? (
-          <div
-            key={index}
-            className={s.carousel}
-            style={{
-              marginBottom: value.is_automatique ? `0px` : `30px`,
-            }}
-          >
-            <CarouselVisualization
-              input_bloc={value}
-              toggle={toggle}
-              refresh={false}
-              full={true}
-              isResponsive={false}
-            />
-          </div>
-        ) : value instanceof PictureGroup ? (
-          <div key={index} className={s.grid}>
-            {!value.is_grid ? (
-              <PictureGroupVizualisation
-                input_bloc={value}
-                toggle={toggle}
-                refresh={false}
-                full={true}
-                isResponsive={false}
-              />
-            ) : (
-              <GridVizualisation
-                input_bloc={value}
-                toggle={toggle}
-                refresh={false}
-                isResponsive={false}
-              />
-            )}
-          </div>
-        ) : value instanceof Button ? (
-          <div key={index} className={s.carousel}>
-            <ButtonVisualization
-              input_bloc={value}
-              toggle={toggle}
-              full={true}
-              isResponsive={false}
-            />
-          </div>
-        ) : value instanceof Video ? (
-          <div key={index} className={s.video}>
-            <VideoVizualisation
-              bloc={value}
-              full={true}
-              isResponsive={false}
-              toggle={toggle}
-            />
-          </div>
-        ) : (
-          value instanceof Parallaxe && (
-            <div key={index} className={s.parallaxe}>
-              <ParallaxeVizualisation
+      <main>
+        {blocs.map((value, index) => {
+          return value instanceof TextPicture ? (
+            <div key={index} className={s.bloc}>
+              <Bloc
+                index={index}
                 bloc={value}
+                css={value.css}
+                num_bloc={index}
+                toggle={toggle}
                 full={true}
                 isResponsive={false}
               />
             </div>
-          )
-        );
-      })}
+          ) : value instanceof Carousel ? (
+            <div
+              key={index}
+              className={s.carousel}
+              style={{
+                marginBottom: value.is_automatique ? `0px` : `30px`,
+              }}
+            >
+              <CarouselVisualization
+                input_bloc={value}
+                toggle={toggle}
+                refresh={false}
+                full={true}
+                isResponsive={false}
+              />
+            </div>
+          ) : value instanceof PictureGroup ? (
+            <div key={index} className={s.grid}>
+              {!value.is_grid ? (
+                <PictureGroupVizualisation
+                  input_bloc={value}
+                  toggle={toggle}
+                  refresh={false}
+                  full={true}
+                  isResponsive={false}
+                />
+              ) : (
+                <GridVizualisation
+                  input_bloc={value}
+                  toggle={toggle}
+                  refresh={false}
+                  isResponsive={false}
+                />
+              )}
+            </div>
+          ) : value instanceof Button ? (
+            <div key={index} className={s.carousel}>
+              <ButtonVisualization
+                input_bloc={value}
+                toggle={toggle}
+                full={true}
+                isResponsive={false}
+              />
+            </div>
+          ) : value instanceof Video ? (
+            <div key={index} className={s.video}>
+              <VideoVizualisation
+                bloc={value}
+                full={true}
+                isResponsive={false}
+                toggle={toggle}
+              />
+            </div>
+          ) : (
+            value instanceof Parallaxe && (
+              <div key={index} className={s.parallaxe}>
+                <ParallaxeVizualisation
+                  bloc={value}
+                  full={true}
+                  isResponsive={false}
+                />
+              </div>
+            )
+          );
+        })}
+      </main>
+
       <FooterVizualization
         input_bloc={footer}
         toggle={toggle}
