@@ -3,6 +3,7 @@
 // d'attributs (logique qui sera suivie sur le même principe pour les méthodes api)
 // Logique basée sur le fait que les noms de colonnes en bdd sont identiques au attributs des enfants
 
+import { Navigate } from "react-router-dom";
 import { BASE_URL_SITE } from "../../../config";
 
 export default abstract class Container {
@@ -67,6 +68,7 @@ export default abstract class Container {
       })
       .catch((error: any) => {
         console.error(error.message);
+        <Navigate to="/login" />;
       });
 
     return this;
@@ -195,6 +197,7 @@ export default abstract class Container {
       }
     } catch (error: any) {
       console.error("error", error.message);
+      <Navigate to="/login" />;
     }
   }
 

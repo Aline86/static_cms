@@ -52,8 +52,13 @@
   position: fixed;
   top: 0px !important;
   right: 0px !important;
+  min-height: 100vh;
+  overflow-y: scroll;
+  height: fit-content;
 }
-
+body:has(.open_side_bar) {
+  overflow-y: hidden;
+}
 @keyframes slidein {
   from {
     border-bottom: 1px solid transparent;

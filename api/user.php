@@ -151,7 +151,14 @@ if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== 
 }
 $token = getAuthorizationHeader();
 if($method === "delete_connexion" && $token !== null) {
+    session_start();
     session_destroy(); 
+    foreach ($_COOKIE as $cookie_name => $cookie_value) {
+        if(isset($cookie_name)) {
+            unset($_COOKIE[$cookie_name]); 
+        }
+    }
+     
     return true;
     
     exit();

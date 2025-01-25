@@ -66,7 +66,7 @@ function VideoVizualisation({
   return url !== undefined && url.length > 0 && external ? (
     <div
       style={{
-        marginTop: bloc.bloc_number === 1 ? "90px" : "0px",
+        marginTop: bloc.bloc_number === 1 ? "150px" : "0px",
       }}
     >
       {bloc.title !== "" ? (
@@ -206,7 +206,7 @@ function VideoVizualisation({
               alignItems: "center",
               justifyContent: "center",
               color: "white",
-
+              textTransform: "uppercase",
               textAlign: "center",
               fontSize: `${full ? (!isResponsive ? "100px" : "42px") : "72px"}`,
               opacity: "0.5",

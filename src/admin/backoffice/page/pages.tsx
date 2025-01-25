@@ -147,6 +147,10 @@ function Pages({}: PagesParams) {
             className={s.href_url}
             placeholder="Titre de la page"
             value={pages[0].title}
+            onChange={(e) => {
+              updatePage(e, "title", pages[0], 0);
+            }}
+            style={{ pointerEvents: "none" }}
           />
 
           <Link

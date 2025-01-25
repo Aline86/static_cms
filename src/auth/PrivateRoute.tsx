@@ -19,7 +19,6 @@ const PrivateRoute = () => {
       ) {
         user.set_auth_token(localStorage.getItem("authToken"));
         setUser(user);
-        // setUser(user);
 
         let res = await user.check_token();
 

@@ -54,15 +54,16 @@ function Voir() {
     if (root !== null && (isReponsive || result.matches)) {
       root.style.width = "380px";
       root.style.paddingTop = "0px";
-      root.style.paddingBottom = "220px";
+      root.style.paddingBottom = "0px";
     } else if (root !== null && result_mid.matches) {
       root.style.width = "100vw";
       root.style.paddingTop = "75px";
-      root.style.paddingBottom = "75px";
+      root.style.paddingBottom = "0px";
     } else if (root !== null) {
       root.style.width = "100vw";
       root.style.paddingTop = "100px";
-      root.style.paddingBottom = "75px";
+      root.style.paddingBottom = "0px";
+      root.style.margin = "0px";
     }
   };
   useEffect(() => {

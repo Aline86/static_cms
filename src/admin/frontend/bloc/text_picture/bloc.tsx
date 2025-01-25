@@ -40,11 +40,10 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
             ? "100px"
             : "30px",
         paddingLeft: full ? `0px` : !bloc.bloc_column ? `30px` : `0px`,
-        height: bloc.bloc_column && bloc.text === "" ? "100vh" : "",
       }}
     >
       <div className={s.titre}>
-        <Titre bloc={bloc} full={full} isResponsive={isResponsive} />
+        <Titre bloc={bloc} />
       </div>
 
       <div
@@ -65,18 +64,12 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
             style={{
               width: `${bloc.bloc_column ? `100%` : `50%`}`,
               paddingTop: "15px",
-              marginLeft: `0px`,
-              marginRight: `0px`,
+
               marginBottom: `0px`,
               float: `${bloc.image_right ? "left" : "right"}`,
             }}
           >
-            <Image
-              bloc={bloc}
-              css={css}
-              full={full}
-              isResponsive={isResponsive}
-            />
+            <Image bloc={bloc} css={css} />
           </div>
         )}
         {contentState !== undefined && (

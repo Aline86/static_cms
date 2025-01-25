@@ -19,9 +19,10 @@ function Prerequis({}: PageParams) {
   const [footer, setFooter] = useState<Footer>(new Footer());
 
   const savePrerequisites = async () => {
-    await header.save_bloc();
-    await footer.save_bloc();
-    saveHeaderAndFooter();
+    let promises = [await header.save_bloc(), await footer.save_bloc()];
+    Promise.all(promises).then(() => {
+      saveHeaderAndFooter();
+    });
   };
 
   const saveHeaderAndFooter = async () => {

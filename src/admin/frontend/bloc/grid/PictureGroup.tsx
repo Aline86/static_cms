@@ -29,7 +29,11 @@ function GridVizualisation({
   return (
     <div className={s.body_container}>
       {dataValue !== undefined && (
-        <PictureGroupContainer data={dataValue} toggle={toggle} />
+        <PictureGroupContainer
+          data={dataValue}
+          toggle={toggle}
+          isResponsive={isResponsive}
+        />
       )}
     </div>
   );

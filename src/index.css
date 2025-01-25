@@ -1,11 +1,12 @@
 body,
 #root {
-  overflow-x: hidden;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 * {
-  font-size: 18px;
+  transition: height 0.3s ease-in-out;
+  transition: font-size 0.3s ease-in-out;
 }
 .flex {
   display: flex;
@@ -22,7 +23,6 @@ body,
   margin: 0 auto;
 }
 #root {
-  width: 100%;
   margin: 0 auto;
 }
 body {
@@ -56,8 +56,11 @@ body {
 
 h2 {
   text-align: left;
-  text-transform: uppercase;
+
   font-weight: bold;
+}
+h2::first-letter {
+  text-transform: uppercase !important;
 }
 .bouton_container_bloc_css_carousel,
 .bouton_container_bloc_css {
@@ -121,7 +124,9 @@ h2 {
   text-align: left;
   margin-bottom: 30px;
 }
-
+li.left::marker {
+  text-align: right;
+}
 .center {
   text-align: center;
   margin-bottom: 30px;
@@ -212,6 +217,7 @@ label span:hover {
   transform: translateX(100%) rotate(45deg);
   z-index: 0;
 }
+
 .buttons:hover {
   background-color: var(--button-background-color);
   color: white !important;

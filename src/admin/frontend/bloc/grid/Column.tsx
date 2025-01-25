@@ -5,14 +5,33 @@ import CardDataGrid from "./CardData";
 
 interface ColumnData {
   props: any;
+  isResponsive: boolean;
 }
-function Column({ props }: ColumnData) {
+function Column({ props, isResponsive }: ColumnData) {
+  const result = window.matchMedia("(max-width: 800px)");
   useEffect(() => {}, []);
   return (
-    <div className={s.column}>
+    <div
+      className={s.column}
+      style={
+        isResponsive
+          ? {
+              flex: "90%",
+              maxWidth: "90%",
+              padding: "0 4px",
+              margin: "0 auto",
+            }
+          : {}
+      }
+    >
       {props.map((value: PictureGroupData, index: number) => {
         return (
-          <CardDataGrid key={index} data={value} index={value.card_number} />
+          <CardDataGrid
+            key={index}
+            data={value}
+            index={value.card_number}
+            isResponsive={isResponsive}
+          />
         );
       })}
     </div>

@@ -40,7 +40,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
               ? isResponsive
                 ? "90px"
                 : bloc.bloc_number === 1
-                ? "140px"
+                ? "30px"
                 : "0px"
               : "30px"
           }`,

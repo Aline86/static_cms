@@ -21,13 +21,7 @@
   align-items: center;
   height: 100%;
 }
-@media screen and (max-width: 800px) {
-  .container_class {
-    overflow-x: scroll;
-    margin: 0;
-    padding: 0;
-  }
-}
+
 .card_container {
   position: relative;
   z-index: 0;
@@ -184,13 +178,7 @@ button {
   margin: 0 auto;
   max-width: 90%;
 }
-@media screen and (max-width: 800px) {
-  .container_class_image_group {
-    overflow-x: scroll;
-    margin: 0;
-    padding: 0;
-  }
-}
+
 .card-container_image_group {
   position: absolute;
   left: 0;

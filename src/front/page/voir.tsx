@@ -28,7 +28,6 @@ function Front() {
   >([]);
   const { id } = useParams();
   const [toggle, setToggle] = useState(false);
-  const [, setResize] = useState(window.innerWidth);
   const [footer] = useState<Footer>(new Footer());
   const [header] = useState<Header>(new Header());
   const location = useLocation();
@@ -53,22 +52,24 @@ function Front() {
     let root = document.getElementById("root");
     if (root !== null && result.matches) {
       root.style.width = "100%";
-      root.style.paddingTop = "0px";
+      root.style.paddingTop = "45px";
       root.style.paddingBottom = "220px";
     } else if (root !== null && result_mid.matches) {
       root.style.width = "100vw";
       root.style.paddingTop = "75px";
-      root.style.paddingBottom = "75px";
+      root.style.paddingBottom = "0";
     } else if (root !== null) {
       root.style.width = "100vw";
       root.style.paddingTop = "100px";
-      root.style.paddingBottom = "75px";
+      root.style.paddingBottom = "0";
     }
   };
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();
   }, [location]);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
   const styles = {
     backgroundColor: common !== null ? `${common?.fond}` : "#ffffff",
     "--titles": `${common?.titles}` ? `${common?.titles}` : "black",
@@ -89,16 +90,6 @@ function Front() {
       asynchronRequestsToPopulateBlocs();
     }
   }, []);
-
-  function updateSize() {
-    window.location.reload();
-  }
-  useEffect(() => {
-    if (!result.matches) {
-      window.addEventListener("resize", updateSize);
-      setResize(window.innerWidth);
-    }
-  }, [result.matches]);
 
   return (
     <div className={s.blocs_container} style={styles}>
@@ -138,7 +129,7 @@ function Front() {
             />
           </div>
         ) : value instanceof PictureGroup ? (
-          <div key={index} className={s.carousel}>
+          <div key={index} className={s.grid}>
             {!value.is_grid ? (
               <PictureGroupVizualisation
                 input_bloc={value}
@@ -176,7 +167,7 @@ function Front() {
           </div>
         ) : (
           value instanceof Parallaxe && (
-            <div key={index} className={s.video}>
+            <div key={index} className={s.parallaxe}>
               <ParallaxeVizualisation
                 bloc={value}
                 full={true}

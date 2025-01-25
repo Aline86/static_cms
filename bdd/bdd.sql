@@ -224,4 +224,4 @@ CREATE TABLE IF NOT EXISTS `common` (
     `background_color_buttons` varchar(11)  NOT NULL default "",
     PRIMARY KEY  (`id`)
 );
-INSERT INTO `user` (`id`, `email`, `password`, `token`) VALUES (NULL, 'cahaestie@gmail.com', '$2y$10$TcCbuk5kNo9upr9BHM/0ouB3F0vLcnUcTMn.31LNK16NtjECJ/hmu', '');
+INSERT INTO `user` (`id`, `email`, `password`, `token`) VALUES (NULL, 'cahaestie@gmail.com', '$2y$10$Z7DfymlrDFwM4Eo7kAum2u4mqR0gpktj7D.j5hPuuo5J/8yxa9XwO', '');

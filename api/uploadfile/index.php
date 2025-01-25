@@ -94,14 +94,16 @@ if (isset($_COOKIE['set_tok'])) {
   $timestamp = $date->getTimestamp();
   $str = isset($_GET['name']) ? utf8_decode(urldecode(html_entity_decode(htmlspecialchars(strip_tags($_GET['name']))))) : exit;
   $str = str_ends_with($str, '=') ? str_replace('=', '', $str) : $str;
+  $extension = explode(".", $_FILES["file"]["name"]);
+  $imageFileType = $extension[count($extension) - 1];
 
   $target_dir = "./";
   $target_file = $_GET["name"] ? $target_dir . basename(html_entity_decode(htmlspecialchars(strip_tags($_GET["name"])))) : exit;
   $uploadOk = 1;
-  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+  $imageFileTypes = ["jpg", "png", "jpeg"];
 
   // Check if image file is a actual image or fake image
-  if(isset($_FILES["file"]["tmp_name"])) {
+  if(in_array($imageFileType, $imageFileTypes) && isset($_FILES["file"]["tmp_name"])) {
     $check = getimagesize($_FILES["file"]["tmp_name"]);
     if($check !== false) {
     

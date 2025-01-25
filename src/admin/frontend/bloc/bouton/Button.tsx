@@ -15,18 +15,9 @@ function ButtonVisualization({
   full,
   isResponsive,
 }: CustomCarouselInfo) {
-  const [, setResize] = useState(window.innerWidth);
   const result = window.matchMedia("(max-width: 1000px)");
 
-  function updateSize() {
-    window.location.reload();
-  }
-  useEffect(() => {
-    if (!result.matches) {
-      window.addEventListener("resize", updateSize);
-      setResize(window.innerWidth);
-    }
-  }, [result]);
+  useEffect(() => {}, [result]);
 
   useEffect(() => {}, [isResponsive]);
   return (

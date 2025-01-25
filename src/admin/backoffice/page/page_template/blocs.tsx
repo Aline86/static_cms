@@ -79,13 +79,13 @@ function Blocs({
     setBlocs(blocs);
     setContentState(contentState);
   };
-  const updateBloc = (
+  const updateBloc = async (
     e: any,
     field: string,
     input: string,
     input_bloc: TextPicture
   ) => {
-    const new_Bloc = input_bloc.update(e, field, input);
+    const new_Bloc = await input_bloc.update(e, field, input);
     blocs !== undefined && setHighlight(new_Bloc);
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
     setBlocs(blocs);

@@ -311,7 +311,7 @@ function TextReader({
       className="container"
       style={{
         backgroundColor: color === `#ffffff` ? "transparent" : `${color}`,
-        padding: "10px",
+        padding: "15px",
       }}
     >
       {stringTexts !== undefined &&
@@ -396,18 +396,13 @@ function TextReader({
             headlines[j] !== undefined &&
             headlines[j] === "header-two" ? (
             <h2 key={j + headlines[j]}>
-              <div
-                className="container_data bloc"
-                style={{ display: "inline" }}
-              >
-                {stringText !== undefined && (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: stringText,
-                    }}
-                  />
-                )}
-              </div>
+              {stringText !== undefined && (
+                <h2
+                  dangerouslySetInnerHTML={{
+                    __html: stringText,
+                  }}
+                />
+              )}
             </h2>
           ) : (
             ((read_more && ((isToggle && j >= 0) || (!isToggle && j <= 2))) ||

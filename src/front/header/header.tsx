@@ -25,13 +25,34 @@ function HeaderVizualization({
   const [trigger_show_link, setTrigger_show_link] = useState(true);
   const [stylePath, setStylePath] = useState(s);
   const result = window.matchMedia("(max-width: 800px)");
+
   const style_width = {
     width: isResponsive ? "380px" : "100%",
   };
   const handleShowLinks = () => {
     setTrigger_show_link(!trigger_show_link);
   };
-  useEffect(() => {}, [toggle]);
+  const nav_animation = () => {
+    const nav = document.getElementById(stylePath.nav);
+
+    window.addEventListener("scroll", function () {
+      if (nav !== undefined && nav !== null) {
+        if (window.scrollY > nav.offsetHeight + 350) {
+          if (!nav.className.includes("active")) {
+            nav.classList.add(stylePath.active);
+          }
+        } else {
+          nav.classList.remove(stylePath.active);
+        }
+      }
+    });
+  };
+  useEffect(() => {
+    nav_animation();
+  }, [toggle]);
+  useEffect(() => {
+    nav_animation();
+  }, []);
   useEffect(() => {
     if (isResponsive || result.matches) {
       setTrigger_show_link(false);
@@ -47,9 +68,11 @@ function HeaderVizualization({
       setTrigger_show_link(true);
       setStylePath(e);
     }
+    nav_animation();
   }, [isResponsive]);
+
   return (
-    <>
+    <div id={stylePath.nav}>
       <div
         className={stylePath.backdrop}
         style={{
@@ -127,7 +150,7 @@ function HeaderVizualization({
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

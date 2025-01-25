@@ -12,7 +12,11 @@
 }
 .bloc {
   height: 100%;
-  margin-bottom: 60px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .blocs_container {
   display: flex;

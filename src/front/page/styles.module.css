@@ -13,9 +13,15 @@
 .video {
   height: auto;
 }
+.grid {
+  height: fit-content;
+}
+.parallaxe {
+  margin-bottom: 15px;
+}
 .bloc {
-  height: 100%;
-  margin-bottom: 60px;
+  height: fit-content;
+  margin-bottom: 30px;
 }
 .blocs_container {
   display: flex;
