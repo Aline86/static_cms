@@ -55,7 +55,7 @@ function InsideButton({
   };
   useEffect(() => {
     checkExternal(data.href_url);
-    id !== undefined && localStorage.setItem("previous_page_id", id);
+    id !== undefined && sessionStorage.setItem("previous_page_id", id);
   }, [toggle]);
   useEffect(() => {}, [link]);
   const style_data = {

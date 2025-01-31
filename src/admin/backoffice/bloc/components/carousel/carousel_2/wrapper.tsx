@@ -4,6 +4,7 @@ import CarouselData from "../class/CarouselData";
 import { Carousel } from "../class/Carousel";
 import DropdownData from "../dropdown/Dropdown";
 import Picture from "../../../../services/picture";
+import FileUploadWithProgress from "../../../../services/FileUploadWithProgress";
 
 interface CardDatas {
   gap: number;
@@ -75,17 +76,14 @@ function CardData({
           width: "100%",
         }}
       >
-        <label>
-          <span>Choisir une image</span>
-          <input
-            type="file"
-            className={s.image_url}
-            placeholder="Url de l'image"
-            onChange={(e) => {
-              updateCarousel(e, "image_url", bloc, index);
-            }}
-          />
-        </label>
+        <FileUploadWithProgress
+          sub_field_name={undefined}
+          update={updateCarousel}
+          text_bouton_telechargement={"Choisir une image"}
+          field_name={"image_url"}
+          component={bloc}
+          index={index}
+        />
         <Picture
           update={updateCarousel}
           bloc={bloc}

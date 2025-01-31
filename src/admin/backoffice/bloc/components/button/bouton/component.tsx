@@ -2,6 +2,7 @@ import { Button } from "../class/Button";
 import DropdownData from "../dropdown/Dropdown";
 import s from "./style/style.module.css";
 import Picture from "../../../../services/picture";
+import FileUploadWithProgress from "../../../../services/FileUploadWithProgress";
 
 interface CardDatas {
   updateButton: any;
@@ -57,16 +58,14 @@ function ButtonInput({ updateButton, bloc }: CardDatas) {
               width: "100%",
             }}
           >
-            <label>
-              <span>Choisir une image de fond</span>
-              <input
-                type="file"
-                className={s.image_url}
-                onChange={(e) => {
-                  updateButton(e, "image_url", bloc);
-                }}
-              />
-            </label>
+            <FileUploadWithProgress
+              sub_field_name={undefined}
+              update={updateButton}
+              text_bouton_telechargement={"Choisir une image de fond"}
+              field_name={"image_url"}
+              component={bloc}
+              index={undefined}
+            />
             <Picture
               update={updateButton}
               bloc={bloc}

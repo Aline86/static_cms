@@ -51,7 +51,7 @@ export class TextPicture extends Container {
     this.parameters = this.type + "&id=" + this.id + "&type=" + this.type;
   }
 
-  public update(
+  public async update(
     e: any,
     field: string,
     css_type: string | undefined = undefined
@@ -86,8 +86,15 @@ export class TextPicture extends Container {
         this.set_background_color(e.target.value);
         break;
       case "image":
-        this.set_image(UploadService.sanitizeName(e.target.files[0].name));
-        UploadService.handleUpload(e.target.files[0]);
+        if (e.target.files !== null) {
+          let picture_name = await UploadService.handleUpload(
+            e.target.files[0]
+          );
+          console.log("image", picture_name);
+          if (picture_name !== undefined && picture_name !== "") {
+            this.set_image(picture_name);
+          }
+        }
         break;
       case "css":
         switch (css_type) {

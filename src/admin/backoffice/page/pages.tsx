@@ -29,7 +29,7 @@ function Pages({}: PagesParams) {
     setToggle(!toggle);
   };
   const addPage = () => {
-    pages.push(new Page(-1, pages.length - 1));
+    pages.push(new Page(-1, pages.length));
     setPages(pages);
     setToggle(!toggle);
   };
@@ -77,7 +77,7 @@ function Pages({}: PagesParams) {
     user.logOut();
     setUser(new User("", "", ""));
     navigate("/login");
-    localStorage.setItem("authToken", "");
+    sessionStorage.setItem("authToken", "");
   };
   const updateDragBloc = async (lastKey: number) => {
     const start = dragBegin;
@@ -147,6 +147,10 @@ function Pages({}: PagesParams) {
             className={s.href_url}
             placeholder="Titre de la page"
             value={pages[0].title}
+            onChange={(e) => {
+              updatePage(e, "title", pages[0], 1);
+            }}
+            style={{ pointerEvents: "none" }}
           />
 
           <Link

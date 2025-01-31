@@ -6,6 +6,7 @@ import { Carousel } from "../../bloc/components/carousel/class/Carousel";
 import { PictureGroup } from "../../bloc/components/picture_group/class/PictureGroup";
 import { Button } from "../../bloc/components/button/class/Button";
 import { Video } from "../../bloc/components/video/class/Video";
+import { Screen } from "../../bloc/components/screen/class/Screen";
 import BlocHeader from "./bloc_components/BlocHeader";
 import Footer from "../../bloc/components/footer/Footer";
 import Header from "../../bloc/components/header/Header";
@@ -28,6 +29,8 @@ const BlocParallaxeComponent = lazy(
   () => import("./bloc_components/BlocParallaxe")
 );
 const BlocGridComponent = lazy(() => import("./bloc_components/BlocGrid"));
+const BlocScreenComponent = lazy(() => import("./bloc_components/BlocScreen"));
+
 interface BlocData {
   blocs: Array<any>;
   setDragBegin: any;
@@ -68,7 +71,8 @@ function Blocs({
     | PictureGroup
     | Button
     | Video
-    | Parallaxe;
+    | Parallaxe
+    | Screen;
   const onContentStateChange = (
     contentState: any,
     input_bloc: TextPicture,
@@ -79,13 +83,13 @@ function Blocs({
     setBlocs(blocs);
     setContentState(contentState);
   };
-  const updateBloc = (
+  const updateBloc = async (
     e: any,
     field: string,
     input: string,
     input_bloc: TextPicture
   ) => {
-    const new_Bloc = input_bloc.update(e, field, input);
+    const new_Bloc = await input_bloc.update(e, field, input);
     blocs !== undefined && setHighlight(new_Bloc);
     blocs[input_bloc.bloc_number - 1] = new_Bloc;
     setBlocs(blocs);
@@ -114,8 +118,20 @@ function Blocs({
       setToggle(!toggle);
     }
   };
-  const updateVideo = (e: any, field: string, input_bloc: Video) => {
-    const new_Bloc = input_bloc.update(e, field);
+  const updateVideo = async (e: any, field: string, input_bloc: Video) => {
+    const new_Bloc = await input_bloc.update(e, field);
+    if (new_Bloc !== undefined) {
+      blocs !== undefined && setHighlight(new_Bloc);
+      blocs[input_bloc.bloc_number - 1] = new_Bloc;
+
+      setBlocs(blocs);
+
+      setToggle(!toggle);
+    }
+  };
+
+  const updateScreen = async (e: any, field: string, input_bloc: Video) => {
+    const new_Bloc = await input_bloc.update(e, field);
     if (new_Bloc !== undefined) {
       blocs !== undefined && setHighlight(new_Bloc);
       blocs[input_bloc.bloc_number - 1] = new_Bloc;
@@ -450,29 +466,48 @@ function Blocs({
               }
             />
           </Suspense>
+        ) : bloc.type === "parallaxe" ? (
+          <Suspense fallback={<div>Chargement...</div>}>
+            <BlocParallaxeComponent
+              key={index}
+              bloc={bloc}
+              setDragBegin={setDragBegin}
+              updateDragBloc={updateDragBloc}
+              handleDragOver={handleDragOver}
+              updateParallaxe={updateParallaxe}
+              removeBloc={removeBloc}
+              saveBlocAll={saveBlocAll}
+              drag={drag}
+              toggle={toggle}
+              index={index}
+              handleDragLeave={handleDragLeave}
+              isOpen={
+                highlight !== undefined &&
+                highlight.bloc_number === bloc.bloc_number
+              }
+            />
+          </Suspense>
         ) : (
-          bloc.type === "parallaxe" && (
-            <Suspense fallback={<div>Chargement...</div>}>
-              <BlocParallaxeComponent
-                key={index}
-                bloc={bloc}
-                setDragBegin={setDragBegin}
-                updateDragBloc={updateDragBloc}
-                handleDragOver={handleDragOver}
-                updateParallaxe={updateParallaxe}
-                removeBloc={removeBloc}
-                saveBlocAll={saveBlocAll}
-                drag={drag}
-                toggle={toggle}
-                index={index}
-                handleDragLeave={handleDragLeave}
-                isOpen={
-                  highlight !== undefined &&
-                  highlight.bloc_number === bloc.bloc_number
-                }
-              />
-            </Suspense>
-          )
+          <Suspense fallback={<div>Chargement...</div>}>
+            <BlocScreenComponent
+              key={index}
+              bloc={bloc}
+              setDragBegin={setDragBegin}
+              updateDragBloc={updateDragBloc}
+              handleDragOver={handleDragOver}
+              updateScreen={updateScreen}
+              removeBloc={removeBloc}
+              saveBlocAll={saveBlocAll}
+              drag={drag}
+              toggle={toggle}
+              index={index}
+              handleDragLeave={handleDragLeave}
+              isOpen={
+                highlight !== undefined &&
+                highlight.bloc_number === bloc.bloc_number
+              }
+            />
+          </Suspense>
         );
       })}
 

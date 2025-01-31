@@ -79,9 +79,7 @@
                   
                     if(is_array($data_item)) {
                         if($data_item['id'] >= 1) {
-                            echo "<pre>";
-                            print_r($data_item);
-                            echo "</pre>";
+                         
                             $this->update_children($data_item, $id, $associated_table);
                         }
                         else if ($data_item['id'] === -1){
@@ -91,18 +89,16 @@
                 }
             } else  {
                 if(is_array($data_type_decoded)) {
-                    echo "data_type_decoded<pre>";
-                    print_r($data_type_decoded);
-                    echo "</pre>";
+                 
                     if(isset($data_type_decoded['id']) && $data_type_decoded['id'] >= 1) {
                        
                 
                         $this->update_children($data_type_decoded, $id, $associated_table);
                     }
-                   /* else {
+                    else if($data_type_decoded['id'] === -1){
                    
                         $this->add_children($data_type_decoded, $id, $associated_table);
-                    }*/
+                    }
                 }
               
             }

@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import InsideCardData from "./InsideCardData";
 import s from "./styles/style.module.css";
 import { useEffect, useState, Suspense, lazy } from "react";
-
+import LazyLoad from "react-lazyload";
 import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 import Page from "../../../backoffice/page/class/Page";
 import { BASE_URL_SITE } from "../../../../config";
@@ -50,7 +50,7 @@ function CardData({
           ? `350px`
           : `${height}vw`
         : `${height * 0.5}vw`,
-
+      cursor: "pointer",
       marginBottom: "60px",
       boxShadow: "2px 2px 3px rgba(0,0,0,0.2)",
     };
@@ -61,7 +61,7 @@ function CardData({
           ? `350px`
           : `${width}vw`
         : `${width * 0.5}vw`,
-
+      pointerEvents: "none",
       borderRadius: "1px",
       height: full
         ? isResponsive || result.matches
@@ -116,7 +116,7 @@ function CardData({
     checkExternal(data.href_url);
   }, [toggle]);
   useEffect(() => {
-    id !== undefined && localStorage.setItem("previous_page_id", id);
+    id !== undefined && sessionStorage.setItem("previous_page_id", id);
   }, []);
   useEffect(() => {
     setContentState(typeof data.text === "object" ? data.text : contentState);
@@ -125,67 +125,71 @@ function CardData({
     setContentState(typeof data.text === "object" ? data.text : contentState);
   }, []);
   return external ? (
-    <a
-      target="_blank"
-      href={data.href_url}
-      className={s.card_app_image_group}
-      style={style_data}
-    >
-      {!Boolean(data.is_data_button) ? (
-        <div className={s.text_image_group}>
-          {contentState !== undefined ? (
-            <Suspense fallback={<div>Chargement...</div>}>
-              <TextReaderComponent
-                read_more={false}
-                color={data.background_color}
-                toggle={toggle}
-                contenState={contentState}
-                isResponsive={isResponsive}
-              />
-            </Suspense>
-          ) : (
-            data.text
-          )}
-        </div>
-      ) : (
-        <InsideCardData
-          data={data}
-          isLightOrDark={isLightOrDark}
-          isResponsive={isResponsive}
-        />
-      )}
-    </a>
+    <LazyLoad height={height} offset={100}>
+      <a
+        target="_blank"
+        href={data.href_url}
+        className={s.card_app_image_group}
+        style={style_data}
+      >
+        {!Boolean(data.is_data_button) ? (
+          <div className={s.text_image_group}>
+            {contentState !== undefined ? (
+              <Suspense fallback={<div>Chargement...</div>}>
+                <TextReaderComponent
+                  read_more={false}
+                  color={data.background_color}
+                  toggle={toggle}
+                  contenState={contentState}
+                  isResponsive={isResponsive}
+                />
+              </Suspense>
+            ) : (
+              data.text
+            )}
+          </div>
+        ) : (
+          <InsideCardData
+            data={data}
+            isLightOrDark={isLightOrDark}
+            isResponsive={isResponsive}
+          />
+        )}
+      </a>
+    </LazyLoad>
   ) : (
-    <Link
-      //
-      to={{ pathname: `/` + page?.id + `/` + page?.title }}
-      style={style_data}
-      className={s.card_app_image_group}
-    >
-      {!Boolean(data.is_data_button) ? (
-        <div className={s.text_image_group}>
-          {contentState !== undefined ? (
-            <Suspense fallback={<div>Chargement...</div>}>
-              <TextReaderComponent
-                read_more={false}
-                color={data.background_color}
-                toggle={toggle}
-                contenState={contentState}
-                isResponsive={isResponsive}
-              />
-            </Suspense>
-          ) : (
-            data.text
-          )}
-        </div>
-      ) : (
-        <InsideCardData
-          data={data}
-          isLightOrDark={isLightOrDark}
-          isResponsive={isResponsive}
-        />
-      )}
-    </Link>
+    <LazyLoad height={height} offset={100}>
+      <Link
+        //
+        to={{ pathname: `/` + page?.id + `/` + page?.title }}
+        style={style_data}
+        className={s.card_app_image_group}
+      >
+        {!Boolean(data.is_data_button) ? (
+          <div className={s.text_image_group}>
+            {contentState !== undefined ? (
+              <Suspense fallback={<div>Chargement...</div>}>
+                <TextReaderComponent
+                  read_more={false}
+                  color={data.background_color}
+                  toggle={toggle}
+                  contenState={contentState}
+                  isResponsive={isResponsive}
+                />
+              </Suspense>
+            ) : (
+              data.text
+            )}
+          </div>
+        ) : (
+          <InsideCardData
+            data={data}
+            isLightOrDark={isLightOrDark}
+            isResponsive={isResponsive}
+          />
+        )}
+      </Link>
+    </LazyLoad>
   );
 }
 

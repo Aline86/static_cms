@@ -19,9 +19,10 @@ function Prerequis({}: PageParams) {
   const [footer, setFooter] = useState<Footer>(new Footer());
 
   const savePrerequisites = async () => {
-    await header.save_bloc();
-    await footer.save_bloc();
-    saveHeaderAndFooter();
+    let promises = [await header.save_bloc(), await footer.save_bloc()];
+    Promise.all(promises).then(() => {
+      saveHeaderAndFooter();
+    });
   };
 
   const saveHeaderAndFooter = async () => {
@@ -31,7 +32,7 @@ function Prerequis({}: PageParams) {
 
   function handleScroll() {
     let timedelay = 0;
-    let scrollId: number;
+    let scrollId: any;
     let height: number = 0;
     let minScrollHeight: number = 100;
     scrollId = setInterval(function () {

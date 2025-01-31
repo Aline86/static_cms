@@ -18,17 +18,15 @@ const getBloc = async () => {
 
 const saveBloc = async () => {
   let common = new Common();
-  return new Promise(async function (resolve, _) {
-    let result = await common.get_bloc();
-    resolve(result);
-    if (result.id >= 1) {
-      resolve(await common.get_bloc());
-    }
-    if (result.id === -1) {
-      resolve(await common.save_bloc());
-      resolve(await common.get_bloc());
-    }
-  });
+
+  let result = await common.get_bloc();
+
+  if (result.id === -1) {
+    await common.save_bloc();
+    return false;
+  } else if (result !== undefined) {
+    return true;
+  }
 };
 const ColorContext = createContext<any>(
   new Common("#ffffff", "black", "#2f6091")

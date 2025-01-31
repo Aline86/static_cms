@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 interface CarouselData {
   data: PictureGroupCard[] | undefined;
   toggle: boolean;
+  isResponsive: boolean;
 }
 
-function PictureGroupContainer({ data, toggle }: CarouselData) {
+function PictureGroupContainer({ data, toggle, isResponsive }: CarouselData) {
+  const result = window.matchMedia("(max-width: 800px)");
   const [data_break, set_data_break] = useState<any[]>([]);
   const divider = data !== undefined ? Math.ceil(data.length / 2) : undefined;
   const breakpoints =
@@ -54,23 +56,42 @@ function PictureGroupContainer({ data, toggle }: CarouselData) {
         >
           <div
             className={s.cards_image_group}
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              padding: "0 4px",
-              margin: "0 auto",
-              width: "fit-content",
-            }}
+            style={
+              result.matches || isResponsive
+                ? {
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    padding: "0 4px",
+                    margin: "0 auto",
+                    width: isResponsive ? "380px" : "90%",
+                  }
+                : {
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                    padding: "0 4px",
+                    margin: "0 auto",
+                    width: "fit-content",
+                  }
+            }
           >
             {data_break !== undefined &&
               divider !== undefined &&
               data !== undefined && (
-                <Column key={0} props={data.slice(0, divider)} />
+                <Column
+                  key={0}
+                  props={data.slice(0, divider)}
+                  isResponsive={isResponsive}
+                />
               )}
 
             {data !== undefined && divider !== undefined && (
-              <Column key={1} props={data.slice(divider, 2 * divider)} />
+              <Column
+                key={1}
+                props={data.slice(divider, 2 * divider)}
+                isResponsive={isResponsive}
+              />
             )}
           </div>
         </div>

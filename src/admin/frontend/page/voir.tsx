@@ -17,14 +17,24 @@ import ButtonVisualization from "../bloc/bouton/Button";
 import VideoVizualisation from "../bloc/video/video";
 import { Button } from "../../backoffice/bloc/components/button/class/Button";
 import { Video } from "../../backoffice/bloc/components/video/class/Video";
+import { Screen } from "../../backoffice/bloc/components/screen/class/Screen";
 import ColorContext from "../../../ColorContext";
 import { Parallaxe } from "../../backoffice/bloc/components/parallaxe/class/Parallaxe";
 import ParallaxeVizualisation from "../bloc/parallaxe/parallaxe";
 import GridVizualisation from "../bloc/grid/PictureGroup";
+import ScreenVizualisation from "../bloc/screen/screen";
 
 function Voir() {
   const [blocs, setBlocs] = useState<
-    Array<Carousel | TextPicture | PictureGroup | Button | Video | Parallaxe>
+    Array<
+      | Carousel
+      | TextPicture
+      | PictureGroup
+      | Button
+      | Video
+      | Parallaxe
+      | Screen
+    >
   >([]);
   const { id, name } = useParams();
   const [toggle, setToggle] = useState(false);
@@ -38,7 +48,7 @@ function Voir() {
   const result_mid = window.matchMedia("(max-width: 1200px)");
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
-  const { common } = useContext(ColorContext);
+  const { common, initCommon } = useContext(ColorContext);
   async function asynchronRequestsToPopulateBlocs() {
     await header.get_bloc();
 
@@ -56,13 +66,13 @@ function Voir() {
       root.style.paddingTop = "0px";
       root.style.paddingBottom = "220px";
     } else if (root !== null && result_mid.matches) {
-      root.style.width = "100vw";
+      root.style.width = "100%";
       root.style.paddingTop = "75px";
-      root.style.paddingBottom = "75px";
+      root.style.paddingBottom = "0px";
     } else if (root !== null) {
-      root.style.width = "100vw";
-      root.style.paddingTop = "100px";
-      root.style.paddingBottom = "75px";
+      root.style.width = "100%";
+      root.style.paddingTop = "75px";
+      root.style.paddingBottom = "0px";
     }
   };
   useEffect(() => {
@@ -75,15 +85,15 @@ function Voir() {
     "--button-background-color": `${common?.background_color_buttons}`
       ? `${common?.background_color_buttons}`
       : "#2f6091",
-    height: "fit-content",
-    minHeight: "100vh",
-    paddingBottom: "30px",
+
+    "--background": `${common?.fond}` ? `${common?.fond}` : "white",
   };
   useEffect(() => {
     adaptRoot();
   }, [isReponsive]);
 
   useEffect(() => {
+    initCommon();
     adaptRoot();
     if (blocs.length === 0 || blocs === undefined) {
       asynchronRequestsToPopulateBlocs();
@@ -91,103 +101,106 @@ function Voir() {
   }, []);
 
   useEffect(() => {}, [videoLoaded]);
-
+  useEffect(() => {}, []);
   return (
-    <div className={s.blocs_container} style={styles}>
-      <HeaderVizualization
-        input_bloc={header}
-        toggle={toggle}
-        full={true}
-        isResponsive={isReponsive}
-      />
-      {!isReponsive && (
-        <Link to={{ pathname: `/admin/page/` + id + `/` + name }}>
-          <li>
-            <div className={s.navigate}>Retour</div>
-          </li>
-        </Link>
-      )}
-
-      <a
-        className={s.responsive_mode}
-        onClick={() => setResponsive(!isReponsive)}
+    <div style={styles}>
+      <div
+        id="container"
+        className={s.blocs_container}
+        style={{ height: "fit-content", minHeight: "100vh" }}
       >
-        Mode responsive
-      </a>
+        <HeaderVizualization
+          input_bloc={header}
+          toggle={toggle}
+          full={true}
+          isResponsive={isReponsive}
+        />
+        {!isReponsive && (
+          <Link to={{ pathname: `/admin/page/` + id + `/` + name }}>
+            <li>
+              <div className={s.navigate}>Retour</div>
+            </li>
+          </Link>
+        )}
 
-      {blocs.map((value, index) => {
-        return videoLoaded && value instanceof TextPicture ? (
-          <div className={s.bloc} key={index}>
-            <Bloc
-              index={index}
-              bloc={value}
-              css={value.css}
-              num_bloc={index}
-              toggle={toggle}
-              full={true}
-              isResponsive={isReponsive}
-            />
-          </div>
-        ) : videoLoaded && value instanceof Carousel ? (
-          <div
-            key={index}
-            className={s.carousel}
-            style={{
-              marginBottom: `${
-                (isReponsive || result.matches) && value.is_automatique
-                  ? "-90px"
-                  : "0px"
-              }`,
-            }}
-          >
-            <CarouselVisualization
-              input_bloc={value}
-              toggle={toggle}
-              refresh={false}
-              full={true}
-              isResponsive={isReponsive}
-            />
-          </div>
-        ) : videoLoaded && value instanceof PictureGroup ? (
-          <div key={index} className={s.carousel}>
-            {!value.is_grid ? (
-              <PictureGroupVizualisation
+        <a
+          className={s.responsive_mode}
+          onClick={() => setResponsive(!isReponsive)}
+        >
+          Mode responsive
+        </a>
+
+        {blocs.map((value, index) => {
+          return videoLoaded && value instanceof TextPicture ? (
+            <div className={s.bloc} key={index}>
+              <Bloc
+                index={index}
+                bloc={value}
+                css={value.css}
+                num_bloc={index}
+                toggle={toggle}
+                full={true}
+                isResponsive={isReponsive}
+              />
+            </div>
+          ) : videoLoaded && value instanceof Carousel ? (
+            <div
+              key={index}
+              className={s.carousel}
+              style={{
+                marginBottom: `${
+                  (isReponsive || result.matches) && value.is_automatique
+                    ? "-90px"
+                    : "0px"
+                }`,
+              }}
+            >
+              <CarouselVisualization
                 input_bloc={value}
                 toggle={toggle}
                 refresh={false}
                 full={true}
                 isResponsive={isReponsive}
               />
-            ) : (
-              <GridVizualisation
+            </div>
+          ) : videoLoaded && value instanceof PictureGroup ? (
+            <div key={index} className={s.carousel}>
+              {!value.is_grid ? (
+                <PictureGroupVizualisation
+                  input_bloc={value}
+                  toggle={toggle}
+                  refresh={false}
+                  full={true}
+                  isResponsive={isReponsive}
+                />
+              ) : (
+                <GridVizualisation
+                  input_bloc={value}
+                  toggle={toggle}
+                  refresh={false}
+                  isResponsive={isReponsive}
+                />
+              )}
+            </div>
+          ) : videoLoaded && value instanceof Button ? (
+            <div key={index} className={s.carousel}>
+              <ButtonVisualization
                 input_bloc={value}
                 toggle={toggle}
-                refresh={false}
+                full={true}
                 isResponsive={isReponsive}
               />
-            )}
-          </div>
-        ) : videoLoaded && value instanceof Button ? (
-          <div key={index} className={s.carousel}>
-            <ButtonVisualization
-              input_bloc={value}
-              toggle={toggle}
-              full={true}
-              isResponsive={isReponsive}
-            />
-          </div>
-        ) : value instanceof Video ? (
-          <div key={index} className={s.video}>
-            <VideoVizualisation
-              bloc={value}
-              full={true}
-              isResponsive={isReponsive}
-              toggle={refresh}
-            />
-          </div>
-        ) : (
-          videoLoaded &&
-          value instanceof Parallaxe && (
+            </div>
+          ) : value instanceof Video ? (
+            <div key={index} className={s.video}>
+              <VideoVizualisation
+                bloc={value}
+                full={true}
+                isResponsive={isReponsive}
+                toggle={refresh}
+              />
+            </div>
+          ) : value instanceof Parallaxe ? (
             <div key={index} className={s.video}>
               <ParallaxeVizualisation
                 bloc={value}
@@ -195,9 +208,19 @@ function Voir() {
                 isResponsive={isReponsive}
               />
             </div>
-          )
-        );
-      })}
+          ) : (
+            value instanceof Screen && (
+              <div key={index} className={s.screen}>
+                <ScreenVizualisation
+                  bloc={value}
+                  isResponsive={isReponsive}
+                  toggle={false}
+                />
+              </div>
+            )
+          );
+        })}
+      </div>
       <FooterVizualization
         input_bloc={footer}
         toggle={toggle}

@@ -17,18 +17,27 @@ import ButtonVisualization from "../../admin/frontend/bloc/bouton/Button";
 import VideoVizualisation from "../../admin/frontend/bloc/video/video";
 import { Button } from "../../admin/backoffice/bloc/components/button/class/Button";
 import { Video } from "../../admin/backoffice/bloc/components/video/class/Video";
+import { Screen } from "../../admin/backoffice/bloc/components/screen/class/Screen";
 import ColorContext from "../../ColorContext";
 import { Parallaxe } from "../../admin/backoffice/bloc/components/parallaxe/class/Parallaxe";
 import ParallaxeVizualisation from "../../admin/frontend/bloc/parallaxe/parallaxe";
 import GridVizualisation from "../../admin/frontend/bloc/grid/PictureGroup";
+import ScreenVizualisation from "../../admin/frontend/bloc/screen/screen";
 
 function Front() {
   const [blocs, setBlocs] = useState<
-    Array<Carousel | TextPicture | PictureGroup | Button | Video | Parallaxe>
+    Array<
+      | Carousel
+      | TextPicture
+      | PictureGroup
+      | Button
+      | Video
+      | Parallaxe
+      | Screen
+    >
   >([]);
   const { id } = useParams();
   const [toggle, setToggle] = useState(false);
-  const [, setResize] = useState(window.innerWidth);
   const [footer] = useState<Footer>(new Footer());
   const [header] = useState<Header>(new Header());
   const location = useLocation();
@@ -37,7 +46,7 @@ function Front() {
   const result = window.matchMedia("(max-width: 800px)");
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
-  const { common } = useContext(ColorContext);
+  const { common, initCommon } = useContext(ColorContext);
   async function asynchronRequestsToPopulateBlocs() {
     setBlocs([]);
     await header.get_bloc();
@@ -53,30 +62,32 @@ function Front() {
     let root = document.getElementById("root");
     if (root !== null && result.matches) {
       root.style.width = "100%";
-      root.style.paddingTop = "0px";
-      root.style.paddingBottom = "220px";
+      root.style.paddingTop = "45px";
+      root.style.paddingBottom = "0";
     } else if (root !== null && result_mid.matches) {
-      root.style.width = "100vw";
+      root.style.width = "100%";
       root.style.paddingTop = "75px";
-      root.style.paddingBottom = "75px";
+      root.style.paddingBottom = "0";
     } else if (root !== null) {
-      root.style.width = "100vw";
-      root.style.paddingTop = "100px";
-      root.style.paddingBottom = "75px";
+      root.style.width = "100%";
+      root.style.paddingTop = "75px";
+      root.style.paddingBottom = "0";
     }
   };
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();
   }, [location]);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
   const styles = {
     backgroundColor: common !== null ? `${common?.fond}` : "#ffffff",
     "--titles": `${common?.titles}` ? `${common?.titles}` : "black",
     "--button-background-color": `${common?.background_color_buttons}`
       ? `${common?.background_color_buttons}`
       : "#2f6091",
-    height: "fit-content",
-    minHeight: "100vh",
+
+    "--background": `${common?.fond}` ? `${common?.fond}` : "white",
   };
   useEffect(() => {
     adaptRoot();
@@ -87,104 +98,110 @@ function Front() {
     if (blocs.length === 0 || blocs === undefined) {
       asynchronRequestsToPopulateBlocs();
     }
+    initCommon();
   }, []);
 
-  function updateSize() {
-    window.location.reload();
-  }
-  useEffect(() => {
-    if (!result.matches) {
-      window.addEventListener("resize", updateSize);
-      setResize(window.innerWidth);
-    }
-  }, [result.matches]);
-
   return (
-    <div className={s.blocs_container} style={styles}>
-      <HeaderVizualization
-        input_bloc={header}
-        toggle={toggle}
-        full={true}
-        isResponsive={false}
-      />
-      {blocs.map((value, index) => {
-        return value instanceof TextPicture ? (
-          <div key={index} className={s.bloc}>
-            <Bloc
-              index={index}
-              bloc={value}
-              css={value.css}
-              num_bloc={index}
-              toggle={toggle}
-              full={true}
-              isResponsive={false}
-            />
-          </div>
-        ) : value instanceof Carousel ? (
-          <div
-            key={index}
-            className={s.carousel}
-            style={{
-              marginBottom: value.is_automatique ? `0px` : `30px`,
-            }}
-          >
-            <CarouselVisualization
-              input_bloc={value}
-              toggle={toggle}
-              refresh={false}
-              full={true}
-              isResponsive={false}
-            />
-          </div>
-        ) : value instanceof PictureGroup ? (
-          <div key={index} className={s.carousel}>
-            {!value.is_grid ? (
-              <PictureGroupVizualisation
+    <div style={styles}>
+      <div
+        id="container"
+        className={s.blocs_container}
+        style={{ height: "fit-content", minHeight: "100vh" }}
+      >
+        <HeaderVizualization
+          input_bloc={header}
+          toggle={toggle}
+          full={true}
+          isResponsive={false}
+        />
+
+        {blocs.map((value, index) => {
+          return value instanceof TextPicture ? (
+            <div key={index} className={s.bloc}>
+              <Bloc
+                index={index}
+                bloc={value}
+                css={value.css}
+                num_bloc={index}
+                toggle={toggle}
+                full={true}
+                isResponsive={false}
+              />
+            </div>
+          ) : value instanceof Carousel ? (
+            <div
+              key={index}
+              className={s.carousel}
+              style={{
+                marginBottom: value.is_automatique ? `0px` : `30px`,
+              }}
+            >
+              <CarouselVisualization
                 input_bloc={value}
                 toggle={toggle}
                 refresh={false}
                 full={true}
                 isResponsive={false}
               />
-            ) : (
-              <GridVizualisation
+            </div>
+          ) : value instanceof PictureGroup ? (
+            <div key={index} className={s.grid}>
+              {!value.is_grid ? (
+                <PictureGroupVizualisation
+                  input_bloc={value}
+                  toggle={toggle}
+                  refresh={false}
+                  full={true}
+                  isResponsive={false}
+                />
+              ) : (
+                <GridVizualisation
+                  input_bloc={value}
+                  toggle={toggle}
+                  refresh={false}
+                  isResponsive={false}
+                />
+              )}
+            </div>
+          ) : value instanceof Button ? (
+            <div key={index} className={s.carousel}>
+              <ButtonVisualization
                 input_bloc={value}
                 toggle={toggle}
-                refresh={false}
+                full={true}
                 isResponsive={false}
               />
-            )}
-          </div>
-        ) : value instanceof Button ? (
-          <div key={index} className={s.carousel}>
-            <ButtonVisualization
-              input_bloc={value}
-              toggle={toggle}
-              full={true}
-              isResponsive={false}
-            />
-          </div>
-        ) : value instanceof Video ? (
-          <div key={index} className={s.video}>
-            <VideoVizualisation
-              bloc={value}
-              full={true}
-              isResponsive={false}
-              toggle={toggle}
-            />
-          </div>
-        ) : (
-          value instanceof Parallaxe && (
+            </div>
+          ) : value instanceof Video ? (
             <div key={index} className={s.video}>
+              <VideoVizualisation
+                bloc={value}
+                full={true}
+                isResponsive={false}
+                toggle={toggle}
+              />
+            </div>
+          ) : value instanceof Parallaxe ? (
+            <div key={index} className={s.parallaxe}>
               <ParallaxeVizualisation
                 bloc={value}
                 full={true}
                 isResponsive={false}
               />
             </div>
-          )
-        );
-      })}
+          ) : (
+            value instanceof Screen && (
+              <div key={index} className={s.screen}>
+                <ScreenVizualisation
+                  bloc={value}
+                  isResponsive={false}
+                  toggle={false}
+                />
+              </div>
+            )
+          );
+        })}
+      </div>
       <FooterVizualization
         input_bloc={footer}
         toggle={toggle}

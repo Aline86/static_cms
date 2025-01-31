@@ -1,9 +1,11 @@
+import { TextPicture } from "../../../../backoffice/bloc/components/text_picture/class/TextPicture";
+
 interface TitreParams {
-  titre: string;
+  bloc: TextPicture;
 }
 
-function Titre({ titre }: TitreParams) {
-  return <h2>{titre}</h2>;
+function Titre({ bloc }: TitreParams) {
+  return <h2>{bloc.title}</h2>;
 }
 
 export default Titre;

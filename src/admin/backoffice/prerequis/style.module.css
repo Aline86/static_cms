@@ -20,7 +20,7 @@
 .page_container {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 95vw;
   margin: 0 auto;
 }
 .center {

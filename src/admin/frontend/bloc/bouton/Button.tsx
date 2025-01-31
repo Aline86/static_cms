@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import s from "./styles/style.module.css";
 import { Button } from "../../../backoffice/bloc/components/button/class/Button";
 import ButtonContainer from "./ButtonContainer";
@@ -15,18 +15,9 @@ function ButtonVisualization({
   full,
   isResponsive,
 }: CustomCarouselInfo) {
-  const [, setResize] = useState(window.innerWidth);
   const result = window.matchMedia("(max-width: 1000px)");
 
-  function updateSize() {
-    window.location.reload();
-  }
-  useEffect(() => {
-    if (!result.matches) {
-      window.addEventListener("resize", updateSize);
-      setResize(window.innerWidth);
-    }
-  }, [result]);
+  useEffect(() => {}, [result]);
 
   useEffect(() => {}, [isResponsive]);
   return (
@@ -34,7 +25,7 @@ function ButtonVisualization({
       className={s.body_container}
       style={{
         marginTop: `${input_bloc.bloc_number === 1 ? "60px" : "60px"}`,
-        marginBottom: `80px`,
+        marginBottom: `30px`,
       }}
     >
       <ButtonContainer

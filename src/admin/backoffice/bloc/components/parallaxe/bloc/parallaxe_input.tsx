@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import s from "./style.module.css";
 import { Parallaxe } from "../class/Parallaxe";
+import FileUploadWithProgress from "../../../../services/FileUploadWithProgress";
 
 function ParallaxeInput({
   input_bloc,
@@ -50,18 +51,15 @@ function ParallaxeInput({
             }}
           >
             <h3>Insérer une image</h3>
-            <label>
-              <span>Choisir une image</span>
-              <input
-                type="file"
-                name="singleFile"
-                onChange={(e) => {
-                  updateParallaxe(e, "image", input_bloc);
-                }}
-                style={{ display: `block` }}
-              />
-            </label>
 
+            <FileUploadWithProgress
+              sub_field_name={undefined}
+              update={updateParallaxe}
+              text_bouton_telechargement={"Choisir une image"}
+              field_name={"image"}
+              component={input_bloc}
+              index={undefined}
+            />
             <h3>Texte de la balise image</h3>
             <input
               type="text"

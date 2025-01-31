@@ -7,6 +7,7 @@ import DropdownData from "../dropdown/Dropdown";
 import Picture from "../../../../services/picture";
 import ContentText from "./content_text";
 import { RawDraftContentState } from "react-draft-wysiwyg";
+import FileUploadWithProgress from "../../../../services/FileUploadWithProgress";
 
 interface CardDatas {
   bloc: PictureGroup;
@@ -144,17 +145,14 @@ function CardData({
               width: "100%",
             }}
           >
-            <label>
-              <span>Choisir une image</span>
-              <input
-                type="file"
-                className={s.image_url}
-                placeholder="Url de l'image"
-                onChange={(e) => {
-                  updatePictureGroupData(e, "image_url", bloc, index);
-                }}
-              />
-            </label>
+            <FileUploadWithProgress
+              sub_field_name={undefined}
+              update={updatePictureGroupData}
+              text_bouton_telechargement={"Choisir une image"}
+              field_name={"image_url"}
+              component={bloc}
+              index={index}
+            />
             <Picture
               update={updatePictureGroupData}
               bloc={bloc}

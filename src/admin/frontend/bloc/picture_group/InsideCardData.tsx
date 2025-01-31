@@ -14,7 +14,6 @@ function InsideCardData({ data, isLightOrDark, isResponsive }: CardDatas) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
 
   const style = {
-    cursor: "pointer",
     color: isLightOrDark(data.background_color),
     border: "1px solid " + `${isLightOrDark(data.background_color)}`,
     marginBottom: `25px`,

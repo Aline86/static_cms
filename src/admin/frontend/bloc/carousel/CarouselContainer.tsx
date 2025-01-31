@@ -137,7 +137,7 @@ function CarouselContainer({
       className={s.body}
       onTransitionEnd={() => updateTransitionState(false)}
       style={{
-        width: full ? "90vw" : isResponsive ? `360px` : `50vw`,
+        width: full ? "100%" : isResponsive ? `360px` : `50vw`,
         margin: `${bloc.gap}px auto`,
         marginBottom: isResponsive || result.matches ? "0px" : "30px",
         marginLeft: isResponsive || result.matches ? "-15px" : "0",
@@ -148,13 +148,7 @@ function CarouselContainer({
         <div
           className={s.left_arrows}
           style={{
-            width: full
-              ? isResponsive
-                ? "360px"
-                : `calc(${bloc.width * (cardNumber - 1)}vw + ${
-                    bloc.gap * (cardNumber - 1)
-                  }px)`
-              : `43vw`,
+            width: full ? (isResponsive ? "360px" : ``) : `43vw`,
           }}
         >
           {type === "carousel" && transitionFinished ? (
@@ -218,7 +212,7 @@ function CarouselContainer({
       <div
         className={s.arrow_container}
         style={{
-          maxWidth: full ? (isResponsive ? "360px" : "90vw") : "43vw",
+          maxWidth: full ? (isResponsive ? "360px" : "100%") : "43vw",
         }}
       >
         <div
@@ -226,9 +220,11 @@ function CarouselContainer({
           style={
             isResponsive || result.matches
               ? {
-                  minWidth: `${cardWidth}px`,
+                  minWidth: "360px",
                   /*  margin: `${bloc.gap}px auto`,*/
-                  overflowX: `scroll`,
+
+                  overflowY: "hidden",
+                  overflowX: "scroll",
                   height: full
                     ? !result.matches && !isResponsive
                       ? `${Number(bloc.height)}vw`
@@ -236,10 +232,8 @@ function CarouselContainer({
                     : `${Number(bloc.height)}vw`,
                   marginLeft: `15px`,
                   width: full
-                    ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
-                        bloc.gap * (cardNumber - 1)
-                      }px)`
-                    : `calc(${bloc.width}vw + ${
+                    ? ``
+                    : `calc(${bloc.width * bloc.card_number}vw + ${
                         bloc.gap * (cardNumber - 1)
                       }px)`,
                 }
@@ -249,18 +243,24 @@ function CarouselContainer({
                     !isResponsive && !result.matches
                       ? `calc(${bloc.height}vw)`
                       : "180px",
-                  width:
-                    !isResponsive && !result.matches
-                      ? `calc(${bloc.width * (cardNumber - 1)}vw + ${
-                          bloc.gap * (cardNumber - 1)
-                        }px)`
-                      : `360px`,
+                  width: isResponsive
+                    ? `360px`
+                    : `calc(${bloc.width * 3}vw + ${bloc.gap * 2}px)`,
                 }
           }
         >
           <div
             className={s.card_container}
             style={{
+              width: result.matches ? "95vw" : "",
+              maxWidth: full && !result.matches ? "calc(100% - 60px)" : "",
+              marginLeft:
+                full && !result.matches
+                  ? "-15px"
+                  : result.matches
+                  ? "15px"
+                  : "",
+
               height: `fit-content`,
               transform: full
                 ? !result.matches && !isResponsive
@@ -340,7 +340,7 @@ function CarouselContainer({
                     transitionFinished={transitionFinished}
                     trasnsType={"transform 1s ease-in"}
                     transX={move}
-                    width={full ? (isResponsive ? `380px` : `100vw`) : `45vw`}
+                    width={full ? (isResponsive ? `380px` : `100%`) : `45vw`}
                     gap={bloc.gap}
                     height={bloc.height}
                     value={value}

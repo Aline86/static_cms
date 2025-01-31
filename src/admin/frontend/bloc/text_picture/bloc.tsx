@@ -26,6 +26,7 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
     setContentState(typeof bloc.text === "object" ? bloc.text : contentState);
   }, []);
   useEffect(() => {}, [bloc, result.matches]);
+
   return (
     <div
       className={s.bloc}
@@ -34,16 +35,15 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
           full ? (isResponsive || result.matches ? "95%" : "50%") : "90%"
         }`,
         margin: "0 auto",
-        marginTop:
-          (isResponsive || result.matches) && bloc.bloc_number === 1
-            ? "100px"
-            : "30px",
+        paddingTop: bloc.bloc_number === 1 ? "40px" : "30px",
         paddingLeft: full ? `0px` : !bloc.bloc_column ? `30px` : `0px`,
       }}
     >
-      <div className={s.titre}>
-        <Titre titre={bloc.title} />
-      </div>
+      {bloc.title !== "" && (
+        <div className={s.titre}>
+          <Titre bloc={bloc} />
+        </div>
+      )}
 
       <div
         className={s.bloc_content}
@@ -63,20 +63,15 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
             style={{
               width: `${bloc.bloc_column ? `100%` : `50%`}`,
               paddingTop: "15px",
-              marginLeft: `0px`,
-              marginRight: `0px`,
-              marginBottom: `0px`,
+
+              marginBottom: `30px`,
               float: `${bloc.image_right ? "left" : "right"}`,
             }}
           >
-            <Image
-              image={bloc.image}
-              alt_image={bloc.alt_image}
-              css={css}
-              isBlocColumn={bloc.bloc_column}
-            />
+            <Image bloc={bloc} css={css} />
           </div>
         )}
+        {bloc.text === "" && <div className={s.clear_box}></div>}
         {contentState !== undefined && (
           <div
             className={s.text}

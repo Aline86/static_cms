@@ -45,15 +45,48 @@
 .ul_menu a {
   text-decoration: none;
   color: gray;
-  font-size: 28px;
+  font-size: 20px;
 }
 
 .open_side_bar {
   position: fixed;
   top: 0px !important;
   right: 0px !important;
+  min-height: 100vh;
+  overflow-y: scroll;
+  height: fit-content;
 }
-
+body:has(.open_side_bar) {
+  overflow-y: hidden;
+}
+@media screen and (max-width: 800px) {
+  .side_menu {
+    position: absolute;
+    height: fit-content;
+    min-height: 350px;
+  }
+  body:has(.open_side_bar) {
+    overflow-y: hidden;
+  }
+  .open_side_bar {
+    position: absolute !important;
+    margin-top: -20px;
+    padding-top: 50px;
+    right: -50px !important;
+    overflow-y: auto !important;
+    height: 100% !important;
+    min-height: 350px;
+  }
+  .side_menu {
+    position: absolute;
+    margin-top: -20px;
+    padding-top: 50px;
+    right: -380px;
+  }
+  .ul_menu a {
+    font-size: 15px;
+  }
+}
 @keyframes slidein {
   from {
     border-bottom: 1px solid transparent;

@@ -35,7 +35,7 @@ export class Video extends Container {
     this.parameters = this.type + "&id=" + this.id + "&type=" + this.type;
   }
 
-  public update(e: any, field: string) {
+  public async update(e: any, field: string) {
     switch (field) {
       case "bloc_number":
         this.set_bloc_number(e);
@@ -70,11 +70,16 @@ export class Video extends Container {
         if (e.target.value.includes("https")) {
           this.set_video_url(e.target.value);
         } else if (e.target.files !== null) {
-          this.set_video_url(
-            UploadService.sanitizeName(e.target.files[0].name)
-          );
-          UploadService.handleUpload(e.target.files[0]);
+          if (e.target.files !== null) {
+            let picture_name = await UploadService.handleUpload(
+              e.target.files[0]
+            );
+            if (picture_name !== undefined && picture_name !== "") {
+              this.set_video_url(picture_name);
+            }
+          }
         }
+
         break;
       default:
         null;

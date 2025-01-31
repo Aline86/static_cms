@@ -46,6 +46,22 @@ function HeaderVizualization({
   const handleShowLinks = () => {
     setTrigger_show_link(!trigger_show_link);
   };
+
+  const nav_animation = () => {
+    const nav = document.getElementById(stylePath.nav);
+
+    window.addEventListener("scroll", function () {
+      if (nav !== undefined && nav !== null) {
+        if (window.scrollY > nav.offsetHeight + 400) {
+          if (!nav.className.includes("active")) {
+            nav.classList.add(stylePath.active);
+          }
+        } else {
+          nav.classList.remove(stylePath.active);
+        }
+      }
+    });
+  };
   useEffect(() => {}, [toggle]);
   useEffect(() => {
     if (isResponsive || result.matches) {
@@ -63,8 +79,11 @@ function HeaderVizualization({
       setStylePath(e);
     }
   }, [isResponsive]);
+  useEffect(() => {
+    nav_animation();
+  }, []);
   return (
-    <>
+    <div id={stylePath.nav}>
       <div
         className={stylePath.backdrop}
         style={{
@@ -88,7 +107,7 @@ function HeaderVizualization({
             <div className={stylePath.menu_btn__burger}></div>
           </div>
           <div>
-            <Nav opened={open} isResponsive={isResponsive} />
+            <Nav opened={open} isResponsive={isResponsive} setOpen={setOpen} />
           </div>
         </div>
         <div className={stylePath.title}>
@@ -142,7 +161,7 @@ function HeaderVizualization({
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

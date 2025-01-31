@@ -1,3 +1,11 @@
+main {
+  min-height: calc(100vh - 60px);
+}
+
+footer {
+  grid-row: 2; /* Place le footer sur la deuxième ligne */
+}
+
 .carousel {
   height: fit-content;
   width: 100%;
@@ -7,17 +15,21 @@
   align-items: center;
 }
 .video {
-  height: auto;
   margin-top: 10px;
 }
 .bloc {
   height: 100%;
-  margin-bottom: 60px;
-}
-.blocs_container {
+
   display: flex;
   flex-direction: column;
-
+  align-items: center;
+  justify-content: center;
+}
+#container {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   width: 100%;
   margin: 0 auto;
 }

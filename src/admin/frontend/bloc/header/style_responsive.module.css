@@ -31,7 +31,7 @@
 .title .title_container span {
   display: inline-block;
   position: relative;
-  top: -30px;
+  top: -10px;
 
   /*animation-iteration-count: infinite;*/
   animation-duration: 5s;
@@ -140,8 +140,8 @@
   justify-content: center;
   align-items: center;
   margin-right: 15px;
-  margin-top: 20px;
-  width: 150px;
+  margin-top: 28px;
+  width: 160px;
   text-align: center;
   text-transform: uppercase;
 }
@@ -179,8 +179,8 @@
 .logo {
   position: absolute;
   left: 25px;
-  top: 17px;
-  height: 40px;
+  top: 22px;
+  height: 30px;
 }
 .logo img {
   height: 100%;

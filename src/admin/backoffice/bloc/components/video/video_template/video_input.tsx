@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import s from "./style.module.css";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Video } from "../class/Video";
+import FileUploadWithProgress from "../../../../services/FileUploadWithProgress";
 
 function VideoInput({
   input_bloc,
@@ -143,20 +143,14 @@ function VideoInput({
                   onChange={() => updateIsYoutube()}
                 />
               </div>
-              <label>
-                <span>
-                  <h3 style={{ width: `250px!important` }}>
-                    Télécharger une vidéo
-                  </h3>
-                  <input
-                    type="file"
-                    name="singleFile"
-                    onChange={(e) => {
-                      updateVideo(e, "video_url", input_bloc);
-                    }}
-                  />
-                </span>
-              </label>
+              <FileUploadWithProgress
+                sub_field_name={undefined}
+                update={updateVideo}
+                text_bouton_telechargement={"Télécharger une vidéo"}
+                field_name={"video_url"}
+                component={input_bloc}
+                index={undefined}
+              />
             </div>
           )}
           <label htmlFor="">

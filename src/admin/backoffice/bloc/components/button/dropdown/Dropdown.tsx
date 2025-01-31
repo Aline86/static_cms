@@ -60,8 +60,8 @@ function DropdownData({ bloc, updateButton }: DropdownInfo) {
         <option key={1} value="Lien url externe">
           Lien url externe
         </option>
-        <option key={2} value="Page externe">
-          Page externe{" "}
+        <option key={2} value="Page interne">
+          Page interne{" "}
         </option>
         <option key={3} value="Fichier">
           Fichier{" "}

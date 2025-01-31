@@ -158,6 +158,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     `email` varchar(250)  NOT NULL default "",
     `password` varchar(250)  NOT NULL default "",       
     `token` text  NOT NULL default "", 
+    `connection_attempts` int(11)  NOT NULL default 0,
     PRIMARY KEY  (`id`)
 );
 
@@ -212,8 +213,20 @@ CREATE TABLE IF NOT EXISTS `link_networks_an_others_header` (
     PRIMARY KEY  (`id`),
     FOREIGN KEY (`header_id`) REFERENCES header(`id`) ON DELETE CASCADE
 );
-/*Table structure for table `links_network_an_others_footer` */
 
+/*Table structure for table `screen` */
+CREATE TABLE IF NOT EXISTS `screen` (
+    `id` int(11) NOT NULL auto_increment,  
+    `title` varchar(250)  NOT NULL default "", 
+    `type` varchar(55)  NOT NULL default "screen",           
+    `overlay` boolean  default false  ,   
+    `text` text NOT NULL default "",    
+    `screen_url` text NOT NULL default "", 
+    `bloc_number` int(11)  NOT NULL,
+    `page_id` int(11)  NOT NULL,
+    PRIMARY KEY  (`id`),
+    FOREIGN KEY (`page_id`) REFERENCES page(`id`)
+);
 /*Table structure for table `common_settings` */
 CREATE TABLE IF NOT EXISTS `common` (
     `id` int(11) NOT NULL auto_increment,        
@@ -224,4 +237,3 @@ CREATE TABLE IF NOT EXISTS `common` (
     `background_color_buttons` varchar(11)  NOT NULL default "",
     PRIMARY KEY  (`id`)
 );
-INSERT INTO `user` (`id`, `email`, `password`, `token`) VALUES (NULL, 'cahaestie@gmail.com', '$2y$10$TcCbuk5kNo9upr9BHM/0ouB3F0vLcnUcTMn.31LNK16NtjECJ/hmu', '');

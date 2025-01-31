@@ -27,7 +27,7 @@ function VideoVizualisation({
   const [external, isExternalLink] = useState<boolean>();
 
   const [blocWidth, setblocWidth] = useState<number>(0);
-  const [blocHeight, setblocHeight] = useState<number>(0);
+  const [, setblocHeight] = useState<number>(0);
   const [url, setUrl] = useState<string>("");
   const blocRef = useRef<any>();
   const result = window.matchMedia("(max-width: 800px)");
@@ -66,7 +66,7 @@ function VideoVizualisation({
   return url !== undefined && url.length > 0 && external ? (
     <div
       style={{
-        marginTop: bloc.bloc_number === 1 ? "90px" : "0px",
+        marginTop: bloc.bloc_number === 1 ? "150px" : "0px",
       }}
     >
       {bloc.title !== "" ? (
@@ -154,7 +154,7 @@ function VideoVizualisation({
         style={{
           position: "relative",
           width: `${blocWidth + "px"}`,
-          height: `${blocHeight + "px"}`,
+          height: `100vh"}`,
           marginLeft: full
             ? isResponsive || result.matches
               ? "0"
@@ -165,7 +165,7 @@ function VideoVizualisation({
               ? "0px"
               : result.matches
               ? "-60px"
-              : "0px"
+              : "-30px"
             : "0",
           marginBottom: "30px",
         }}
@@ -191,7 +191,7 @@ function VideoVizualisation({
             }`,
             color: "red",
             height: full ? (isResponsive ? "auto" : "100vh") : "50%",
-            width: full ? (isResponsive ? "100vw" : "100vw") : "43vw",
+            width: full ? (isResponsive ? "100%" : "100%") : "43vw",
             zIndex: "2",
             display: "flex",
             flexDirection: "column",
@@ -206,7 +206,7 @@ function VideoVizualisation({
               alignItems: "center",
               justifyContent: "center",
               color: "white",
-
+              textTransform: "uppercase",
               textAlign: "center",
               fontSize: `${full ? (!isResponsive ? "100px" : "42px") : "72px"}`,
               opacity: "0.5",
@@ -256,6 +256,7 @@ function VideoVizualisation({
             alignItems: "center",
             justifyContent: "center",
           }}
+          playsInline
           autoPlay
           muted
           onLoadedData={() => {

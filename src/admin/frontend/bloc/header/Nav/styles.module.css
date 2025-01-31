@@ -45,15 +45,20 @@
 .ul_menu a {
   text-decoration: none;
   color: gray;
-  font-size: 28px;
+  font-size: 20px;
 }
 
 .open_side_bar {
   position: fixed;
   top: 0px !important;
   right: 0px !important;
+  min-height: 100vh;
+  overflow-y: scroll;
+  height: fit-content;
 }
-
+body:has(.open_side_bar) {
+  overflow-y: hidden;
+}
 @keyframes slidein {
   from {
     border-bottom: 1px solid transparent;

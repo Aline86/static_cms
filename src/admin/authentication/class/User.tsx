@@ -56,7 +56,7 @@ export default class User {
         credentials: "include",
         headers: {
           "Content-type": "application/json",
-          Authorization: `${localStorage.getItem("authToken")}`, // notice the Bearer before your token
+          Authorization: `${sessionStorage.getItem("authToken")}`, // notice the Bearer before your token
         },
       }
     ).then(async (response) => {
@@ -72,19 +72,22 @@ export default class User {
       {
         referrerPolicy: "strict-origin-when-cross-origin", // n
         mode: "cors",
-        method: "POST",
+        method: "GET",
         credentials: "include",
+
         headers: {
-          "Content-type": "application/json",
-          Authorization: `${localStorage.getItem("authToken")}`, // notice the Bearer before your token
+          Authorization: `${sessionStorage.getItem("authToken")}`, // notice the Bearer before your token
         },
       }
     ).then(async (response) => {
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
-
-      return await response.json();
+      try {
+        return await response.json();
+      } catch (e: any) {
+        console.log("e", e.message);
+      }
     });
 
     return response;
@@ -93,7 +96,7 @@ export default class User {
     this.token = token;
   }
   retrieveHashedPassword() {
-    const storedHashedPassword = localStorage.getItem("authToken");
+    const storedHashedPassword = sessionStorage.getItem("authToken");
     if (storedHashedPassword) {
       return storedHashedPassword;
     } else {

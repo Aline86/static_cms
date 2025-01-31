@@ -16,7 +16,7 @@ const Login = () => {
       let user_data = await loginAction_starter(input);
 
       if (user_data !== undefined) {
-        localStorage.setItem("authToken", user_data.token);
+        sessionStorage.setItem("authToken", user_data.token);
         navigate("/admin");
       }
     }

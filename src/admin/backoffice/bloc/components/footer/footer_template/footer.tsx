@@ -3,6 +3,7 @@ import s from "./styles.module.css";
 import remove from "./../../../../../../assets/remove.png";
 import add_to_database from "./../../../../../../assets/add_to_database.png";
 import Footer from "../Footer";
+import FileUploadWithProgress from "../../../../services/FileUploadWithProgress";
 
 interface FooterInfo {
   input_bloc: Footer;
@@ -109,16 +110,15 @@ function FooterInput({ input_bloc, updateFooter, saveBloc }: FooterInfo) {
                 </div>
                 <div className={s.url_logo}>
                   <h3>Image logo lien :</h3>
-                  <label>
-                    <span>Choisir une image</span>
-                    <input
-                      type="file"
-                      onChange={(e) => {
-                        e.preventDefault();
-                        updateFooter(e, "social_network", "url_logo", key);
-                      }}
-                    />
-                  </label>
+
+                  <FileUploadWithProgress
+                    sub_field_name={"url_logo"}
+                    update={updateFooter}
+                    text_bouton_telechargement={"Charger une image"}
+                    field_name={"social_network"}
+                    component={input_bloc}
+                    index={key}
+                  />
                 </div>
                 <h3>Nom :</h3>
                 <div className={s.name}>

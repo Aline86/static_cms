@@ -13,7 +13,7 @@ export default function Nav({ opened, setOpen, isResponsive }: NavInfo) {
   const [stylePath, setStylePath] = useState(s);
   const [pages, setPages] = useState<Page[]>([]);
   const page_type = new Page();
-  // const { id, name } = useParams();
+
   const getPages = async () => {
     let async_result = await page_type.get_pages();
 
@@ -21,13 +21,7 @@ export default function Nav({ opened, setOpen, isResponsive }: NavInfo) {
       setPages(async_result);
     }
   };
-  /*if (
-    localStorage.getItem("previous_page_id") !== null &&
-    localStorage.getItem("previous_page_id") !== id
-  ) {
-    localStorage.removeItem("previous_page_id");
-    window.location.reload();
-  }*/
+
   useEffect(() => {
     if (isResponsive) {
       setStylePath(v);
