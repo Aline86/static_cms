@@ -1,6 +1,6 @@
 import s from "./style.module.css";
 import { Screen } from "./../../../backoffice/bloc/components/screen/class/Screen";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 
 import { BASE_URL_SITE } from "../../../../config";
 

@@ -41,7 +41,7 @@ function Visualization({}: PageParams) {
     await footer.get_bloc();
 
     let bloc_pages = await tools.getAllBlocsPage();
-    console.log("bloc_pages", bloc_pages);
+
     bloc_pages !== undefined && setBlocs(bloc_pages);
     if (goToB) {
       blocs !== undefined && setHighlight(bloc_pages[bloc_pages.length - 1]);
@@ -53,7 +53,7 @@ function Visualization({}: PageParams) {
 
   function handleScroll() {
     let timedelay = 0;
-    let scrollId: number;
+    let scrollId: any;
     let height: number = 0;
     let minScrollHeight: number = 100;
     scrollId = setInterval(function () {
@@ -69,7 +69,7 @@ function Visualization({}: PageParams) {
     user.logOut();
     setUser(new User("", "", ""));
     navigate("/login");
-    localStorage.setItem("authToken", "");
+    sessionStorage.setItem("authToken", "");
   };
   useEffect(() => {
     asynchronRequestsToPopulateBlocs();

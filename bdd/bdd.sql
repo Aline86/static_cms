@@ -158,6 +158,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     `email` varchar(250)  NOT NULL default "",
     `password` varchar(250)  NOT NULL default "",       
     `token` text  NOT NULL default "", 
+    `connection_attempts` int(11)  NOT NULL default 0,
     PRIMARY KEY  (`id`)
 );
 
@@ -236,4 +237,3 @@ CREATE TABLE IF NOT EXISTS `common` (
     `background_color_buttons` varchar(11)  NOT NULL default "",
     PRIMARY KEY  (`id`)
 );
-INSERT INTO `user` (`id`, `email`, `password`, `token`) VALUES (NULL, 'cahaestie@gmail.com', '$2y$10$Z7DfymlrDFwM4Eo7kAum2u4mqR0gpktj7D.j5hPuuo5J/8yxa9XwO', '');

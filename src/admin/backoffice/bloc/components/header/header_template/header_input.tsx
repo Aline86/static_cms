@@ -6,6 +6,7 @@ import add_to_database from "./../../../../../../assets/add_to_database.png";
 import Header from "./../Header";
 import LinkNetworksAndOthersHeader from "../LinkNetworksAndOthersHeader";
 import DropdownData from "../dropdown/Dropdown";
+import FileUploadWithProgress from "../../../../services/FileUploadWithProgress";
 
 interface HeaderInfo {
   input_bloc: Header | undefined;
@@ -36,16 +37,18 @@ function HeaderInput({
           </div>
           <div className={s.title_bloc}>
             <h3>Logo : </h3>
-            <label>
-              <span>Choisir une image</span>
-              <input
-                type="file"
-                onChange={(e) => {
-                  updateHeader(e, "logo_url", undefined, undefined);
-                }}
-              />
-            </label>
+
+            <FileUploadWithProgress
+              update={updateHeader}
+              text_bouton_telechargement={"Choisir une image"}
+              field_name={"logo_url"}
+              sub_field_name={undefined}
+              component={input_bloc}
+              index={undefined}
+            />
+            <br />
             <label>{input_bloc?.logo_url}</label>
+            <br />
           </div>
           <DropdownData input_bloc={input_bloc} updateHeader={updateHeader} />
           <div className={s.add_file}>
@@ -82,15 +85,15 @@ function HeaderInput({
                     </div>
                     <div className={s.url_logo}>
                       <h3>Image logo lien :</h3>
-                      <label>
-                        <span>Choisir une image</span>
-                        <input
-                          type="file"
-                          onChange={(e) => {
-                            updateHeader(e, "social_network", "url_logo", key);
-                          }}
-                        />
-                      </label>
+
+                      <FileUploadWithProgress
+                        update={updateHeader}
+                        text_bouton_telechargement={"Choisir une image"}
+                        field_name={"social_network"}
+                        sub_field_name={"url_logo"}
+                        component={input_bloc}
+                        index={key}
+                      />
                     </div>
                     <h3>Nom :</h3>
                     <div className={s.name}>

@@ -15,4 +15,8 @@ ul li {
 }
 .image {
   display: inline !important;
+  margin-bottom: 30px !important;
+}
+.clear_box {
+  clear: both; /* Ensures the content starts below any floated elements */
 }

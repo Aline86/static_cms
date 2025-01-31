@@ -46,7 +46,7 @@ function Front() {
   const result = window.matchMedia("(max-width: 800px)");
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
-  const { common } = useContext(ColorContext);
+  const { common, initCommon } = useContext(ColorContext);
   async function asynchronRequestsToPopulateBlocs() {
     setBlocs([]);
     await header.get_bloc();
@@ -63,14 +63,14 @@ function Front() {
     if (root !== null && result.matches) {
       root.style.width = "100%";
       root.style.paddingTop = "45px";
-      root.style.paddingBottom = "220px";
+      root.style.paddingBottom = "0";
     } else if (root !== null && result_mid.matches) {
-      root.style.width = "100vw";
+      root.style.width = "100%";
       root.style.paddingTop = "75px";
       root.style.paddingBottom = "0";
     } else if (root !== null) {
-      root.style.width = "100vw";
-      root.style.paddingTop = "100px";
+      root.style.width = "100%";
+      root.style.paddingTop = "75px";
       root.style.paddingBottom = "0";
     }
   };
@@ -86,8 +86,7 @@ function Front() {
     "--button-background-color": `${common?.background_color_buttons}`
       ? `${common?.background_color_buttons}`
       : "#2f6091",
-    height: "fit-content",
-    minHeight: "100vh",
+
     "--background": `${common?.fond}` ? `${common?.fond}` : "white",
   };
   useEffect(() => {
@@ -99,11 +98,16 @@ function Front() {
     if (blocs.length === 0 || blocs === undefined) {
       asynchronRequestsToPopulateBlocs();
     }
+    initCommon();
   }, []);
 
   return (
-    <div>
-      <div id="container" className={s.blocs_container} style={styles}>
+    <div style={styles}>
+      <div
+        id="container"
+        className={s.blocs_container}
+        style={{ height: "fit-content", minHeight: "100vh" }}
+      >
         <HeaderVizualization
           input_bloc={header}
           toggle={toggle}

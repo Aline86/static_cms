@@ -37,7 +37,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
           backgroundAttachment: "fixed",
           marginTop: `${
             full
-              ? isResponsive
+              ? isResponsive || result.matches
                 ? "90px"
                 : bloc.bloc_number === 1
                 ? "30px"
@@ -47,7 +47,7 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
           fontSize: isResponsive ? "4vh" : "12vh",
           WebkitTextFillColor: "transparent",
           lineHeight: "100%",
-          height: !isResponsive && !result.matches ? "fit-content" : "14vh",
+          height: !isResponsive && !result.matches ? "fit-content" : "6vh",
           backgroundClip: "text",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",

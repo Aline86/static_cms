@@ -21,13 +21,7 @@
 .bloc {
   margin-bottom: 30px;
 }
-.blocs_container {
-  display: flex;
-  flex-direction: column;
 
-  width: 100%;
-  margin: 0 auto;
-}
 li .navigate {
   position: fixed;
   top: 150px;

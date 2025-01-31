@@ -4,7 +4,7 @@ import { PictureGroup } from "../class/PictureGroup";
 
 import { RawDraftContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
-
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 interface CardDatas {
   index: number;
 

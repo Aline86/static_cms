@@ -1,5 +1,5 @@
 <?php
-$envFile = './../.env.local';
+$envFile = './../.env
 include 'environment_variables.php';
 $host = getenv('DB_HOST');
 $user = getenv('DB_USER');
@@ -84,7 +84,7 @@ function generateNumericOTP($n) {
 
 if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== null && htmlspecialchars(strip_tags($_POST['password'])) !== null) {
     
-    $requete = 'SELECT password FROM user WHERE email = :email';
+    $requete = 'SELECT password, connection_attempts FROM user WHERE email = :email';
     $resultat = $db->prepare($requete);
     $resultat->bindValue(':email', htmlspecialchars(strip_tags($_POST['email'])));
     $resultat->execute();  
@@ -94,19 +94,9 @@ if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== 
     $hashed = password_verify($_POST['password'], $user[0]['password']);
 
 
-    if($hashed) {
+    if($hashed && $user[0]['connection_attempts'] < 11) {
       
-        $res = mail(
-
-            'ca.haestie@gmail.com',
-        
-            'test',
-        
-            generateNumericOTP($n)
-    
-        
-        );
-    
+       
         $token_for_bdd = bin2hex(random_bytes(16));
     
         $requete = 'UPDATE user SET token=:token WHERE email=:email AND password=:password';
@@ -132,7 +122,7 @@ if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== 
         $cookie_name = "set_tok";
         $cookie_value = $hash_front_token;
         $cookie_expire = time() + 3600;  // Set to expire in 1 hour (3600 seconds)
-        $cookie_path = "*/admin";  // Make the cookie accessible throughout the entire website
+        $cookie_path = "/";  // Make the cookie accessible throughout the entire website
         
         // Set the cookie with secure and HttpOnly flags
         setcookie($cookie_name, $cookie_value, $cookie_expire, $cookie_path, '', true, true);
@@ -145,8 +135,19 @@ if($method === "connexion" && htmlspecialchars(strip_tags($_POST['email'])) !== 
         exit();
     }
     else {
+        $requete2 = 'SELECT connection_attempts FROM user';
+        $resultat2 = $db->prepare($requete2);
+        $resultat2->execute(); 
+        $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
+
+        $requete = 'UPDATE user SET connection_attempts=:connection_attempts';
+        $resultat = $db->prepare($requete);
+        $resultat->bindValue(':connection_attempts', $user[0]['connection_attempts'] + 1);
+        $res = $resultat->execute();  
+
         http_response_code(403);
         echo false;
+        exit();
     }
 }
 $token = getAuthorizationHeader();
@@ -165,7 +166,7 @@ if($method === "delete_connexion" && $token !== null) {
 }
 
 if($method === "check_token" && $token !== null) {
- 
+    
     if (isset($_COOKIE['set_tok'])) {
         session_start(); 
         $set_tok = $_COOKIE['set_tok'];
@@ -173,10 +174,11 @@ if($method === "check_token" && $token !== null) {
         $resultat2 = $db->query($requete2);
     
         $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-
+        
         if($_SESSION['user'][0]['token'] === $user[0]['token']) {
-            http_response_code(200);
-            echo  json_encode($_SESSION['user'][0]['token']);
+            
+            echo  json_encode(true);
+         
             exit();
         }else {
             http_response_code(403);

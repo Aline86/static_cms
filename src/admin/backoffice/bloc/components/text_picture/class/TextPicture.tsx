@@ -86,11 +86,15 @@ export class TextPicture extends Container {
         this.set_background_color(e.target.value);
         break;
       case "image":
-        let picture_name = await UploadService.handleUpload(e.target.files[0]);
-        if (picture_name !== undefined && picture_name !== "") {
-          this.set_image(picture_name);
+        if (e.target.files !== null) {
+          let picture_name = await UploadService.handleUpload(
+            e.target.files[0]
+          );
+          console.log("image", picture_name);
+          if (picture_name !== undefined && picture_name !== "") {
+            this.set_image(picture_name);
+          }
         }
-
         break;
       case "css":
         switch (css_type) {

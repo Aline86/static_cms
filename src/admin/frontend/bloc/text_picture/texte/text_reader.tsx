@@ -395,7 +395,7 @@ function TextReader({
               !read_more) &&
             headlines[j] !== undefined &&
             headlines[j] === "header-two" ? (
-            <h2 key={j + headlines[j]}>
+            <div key={j + headlines[j]}>
               {stringText !== undefined && (
                 <h2
                   dangerouslySetInnerHTML={{
@@ -403,7 +403,7 @@ function TextReader({
                   }}
                 />
               )}
-            </h2>
+            </div>
           ) : (
             ((read_more && ((isToggle && j >= 0) || (!isToggle && j <= 2))) ||
               !read_more) &&

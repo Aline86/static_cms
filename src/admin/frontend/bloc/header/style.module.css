@@ -168,7 +168,7 @@
   height: 70px;
   display: flex;
   background-color: transparent;
-
+  max-width: 100px;
   padding: 15px;
   left: 25px;
   top: 0px;

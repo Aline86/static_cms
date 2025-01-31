@@ -60,7 +60,7 @@ function InsideCardDataShow({
   useEffect(() => {
     checkExternal(value.href_url);
 
-    id !== undefined && localStorage.setItem("previous_page_id", id);
+    id !== undefined && sessionStorage.setItem("previous_page_id", id);
     console.log("image", image);
   }, []);
 

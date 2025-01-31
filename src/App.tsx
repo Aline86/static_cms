@@ -5,7 +5,7 @@ import Prerequis from "./admin/backoffice/prerequis/prerequis";
 import { AuthContextProvider } from "./auth/AuthContext";
 
 function App() {
-  const { common, initCommon } = useContext(ColorContext);
+  const { common } = useContext(ColorContext);
   const [resize, setResize] = useState(window.innerWidth);
   const result = window.matchMedia("(max-width: 1200px)");
   const set_position_footer = () => {
@@ -36,9 +36,7 @@ function App() {
     }
   }, [result.matches]);
   useEffect(() => {}, [common, resize]);
-  useEffect(() => {
-    initCommon();
-  }, []);
+  useEffect(() => {}, []);
   useEffect(() => {
     set_position_footer();
   }, []);

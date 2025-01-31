@@ -8,7 +8,6 @@ interface ColumnData {
   isResponsive: boolean;
 }
 function Column({ props, isResponsive }: ColumnData) {
-  const result = window.matchMedia("(max-width: 800px)");
   useEffect(() => {}, []);
   return (
     <div

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import s from "./style.module.css";
 import { Screen } from "../class/Screen";
+import FileUploadWithProgress from "../../../../services/FileUploadWithProgress";
 
 function ScreenInput({
   input_bloc,
@@ -21,20 +22,14 @@ function ScreenInput({
   return (
     <div className={s.bloc} key={input_bloc.bloc_number}>
       <div className={s.titre} style={{ display: `block`, marginTop: "15px" }}>
-        <label>
-          <span>
-            <h3 style={{ margin: "0", padding: "0" }}>
-              Insérer une image de fond
-            </h3>
-            <input
-              type="file"
-              name="singleFile"
-              onChange={(e) => {
-                updateScreen(e, "screen_url", input_bloc);
-              }}
-            />
-          </span>
-        </label>
+        <FileUploadWithProgress
+          sub_field_name={undefined}
+          update={updateScreen}
+          text_bouton_telechargement={"Insérer une image de fond"}
+          field_name={"screen_url"}
+          component={input_bloc}
+          index={undefined}
+        />
       </div>
       <div className={s.titre}>
         <h3>Titre du bloc (optionnel)</h3>

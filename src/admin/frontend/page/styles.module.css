@@ -15,7 +15,6 @@ footer {
   align-items: center;
 }
 .video {
-  height: auto;
   margin-top: 10px;
 }
 .bloc {
@@ -26,10 +25,11 @@ footer {
   align-items: center;
   justify-content: center;
 }
-.blocs_container {
+#container {
+  margin-top: 0;
   display: flex;
   flex-direction: column;
-
+  min-height: 100vh;
   width: 100%;
   margin: 0 auto;
 }

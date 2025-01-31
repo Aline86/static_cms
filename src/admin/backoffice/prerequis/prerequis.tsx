@@ -32,7 +32,7 @@ function Prerequis({}: PageParams) {
 
   function handleScroll() {
     let timedelay = 0;
-    let scrollId: number;
+    let scrollId: any;
     let height: number = 0;
     let minScrollHeight: number = 100;
     scrollId = setInterval(function () {

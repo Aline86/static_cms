@@ -30,8 +30,9 @@ if (file_exists($envFile)) {
 
         // Alternatively, you can populate the $_ENV array
         $_ENV[$key] = $value;
-     
+       
     }
+  
 } 
 
 

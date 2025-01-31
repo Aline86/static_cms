@@ -1,7 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-
-$envFile = './../.env.local';
+$envFile = './../.env
 
 require './environment_variables.php';
 $host = getenv('DB_HOST');
@@ -23,19 +24,24 @@ function is_json($string) {
 }
 
 // Get the Origin header from the incoming request
-$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
-
+$origin = '';
+if(isset($_SERVER['HTTP_HOST'])) {
+    $origin = $_SERVER['HTTP_HOST'] ;
+} 
+if(isset($_SERVER['HTTP_ORIGIN'])) {
+    $origin = $_SERVER['HTTP_ORIGIN'] ;
+}
 // Check if the origin matches the allowed prefix
-if ($origin && strpos($origin, $allowed_prefix) !== false) {
+if ($origin && strpos($allowed_prefix, $origin) !== false) {
+
     header('Access-Control-Allow-Origin: ' . $origin);
-    header('Access-Control-Allow-Headers: *' );
-    header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
+    header('Access-Control-Allow-Methods: *');
     header('Access-Control-Allow-Credentials: true');
     header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    
         exit(0);
     }
+
 }
 else {
 
@@ -44,8 +50,8 @@ else {
 
 function getAuthorizationHeader(){
     $headers = null;
-    if (isset($_SERVER['Authorization'])) {
-        $headers = trim($_SERVER["Authorization"]);
+    if (isset($_SERVER['HTTP_X_OVHREQUEST_ID'])) {
+        $headers = trim($_SERVER["HTTP_X_OVHREQUEST_ID"]);
     }
     else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI
         $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
@@ -58,6 +64,7 @@ function getAuthorizationHeader(){
             $headers = trim($requestHeaders['Authorization']);
         }
     }
+   
     return $headers;
 }
 $token = null;
@@ -79,13 +86,10 @@ function check_token($token, $db) {
     $requete2 = 'SELECT token FROM user';
     $resultat2 = $db->query($requete2);
     $user = $resultat2->fetchAll(PDO::FETCH_ASSOC);
-    $auth = getAuthorizationHeader();
+  //  $auth = getAuthorizationHeader();
 
-
-    $set_tok = $_COOKIE['set_tok'];
-   
-    if($set_tok === $auth && $user[0]['token'] === $token) {
-        
+    if($user[0]['token'] === $token) {
+    
         http_response_code(200);
         return true;
         
@@ -111,11 +115,10 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
  
     if(str_contains($method, 'add') || str_contains($method, 'update') || str_contains($method, 'delete'))  {
         session_start();
-      
         $token = $_SESSION['user'][0]['token'];
        
-        if(empty($_COOKIE['set_tok']) || $token === null) {
-           
+        if(empty($_COOKIE['set_tok'])) {
+            
             http_response_code(403);
             exit();
         }
@@ -162,7 +165,7 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
         }
     
     }
- 
+   
     foreach($crud as $method_to_call) {
   
         if($method === 'delete_child' && $method_to_call === 'delete_child' && $token !== null) {
@@ -221,16 +224,16 @@ if(isset($_GET['type']) && htmlspecialchars(strip_tags($_GET['type'])) !== null)
                 if($id !== null) {
                     $method_params['id_component'] = $id;
                 }
-            
+               
                 include 'models/additional_base.php';
                 exit();
             }
             else if($token !== null){
              
                 $can_access = check_token($token, $db);
-            
-                if($can_access) {
               
+                if($can_access) {
+                    print_r($_POST);
                     $class = ucfirst($type);
         
                     $model = new $class($type, $database_name, $host, $user, $password);

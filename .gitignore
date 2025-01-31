@@ -11,7 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+__.env.dont
 .env
+.htaccess
+.ovhconfig
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

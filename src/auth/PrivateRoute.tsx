@@ -8,16 +8,15 @@ const PrivateRoute = () => {
   const [loading, setLoading] = useState(true);
 
   const returnState = async () => {
-    const secretMessage = localStorage.getItem("authToken");
+    const secretMessage = sessionStorage.getItem("authToken");
 
     try {
       if (
         secretMessage !== "" &&
         secretMessage !== null &&
-        secretMessage !== undefined &&
-        secretMessage.length > 10
+        secretMessage !== undefined
       ) {
-        user.set_auth_token(localStorage.getItem("authToken"));
+        user.set_auth_token(sessionStorage.getItem("authToken"));
         setUser(user);
 
         let res = await user.check_token();
@@ -27,13 +26,12 @@ const PrivateRoute = () => {
         } else {
           setAccess(true);
         }
-      } else if (localStorage.getItem("authToken") === null) {
+      } else if (sessionStorage.getItem("authToken") === null) {
         setAccess(false);
       }
     } catch (error) {
       setAccess(false);
-
-      setLoading(false);
+      <Navigate to="/login" />;
     } finally {
       setLoading(false);
     }

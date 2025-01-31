@@ -27,7 +27,7 @@ function VideoVizualisation({
   const [external, isExternalLink] = useState<boolean>();
 
   const [blocWidth, setblocWidth] = useState<number>(0);
-  const [blocHeight, setblocHeight] = useState<number>(0);
+  const [, setblocHeight] = useState<number>(0);
   const [url, setUrl] = useState<string>("");
   const blocRef = useRef<any>();
   const result = window.matchMedia("(max-width: 800px)");
@@ -154,7 +154,7 @@ function VideoVizualisation({
         style={{
           position: "relative",
           width: `${blocWidth + "px"}`,
-          height: `${blocHeight + "px"}`,
+          height: `100vh"}`,
           marginLeft: full
             ? isResponsive || result.matches
               ? "0"
@@ -165,7 +165,7 @@ function VideoVizualisation({
               ? "0px"
               : result.matches
               ? "-60px"
-              : "0px"
+              : "-30px"
             : "0",
           marginBottom: "30px",
         }}
@@ -191,7 +191,7 @@ function VideoVizualisation({
             }`,
             color: "red",
             height: full ? (isResponsive ? "auto" : "100vh") : "50%",
-            width: full ? (isResponsive ? "100vw" : "100vw") : "43vw",
+            width: full ? (isResponsive ? "100%" : "100%") : "43vw",
             zIndex: "2",
             display: "flex",
             flexDirection: "column",
@@ -256,6 +256,7 @@ function VideoVizualisation({
             alignItems: "center",
             justifyContent: "center",
           }}
+          playsInline
           autoPlay
           muted
           onLoadedData={() => {

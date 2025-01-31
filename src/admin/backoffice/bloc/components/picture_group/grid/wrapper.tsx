@@ -5,6 +5,7 @@ import { PictureGroup } from "../class/PictureGroup";
 import PictureGroupData from "../class/PictureGroupData";
 
 import Picture from "../../../../services/picture";
+import FileUploadWithProgress from "../../../../services/FileUploadWithProgress";
 
 interface GridData {
   bloc: PictureGroup;
@@ -59,17 +60,15 @@ function Grid({
             }}
           >
             <div>N° {Number(data.card_number + 1)}</div>
-            <label>
-              <span>Choisir une image</span>
-              <input
-                type="file"
-                className={s.image_url}
-                placeholder="Url de l'image"
-                onChange={(e) => {
-                  updatePictureGroupData(e, "image_url", bloc, index);
-                }}
-              />
-            </label>
+
+            <FileUploadWithProgress
+              sub_field_name={undefined}
+              update={updatePictureGroupData}
+              text_bouton_telechargement={"Choisir une image"}
+              field_name={"image_url"}
+              component={bloc}
+              index={index}
+            />
             <Picture
               update={updatePictureGroupData}
               bloc={bloc}

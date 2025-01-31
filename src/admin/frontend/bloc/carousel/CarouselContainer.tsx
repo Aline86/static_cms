@@ -340,7 +340,7 @@ function CarouselContainer({
                     transitionFinished={transitionFinished}
                     trasnsType={"transform 1s ease-in"}
                     transX={move}
-                    width={full ? (isResponsive ? `380px` : `100vw`) : `45vw`}
+                    width={full ? (isResponsive ? `380px` : `100%`) : `45vw`}
                     gap={bloc.gap}
                     height={bloc.height}
                     value={value}

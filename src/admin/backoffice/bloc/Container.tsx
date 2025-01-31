@@ -48,6 +48,7 @@ export default abstract class Container {
     const action = this.id > -1 ? "update" : "add";
 
     let data_to_send = this._create_form(this);
+
     await fetch(
       this.BASE_URL + action + "_" + this._get_class_api_call_parameters(),
       {
@@ -56,13 +57,18 @@ export default abstract class Container {
 
         referrerPolicy: "strict-origin-when-cross-origin", // n
         mode: "cors",
-        headers: {
-          Authorization: `${localStorage.getItem("authToken")}`, // notice the Bearer before your token
-        },
+        headers: {},
         body: data_to_send,
       }
     )
-      .then((response) => response)
+      .then((response) => {
+        if (!response.ok) {
+          <Navigate to="/login" />;
+        }
+        try {
+          console.log(response);
+        } catch (e: any) {}
+      })
       .then(() => {
         return this;
       })
@@ -88,6 +94,10 @@ export default abstract class Container {
         {
           referrerPolicy: "strict-origin-when-cross-origin", // n
           mode: "cors",
+          headers: {
+            Accept: "application/json",
+            // Any other headers needed for the request
+          },
         }
       );
       if (!response.ok) {
@@ -118,6 +128,10 @@ export default abstract class Container {
         {
           referrerPolicy: "strict-origin-when-cross-origin", // n
           mode: "cors",
+          headers: {
+            Accept: "application/json",
+            // Any other headers needed for the request
+          },
         }
       );
       if (!response.ok) {
@@ -146,6 +160,10 @@ export default abstract class Container {
         {
           referrerPolicy: "strict-origin-when-cross-origin", // n
           mode: "cors",
+          headers: {
+            Accept: "application/json",
+            // Any other headers needed for the request
+          },
         }
       );
       if (!response.ok) {
@@ -188,12 +206,13 @@ export default abstract class Container {
           method: "GET",
           credentials: "include",
           headers: {
-            "Content-type": "application/json",
-            Authorization: `${localStorage.getItem("authToken")}`, // notice the Bearer before your token
+            Accept: "application/json",
+            // Any other headers needed for the request
           },
         }
       );
-      if (response.ok) {
+      if (!response.ok) {
+        <Navigate to="/login" />;
       }
     } catch (error: any) {
       console.error("error", error.message);
