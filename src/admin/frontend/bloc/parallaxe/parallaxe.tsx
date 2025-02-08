@@ -12,9 +12,7 @@ interface BlocParams {
 function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
   const result = window.matchMedia("(max-width: 800px)");
   const img_url = BASE_URL_SITE + "/api/uploadfile/" + bloc.image;
-  useEffect(() => {
-    console.log("bloc", bloc);
-  }, [bloc]);
+  useEffect(() => {}, [bloc]);
   useEffect(() => {}, [isResponsive]);
 
   return bloc.title !== "" ? (

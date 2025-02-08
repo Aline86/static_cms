@@ -64,7 +64,7 @@ function BlocCarousel({
       css_position={
         <CssCarouselPosition
           props={
-            bloc.is_automatique ? (
+            bloc.carousel_type === "auto" ? (
               <CarouselOption2 updateCarousel={updateCarousel} bloc={bloc} />
             ) : (
               <CarouselOption1 updateCarousel={updateCarousel} bloc={bloc} />

@@ -11,7 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
-__.env.dont
+.env*
+__.htaccess*
+.env_welcome_poitiers
 .env
 .htaccess
 .ovhconfig

@@ -41,7 +41,7 @@ function CardDataShow({
       value.image_url !== ""
         ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${img_url}) no-repeat center / cover`
         : `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0))`,
-    width: width,
+    width: !full ? width : !isResponsive && !result.matches ? "100vw" : "380px",
     height: `200px`,
     transition: `${trasnsType}`,
     transform: `translateX(${width})`,
@@ -51,7 +51,7 @@ function CardDataShow({
       value.image_url !== ""
         ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${img_url}) no-repeat center / cover`
         : `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0))`,
-    width: width,
+    width: !full ? width : !isResponsive && !result.matches ? "100vw" : "380px",
     height: `200px`,
   };
   const style_data_transition_finished_carousel = {

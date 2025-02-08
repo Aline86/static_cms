@@ -1,5 +1,5 @@
 <?php
-
+$envFile = './../.env';
 // Check if the file exists
 if (file_exists($envFile)) {
 

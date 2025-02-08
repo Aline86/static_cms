@@ -7,6 +7,7 @@ import Header from "./../Header";
 import LinkNetworksAndOthersHeader from "../LinkNetworksAndOthersHeader";
 import DropdownData from "../dropdown/Dropdown";
 import FileUploadWithProgress from "../../../../services/FileUploadWithProgress";
+import Picture from "../../../../services/picture";
 
 interface HeaderInfo {
   input_bloc: Header | undefined;
@@ -46,8 +47,15 @@ function HeaderInput({
               component={input_bloc}
               index={undefined}
             />
+            <Picture
+              update={updateHeader}
+              bloc={input_bloc}
+              index={undefined}
+              sub_bloc={undefined}
+              image_spec={input_bloc?.logo_url}
+            />
             <br />
-            <label>{input_bloc?.logo_url}</label>
+
             <br />
           </div>
           <DropdownData input_bloc={input_bloc} updateHeader={updateHeader} />

@@ -89,6 +89,7 @@ function CardData({
           bloc={bloc}
           index={index}
           sub_bloc={data}
+          image_spec={undefined}
         />
       </div>
 

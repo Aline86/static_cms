@@ -1,8 +1,9 @@
 <?php
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$envFile = './../.env
+
 
 require './environment_variables.php';
 $host = getenv('DB_HOST');

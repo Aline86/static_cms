@@ -171,7 +171,6 @@ function TextReader({
         let fontS = "";
         if (!tagStack.includes(balise)) {
           if (balise.includes("fontsize") && count === text_chunk.offset) {
-            console.log("inside");
             let font = balise.split("-");
             fontS = "font-size:" + font[1] + "px!important;";
             result += "<div style=" + fontS + ">";

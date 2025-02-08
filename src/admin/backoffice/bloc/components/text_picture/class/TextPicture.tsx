@@ -90,7 +90,7 @@ export class TextPicture extends Container {
           let picture_name = await UploadService.handleUpload(
             e.target.files[0]
           );
-          console.log("image", picture_name);
+
           if (picture_name !== undefined && picture_name !== "") {
             this.set_image(picture_name);
           }

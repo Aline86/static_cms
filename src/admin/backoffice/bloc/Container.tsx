@@ -66,7 +66,6 @@ export default abstract class Container {
           <Navigate to="/login" />;
         }
         try {
-          console.log(response);
         } catch (e: any) {}
       })
       .then(() => {

@@ -37,7 +37,7 @@ export class Parallaxe extends Container {
         break;
       case "image":
         let picture_name = await UploadService.handleUpload(e.target.files[0]);
-        console.log(picture_name);
+
         if (picture_name !== undefined && picture_name !== "") {
           this.set_image(picture_name);
           return this;

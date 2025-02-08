@@ -23,17 +23,20 @@ const PrivateRoute = () => {
 
         if (res === false) {
           setAccess(false);
+          <Navigate to="/login" />;
         } else {
           setAccess(true);
         }
       } else if (sessionStorage.getItem("authToken") === null) {
         setAccess(false);
+        <Navigate to="/login" />;
       }
     } catch (error) {
       setAccess(false);
       <Navigate to="/login" />;
     } finally {
       setLoading(false);
+      <Navigate to="/login" />;
     }
   };
   useEffect(() => {

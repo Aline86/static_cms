@@ -107,7 +107,6 @@ export class UploadService {
           }
         })
         .then((data) => {
-          console.log("data", data);
           if (data !== undefined) {
             return data;
           }
