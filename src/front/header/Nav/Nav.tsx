@@ -46,7 +46,7 @@ export default function Nav({ opened, setOpen, isResponsive }: NavInfo) {
           <ul className={stylePath.ul_menu} key={index}>
             <div key={page.id}>
               <Link
-                to={`/${page.id}/${page.title}`}
+                to={`/${page.id}/${page.slug}`}
                 key={page.id}
                 onClick={() => setOpen(false)}
               >

@@ -1,7 +1,7 @@
 import s from "./style.module.css";
 import { useEffect } from "react";
-import { Parallaxe } from "../../../backoffice/bloc/components/parallaxe/class/Parallaxe";
 import { BASE_URL_SITE } from "../../../../config";
+import { Parallaxe } from "../../../backoffice/page/page_template/bloc_components/components/parallaxe/class/Parallaxe";
 
 interface BlocParams {
   bloc: Parallaxe;
@@ -39,10 +39,10 @@ function ParallaxeVizualisation({ bloc, full, isResponsive }: BlocParams) {
                 ? "90px"
                 : bloc.bloc_number === 1
                 ? "30px"
-                : "0px"
+                : "10px"
               : "30px"
           }`,
-          fontSize: isResponsive ? "4vh" : "12vh",
+          fontSize: isResponsive ? "30px" : "50px",
           WebkitTextFillColor: "transparent",
           lineHeight: "100%",
           height: !isResponsive && !result.matches ? "fit-content" : "6vh",

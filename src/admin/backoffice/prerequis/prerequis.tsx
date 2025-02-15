@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import s from "./style.module.css";
-import Header from "../bloc/components/header/Header";
-import Footer from "../bloc/components/footer/Footer";
+
 import BlocHeader from "../page/page_template/bloc_components/BlocHeader";
 import BlocFooter from "../page/page_template/bloc_components/BlocFooter";
-import CommonVisualization from "../bloc/components/common/general_settings";
+
 import { Link } from "react-router-dom";
 import Page from "../page/class/Page";
 import ColorContext from "../../../ColorContext";
+import Footer from "../page/page_template/bloc_components/components/footer/Footer";
+import Header from "../page/page_template/bloc_components/components/header/Header";
+import CommonVisualization from "../page/page_template/bloc_components/components/common/general_settings";
 
 interface PageParams {}
 
@@ -102,7 +104,7 @@ function Prerequis({}: PageParams) {
     let async_result = await page_type.get_pages();
     if (Array.isArray(async_result) && async_result.length >= 1) {
     } else if (async_result !== undefined) {
-      let page = new Page(-1, 1, "Accueil");
+      let page = new Page(-1, 1, "Accueil", "accueil");
       let result = await page.save_bloc();
       if (result.id > -1) {
         setRefresh(!refresh);

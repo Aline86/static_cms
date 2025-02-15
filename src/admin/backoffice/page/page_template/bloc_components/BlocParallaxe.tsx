@@ -1,8 +1,9 @@
 import BlockContainer from "./snippets/BlockContainer";
-import { Parallaxe } from "../../../bloc/components/parallaxe/class/Parallaxe";
+
 import ParallaxeVizualisation from "../../../../frontend/bloc/parallaxe/parallaxe";
-import CssParallaxePosition from "../../../bloc/components/parallaxe/css_bloc_position/CssParallaxePosition";
-import ParallaxeInput from "../../../bloc/components/parallaxe/bloc/parallaxe_input";
+import { Parallaxe } from "./components/parallaxe/class/Parallaxe";
+import CssParallaxePosition from "./components/parallaxe/css_bloc_position/CssParallaxePosition";
+import ParallaxeInput from "./components/parallaxe/bloc/parallaxe_input";
 
 interface BlocData {
   bloc: Parallaxe;

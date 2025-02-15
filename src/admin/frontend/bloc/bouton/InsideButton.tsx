@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import s from "./styles/style.module.css";
 import { Link, useParams } from "react-router-dom";
 import Page from "../../../backoffice/page/class/Page";
-import { Button } from "../../../backoffice/bloc/components/button/class/Button";
 import { BASE_URL_SITE } from "../../../../config";
+import { Button } from "../../../backoffice/page/page_template/bloc_components/components/button/class/Button";
 
 interface CardDatas {
   data: Button;
@@ -90,7 +90,7 @@ function InsideButton({
   ) : (
     <Link
       //
-      to={{ pathname: `/` + page?.id + `/` + page?.title }}
+      to={{ pathname: `/` + page?.id + `/` + page?.slug }}
       className={s.card_app_image_group}
     >
       {data.text.length > 0 && (

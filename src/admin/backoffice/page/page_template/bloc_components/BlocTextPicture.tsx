@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import Bloc from "../../../../frontend/bloc/text_picture/bloc";
-import BlocInput from "../../../bloc/components/text_picture/bloc/bloc_input";
-import { TextPicture } from "../../../bloc/components/text_picture/class/TextPicture";
-import CssBlocPosition from "../../../bloc/components/text_picture/css_bloc_position/CssBlocPosition";
+
 import BlockContainer from "./snippets/BlockContainer";
+import { TextPicture } from "./components/text_picture/class/TextPicture";
+import CssBlocPosition from "./components/text_picture/css_bloc_position/CssBlocPosition";
+import BlocInput from "./components/text_picture/bloc/bloc_input";
 
 interface BlocData {
   bloc: TextPicture;

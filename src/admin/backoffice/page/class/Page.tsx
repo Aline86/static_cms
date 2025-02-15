@@ -1,17 +1,22 @@
-import Container from "../../bloc/Container";
+import Container from "../page_template/bloc_components/components/Container";
+import slugify from "react-slugify";
 
 export default class Page extends Container {
   parameters: string;
   page_number: number;
+  slug: string;
+
   constructor(
     id: number = -1,
     page_number: number = -1,
     title: string = "",
+    slug: string = "",
     type: string = "page"
   ) {
     super(id, title, type);
     this.id = id;
     this.title = title;
+    this.slug = slug;
     this.type = type;
     this.page_number = page_number;
     this.parameters = this.type + "&id=" + this.id + "&type=" + this.type;
@@ -23,6 +28,7 @@ export default class Page extends Container {
     switch (field) {
       case "title":
         this.set_title(e.target.value);
+        this.slug = this.sanitizeName(e.target.value);
         break;
       default:
         null;
@@ -35,7 +41,7 @@ export default class Page extends Container {
     let pages = await this.get_blocs();
     pages.forEach((page) => {
       page_array.push(
-        new Page(page.id, page.page_number, page.title, page.type)
+        new Page(page.id, page.page_number, page.title, page.slug)
       );
     });
     this.set_parameters(this.type + "&id=" + this.id + "&type=" + this.type);
@@ -64,6 +70,11 @@ export default class Page extends Container {
       return this;
     }
   }
+  sanitizeName(filename: string) {
+    let result = filename.replace(/\(.*?\)/g, "");
+
+    return slugify(result);
+  }
   public get_parameters(): string {
     return this.parameters;
   }
@@ -75,5 +86,11 @@ export default class Page extends Container {
   }
   public set_page_number(value: number) {
     this.page_number = value;
+  }
+  public get_slug(): string {
+    return this.slug;
+  }
+  public set_slug(value: string) {
+    this.slug = value;
   }
 }

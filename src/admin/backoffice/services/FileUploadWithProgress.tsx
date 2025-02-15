@@ -1,9 +1,7 @@
 import { useState } from "react";
-
-import { TextPicture } from "../bloc/components/text_picture/class/TextPicture";
-
-import Header from "../bloc/components/header/Header";
-import Footer from "../bloc/components/footer/Footer";
+import Header from "../page/page_template/bloc_components/components/header/Header";
+import Footer from "../page/page_template/bloc_components/components/footer/Footer";
+import { TextPicture } from "../page/page_template/bloc_components/components/text_picture/class/TextPicture";
 
 interface BlocData {
   update: any;

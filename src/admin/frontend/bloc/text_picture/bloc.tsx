@@ -3,8 +3,9 @@ import Image from "./image/image";
 import Titre from "./titre/titre";
 import { useEffect, useState, Suspense, lazy } from "react";
 import { RawDraftContentState } from "draft-js";
-import OptionCss from "../../../backoffice/bloc/components/text_picture/class/OptionsCss";
-import { TextPicture } from "../../../backoffice/bloc/components/text_picture/class/TextPicture";
+import { TextPicture } from "../../../backoffice/page/page_template/bloc_components/components/text_picture/class/TextPicture";
+import OptionCss from "../../../backoffice/page/page_template/bloc_components/components/parallaxe/class/OptionsCss";
+
 const TextReaderComponent = lazy(() => import("./texte/text_reader"));
 interface BlocParams {
   index: number;

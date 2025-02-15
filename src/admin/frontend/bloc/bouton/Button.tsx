@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import s from "./styles/style.module.css";
-import { Button } from "../../../backoffice/bloc/components/button/class/Button";
 import ButtonContainer from "./ButtonContainer";
+import { Button } from "../../../backoffice/page/page_template/bloc_components/components/button/class/Button";
 
 interface CustomCarouselInfo {
   input_bloc: Button;

@@ -1,10 +1,9 @@
 import { Link, useParams } from "react-router-dom";
-
 import s from "./styles/style.module.css";
 import { useEffect, useState } from "react";
 import Page from "../../../backoffice/page/class/Page";
-import CarouselData from "../../../backoffice/bloc/components/carousel/class/CarouselData";
 import { BASE_URL_SITE } from "../../../../config";
+import CarouselData from "../../../backoffice/page/page_template/bloc_components/components/carousel/class/CarouselData";
 
 interface CardDatas {
   value: CarouselData;
@@ -26,7 +25,7 @@ function InsideCardDataShow({
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
   const style_data = {
-    background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${image}) no-repeat center / cover`,
+    background: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url("${image}") no-repeat center / contain`,
     width: `${
       !result.matches && !isResponsive
         ? `${width}vw`
@@ -75,7 +74,7 @@ function InsideCardDataShow({
     </a>
   ) : (
     <Link
-      to={{ pathname: `/` + page?.id + `/` + page?.title }}
+      to={{ pathname: `/` + page?.id + `/` + page?.slug }}
       style={style_data}
       className={s.card_app}
       key={value.id}

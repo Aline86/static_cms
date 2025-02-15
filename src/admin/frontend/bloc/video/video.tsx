@@ -1,13 +1,12 @@
 import s from "./style.module.css";
 
-import { useEffect, useRef, useState } from "react";
-import { Video } from "../../../backoffice/bloc/components/video/class/Video";
+import { useEffect, useState } from "react";
+
 import { BASE_URL_SITE } from "../../../../config";
+import { Video } from "../../../backoffice/page/page_template/bloc_components/components/video/class/Video";
 
 interface BlocParams {
   bloc: Video;
-
-  toggle: boolean;
 
   full: boolean;
 
@@ -20,26 +19,14 @@ function VideoVizualisation({
   full,
 
   isResponsive,
-
-  toggle,
 }: BlocParams) {
   useEffect(() => {}, [bloc]);
   const [external, isExternalLink] = useState<boolean>();
 
-  const [blocWidth, setblocWidth] = useState<number>(0);
-  const [, setblocHeight] = useState<number>(0);
   const [url, setUrl] = useState<string>("");
-  const blocRef = useRef<any>();
-  const result = window.matchMedia("(max-width: 800px)");
-  function updateblocRef() {
-    const blocWidth: number | undefined = blocRef?.current?.clientWidth;
 
-    const blocHeight: number | undefined = blocRef.current?.clientHeight;
-    if (blocHeight !== undefined && blocWidth !== undefined) {
-      setblocHeight(blocHeight);
-      setblocWidth(blocWidth);
-    }
-  }
+  const result = window.matchMedia("(max-width: 800px)");
+
   const checkExternal = async (url: string) => {
     let prefixe = url.substring(0, 4);
 
@@ -51,18 +38,11 @@ function VideoVizualisation({
     setUrl(url);
   };
   useEffect(() => {
-    updateblocRef();
     checkExternal(bloc.video_url);
   }, []);
 
-  useEffect(() => {
-    updateblocRef();
-  }, [external, url, isResponsive]);
+  useEffect(() => {}, [external, url, isResponsive]);
 
-  useEffect(() => {
-    window.addEventListener("resize", updateblocRef);
-  }, [toggle, window.innerWidth]);
-  useEffect(() => {}, [url]);
   return url !== undefined && url.length > 0 && external ? (
     <div
       style={{
@@ -139,7 +119,6 @@ function VideoVizualisation({
             margin: "0 auto",
             height: `${bloc.height + "%"}`,
           }}
-          ref={blocRef}
           src={url}
           title={bloc.title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -148,175 +127,130 @@ function VideoVizualisation({
         ></iframe>
       </div>
     </div>
-  ) : url !== undefined && url.length > 0 ? (
-    <div className={s.bloc}>
-      <div
-        style={{
-          position: "relative",
-          width: `${blocWidth + "px"}`,
-          height: `100vh"}`,
-          marginLeft: full
-            ? isResponsive || result.matches
-              ? "0"
-              : "0px"
-            : "30px",
-          marginTop: full
-            ? isResponsive
-              ? "0px"
-              : result.matches
-              ? "-60px"
-              : "-30px"
-            : "0",
-          marginBottom: "30px",
-        }}
-      >
+  ) : (
+    url !== undefined && !external && (
+      <div className={s.bloc}>
         <div
-          className={s.encart}
           style={{
-            position: `${
-              full
-                ? isResponsive || !result.matches
-                  ? "absolute"
-                  : "relative"
-                : "absolute"
-            }`,
-            top: `${
-              full
-                ? isResponsive || result.matches
-                  ? "300px"
-                  : "50%"
-                : "100px"
-            }`,
-            left: `${full ? (isResponsive ? "50%" : "50%") : "0%"}`,
-            transform: `${
-              full
-                ? isResponsive
-                  ? "translate(-50%, -50%)"
-                  : "translate(-50%, -50%)"
-                : "unset"
-            }`,
-            color: "red",
-            height: full ? (isResponsive ? "auto" : "100vh") : "50%",
-            width: full ? (isResponsive ? "100%" : "100%") : "43vw",
-            zIndex: "2",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "transparent",
+            position: "relative",
+            width: `100vw`,
+
+            height: `100vh`,
+            marginLeft: full
+              ? isResponsive || result.matches
+                ? "0"
+                : "0px"
+              : "30px",
+            marginTop: full
+              ? isResponsive
+                ? "0px"
+                : result.matches
+                ? "-60px"
+                : "-30px"
+              : "0",
+            marginBottom: "30px",
           }}
         >
-          <h2
+          <div
+            className={s.encart}
             style={{
+              maxWidth: "90vw",
+
+              position: `${
+                full
+                  ? isResponsive || !result.matches
+                    ? "absolute"
+                    : "relative"
+                  : "absolute"
+              }`,
+              top: `${
+                full
+                  ? isResponsive || result.matches
+                    ? "350px"
+                    : "50%"
+                  : "100px"
+              }`,
+              left: `${full ? (isResponsive ? "50%" : "50%") : "0%"}`,
+              transform: `${
+                full
+                  ? isResponsive
+                    ? "translate(-50%, -50%)"
+                    : "translate(-50%, -50%)"
+                  : "unset"
+              }`,
+
+              height: full ? (isResponsive ? "auto" : "100vh") : "50%",
+              width: full ? (isResponsive ? "100%" : "100%") : "43vw",
+              zIndex: "51",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              color: "white",
-              textTransform: "uppercase",
-              textAlign: "center",
-              fontSize: `${full ? (!isResponsive ? "100px" : "42px") : "72px"}`,
-              opacity: "0.5",
+              backgroundColor: "transparent",
             }}
           >
-            {bloc.title}
-          </h2>
-          <p
+            <h2
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+                textTransform: "uppercase",
+                textAlign: "center",
+                fontSize: `${
+                  full ? (!isResponsive ? "100px" : "42px") : "72px"
+                }`,
+                opacity: "0.5",
+              }}
+            >
+              {bloc.title}
+            </h2>
+            <p
+              style={{
+                color: "white",
+                fontSize: "25px",
+                textAlign: "center",
+
+                display: "inline-block",
+              }}
+            >
+              {bloc.text}
+            </p>
+          </div>
+          <video
             style={{
-              color: "white",
-              fontSize: "25px",
-              textAlign: "center",
+              zIndex: "50",
+              position: `relative`,
 
-              display: "inline-block",
+              left: "0",
+              right: "0",
+              top: "0",
+              bottom: "0",
+              height: `100vh`,
+              width: `${full ? (isResponsive ? "360px" : "100vw") : "43vw"}`,
+              objectFit: "cover",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
+            playsInline
+            autoPlay
+            muted
+            loop
+            controls={false}
           >
-            {bloc.text}
-          </p>
+            <source
+              src={BASE_URL_SITE + "/api/uploadfile/" + bloc.video_url}
+              type="video/mp4"
+            />
+            <source
+              src={BASE_URL_SITE + "/api/uploadfile/" + bloc.video_url}
+              type="video/webm"
+            />
+          </video>
         </div>
-        <video
-          ref={blocRef}
-          style={{
-            zIndex: "1",
-            position: `${
-              full
-                ? isResponsive || !result.matches
-                  ? "relative"
-                  : "absolute"
-                : "relative"
-            }`,
-
-            left: "0",
-            right: "0",
-            top: "0",
-            bottom: "0",
-            height: `${
-              full
-                ? isResponsive
-                  ? "300px"
-                  : "calc(" + bloc.height + "vh )"
-                : "auto"
-            }`,
-            width: `${full ? (isResponsive ? "360px" : "100vw") : "43vw"}`,
-            margin: "0 auto",
-            objectFit: "cover",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          playsInline
-          autoPlay
-          muted
-          loop
-          controls={false}
-          onLoadedData={() => {
-            updateblocRef();
-          }}
-        >
-          <source
-            src={BASE_URL_SITE + "/api/uploadfile/" + url}
-            type="video/mp4"
-          />
-          <source
-            src={BASE_URL_SITE + "/api/uploadfile/" + url}
-            type="video/webm"
-          />
-        </video>
-      </div>
-    </div>
-  ) : (
-    url !== undefined &&
-    url.length === 0 && (
-      <div
-        className={s.encart}
-        style={{
-          position: "relative",
-          zIndex: "2",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <h2
-          style={{
-            display: "inline-block",
-            textAlign: "center",
-            marginBottom: "0",
-          }}
-        >
-          {bloc.title}
-        </h2>
-        <p
-          style={{
-            fontSize: "25px",
-            textAlign: "center",
-
-            display: "inline-block",
-          }}
-        >
-          {bloc.text}
-        </p>
       </div>
     )
   );

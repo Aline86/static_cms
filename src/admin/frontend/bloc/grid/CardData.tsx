@@ -1,9 +1,9 @@
-import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 import s from "./styles/style.module.css";
 import { BASE_URL_SITE } from "../../../../config";
+import PictureGroupData from "../../../backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroupData";
 
 interface CardDatas {
-  data: PictureGroupCard;
+  data: PictureGroupData;
   index: number;
   isResponsive: boolean;
 }

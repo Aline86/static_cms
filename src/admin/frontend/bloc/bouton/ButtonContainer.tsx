@@ -1,6 +1,5 @@
+import { Button } from "../../../backoffice/page/page_template/bloc_components/components/button/class/Button";
 import Bouton from "./bouton";
-
-import { Button } from "../../../backoffice/bloc/components/button/class/Button";
 
 interface ButtonData {
   bloc: Button;

@@ -15,10 +15,10 @@ export default function ThemeContextProvider({}: { children: any }) {
     <HashRouter>
       <AuthContextProvider>
         <Routes>
-          <Route path="/" element={<Navigate to="/1/Accueil" replace />}>
+          <Route path="/" element={<Navigate to="/1/accueil" replace />}>
             Accueil
           </Route>
-          <Route path="/:id/:name" element={<Front />}>
+          <Route path="/:id/:slug" element={<Front />}>
             Front
           </Route>
 
@@ -27,10 +27,10 @@ export default function ThemeContextProvider({}: { children: any }) {
             <Route path="/admin/pages" element={<Pages />}>
               Pages
             </Route>
-            <Route path="/admin/page/:id/:name" element={<Visualization />}>
+            <Route path="/admin/page/:id/:slug" element={<Visualization />}>
               Page
             </Route>
-            <Route path="/admin/:id/:name" element={<Voir />}>
+            <Route path="/admin/:id/:slug" element={<Voir />}>
               Visualization
             </Route>
 

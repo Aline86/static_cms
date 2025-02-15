@@ -1,7 +1,7 @@
-import { Video } from "../../../bloc/components/video/class/Video";
-import CssVideoPosition from "../../../bloc/components/video/css_bloc_position/CssBlocPosition";
-import VideoInput from "../../../bloc/components/video/video_template/video_input";
 import VideoVizualisation from "../../../../frontend/bloc/video/video";
+import { Video } from "./components/video/class/Video";
+import CssVideoPosition from "./components/video/css_bloc_position/CssBlocPosition";
+import VideoInput from "./components/video/video_template/video_input";
 import BlockContainer from "./snippets/BlockContainer";
 
 interface BlocData {
@@ -49,12 +49,7 @@ function BlocVideo({
       drag={drag}
       isOpen={isOpen}
       component_visualization={
-        <VideoVizualisation
-          bloc={bloc}
-          full={false}
-          isResponsive={false}
-          toggle={toggle}
-        />
+        <VideoVizualisation bloc={bloc} full={false} isResponsive={false} />
       }
       css_position={
         <CssVideoPosition

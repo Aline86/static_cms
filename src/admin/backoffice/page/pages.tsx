@@ -4,10 +4,11 @@ import add_to_database from "./../../../assets/add_to_database.png";
 import s from "./style.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import Page from "./class/Page";
-import Header from "../bloc/components/header/Header";
-import Footer from "../bloc/components/footer/Footer";
+
 import AuthContextProvider from "../../../auth/AuthContext";
 import User from "../../authentication/class/User";
+import Header from "./page_template/bloc_components/components/header/Header";
+import Footer from "./page_template/bloc_components/components/footer/Footer";
 
 interface PagesParams {}
 
@@ -55,6 +56,7 @@ function Pages({}: PagesParams) {
 
     if (Array.isArray(async_result) && async_result.length >= 1) {
       setPages(async_result);
+      console.log("pages", pages);
     }
   };
   const getHeader = async () => {
@@ -154,11 +156,7 @@ function Pages({}: PagesParams) {
 
           <Link
             to={{
-              pathname:
-                `/admin/page/` +
-                pages[0].id +
-                `/` +
-                pages[0].title.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "_"),
+              pathname: `/admin/page/` + pages[0].id + `/` + pages[0].slug,
             }}
           >
             <label className={s.addLink}>
@@ -213,11 +211,7 @@ function Pages({}: PagesParams) {
                     )}
                     <Link
                       to={{
-                        pathname:
-                          `/admin/page/` +
-                          page.id +
-                          `/` +
-                          page.title.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "_"),
+                        pathname: `/admin/page/` + page.id + `/` + page.slug,
                       }}
                     >
                       <label className={s.addLink}>

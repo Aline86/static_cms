@@ -4,9 +4,10 @@ import s from "./style.module.css";
 import e from "./edition.module.css";
 import Nav from "./Nav/Nav";
 import { Link } from "react-router-dom";
-import Header from "../../../backoffice/bloc/components/header/Header";
+
 import reseaux from "./../../../../assets/reseaux.png";
 import { BASE_URL_SITE } from "../../../../config";
+import Header from "../../../backoffice/page/page_template/bloc_components/components/header/Header";
 
 interface HeaderInfo {
   input_bloc: Header;
@@ -125,31 +126,33 @@ function HeaderVizualization({
             )}
 
             {input_bloc.link_networks_an_others_header.length > 0 &&
-              input_bloc.link_networks_an_others_header.map((value, key) => {
-                return (
-                  <a
-                    key={key}
-                    className={stylePath.facebook}
-                    href={value.background_url}
-                    title={value.title}
-                    target="_blank"
-                  >
-                    {value.logo_url.length > 0 ? (
-                      <img
-                        src={
-                          BASE_URL_SITE + "/api/uploadfile/" + value.logo_url
-                        }
-                        alt={value.title}
-                        className={
-                          trigger_show_link ? "tr show_link" : "tr small"
-                        }
-                      />
-                    ) : (
-                      value.name
-                    )}
-                  </a>
-                );
-              })}
+              input_bloc.link_networks_an_others_header.map(
+                (value: any, key: number) => {
+                  return (
+                    <a
+                      key={key}
+                      className={stylePath.facebook}
+                      href={value.background_url}
+                      title={value.title}
+                      target="_blank"
+                    >
+                      {value.logo_url.length > 0 ? (
+                        <img
+                          src={
+                            BASE_URL_SITE + "/api/uploadfile/" + value.logo_url
+                          }
+                          alt={value.title}
+                          className={
+                            trigger_show_link ? "tr show_link" : "tr small"
+                          }
+                        />
+                      ) : (
+                        value.name
+                      )}
+                    </a>
+                  );
+                }
+              )}
           </div>
           <Link to="/">
             <div className={stylePath.logo}>

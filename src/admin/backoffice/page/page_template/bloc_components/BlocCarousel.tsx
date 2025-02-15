@@ -1,11 +1,11 @@
-import { Carousel } from "../../../bloc/components/carousel/class/Carousel";
-import CssCarouselPosition from "../../../bloc/components/carousel/css_bloc_position/CssBlocPosition";
-import CarouselOption2 from "../../../bloc/components/carousel/carousel_2/component";
-import CarouselOption1 from "../../../bloc/components/carousel/carousel_1/component";
 import CarouselVisualization from "../../../../frontend/bloc/carousel/Carousel";
 
 import { useEffect } from "react";
 import BlockContainer from "./snippets/BlockContainer";
+import { Carousel } from "./components/carousel/class/Carousel";
+import CarouselOption2 from "./components/carousel/carousel_2/component";
+import CssCarouselPosition from "./components/carousel/css_bloc_position/CssBlocPosition";
+import CarouselOption1 from "./components/carousel/carousel_1/component";
 
 interface BlocData {
   bloc: Carousel;

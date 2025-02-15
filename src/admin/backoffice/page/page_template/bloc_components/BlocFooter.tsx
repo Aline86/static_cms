@@ -1,8 +1,9 @@
 import FooterVizualization from "../../../../frontend/bloc/footer/footer";
-import FooterInput from "../../../bloc/components/footer/footer_template/footer";
-import CssFooterPosition from "../../../bloc/components/footer/css_bloc_position/CssFooterPosition";
+import CssFooterPosition from "./components/footer/css_bloc_position/CssFooterPosition";
+import Footer from "./components/footer/Footer";
+import FooterInput from "./components/footer/footer_template/footer";
+
 import BlockContainer from "./snippets/BlockContainer";
-import Footer from "../../../bloc/components/footer/Footer";
 
 interface BlocData {
   bloc: Footer;

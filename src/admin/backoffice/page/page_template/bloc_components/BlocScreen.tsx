@@ -1,8 +1,9 @@
-import { Screen } from "../../../bloc/components/screen/class/Screen";
-import CssScreenPosition from "../../../bloc/components/screen/css_bloc_position/CssScreenPosition";
 import BlockContainer from "./snippets/BlockContainer";
-import ScreenInput from "../../../bloc/components/screen/screen_template/screen_input";
+
+import { Screen } from "./components/screen/class/Screen";
 import ScreenVizualisation from "../../../../frontend/bloc/screen/screen";
+import CssScreenPosition from "./components/screen/css_bloc_position/CssScreenPosition";
+import ScreenInput from "./components/screen/screen_template/screen_input";
 
 interface BlocData {
   bloc: Screen;
