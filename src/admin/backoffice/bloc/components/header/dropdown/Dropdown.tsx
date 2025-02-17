@@ -11,7 +11,9 @@ interface DropdownInfo {
 
 function DropdownData({ input_bloc, updateHeader }: DropdownInfo) {
   const [picture, isPicture] = useState<number>(0);
-
+  useEffect(() => {
+    isPicture(input_bloc?.image_url !== "" ? 1 : 0);
+  }, []);
   useEffect(() => {}, [picture]);
 
   return (
@@ -31,7 +33,7 @@ function DropdownData({ input_bloc, updateHeader }: DropdownInfo) {
         </option>
       </select>
       <div className={s.bg}>
-        {picture ? (
+        {picture === 1 ? (
           <div className={s.sup_container}>
             <h3>Image de fond : </h3>
             <label>

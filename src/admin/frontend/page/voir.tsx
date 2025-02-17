@@ -149,7 +149,8 @@ function Voir() {
               className={s.carousel}
               style={{
                 marginBottom: `${
-                  (isReponsive || result.matches) && value.is_automatique
+                  (isReponsive || result.matches) &&
+                  value.carousel_type === "auto"
                     ? "-90px"
                     : "0px"
                 }`,

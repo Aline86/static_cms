@@ -8,9 +8,10 @@ interface CardDatas {
   bloc: any;
   index: number | undefined;
   sub_bloc: any | undefined;
+  image_spec: string | undefined;
 }
 
-function Picture({ update, bloc, index, sub_bloc }: CardDatas) {
+function Picture({ update, bloc, index, sub_bloc, image_spec }: CardDatas) {
   useEffect(() => {}, []);
   return (bloc.image_url !== undefined && bloc.image_url !== "") ||
     (sub_bloc !== undefined && sub_bloc.image_url !== "") ? (
@@ -29,14 +30,25 @@ function Picture({ update, bloc, index, sub_bloc }: CardDatas) {
         </div>
       </div>
       <div className={s.delete}>
-        <img
-          src={
-            index === undefined
-              ? BASE_URL_SITE + "/api/uploadfile/" + bloc.image_url
-              : BASE_URL_SITE + "/api/uploadfile/" + sub_bloc.image_url
-          }
-          alt="miniature"
-        />
+        {image_spec !== undefined ? (
+          <img
+            src={
+              index === undefined
+                ? BASE_URL_SITE + "/api/uploadfile/" + image_spec
+                : BASE_URL_SITE + "/api/uploadfile/" + image_spec
+            }
+            alt="miniature"
+          />
+        ) : (
+          <img
+            src={
+              index === undefined
+                ? BASE_URL_SITE + "/api/uploadfile/" + bloc.image_url
+                : BASE_URL_SITE + "/api/uploadfile/" + sub_bloc.image_url
+            }
+            alt="miniature"
+          />
+        )}
       </div>
     </div>
   ) : (

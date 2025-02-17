@@ -33,8 +33,8 @@ function PictureGroupContainer({
       <div
         className={s.container_class_image_group}
         style={{
-          width: full ? `100%` : "100%",
-          margin: `30 auto`,
+          width: full ? `90vw` : "100%",
+          margin: `30px auto`,
           height: `fit-content`,
         }}
       >
@@ -54,7 +54,7 @@ function PictureGroupContainer({
                 ? {
                     display: "flex",
                     flexWrap: "wrap",
-                    maxWidth: !full ? "calc(45vw )" : "calc(90vw)",
+                    maxWidth: !full ? "calc(45vw)" : "calc(90vw)",
                     justifyContent: "space-between",
                     height: `fit-content`,
                     gap: `30px`,

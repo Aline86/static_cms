@@ -36,11 +36,11 @@ function Shrink({ props, bloc, index, isOpen }: ShrinkData) {
                 {index !== -1 && `${"Bloc n° " + index} : `}{" "}
                 {bloc.type === "carousel" &&
                 bloc instanceof Carousel &&
-                bloc.is_automatique
+                bloc.carousel_type === "auto"
                   ? "Carousel option 2 (automatique)"
                   : bloc.type === "carousel" &&
                     bloc instanceof Carousel &&
-                    !bloc.is_automatique
+                    bloc.carousel_type === "carousel"
                   ? "Carousel option 1 (défilé d'images au clic)"
                   : bloc.type === "picture_group"
                   ? "Groupe d'images"

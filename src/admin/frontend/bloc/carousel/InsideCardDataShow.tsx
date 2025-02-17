@@ -61,7 +61,6 @@ function InsideCardDataShow({
     checkExternal(value.href_url);
 
     id !== undefined && sessionStorage.setItem("previous_page_id", id);
-    console.log("image", image);
   }, []);
 
   return external ? (

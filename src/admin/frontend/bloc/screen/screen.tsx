@@ -52,7 +52,7 @@ function ScreenVizualisation({
             <h2
               style={{
                 display: "inline-block",
-
+                textAlign: "left",
                 margin: "0",
                 color: "white",
                 textTransform: "uppercase",

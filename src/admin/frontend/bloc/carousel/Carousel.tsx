@@ -40,7 +40,7 @@ function CarouselVisualization({
     setData(cards);
   }
   function updateType(input_bloc: Carousel) {
-    const type = input_bloc.is_automatique ? "auto" : "carousel";
+    const type = input_bloc.carousel_type;
     setType(type);
   }
 
@@ -83,7 +83,7 @@ function CarouselVisualization({
     );
   }, [toggle, refresh]);
   useEffect(() => {
-    if (input_bloc.is_automatique) {
+    if (input_bloc.carousel_type === "auto") {
       reorder_automatic();
     }
     if ((!isResponsive && !result.matches) || !full) {
@@ -100,11 +100,11 @@ function CarouselVisualization({
       className={s.body_container}
       style={{
         marginTop: `${
-          input_bloc.is_automatique &&
+          input_bloc.carousel_type === "auto" &&
           isResponsive &&
           input_bloc.bloc_number > 1
             ? "-170px"
-            : input_bloc.is_automatique &&
+            : input_bloc.carousel_type === "auto" &&
               isResponsive &&
               input_bloc.bloc_number === 1
             ? "-75px"
@@ -113,11 +113,11 @@ function CarouselVisualization({
             : "0"
         }`,
         marginBottom: `${
-          input_bloc.is_automatique &&
+          input_bloc.carousel_type === "auto" &&
           input_bloc.bloc_number === 1 &&
           result.matches
             ? "-40px"
-            : isResponsive && input_bloc.is_automatique
+            : isResponsive && input_bloc.carousel_type === "auto"
             ? "80px"
             : "0px"
         }`,

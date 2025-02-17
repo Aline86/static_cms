@@ -12,6 +12,7 @@ const Login = () => {
 
   const handleSubmitEvent = async (e: any) => {
     e.preventDefault();
+
     if (input.email !== "" && input.password !== "") {
       let user_data = await loginAction_starter(input);
 

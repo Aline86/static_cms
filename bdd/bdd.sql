@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `carousel` (
     `id` int(11) NOT NULL auto_increment,        
     `title` varchar(250)  NOT NULL default "",  
     `type` varchar(55)  NOT NULL default "carousel",           
-    `is_automatique` boolean,     
+    `carousel_type` varchar(55)  NOT NULL default "carousel",   
     `card_number` int(8)  NOT NULL , 
 
     `width` int(11)  NOT NULL default 21,
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `parallaxe` (
     `bloc_number` int(11)  NOT NULL,
     `page_id` int(11)  NOT NULL,
     PRIMARY KEY  (`id`),
-    FOREIGN KEY (`page_id`) REFERENCES page(`id`)
+    FOREIGN KEY (`page_id`) REFERENCES page(`id`) ON DELETE CASCADE
 );
 /*Table structure for table `text_picture` */
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `text_picture` (
     `bloc_number` int(11)  NOT NULL,
     `page_id` int(11)  NOT NULL,
     PRIMARY KEY  (`id`),
-    FOREIGN KEY (`page_id`) REFERENCES page(`id`)
+    FOREIGN KEY (`page_id`) REFERENCES page(`id`) ON DELETE CASCADE
 );
 /*Table structure for table `video` */
 
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `video` (
     `bloc_number` int(11)  NOT NULL,
     `page_id` int(11)  NOT NULL,
     PRIMARY KEY  (`id`),
-    FOREIGN KEY (`page_id`) REFERENCES page(`id`)
+    FOREIGN KEY (`page_id`) REFERENCES page(`id`) ON DELETE CASCADE
 );
 /*Table structure for table `header` */
 
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `screen` (
     `bloc_number` int(11)  NOT NULL,
     `page_id` int(11)  NOT NULL,
     PRIMARY KEY  (`id`),
-    FOREIGN KEY (`page_id`) REFERENCES page(`id`)
+    FOREIGN KEY (`page_id`) REFERENCES page(`id`) ON DELETE CASCADE
 );
 /*Table structure for table `common_settings` */
 CREATE TABLE IF NOT EXISTS `common` (

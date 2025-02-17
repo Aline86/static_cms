@@ -35,7 +35,6 @@ function Pages({}: PagesParams) {
   };
 
   const savePage = async (page: Page) => {
-    console.log("page", page);
     let result = await page.save_bloc();
     if (result !== undefined) {
       if (page.id > 0) {

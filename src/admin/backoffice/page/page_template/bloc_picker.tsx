@@ -77,7 +77,9 @@ function BlocDisplay({ getPage, blocs, open, setOpen, page }: BlocData) {
               value="Défilé d'images Option 2 (automatique)"
               onClick={(e) => {
                 e.preventDefault();
-                addBlocToBDD(new Carousel(page.id, blocs.length + 1, -1, true));
+                addBlocToBDD(
+                  new Carousel(page.id, blocs.length + 1, -1, "auto")
+                );
 
                 setOpen(!open);
               }}

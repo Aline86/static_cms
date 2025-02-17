@@ -71,6 +71,7 @@ function ButtonInput({ updateButton, bloc }: CardDatas) {
               bloc={bloc}
               index={undefined}
               sub_bloc={undefined}
+              image_spec={undefined}
             />
           </div>
           <DropdownData updateButton={updateButton} bloc={bloc} />

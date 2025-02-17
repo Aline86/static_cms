@@ -180,7 +180,13 @@ function VideoVizualisation({
                   : "relative"
                 : "absolute"
             }`,
-            top: `${full ? (isResponsive ? "200px" : "50%") : "100px"}`,
+            top: `${
+              full
+                ? isResponsive || result.matches
+                  ? "300px"
+                  : "50%"
+                : "100px"
+            }`,
             left: `${full ? (isResponsive ? "50%" : "50%") : "0%"}`,
             transform: `${
               full
@@ -197,6 +203,7 @@ function VideoVizualisation({
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            backgroundColor: "transparent",
           }}
         >
           <h2
@@ -229,6 +236,7 @@ function VideoVizualisation({
         <video
           ref={blocRef}
           style={{
+            zIndex: "1",
             position: `${
               full
                 ? isResponsive || !result.matches
@@ -248,7 +256,7 @@ function VideoVizualisation({
                   : "calc(" + bloc.height + "vh )"
                 : "auto"
             }`,
-            width: `${full ? (isResponsive ? "380px" : "100vw") : "43vw"}`,
+            width: `${full ? (isResponsive ? "360px" : "100vw") : "43vw"}`,
             margin: "0 auto",
             objectFit: "cover",
             display: "flex",
@@ -259,10 +267,16 @@ function VideoVizualisation({
           playsInline
           autoPlay
           muted
+          loop
+          controls={false}
           onLoadedData={() => {
             updateblocRef();
           }}
         >
+          <source
+            src={BASE_URL_SITE + "/api/uploadfile/" + url}
+            type="video/mp4"
+          />
           <source
             src={BASE_URL_SITE + "/api/uploadfile/" + url}
             type="video/webm"

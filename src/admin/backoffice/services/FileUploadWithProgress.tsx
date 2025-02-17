@@ -54,7 +54,7 @@ function FileUploadWithProgress({
 
     // Simulating upload by using setInterval (you can replace this with an actual upload logic)
     const interval = setInterval(() => {
-      uploaded += totalSize / 1000;
+      uploaded += totalSize / 100;
       if (uploaded >= totalSize) {
         uploaded = totalSize;
         clearInterval(interval);

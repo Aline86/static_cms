@@ -133,7 +133,7 @@ function Front() {
               key={index}
               className={s.carousel}
               style={{
-                marginBottom: value.is_automatique ? `0px` : `30px`,
+                marginBottom: value.carousel_type === "auto" ? `0px` : `30px`,
               }}
             >
               <CarouselVisualization
