@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import reseaux from "./../../../../assets/reseaux.png";
 import { BASE_URL_SITE } from "../../../../config";
 import Header from "../../../backoffice/page/page_template/bloc_components/components/header/Header";
-import { debounce } from "lodash";
 
 interface HeaderInfo {
   input_bloc: Header;

@@ -5,15 +5,12 @@ import { BASE_URL_SITE } from "../../../../../config";
 
 import { useInView } from "react-intersection-observer";
 import { TextPicture } from "../../../../backoffice/page/page_template/bloc_components/components/text_picture/class/TextPicture";
-import OptionCss from "../../../../backoffice/page/page_template/bloc_components/components/text_picture/class/OptionsCss";
 
 interface ImageParams {
   bloc: TextPicture;
-
-  css: OptionCss;
 }
 
-function Image({ bloc, css }: ImageParams) {
+function Image({ bloc }: ImageParams) {
   const { ref, inView } = useInView({
     triggerOnce: true, // Charge l'image seulement une fois qu'elle est visible
     threshold: 0.1, // Se déclenche quand 10% de l'image est visible

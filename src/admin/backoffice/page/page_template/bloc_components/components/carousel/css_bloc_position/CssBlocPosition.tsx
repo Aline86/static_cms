@@ -68,7 +68,9 @@ function CssCarouselPosition({
                       textDecoration: "underline",
                     }}
                   >
-                    Carousel option 2
+                    {bloc.carousel_type === "miniatures"
+                      ? "Défilé d'images Option 3 (miniatures)"
+                      : "Carousel option 2 (Carousel classique)"}
                   </h3>
                 </div>
               </div>

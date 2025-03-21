@@ -359,7 +359,6 @@ function Blocs({
               toggle={toggle}
               page_id={page_id}
               index={index}
-              refresh={refresh}
               handleDragLeave={handleDragLeave}
               isOpen={
                 highlight !== undefined &&

@@ -22,7 +22,6 @@ interface CarouselDataValue {
   updateCardEnd: any;
   clic: boolean;
   cardValue: number;
-  toggle: boolean;
 }
 
 function MiniaturesContainer({
@@ -42,7 +41,6 @@ function MiniaturesContainer({
   updateCardEnd,
   clic,
   cardValue,
-  toggle,
 }: CarouselDataValue) {
   const [trigger, setTrigger] = useState(0);
   const [move, setMove] = useState(0);
@@ -192,12 +190,9 @@ function MiniaturesContainer({
                       trasnsType={"transform 0.4s ease-in"}
                       transX={move}
                       width={width}
-                      gap={gap}
                       height={height}
                       updateCard={updateCard}
                       toggle={false}
-                      isResponsive={false}
-                      full={full}
                     />
                   );
                 })}

@@ -4,25 +4,16 @@ import s from "./style.module.css";
 import e from "./edition.module.css";
 import Nav from "./Nav/Nav";
 import { Link } from "react-router-dom";
-
 import reseaux from "./../../assets/reseaux.png";
-
 import { BASE_URL_SITE } from "../../config";
 import Header from "../../admin/backoffice/page/page_template/bloc_components/components/header/Header";
-import { debounce } from "lodash";
 
 interface HeaderInfo {
   input_bloc: Header;
   isResponsive: boolean;
   full: boolean;
-  toggle: boolean;
 }
-function HeaderVizualization({
-  input_bloc,
-  toggle,
-  full,
-  isResponsive,
-}: HeaderInfo) {
+function HeaderVizualization({ input_bloc, full, isResponsive }: HeaderInfo) {
   const [open, setOpen] = useState(false);
   const [trigger_show_link, setTrigger_show_link] = useState(true);
   const [stylePath, setStylePath] = useState(s);

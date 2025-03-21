@@ -47,7 +47,12 @@ function BlocScreen({
       drag={drag}
       isOpen={isOpen}
       component_visualization={
-        <ScreenVizualisation bloc={bloc} isResponsive={false} toggle={toggle} />
+        <ScreenVizualisation
+          bloc={bloc}
+          isResponsive={false}
+          toggle={toggle}
+          full={false}
+        />
       }
       css_position={
         <CssScreenPosition

@@ -141,7 +141,6 @@ function Voir() {
               <Bloc
                 index={index}
                 bloc={value}
-                css={value.css}
                 num_bloc={index}
                 toggle={toggle}
                 full={true}

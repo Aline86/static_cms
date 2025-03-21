@@ -1,6 +1,4 @@
-import CarouselVisualization from "../../../../frontend/bloc/carousel/Carousel";
-
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import BlockContainer from "./snippets/BlockContainer";
 import { Carousel } from "./components/carousel/class/Carousel";
 import CarouselOption2 from "./components/carousel/carousel_2/component";
@@ -8,7 +6,9 @@ import CssCarouselPosition from "./components/carousel/css_bloc_position/CssBloc
 import CarouselOption1 from "./components/carousel/carousel_1/component";
 import CarouselOption3 from "./components/carousel/miniatures/component";
 import MiniaturesVisualization from "../../../../frontend/bloc/miniatures/Miniatures";
-
+const CarouselVisualization = lazy(
+  () => import("../../../../frontend/bloc/carousel/Carousel")
+);
 interface BlocData {
   bloc: Carousel;
   setDragBegin: any;
@@ -22,7 +22,6 @@ interface BlocData {
   toggle: boolean;
   page_id: number;
   index: number;
-  refresh: boolean;
   isOpen: boolean;
   handleDragLeave: any;
 }
@@ -38,7 +37,6 @@ function BlocCarousel({
   drag,
   toggle,
   index,
-  refresh,
   isOpen,
   handleDragLeave,
 }: BlocData) {
@@ -81,7 +79,9 @@ function BlocCarousel({
             ) : bloc.carousel_type === "carousel" ? (
               <CarouselOption1 updateCarousel={updateCarousel} bloc={bloc} />
             ) : (
-              <CarouselOption3 updateCarousel={updateCarousel} bloc={bloc} />
+              bloc.carousel_type === "miniatures" && (
+                <CarouselOption3 updateCarousel={updateCarousel} bloc={bloc} />
+              )
             )
           }
           updateCarousel={updateCarousel}
