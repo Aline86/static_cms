@@ -1,11 +1,12 @@
 import { RawDraftContentState } from "react-draft-wysiwyg";
-import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
+
 import { lazy, Suspense, useEffect, useState } from "react";
+import PictureGroupData from "../../../backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroupData";
 const TextReaderComponent = lazy(
   () => import("../text_picture/texte/text_reader")
 );
 interface CardDatas {
-  data: PictureGroupCard;
+  data: PictureGroupData;
   isLightOrDark: any;
   isResponsive: boolean;
 }

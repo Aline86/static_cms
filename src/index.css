@@ -1,6 +1,10 @@
+* {
+  transition: all 0.5s ease-in-out, transition, width;
+}
+
 body {
-  height: 100%;
-  margin: 0;
+  min-height: 100%;
+
   display: flex;
   flex-direction: column;
 }
@@ -12,14 +16,16 @@ body {
 footer {
   grid-row: 2;
 }
+#root {
+  padding-top: 100px;
+  margin-top: 100px;
+}
 body,
 #root {
   margin: 0;
   padding: 0;
+
   overflow-x: hidden;
-}
-* {
-  transition: all 0.5s ease, transition, width;
 }
 
 .flex {
@@ -41,7 +47,6 @@ body,
 }
 body {
   font-family: sans-serif;
-  width: 100%;
 }
 .button_remove_container {
   display: flex;
@@ -162,6 +167,9 @@ h2 {
 @media screen and (max-width: 800px) {
   h2 {
     font-size: 30px !important;
+  }
+  #root {
+    padding-top: 45px;
   }
 }
 

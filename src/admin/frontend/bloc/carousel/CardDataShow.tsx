@@ -1,5 +1,5 @@
 import { BASE_URL_SITE } from "../../../../config";
-import CarouselData from "../../../backoffice/bloc/components/carousel/class/CarouselData";
+import CarouselData from "../../../backoffice/page/page_template/bloc_components/components/carousel/class/CarouselData";
 import InsideCardDataShow from "./InsideCardDataShow";
 import s from "./styles/style.module.css";
 import { useEffect } from "react";
@@ -39,20 +39,22 @@ function CardDataShow({
   const style_data_transition_finished_auto = {
     background:
       value.image_url !== ""
-        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${img_url}) no-repeat center / cover`
-        : `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0))`,
-    width: !full ? width : !isResponsive && !result.matches ? "100vw" : "380px",
-    height: `200px`,
+        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url("${img_url}") no-repeat center / cover`
+        : `white`,
+
+    width: full ? (isResponsive ? "380px" : "100vw") : "45vw",
+    height: !isResponsive && !result.matches ? `120px` : "200px",
     transition: `${trasnsType}`,
     transform: `translateX(${width})`,
   };
   const style_data_transition_start_auto = {
     background:
       value.image_url !== ""
-        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${img_url}) no-repeat center / cover`
-        : `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0))`,
-    width: !full ? width : !isResponsive && !result.matches ? "100vw" : "380px",
-    height: `200px`,
+        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url("${img_url}") no-repeat center / cover`
+        : `white`,
+
+    width: full ? (isResponsive ? "380px" : "100vw") : "45vw",
+    height: !isResponsive && !result.matches ? `120px` : "200px",
   };
   const style_data_transition_finished_carousel = {
     marginRight: `${!result.matches && !isResponsive ? gap : 10}px`,
@@ -81,11 +83,12 @@ function CardDataShow({
             <div
               className={s.card_text}
               style={{
-                lineHeight: `fit-content`,
+                lineHeight: `120px`,
                 color: `${value.image_url !== "" ? "white" : "gray"}`,
+
                 fontSize: full
                   ? !isResponsive && !result.matches
-                    ? `36px`
+                    ? `27px`
                     : "22px"
                   : "22px",
               }}
@@ -107,11 +110,12 @@ function CardDataShow({
             <div
               className={s.card_text}
               style={{
-                lineHeight: `100%`,
+                lineHeight: `120px`,
                 color: `${value.image_url !== "" ? "white" : "gray"}`,
+
                 fontSize: full
                   ? !isResponsive && !result.matches
-                    ? `36px`
+                    ? `27px`
                     : "22px"
                   : "22px",
               }}

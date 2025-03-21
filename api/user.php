@@ -1,6 +1,6 @@
 <?php
 
-
+$envFile = './../.env';
 include 'environment_variables.php';
 $host = getenv('DB_HOST');
 $user = getenv('DB_USER');

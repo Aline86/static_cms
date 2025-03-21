@@ -2,7 +2,7 @@ import { useState } from "react";
 import s from "./style.module.css";
 import up from "./../../../../../../../assets/up.png";
 import down from "./../../../../../../../assets/down.png";
-import { Carousel } from "../../../../../bloc/components/carousel/class/Carousel";
+import { Carousel } from "../../components/carousel/class/Carousel";
 
 interface ShrinkData {
   index: number;

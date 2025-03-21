@@ -2,16 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import s from "./style.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import Footer from "../../bloc/components/footer/Footer";
-import Header from "../../bloc/components/header/Header";
-
-import BlocDisplay from "./bloc_picker";
+import BlocDisplay from "./bloc_components/bloc_picker";
 import Page from "../class/Page";
-import Blocs from "./blocs";
-import BlocTools from "../../../tools/blocs_tools";
+import Blocs from "./bloc_components/blocs";
 
 import User from "../../../authentication/class/User";
 import AuthContextProvider from "../../../../auth/AuthContext";
+import Header from "./bloc_components/components/header/Header";
+import Footer from "./bloc_components/components/footer/Footer";
+import BlocTools from "../../../frontend/page/tools/blocs_tools";
 
 interface PageParams {}
 
@@ -23,7 +22,7 @@ function Visualization({}: PageParams) {
   const [footer] = useState<Footer>(new Footer());
   const [header] = useState<Header>(new Header());
   const [focus, setFocus] = useState<boolean>(false);
-  const { id, name } = useParams();
+  const { id, slug } = useParams();
   const [refresh, setRefresh] = useState(false);
   const [goTo, setGoTo] = useState(false);
 
@@ -96,7 +95,7 @@ function Visualization({}: PageParams) {
     <div className="page">
       <div className={s.page_container}>
         <div className="flex">
-          <Link to={{ pathname: `/admin/` + id + `/` + name }}>
+          <Link to={{ pathname: `/admin/` + id + `/` + slug }}>
             <li>
               <div className={s.navigate_2}>Visualiser la page</div>
             </li>
@@ -148,7 +147,7 @@ function Visualization({}: PageParams) {
             page={page_type}
             getPage={asynchronRequestsToPopulateBlocs}
           />
-          <h1>{name}</h1>
+          <h1>{slug}</h1>
 
           <Blocs
             blocs={blocs}

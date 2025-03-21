@@ -1,10 +1,10 @@
 import s from "./styles/style.module.css";
-import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 import Column from "./Column";
 import { useEffect, useState } from "react";
+import PictureGroupData from "../../../backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroupData";
 
 interface CarouselData {
-  data: PictureGroupCard[] | undefined;
+  data: PictureGroupData[] | undefined;
   toggle: boolean;
   isResponsive: boolean;
 }

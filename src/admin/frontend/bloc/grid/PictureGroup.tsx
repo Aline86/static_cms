@@ -1,8 +1,8 @@
 import { useEffect, useState, createRef } from "react";
 import s from "./styles/style.module.css";
-import { PictureGroup } from "../../../backoffice/bloc/components/picture_group/class/PictureGroup";
-import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 import PictureGroupContainer from "./PictureGroupContainer";
+import PictureGroupData from "../../../backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroupData";
+import { PictureGroup } from "../../../backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroup";
 
 interface CustomCarouselInfo {
   input_bloc: PictureGroup;
@@ -16,7 +16,7 @@ function GridVizualisation({
   refresh,
   isResponsive,
 }: CustomCarouselInfo) {
-  const [dataValue, setData] = useState<PictureGroupCard[]>();
+  const [dataValue, setData] = useState<PictureGroupData[]>();
 
   useEffect(() => {
     setData((elRefs) =>

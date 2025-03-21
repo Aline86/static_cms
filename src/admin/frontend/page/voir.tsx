@@ -1,29 +1,37 @@
-import { useContext, useEffect, useState } from "react";
+import { lazy, Suspense, useContext, useEffect, useState } from "react";
 import s from "./styles.module.css";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { TextPicture } from "../../backoffice/bloc/components/text_picture/class/TextPicture";
-import { Carousel } from "../../backoffice/bloc/components/carousel/class/Carousel";
-import Footer from "../../backoffice/bloc/components/footer/Footer";
-import Header from "../../backoffice/bloc/components/header/Header";
+
 import Page from "../../backoffice/page/class/Page";
 import Bloc from "../bloc/text_picture/bloc";
-import CarouselVisualization from "../bloc/carousel/Carousel";
 import HeaderVizualization from "../bloc/header/header";
 import FooterVizualization from "../bloc/footer/footer";
-import BlocTools from "../../tools/blocs_tools";
-import { PictureGroup } from "../../backoffice/bloc/components/picture_group/class/PictureGroup";
+
 import PictureGroupVizualisation from "../bloc/picture_group/PictureGroup";
 import ButtonVisualization from "../bloc/bouton/Button";
 import VideoVizualisation from "../bloc/video/video";
-import { Button } from "../../backoffice/bloc/components/button/class/Button";
-import { Video } from "../../backoffice/bloc/components/video/class/Video";
-import { Screen } from "../../backoffice/bloc/components/screen/class/Screen";
+
 import ColorContext from "../../../ColorContext";
-import { Parallaxe } from "../../backoffice/bloc/components/parallaxe/class/Parallaxe";
+
 import ParallaxeVizualisation from "../bloc/parallaxe/parallaxe";
 import GridVizualisation from "../bloc/grid/PictureGroup";
 import ScreenVizualisation from "../bloc/screen/screen";
+import { Carousel } from "../../backoffice/page/page_template/bloc_components/components/carousel/class/Carousel";
+import { TextPicture } from "../../backoffice/page/page_template/bloc_components/components/text_picture/class/TextPicture";
+import { PictureGroup } from "../../backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroup";
+import { Button } from "../../backoffice/page/page_template/bloc_components/components/button/class/Button";
+import { Video } from "../../backoffice/page/page_template/bloc_components/components/video/class/Video";
+import { Screen } from "../../backoffice/page/page_template/bloc_components/components/screen/class/Screen";
 
+import { Parallaxe } from "../../backoffice/page/page_template/bloc_components/components/parallaxe/class/Parallaxe";
+import Footer from "../../backoffice/page/page_template/bloc_components/components/footer/Footer";
+import Header from "../../backoffice/page/page_template/bloc_components/components/header/Header";
+import BlocTools from "./tools/blocs_tools";
+
+const MiniaturesVisualization = lazy(
+  () => import("../bloc/miniatures/Miniatures")
+);
+const CarouselVisualization = lazy(() => import("../bloc/carousel/Carousel"));
 function Voir() {
   const [blocs, setBlocs] = useState<
     Array<
@@ -36,14 +44,13 @@ function Voir() {
       | Screen
     >
   >([]);
-  const { id, name } = useParams();
+  const { id, slug } = useParams();
   const [toggle, setToggle] = useState(false);
   const [refresh] = useState(false);
   const [isReponsive, setResponsive] = useState(false);
   const [footer] = useState<Footer>(new Footer());
   const [header] = useState<Header>(new Header());
   const location = useLocation();
-  const [videoLoaded] = useState<boolean>(true);
   const result = window.matchMedia("(max-width: 800px)");
   const result_mid = window.matchMedia("(max-width: 1200px)");
   let page_type = new Page(Number(id));
@@ -63,15 +70,15 @@ function Voir() {
     let root = document.getElementById("root");
     if (root !== null && (isReponsive || result.matches)) {
       root.style.width = "380px";
-      root.style.paddingTop = "0px";
+
       root.style.paddingBottom = "220px";
     } else if (root !== null && result_mid.matches) {
-      root.style.width = "100%";
-      root.style.paddingTop = "75px";
+      root.style.width = "100vw";
+
       root.style.paddingBottom = "0px";
     } else if (root !== null) {
-      root.style.width = "100%";
-      root.style.paddingTop = "75px";
+      root.style.width = "100vw";
+
       root.style.paddingBottom = "0px";
     }
   };
@@ -100,8 +107,6 @@ function Voir() {
     }
   }, []);
 
-  useEffect(() => {}, [videoLoaded]);
-  useEffect(() => {}, []);
   return (
     <div style={styles}>
       <div
@@ -116,7 +121,7 @@ function Voir() {
           isResponsive={isReponsive}
         />
         {!isReponsive && (
-          <Link to={{ pathname: `/admin/page/` + id + `/` + name }}>
+          <Link to={{ pathname: `/admin/page/` + id + `/` + slug }}>
             <li>
               <div className={s.navigate}>Retour</div>
             </li>
@@ -131,7 +136,7 @@ function Voir() {
         </a>
 
         {blocs.map((value, index) => {
-          return videoLoaded && value instanceof TextPicture ? (
+          return value instanceof TextPicture ? (
             <div className={s.bloc} key={index}>
               <Bloc
                 index={index}
@@ -143,7 +148,7 @@ function Voir() {
                 isResponsive={isReponsive}
               />
             </div>
-          ) : videoLoaded && value instanceof Carousel ? (
+          ) : value instanceof Carousel ? (
             <div
               key={index}
               className={s.carousel}
@@ -156,16 +161,36 @@ function Voir() {
                 }`,
               }}
             >
-              <CarouselVisualization
-                input_bloc={value}
-                toggle={toggle}
-                refresh={false}
-                full={true}
-                isResponsive={isReponsive}
-              />
+              {value.carousel_type !== "miniatures" ? (
+                <Suspense fallback={<div>Chargement...</div>}>
+                  <CarouselVisualization
+                    input_bloc={value}
+                    toggle={toggle}
+                    refresh={false}
+                    full={true}
+                    isResponsive={isReponsive}
+                  />
+                </Suspense>
+              ) : (
+                <Suspense fallback={<div>Chargement...</div>}>
+                  <MiniaturesVisualization
+                    input_bloc={value}
+                    toggle={toggle}
+                    refresh={false}
+                    full={true}
+                    isResponsive={isReponsive}
+                  />
+                </Suspense>
+              )}
             </div>
-          ) : videoLoaded && value instanceof PictureGroup ? (
-            <div key={index} className={s.carousel}>
+          ) : value instanceof PictureGroup ? (
+            <div
+              key={index}
+              className={s.carousel}
+              style={{
+                marginTop: value.bloc_number === 1 ? "60px" : "30px",
+              }}
+            >
               {!value.is_grid ? (
                 <PictureGroupVizualisation
                   input_bloc={value}
@@ -183,7 +208,7 @@ function Voir() {
                 />
               )}
             </div>
-          ) : videoLoaded && value instanceof Button ? (
+          ) : value instanceof Button ? (
             <div key={index} className={s.carousel}>
               <ButtonVisualization
                 input_bloc={value}
@@ -198,7 +223,6 @@ function Voir() {
                 bloc={value}
                 full={true}
                 isResponsive={isReponsive}
-                toggle={refresh}
               />
             </div>
           ) : value instanceof Parallaxe ? (
@@ -216,6 +240,7 @@ function Voir() {
                   bloc={value}
                   isResponsive={isReponsive}
                   toggle={false}
+                  full={true}
                 />
               </div>
             )

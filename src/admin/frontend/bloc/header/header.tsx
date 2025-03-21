@@ -4,9 +4,10 @@ import s from "./style.module.css";
 import e from "./edition.module.css";
 import Nav from "./Nav/Nav";
 import { Link } from "react-router-dom";
-import Header from "../../../backoffice/bloc/components/header/Header";
 import reseaux from "./../../../../assets/reseaux.png";
 import { BASE_URL_SITE } from "../../../../config";
+import Header from "../../../backoffice/page/page_template/bloc_components/components/header/Header";
+import { debounce } from "lodash";
 
 interface HeaderInfo {
   input_bloc: Header;
@@ -48,20 +49,29 @@ function HeaderVizualization({
   };
 
   const nav_animation = () => {
-    const nav = document.getElementById(stylePath.nav);
-
+    let lastScroll = 0;
     window.addEventListener("scroll", function () {
-      if (nav !== undefined && nav !== null) {
-        if (window.scrollY > nav.offsetHeight + 400) {
+      let now = Date.now();
+      if (now - lastScroll >= 150) {
+        const nav = document.getElementById(stylePath.nav);
+        if (nav === null || nav === undefined) return;
+
+        if (window.scrollY > nav.offsetHeight + 150) {
           if (!nav.className.includes("active")) {
             nav.classList.add(stylePath.active);
           }
-        } else {
+        } else if (nav.className.includes("active")) {
           nav.classList.remove(stylePath.active);
         }
+        lastScroll = now;
       }
     });
   };
+
+  useEffect(() => {
+    window.addEventListener("scroll", nav_animation);
+  }, []);
+
   useEffect(() => {}, [toggle]);
   useEffect(() => {
     if (isResponsive || result.matches) {
@@ -125,31 +135,33 @@ function HeaderVizualization({
             )}
 
             {input_bloc.link_networks_an_others_header.length > 0 &&
-              input_bloc.link_networks_an_others_header.map((value, key) => {
-                return (
-                  <a
-                    key={key}
-                    className={stylePath.facebook}
-                    href={value.background_url}
-                    title={value.title}
-                    target="_blank"
-                  >
-                    {value.logo_url.length > 0 ? (
-                      <img
-                        src={
-                          BASE_URL_SITE + "/api/uploadfile/" + value.logo_url
-                        }
-                        alt={value.title}
-                        className={
-                          trigger_show_link ? "tr show_link" : "tr small"
-                        }
-                      />
-                    ) : (
-                      value.name
-                    )}
-                  </a>
-                );
-              })}
+              input_bloc.link_networks_an_others_header.map(
+                (value: any, key: number) => {
+                  return (
+                    <a
+                      key={key}
+                      className={stylePath.facebook}
+                      href={value.background_url}
+                      title={value.title}
+                      target="_blank"
+                    >
+                      {value.logo_url.length > 0 ? (
+                        <img
+                          src={
+                            BASE_URL_SITE + "/api/uploadfile/" + value.logo_url
+                          }
+                          alt={value.title}
+                          className={
+                            trigger_show_link ? "tr show_link" : "tr small"
+                          }
+                        />
+                      ) : (
+                        value.name
+                      )}
+                    </a>
+                  );
+                }
+              )}
           </div>
           <Link to="/">
             <div className={stylePath.logo}>

@@ -1,7 +1,7 @@
-import { PictureGroup } from "../../../bloc/components/picture_group/class/PictureGroup";
-import CssPictureGroupPosition from "../../../bloc/components/picture_group/css_bloc_position/CssBlocPosition";
-import ImageGroup from "../../../bloc/components/picture_group/image_group/component";
 import PictureGroupVizualisation from "../../../../frontend/bloc/picture_group/PictureGroup";
+import { PictureGroup } from "./components/picture_group/class/PictureGroup";
+import CssPictureGroupPosition from "./components/picture_group/css_bloc_position/CssBlocPosition";
+import ImageGroup from "./components/picture_group/image_group/component";
 import BlockContainer from "./snippets/BlockContainer";
 
 interface BlocData {

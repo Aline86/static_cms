@@ -1,5 +1,5 @@
 import s from "./style.module.css";
-import { Screen } from "./../../../backoffice/bloc/components/screen/class/Screen";
+import { Screen } from "../../../backoffice/page/page_template/bloc_components/components/screen/class/Screen";
 import { useEffect } from "react";
 
 import { BASE_URL_SITE } from "../../../../config";
@@ -8,7 +8,7 @@ interface BlocParams {
   bloc: Screen;
 
   toggle: boolean;
-
+  full: boolean;
   isResponsive: boolean;
 }
 
@@ -16,7 +16,7 @@ function ScreenVizualisation({
   bloc,
 
   isResponsive,
-
+  full,
   toggle,
 }: BlocParams) {
   useEffect(() => {}, [bloc]);
@@ -32,7 +32,9 @@ function ScreenVizualisation({
         <div
           className={s.screen_container}
           style={{
-            marginTop: bloc.bloc_number === 1 ? "0px" : "30px",
+            marginTop:
+              bloc.bloc_number === 1 ? (!full ? "30px" : "-100px") : "30px",
+
             background: `url(${
               BASE_URL_SITE + "/api/uploadfile/" + bloc.screen_url
             }) no-repeat center / cover`,
@@ -47,6 +49,7 @@ function ScreenVizualisation({
               flexDirection: "column",
               alignItems: "start",
               justifyContent: "center",
+              height: "calc(100vh - 100px)",
             }}
           >
             <h2

@@ -1,4 +1,4 @@
-import { TextPicture } from "../../../../backoffice/bloc/components/text_picture/class/TextPicture";
+import { TextPicture } from "../../../../backoffice/page/page_template/bloc_components/components/text_picture/class/TextPicture";
 
 interface TitreParams {
   bloc: TextPicture;

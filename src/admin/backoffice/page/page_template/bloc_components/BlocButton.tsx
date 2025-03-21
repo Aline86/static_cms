@@ -1,7 +1,7 @@
-import CssButtonPosition from "../../../bloc/components/button/css_bloc_position/CssButtonPosition";
-import ButtonInput from "../../../bloc/components/button/bouton/component";
-import { Button } from "../../../bloc/components/button/class/Button";
 import ButtonVisualization from "../../../../frontend/bloc/bouton/Button";
+import ButtonInput from "./components/button/bouton/component";
+import { Button } from "./components/button/class/Button";
+import CssButtonPosition from "./components/button/css_bloc_position/CssButtonPosition";
 import BlockContainer from "./snippets/BlockContainer";
 
 interface BlocData {

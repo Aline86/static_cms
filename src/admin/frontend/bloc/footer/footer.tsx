@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import s from "./styles.module.css";
 import v from "./style_responsive.module.css";
 import e from "./edition.module.css";
-import Footer from "../../../backoffice/bloc/components/footer/Footer";
+
 import { BASE_URL_SITE } from "../../../../config";
+import Footer from "../../../backoffice/page/page_template/bloc_components/components/footer/Footer";
 
 interface FooterInfo {
   input_bloc: Footer;
@@ -61,41 +62,45 @@ function FooterVizualization({
       <div className={stylePath.facebook_container}>
         <div className={stylePath.end}>
           {input_bloc.links_network_an_others_footer.length > 0 &&
-            input_bloc.links_network_an_others_footer.map((value, key) => {
-              return value.logo_url.length > 0 && value.name.length === 0 ? (
-                <a
-                  key={key}
-                  className={stylePath.facebook}
-                  href={value.background_url}
-                  title={value.title}
-                  target="_blank"
-                  style={{
-                    zIndex: "106",
-                    cursor: "pointer",
-                  }}
-                >
-                  <img
-                    src={BASE_URL_SITE + "/api/uploadfile/" + value.logo_url}
-                    alt={value.title}
-                  />
-                </a>
-              ) : (
-                <a
-                  key={key}
-                  className={stylePath.facebook}
-                  href={BASE_URL_SITE + "/api/uploadfile/" + value.logo_url}
-                  title={value.title}
-                  target="_blank"
-                  style={{
-                    position: "relative",
-                    zIndex: "106",
-                    cursor: "pointer",
-                  }}
-                >
-                  {value.name}
-                </a>
-              );
-            })}
+            input_bloc.links_network_an_others_footer.map(
+              (value: any, key: number) => {
+                return value.logo_url.length > 0 && value.name.length === 0 ? (
+                  <a
+                    key={key}
+                    className={stylePath.facebook}
+                    href={value.background_url}
+                    title={value.title}
+                    target="_blank"
+                    style={{
+                      zIndex: "106",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <img
+                      src={BASE_URL_SITE + "/api/uploadfile/" + value.logo_url}
+                      alt={value.title}
+                    />
+                  </a>
+                ) : (
+                  <a
+                    key={key}
+                    className={stylePath.facebook}
+                    href={BASE_URL_SITE + "/api/uploadfile/" + value.logo_url}
+                    title={value.title}
+                    target="_blank"
+                    style={{
+                      position: "relative",
+                      zIndex: "106",
+                      cursor: "pointer",
+                      color: `${isLightOrDark(input_bloc.background_color)}`,
+                      textDecoration: "underline",
+                    }}
+                  >
+                    {value.name}
+                  </a>
+                );
+              }
+            )}
         </div>
       </div>
       <div className={stylePath.address}>

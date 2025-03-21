@@ -1,28 +1,35 @@
 import { useContext, useEffect, useState } from "react";
 import s from "./styles.module.css";
 import { useLocation, useParams } from "react-router-dom";
-import { TextPicture } from "../../admin/backoffice/bloc/components/text_picture/class/TextPicture";
-import { Carousel } from "../../admin/backoffice/bloc/components/carousel/class/Carousel";
-import Footer from "../../admin/backoffice/bloc/components/footer/Footer";
-import Header from "../../admin/backoffice/bloc/components/header/Header";
+
 import Page from "../../admin/backoffice/page/class/Page";
 import Bloc from "../../admin/frontend/bloc/text_picture/bloc";
 import CarouselVisualization from "../../admin/frontend/bloc/carousel/Carousel";
 import HeaderVizualization from "../../front/header/header";
 import FooterVizualization from "../../admin/frontend/bloc/footer/footer";
-import BlocTools from "../../admin/tools/blocs_tools";
-import { PictureGroup } from "../../admin/backoffice/bloc/components/picture_group/class/PictureGroup";
+
 import PictureGroupVizualisation from "../../admin/frontend/bloc/picture_group/PictureGroup";
 import ButtonVisualization from "../../admin/frontend/bloc/bouton/Button";
-import VideoVizualisation from "../../admin/frontend/bloc/video/video";
-import { Button } from "../../admin/backoffice/bloc/components/button/class/Button";
-import { Video } from "../../admin/backoffice/bloc/components/video/class/Video";
-import { Screen } from "../../admin/backoffice/bloc/components/screen/class/Screen";
+
 import ColorContext from "../../ColorContext";
-import { Parallaxe } from "../../admin/backoffice/bloc/components/parallaxe/class/Parallaxe";
+
 import ParallaxeVizualisation from "../../admin/frontend/bloc/parallaxe/parallaxe";
 import GridVizualisation from "../../admin/frontend/bloc/grid/PictureGroup";
 import ScreenVizualisation from "../../admin/frontend/bloc/screen/screen";
+
+//import VideoVizualisation from "../../admin/frontend/bloc/video/video";
+import { Carousel } from "../../admin/backoffice/page/page_template/bloc_components/components/carousel/class/Carousel";
+import { TextPicture } from "../../admin/backoffice/page/page_template/bloc_components/components/text_picture/class/TextPicture";
+import { PictureGroup } from "../../admin/backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroup";
+import { Button } from "../../admin/backoffice/page/page_template/bloc_components/components/button/class/Button";
+import { Video } from "../../admin/backoffice/page/page_template/bloc_components/components/video/class/Video";
+import { Screen } from "../../admin/backoffice/page/page_template/bloc_components/components/screen/class/Screen";
+import { Parallaxe } from "../../admin/backoffice/page/page_template/bloc_components/components/parallaxe/class/Parallaxe";
+import Footer from "../../admin/backoffice/page/page_template/bloc_components/components/footer/Footer";
+import Header from "../../admin/backoffice/page/page_template/bloc_components/components/header/Header";
+import BlocTools from "../../admin/frontend/page/tools/blocs_tools";
+import VideoVizualisation from "../../admin/frontend/bloc/video/video";
+import MiniaturesVisualization from "../../admin/frontend/bloc/miniatures/Miniatures";
 
 function Front() {
   const [blocs, setBlocs] = useState<
@@ -42,7 +49,6 @@ function Front() {
   const [header] = useState<Header>(new Header());
   const location = useLocation();
   const result_mid = window.matchMedia("(max-width: 1200px)");
-
   const result = window.matchMedia("(max-width: 800px)");
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
@@ -61,16 +67,16 @@ function Front() {
   const adaptRoot = () => {
     let root = document.getElementById("root");
     if (root !== null && result.matches) {
-      root.style.width = "100%";
-      root.style.paddingTop = "45px";
+      root.style.width = "100vw";
+
       root.style.paddingBottom = "0";
     } else if (root !== null && result_mid.matches) {
-      root.style.width = "100%";
-      root.style.paddingTop = "75px";
+      root.style.width = "100vw";
+
       root.style.paddingBottom = "0";
     } else if (root !== null) {
-      root.style.width = "100%";
-      root.style.paddingTop = "75px";
+      root.style.width = "100vw";
+
       root.style.paddingBottom = "0";
     }
   };
@@ -100,7 +106,13 @@ function Front() {
     }
     initCommon();
   }, []);
-
+  useEffect(() => {
+    adaptRoot();
+    if (blocs.length === 0 || blocs === undefined) {
+      asynchronRequestsToPopulateBlocs();
+    }
+    initCommon();
+  }, []);
   return (
     <div style={styles}>
       <div
@@ -133,19 +145,36 @@ function Front() {
               key={index}
               className={s.carousel}
               style={{
+                marginTop: value.bloc_number === 1 ? `60px` : `30px`,
                 marginBottom: value.carousel_type === "auto" ? `0px` : `30px`,
               }}
             >
-              <CarouselVisualization
-                input_bloc={value}
-                toggle={toggle}
-                refresh={false}
-                full={true}
-                isResponsive={false}
-              />
+              {value.carousel_type === "miniatures" ? (
+                <MiniaturesVisualization
+                  input_bloc={value}
+                  toggle={!toggle}
+                  refresh={false}
+                  full={true}
+                  isResponsive={false}
+                />
+              ) : (
+                <CarouselVisualization
+                  input_bloc={value}
+                  toggle={toggle}
+                  refresh={false}
+                  full={true}
+                  isResponsive={false}
+                />
+              )}
             </div>
           ) : value instanceof PictureGroup ? (
-            <div key={index} className={s.grid}>
+            <div
+              key={index}
+              className={s.grid}
+              style={{
+                marginTop: value.bloc_number === 1 ? "60px" : "30px",
+              }}
+            >
               {!value.is_grid ? (
                 <PictureGroupVizualisation
                   input_bloc={value}
@@ -178,7 +207,6 @@ function Front() {
                 bloc={value}
                 full={true}
                 isResponsive={false}
-                toggle={toggle}
               />
             </div>
           ) : value instanceof Parallaxe ? (
@@ -196,6 +224,7 @@ function Front() {
                   bloc={value}
                   isResponsive={false}
                   toggle={false}
+                  full={true}
                 />
               </div>
             )

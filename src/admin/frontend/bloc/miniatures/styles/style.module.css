@@ -1,0 +1,104 @@
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0;
+}
+.container_class {
+  overflow: hidden;
+  display: flex;
+  position: relative;
+
+  vertical-align: center;
+}
+/*@media screen and (max-width: 700px) {
+  .container_class {
+    overflow-x: scroll;
+    margin: 0;
+    padding: 0;
+  }
+}*/
+.card_container {
+  position: relative;
+}
+.cards {
+  position: absolute;
+  display: flex;
+  z-index: 999;
+  gap: 30px;
+}
+.card_app_carousel {
+  position: relative;
+  border-radius: 3px;
+  object-fit: fit-content;
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
+}
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.card_app_big {
+  margin: 0 auto;
+}
+.flex {
+  display: block;
+  text-align: center;
+}
+.left {
+  display: block;
+  cursor: pointer;
+  color: black;
+  margin-top: -25px;
+}
+
+.right {
+  transform: rotate(180deg);
+  display: block;
+  cursor: pointer;
+  color: black;
+  margin-top: -25px;
+}
+.left span,
+.right span {
+  display: block;
+}
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.card_app img {
+  height: 100%;
+  object-fit: cover;
+}
+.card_app {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  padding: 0;
+  margin: 0;
+}
+
+.card_app_carousel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  width: fit-content;
+}
+
+@media screen and (max-width: 700px) {
+  .left span,
+  .right span {
+    height: 18px;
+  }
+  .body {
+    width: 95vw;
+  }
+}

@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+$envFile = './../../.env';
 require './../environment_variables.php';
 $host = getenv('DB_HOST');
 $user = getenv('DB_USER');

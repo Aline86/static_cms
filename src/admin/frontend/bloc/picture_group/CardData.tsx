@@ -1,13 +1,12 @@
 import { Link, useParams } from "react-router-dom";
-
 import InsideCardData from "./InsideCardData";
 import s from "./styles/style.module.css";
 import { useEffect, useState, Suspense, lazy } from "react";
 import LazyLoad from "react-lazyload";
-import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 import Page from "../../../backoffice/page/class/Page";
 import { BASE_URL_SITE } from "../../../../config";
 import { RawDraftContentState } from "react-draft-wysiwyg";
+import PictureGroupData from "../../../backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroupData";
 
 const TextReaderComponent = lazy(
   () => import("../text_picture/texte/text_reader")
@@ -16,7 +15,7 @@ interface CardDatas {
   width: number;
   height: number;
   toggle: boolean;
-  data: PictureGroupCard;
+  data: PictureGroupData;
 
   full: boolean;
   isResponsive: boolean;
@@ -161,7 +160,7 @@ function CardData({
     <LazyLoad height={height} offset={100}>
       <Link
         //
-        to={{ pathname: `/` + page?.id + `/` + page?.title }}
+        to={{ pathname: `/` + page?.id + `/` + page?.slug }}
         style={style_data}
         className={s.card_app_image_group}
       >

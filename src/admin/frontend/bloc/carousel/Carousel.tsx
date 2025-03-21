@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef, createRef } from "react";
 import CarouselContainer from "./CarouselContainer";
 import s from "./styles/style.module.css";
-import { Carousel } from "../../../backoffice/bloc/components/carousel/class/Carousel";
-import CarouselData from "../../../backoffice/bloc/components/carousel/class/CarouselData";
+import CarouselData from "../../../backoffice/page/page_template/bloc_components/components/carousel/class/CarouselData";
+import { Carousel } from "../../../backoffice/page/page_template/bloc_components/components/carousel/class/Carousel";
 
 interface CustomCarouselInfo {
   input_bloc: Carousel;
@@ -103,14 +103,19 @@ function CarouselVisualization({
           input_bloc.carousel_type === "auto" &&
           isResponsive &&
           input_bloc.bloc_number > 1
-            ? "-170px"
+            ? "-100px"
             : input_bloc.carousel_type === "auto" &&
-              isResponsive &&
+              !(isResponsive || result.matches) &&
               input_bloc.bloc_number === 1
-            ? "-75px"
-            : isResponsive && input_bloc.bloc_number === 1
+            ? "70px"
+            : (isResponsive || result.matches) &&
+              input_bloc.bloc_number === 1 &&
+              input_bloc.carousel_type === "carousel"
             ? "65px"
-            : "0"
+            : input_bloc.bloc_number === 1 &&
+              input_bloc.carousel_type === "auto"
+            ? "-50px"
+            : "20px"
         }`,
         marginBottom: `${
           input_bloc.carousel_type === "auto" &&
@@ -119,7 +124,7 @@ function CarouselVisualization({
             ? "-40px"
             : isResponsive && input_bloc.carousel_type === "auto"
             ? "80px"
-            : "0px"
+            : "30px"
         }`,
       }}
     >

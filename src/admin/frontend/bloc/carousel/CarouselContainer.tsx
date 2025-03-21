@@ -4,10 +4,10 @@ import CardDataShow from "./CardDataShow";
 import s from "./styles/style.module.css";
 import right from "./../../../../assets/right.png";
 import left from "./../../../../assets/left.png";
-import CarouselCard from "../../../backoffice/bloc/components/carousel/class/CarouselData";
-import { Carousel } from "../../../backoffice/bloc/components/carousel/class/Carousel";
+import { Carousel } from "../../../backoffice/page/page_template/bloc_components/components/carousel/class/Carousel";
+import CarouselData from "../../../backoffice/page/page_template/bloc_components/components/carousel/class/CarouselData";
 
-interface CarouselData {
+interface CarouselDatas {
   bloc: Carousel;
   transitionFinished: boolean;
   cardWidth: number;
@@ -16,7 +16,7 @@ interface CarouselData {
   cardRef: any;
   updateTransitionState: any;
   cardNumber: number;
-  data: CarouselCard[];
+  data: CarouselData[];
   type: string;
   toggle: boolean;
   full: boolean;
@@ -37,7 +37,7 @@ function CarouselContainer({
   toggle,
   full,
   isResponsive,
-}: CarouselData) {
+}: CarouselDatas) {
   const [trigger, setTrigger] = useState(false);
   const [move, setMove] = useState(0);
   const [isLeft, setIsLeft] = useState(true);
@@ -107,6 +107,10 @@ function CarouselContainer({
   useEffect(() => {
     updateCardRef();
   }, [isResponsive, result.matches]);
+
+  useEffect(() => {
+    updateCardRef();
+  }, []);
   useEffect(() => {
     updateCardRef();
     if (type === "carousel") {
@@ -317,7 +321,7 @@ function CarouselContainer({
           margin: !full ? `${bloc.gap}px auto` : `0px`,
           height: isResponsive ? `230px` : `fit-content`,
           paddingTop: isResponsive ? `120px` : result.matches ? `30px` : `0px`,
-          minHeight: isResponsive || result.matches ? `200px` : `fit-content`,
+          minHeight: isResponsive || result.matches ? `200px` : `100%`,
           width: full ? (isResponsive ? `380px` : `100vw`) : `45vw`,
           marginBottom: result.matches ? "60px" : isResponsive ? "60px" : "0",
         }}

@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import s from "./styles/style.module.css";
-
 import InsideButton from "./InsideButton";
-import { Button } from "../../../backoffice/bloc/components/button/class/Button";
-
 import JSanimationH2 from "../snippets/js_animation_h2";
 import { BASE_URL_SITE } from "../../../../config";
+import { Button } from "../../../backoffice/page/page_template/bloc_components/components/button/class/Button";
 
 interface CustomButtonInfo {
   width: number;
@@ -26,6 +24,7 @@ function Bouton({
   full,
   isResponsive,
 }: CustomButtonInfo) {
+  const result = window.matchMedia("(max-width: 800px)");
   const [link, isLink] = useState(true);
   const checkExternal = async (url: string) => {
     if (/.pdf/.test(url.substring(url.length - 4))) {
@@ -50,22 +49,32 @@ function Bouton({
       style={{
         background:
           bloc.image_url !== ""
-            ? `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(${BASE_URL_SITE}/api/uploadfile/${bloc.image_url}) no-repeat center / cover`
+            ? `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url("${BASE_URL_SITE}/api/uploadfile/${bloc.image_url}") no-repeat center / cover`
             : bloc.background_color,
 
-        width: !full ? "43vw" : isResponsive ? "360px" : "90vw",
+        width: !full
+          ? "43vw"
+          : isResponsive
+          ? "360px"
+          : result.matches
+          ? "90vw"
+          : "50vw",
         margin: "0 auto",
-        height: bloc.image_url === "" ? "40vh" : "50vh",
+        paddingTop: "10px",
+        paddingBottom: "50px",
+        /* height: bloc.image_url === "" ? "" : "50vh",*/
       }}
     >
-      <h2
-        style={{
-          color: bloc.image_url !== "" ? "#ffffff" : "",
-          fontStyle: bloc.image_url !== "" ? "" : "italic",
-        }}
-      >
-        {bloc.title}
-      </h2>
+      {bloc.title !== "" && (
+        <h2
+          style={{
+            color: bloc.image_url !== "" ? "#ffffff" : "",
+            fontStyle: bloc.image_url !== "" ? "" : "italic",
+          }}
+        >
+          {bloc.title}
+        </h2>
+      )}
 
       <InsideButton
         data={bloc}

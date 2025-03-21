@@ -1,7 +1,8 @@
 import HeaderVizualization from "../../../../frontend/bloc/header/header";
-import Header from "../../../bloc/components/header/Header";
-import HeaderInput from "../../../bloc/components/header/header_template/header_input";
-import CssHeaderPosition from "../../../bloc/components/header/css_bloc_position/CssHeaderPosition";
+import CssHeaderPosition from "./components/header/css_bloc_position/CssHeaderPosition";
+import Header from "./components/header/Header";
+import HeaderInput from "./components/header/header_template/header_input";
+
 import BlockContainer from "./snippets/BlockContainer";
 
 interface BlocData {

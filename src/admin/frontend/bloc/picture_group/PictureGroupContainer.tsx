@@ -1,12 +1,12 @@
 import s from "./styles/style.module.css";
 import CardData from "./CardData";
-import PictureGroupCard from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
-import { PictureGroup } from "../../../backoffice/bloc/components/picture_group/class/PictureGroup";
+import PictureGroupData from "../../../backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroupData";
+import { PictureGroup } from "../../../backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroup";
 
 interface CarouselData {
   bloc: PictureGroup;
   updateDataValue: any;
-  data: PictureGroupCard[] | undefined;
+  data: PictureGroupData[] | undefined;
   toggle: boolean;
   full: boolean;
   isResponsive: boolean;

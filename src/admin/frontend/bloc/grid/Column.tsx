@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import s from "./styles/style.module.css";
-import PictureGroupData from "../../../backoffice/bloc/components/picture_group/class/PictureGroupData";
 import CardDataGrid from "./CardData";
+import PictureGroupData from "../../../backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroupData";
 
 interface ColumnData {
   props: any;
