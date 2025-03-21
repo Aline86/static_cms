@@ -36,7 +36,7 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
           full ? (isResponsive || result.matches ? "95%" : "50%") : "90%"
         }`,
         margin: "0 auto",
-        paddingTop: bloc.bloc_number === 1 ? "40px" : "30px",
+        paddingTop: bloc.bloc_number === 1 ? "100px" : "30px",
         paddingLeft: full ? `0px` : !bloc.bloc_column ? `30px` : `0px`,
       }}
     >
@@ -62,11 +62,19 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
           <div
             className={s.image}
             style={{
-              width: `${bloc.bloc_column ? `100%` : `50%`}`,
+              width: !bloc.bloc_column
+                ? `${bloc.css.width * 0.5}%`
+                : `${bloc.css.width}%`,
               paddingTop: "15px",
 
               marginBottom: `30px`,
-              float: `${bloc.image_right ? "left" : "right"}`,
+              float: `${
+                !bloc.bloc_column
+                  ? bloc.image_right
+                    ? "left"
+                    : "right"
+                  : "none"
+              }`,
             }}
           >
             <Image bloc={bloc} css={css} />

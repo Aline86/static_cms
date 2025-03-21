@@ -36,7 +36,7 @@ function Image({ bloc, css }: ImageParams) {
         {inView && (
           <img
             style={{
-              width: `${css.width}%`,
+              width: !bloc.bloc_column ? `100%` : `${bloc.css.width}%`,
               height: `auto`,
             }}
             src={BASE_URL_SITE + "/api/uploadfile/" + bloc.image}

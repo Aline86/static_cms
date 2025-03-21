@@ -42,7 +42,7 @@ function CardDataShow({
         ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url("${img_url}") no-repeat center / cover`
         : `white`,
 
-    width: !full ? width : !isResponsive ? "100vw" : "380px",
+    width: full ? (isResponsive ? "380px" : "100vw") : "45vw",
     height: !isResponsive && !result.matches ? `120px` : "200px",
     transition: `${trasnsType}`,
     transform: `translateX(${width})`,
@@ -53,7 +53,7 @@ function CardDataShow({
         ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url("${img_url}") no-repeat center / cover`
         : `white`,
 
-    width: !full ? width : !isResponsive ? "100vw" : "380px",
+    width: full ? (isResponsive ? "380px" : "100vw") : "45vw",
     height: !isResponsive && !result.matches ? `120px` : "200px",
   };
   const style_data_transition_finished_carousel = {
@@ -83,7 +83,7 @@ function CardDataShow({
             <div
               className={s.card_text}
               style={{
-                lineHeight: `100%`,
+                lineHeight: `120px`,
                 color: `${value.image_url !== "" ? "white" : "gray"}`,
 
                 fontSize: full
@@ -110,7 +110,7 @@ function CardDataShow({
             <div
               className={s.card_text}
               style={{
-                lineHeight: `100%`,
+                lineHeight: `120px`,
                 color: `${value.image_url !== "" ? "white" : "gray"}`,
 
                 fontSize: full

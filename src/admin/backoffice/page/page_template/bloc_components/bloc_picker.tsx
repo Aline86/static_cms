@@ -6,7 +6,10 @@ import text_image from "./../img/image.png";
 import auto from "./../img/auto.png";
 import couches from "./../img/couches.png";
 import video from "./../img/montage.png";
+import cover from "./../img/cover.png";
+import curseur from "./../img/curseur.png";
 import parallaxe from "./../img/picture.png";
+import miniatures from "./../img/miniatures.png";
 import link from "./../img/link.png";
 import Page from "../../class/Page";
 import { TextPicture } from "./components/text_picture/class/TextPicture";
@@ -86,6 +89,21 @@ function BlocDisplay({ getPage, blocs, open, setOpen, page }: BlocData) {
             />
           </div>
           <div className={s.container_auto}>
+            <img src={curseur} alt="carousel miniatures" />
+            <input
+              type="submit"
+              value="Défilé d'images Option 3 (miniatures)"
+              onClick={(e) => {
+                e.preventDefault();
+                addBlocToBDD(
+                  new Carousel(page.id, blocs.length + 1, -1, "miniatures")
+                );
+
+                setOpen(!open);
+              }}
+            />
+          </div>
+          <div className={s.container_auto}>
             <img src={video} alt="Vidéo" />
             <input
               type="submit"
@@ -140,7 +158,7 @@ function BlocDisplay({ getPage, blocs, open, setOpen, page }: BlocData) {
             />
           </div>
           <div className={s.container_auto}>
-            <img src={couches} alt="grille d'image" />
+            <img src={miniatures} alt="grille d'image" />
             <input
               type="submit"
               value="Grille d'images"
@@ -155,7 +173,7 @@ function BlocDisplay({ getPage, blocs, open, setOpen, page }: BlocData) {
             />
           </div>
           <div className={s.container_auto}>
-            <img src={text_image} alt="Image de couverture" />
+            <img src={cover} alt="Image de couverture" />
             <input
               type="submit"
               value="Image de couverture"

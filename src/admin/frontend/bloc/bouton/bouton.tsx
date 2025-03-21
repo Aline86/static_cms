@@ -60,17 +60,21 @@ function Bouton({
           ? "90vw"
           : "50vw",
         margin: "0 auto",
-        height: bloc.image_url === "" ? "" : "50vh",
+        paddingTop: "10px",
+        paddingBottom: "50px",
+        /* height: bloc.image_url === "" ? "" : "50vh",*/
       }}
     >
-      <h2
-        style={{
-          color: bloc.image_url !== "" ? "#ffffff" : "",
-          fontStyle: bloc.image_url !== "" ? "" : "italic",
-        }}
-      >
-        {bloc.title}
-      </h2>
+      {bloc.title !== "" && (
+        <h2
+          style={{
+            color: bloc.image_url !== "" ? "#ffffff" : "",
+            fontStyle: bloc.image_url !== "" ? "" : "italic",
+          }}
+        >
+          {bloc.title}
+        </h2>
+      )}
 
       <InsideButton
         data={bloc}

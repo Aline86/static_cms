@@ -142,7 +142,8 @@ export class Carousel extends Container {
     this.carousel_data.push(
       new CarouselData(
         -1,
-        this.carousel_data[this.carousel_data.length - 1].card_number + 1,
+        Number(this.carousel_data[this.carousel_data.length - 1].card_number) +
+          1,
         this.id
       )
     );
@@ -190,10 +191,10 @@ export class Carousel extends Container {
     this.carousel_type = value;
   }
 
-  public get_data_number(): number {
+  public get_card_number(): number {
     return this.card_number;
   }
-  public set_data_number(value: number) {
+  public set_card_number(value: number) {
     this.card_number = value;
   }
 

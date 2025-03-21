@@ -29,6 +29,7 @@ import Footer from "../../admin/backoffice/page/page_template/bloc_components/co
 import Header from "../../admin/backoffice/page/page_template/bloc_components/components/header/Header";
 import BlocTools from "../../admin/frontend/page/tools/blocs_tools";
 import VideoVizualisation from "../../admin/frontend/bloc/video/video";
+import MiniaturesVisualization from "../../admin/frontend/bloc/miniatures/Miniatures";
 
 function Front() {
   const [blocs, setBlocs] = useState<
@@ -48,7 +49,6 @@ function Front() {
   const [header] = useState<Header>(new Header());
   const location = useLocation();
   const result_mid = window.matchMedia("(max-width: 1200px)");
-
   const result = window.matchMedia("(max-width: 800px)");
   let page_type = new Page(Number(id));
   const tools = new BlocTools(page_type);
@@ -68,15 +68,15 @@ function Front() {
     let root = document.getElementById("root");
     if (root !== null && result.matches) {
       root.style.width = "100vw";
-      root.style.paddingTop = "45px";
+
       root.style.paddingBottom = "0";
     } else if (root !== null && result_mid.matches) {
       root.style.width = "100vw";
-      root.style.paddingTop = "75px";
+
       root.style.paddingBottom = "0";
     } else if (root !== null) {
       root.style.width = "100vw";
-      root.style.paddingTop = "75px";
+
       root.style.paddingBottom = "0";
     }
   };
@@ -145,19 +145,36 @@ function Front() {
               key={index}
               className={s.carousel}
               style={{
+                marginTop: value.bloc_number === 1 ? `60px` : `30px`,
                 marginBottom: value.carousel_type === "auto" ? `0px` : `30px`,
               }}
             >
-              <CarouselVisualization
-                input_bloc={value}
-                toggle={toggle}
-                refresh={false}
-                full={true}
-                isResponsive={false}
-              />
+              {value.carousel_type === "miniatures" ? (
+                <MiniaturesVisualization
+                  input_bloc={value}
+                  toggle={!toggle}
+                  refresh={false}
+                  full={true}
+                  isResponsive={false}
+                />
+              ) : (
+                <CarouselVisualization
+                  input_bloc={value}
+                  toggle={toggle}
+                  refresh={false}
+                  full={true}
+                  isResponsive={false}
+                />
+              )}
             </div>
           ) : value instanceof PictureGroup ? (
-            <div key={index} className={s.grid}>
+            <div
+              key={index}
+              className={s.grid}
+              style={{
+                marginTop: value.bloc_number === 1 ? "60px" : "30px",
+              }}
+            >
               {!value.is_grid ? (
                 <PictureGroupVizualisation
                   input_bloc={value}
@@ -207,6 +224,7 @@ function Front() {
                   bloc={value}
                   isResponsive={false}
                   toggle={false}
+                  full={true}
                 />
               </div>
             )

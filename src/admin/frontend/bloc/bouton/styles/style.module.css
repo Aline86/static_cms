@@ -15,8 +15,6 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-top: 30px;
-  padding-bottom: 50px;
 }
 .button_bloc h2 {
   font-size: 30px;

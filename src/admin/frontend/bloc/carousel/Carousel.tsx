@@ -103,18 +103,18 @@ function CarouselVisualization({
           input_bloc.carousel_type === "auto" &&
           isResponsive &&
           input_bloc.bloc_number > 1
-            ? "-170px"
+            ? "-100px"
             : input_bloc.carousel_type === "auto" &&
-              (isResponsive || result.matches) &&
+              !(isResponsive || result.matches) &&
               input_bloc.bloc_number === 1
-            ? "-25px"
+            ? "70px"
             : (isResponsive || result.matches) &&
               input_bloc.bloc_number === 1 &&
               input_bloc.carousel_type === "carousel"
             ? "65px"
             : input_bloc.bloc_number === 1 &&
               input_bloc.carousel_type === "auto"
-            ? "-10px"
+            ? "-50px"
             : "20px"
         }`,
         marginBottom: `${

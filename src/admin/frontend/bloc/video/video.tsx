@@ -46,7 +46,7 @@ function VideoVizualisation({
   return url !== undefined && url.length > 0 && external ? (
     <div
       style={{
-        marginTop: bloc.bloc_number === 1 ? "150px" : "0px",
+        marginTop: bloc.bloc_number === 1 ? "60px" : "0px",
       }}
     >
       {bloc.title !== "" ? (
@@ -90,7 +90,7 @@ function VideoVizualisation({
           margin: "0 auto",
           marginTop: full
             ? !isResponsive && !result.matches
-              ? "0px"
+              ? "15px"
               : "30px"
             : "0px",
           marginBottom: "30px",
@@ -135,7 +135,7 @@ function VideoVizualisation({
             position: "relative",
             width: `100vw`,
 
-            height: `100vh`,
+            height: `calc(100vh + 100px)`,
             marginLeft: full
               ? isResponsive || result.matches
                 ? "0"
@@ -143,10 +143,10 @@ function VideoVizualisation({
               : "30px",
             marginTop: full
               ? isResponsive
-                ? "0px"
+                ? "-60px"
                 : result.matches
                 ? "-60px"
-                : "-30px"
+                : "-125px"
               : "0",
             marginBottom: "30px",
           }}
@@ -160,17 +160,19 @@ function VideoVizualisation({
                 full
                   ? isResponsive || !result.matches
                     ? "absolute"
-                    : "relative"
+                    : "absolute"
                   : "absolute"
               }`,
               top: `${
                 full
                   ? isResponsive || result.matches
-                    ? "350px"
-                    : "50%"
+                    ? "180px"
+                    : "60%"
                   : "100px"
               }`,
-              left: `${full ? (isResponsive ? "50%" : "50%") : "0%"}`,
+              left: `${full ? (isResponsive ? "" : "50%") : "0%"}`,
+              marginLeft: `${isResponsive ? "100px" : "150px"}`,
+              marginTop: `${isResponsive ? "150px" : ""}`,
               transform: `${
                 full
                   ? isResponsive
@@ -179,12 +181,12 @@ function VideoVizualisation({
                   : "unset"
               }`,
 
-              height: full ? (isResponsive ? "auto" : "100vh") : "50%",
+              height: full ? (isResponsive ? "auto" : "calc(100vh)") : "50%",
               width: full ? (isResponsive ? "100%" : "100%") : "43vw",
-              zIndex: "51",
+              zIndex: "3",
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: "start",
               justifyContent: "center",
               backgroundColor: "transparent",
             }}
@@ -194,7 +196,7 @@ function VideoVizualisation({
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "start",
                 color: "white",
                 textTransform: "uppercase",
                 textAlign: "center",
@@ -220,15 +222,15 @@ function VideoVizualisation({
           </div>
           <video
             style={{
-              zIndex: "50",
+              zIndex: "1",
               position: `relative`,
-
+              height: `calc(100vh + 150px)`,
               left: "0",
               right: "0",
               top: "0",
               bottom: "0",
-              height: `100vh`,
-              width: `${full ? (isResponsive ? "360px" : "100vw") : "43vw"}`,
+
+              width: `${full ? (isResponsive ? "380px" : "100vw") : "43vw"}`,
               objectFit: "cover",
               display: "flex",
               flexDirection: "column",

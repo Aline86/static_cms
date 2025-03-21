@@ -107,6 +107,10 @@ function CarouselContainer({
   useEffect(() => {
     updateCardRef();
   }, [isResponsive, result.matches]);
+
+  useEffect(() => {
+    updateCardRef();
+  }, []);
   useEffect(() => {
     updateCardRef();
     if (type === "carousel") {
@@ -317,7 +321,7 @@ function CarouselContainer({
           margin: !full ? `${bloc.gap}px auto` : `0px`,
           height: isResponsive ? `230px` : `fit-content`,
           paddingTop: isResponsive ? `120px` : result.matches ? `30px` : `0px`,
-          minHeight: isResponsive || result.matches ? `200px` : `fit-content`,
+          minHeight: isResponsive || result.matches ? `200px` : `100%`,
           width: full ? (isResponsive ? `380px` : `100vw`) : `45vw`,
           marginBottom: result.matches ? "60px" : isResponsive ? "60px" : "0",
         }}

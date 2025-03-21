@@ -24,7 +24,7 @@ function ButtonVisualization({
     <div
       className={s.body_container}
       style={{
-        marginTop: `${input_bloc.bloc_number === 1 ? "60px" : "60px"}`,
+        marginTop: `${input_bloc.bloc_number === 1 ? "150px" : "60px"}`,
         marginBottom: `30px`,
       }}
     >

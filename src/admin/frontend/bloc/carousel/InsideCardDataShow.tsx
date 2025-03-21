@@ -25,7 +25,7 @@ function InsideCardDataShow({
   const [page, setPage] = useState<Page>();
   const { id } = useParams();
   const style_data = {
-    background: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url("${image}") no-repeat center / contain`,
+    background: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url("${image}") no-repeat center / contain`,
     width: `${
       !result.matches && !isResponsive
         ? `${width}vw`

@@ -1,9 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import s from "./style.module.css";
-
 import BlocHeader from "../page/page_template/bloc_components/BlocHeader";
 import BlocFooter from "../page/page_template/bloc_components/BlocFooter";
-
 import { Link } from "react-router-dom";
 import Page from "../page/class/Page";
 import ColorContext from "../../../ColorContext";
