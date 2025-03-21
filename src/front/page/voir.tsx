@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { lazy, useContext, useEffect, useState } from "react";
 import s from "./styles.module.css";
 import { useLocation, useParams } from "react-router-dom";
 
 import Page from "../../admin/backoffice/page/class/Page";
 import Bloc from "../../admin/frontend/bloc/text_picture/bloc";
-import CarouselVisualization from "../../admin/frontend/bloc/carousel/Carousel";
+
 import HeaderVizualization from "../../front/header/header";
 import FooterVizualization from "../../admin/frontend/bloc/footer/footer";
 
@@ -17,7 +17,6 @@ import ParallaxeVizualisation from "../../admin/frontend/bloc/parallaxe/parallax
 import GridVizualisation from "../../admin/frontend/bloc/grid/PictureGroup";
 import ScreenVizualisation from "../../admin/frontend/bloc/screen/screen";
 
-//import VideoVizualisation from "../../admin/frontend/bloc/video/video";
 import { Carousel } from "../../admin/backoffice/page/page_template/bloc_components/components/carousel/class/Carousel";
 import { TextPicture } from "../../admin/backoffice/page/page_template/bloc_components/components/text_picture/class/TextPicture";
 import { PictureGroup } from "../../admin/backoffice/page/page_template/bloc_components/components/picture_group/class/PictureGroup";
@@ -29,7 +28,14 @@ import Footer from "../../admin/backoffice/page/page_template/bloc_components/co
 import Header from "../../admin/backoffice/page/page_template/bloc_components/components/header/Header";
 import BlocTools from "../../admin/frontend/page/tools/blocs_tools";
 import VideoVizualisation from "../../admin/frontend/bloc/video/video";
-import MiniaturesVisualization from "../../admin/frontend/bloc/miniatures/Miniatures";
+
+const CarouselVisualization = lazy(
+  () => import("../../admin/frontend/bloc/carousel/Carousel")
+);
+
+const MiniaturesVisualization = lazy(
+  () => import("../../admin/frontend/bloc/miniatures/Miniatures")
+);
 
 function Front() {
   const [blocs, setBlocs] = useState<
@@ -122,7 +128,6 @@ function Front() {
       >
         <HeaderVizualization
           input_bloc={header}
-          toggle={toggle}
           full={true}
           isResponsive={false}
         />
@@ -133,7 +138,6 @@ function Front() {
               <Bloc
                 index={index}
                 bloc={value}
-                css={value.css}
                 num_bloc={index}
                 toggle={toggle}
                 full={true}

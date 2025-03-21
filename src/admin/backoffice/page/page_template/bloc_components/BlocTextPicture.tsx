@@ -55,7 +55,6 @@ function BlocTextPicture({
         <Bloc
           bloc={bloc}
           num_bloc={index}
-          css={bloc.css}
           toggle={toggle}
           full={false}
           index={index}

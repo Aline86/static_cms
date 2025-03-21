@@ -4,20 +4,18 @@ import Titre from "./titre/titre";
 import { useEffect, useState, Suspense, lazy } from "react";
 import { RawDraftContentState } from "draft-js";
 import { TextPicture } from "../../../backoffice/page/page_template/bloc_components/components/text_picture/class/TextPicture";
-import OptionCss from "../../../backoffice/page/page_template/bloc_components/components/parallaxe/class/OptionsCss";
 
 const TextReaderComponent = lazy(() => import("./texte/text_reader"));
 interface BlocParams {
   index: number;
   bloc: TextPicture;
-  css: OptionCss;
   num_bloc: number;
   toggle: boolean;
   full: boolean;
   isResponsive: boolean;
 }
 
-function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
+function Bloc({ bloc, toggle, full, isResponsive }: BlocParams) {
   const [contentState, setContentState] = useState<RawDraftContentState>();
   const result = window.matchMedia("(max-width: 800px)");
   useEffect(() => {
@@ -77,7 +75,7 @@ function Bloc({ bloc, css, toggle, full, isResponsive }: BlocParams) {
               }`,
             }}
           >
-            <Image bloc={bloc} css={css} />
+            <Image bloc={bloc} />
           </div>
         )}
         {bloc.text === "" && <div className={s.clear_box}></div>}

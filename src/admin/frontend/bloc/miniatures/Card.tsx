@@ -11,11 +11,10 @@ interface CardData {
   transX: number;
   width: number;
   height: number;
-  gap: number;
+
   updateCard: any;
   toggle: boolean;
-  isResponsive: boolean;
-  full: boolean;
+
   index: number;
 }
 
@@ -26,12 +25,11 @@ function Card({
   trasnsType,
   transX,
   width,
-  gap,
+
   height,
   updateCard,
   toggle,
-  isResponsive,
-  full,
+
   index,
 }: CardData) {
   useEffect(() => {}, [toggle]);

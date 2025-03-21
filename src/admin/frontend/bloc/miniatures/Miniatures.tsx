@@ -20,7 +20,7 @@ function MiniaturesVisualization({
 }: CustomCarouselInfo) {
   const [dataValue, setData] = useState<CarouselData[]>();
   const [dataToProcess, setDataToProcess] = useState<CarouselData[]>();
-  const [type, setType] = useState<string>("");
+  const [, setType] = useState<string>("");
 
   const [transitionFinished, setTransitionFinished] = useState(false);
   const [cardWidth, setCardWidth] = useState<number>(0);
@@ -103,7 +103,6 @@ function MiniaturesVisualization({
     updateCardRef();
     setData(data);
   }, [result.matches, isResponsive, dataToProcess]);
-  //useEffect(() => {}, [dataValue, toggle, isResponsive]);
 
   return (
     <div className={s.body_container} style={{ marginTop: "30px" }}>
@@ -124,7 +123,6 @@ function MiniaturesVisualization({
             setCardValue={setCardValue}
             updateCardEnd={updateCardEnd}
             full={full}
-            toggle={toggle}
             clic={clic}
             cardValue={cardValue}
           />
