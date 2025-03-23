@@ -1,4 +1,4 @@
-# Prototype created to understand react and typescript before migrating to next.js and implementing material ui components and in-builts components from shadcn.js.
+# Prototype created to understand react and typescript before migrating to next.js and implementing material/ui components and in-builts components from shadcn/ui.
 
 In this prototyped version, all components and design are made from scratch. This is a testing project.
 
