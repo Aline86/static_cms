@@ -1,22 +1,11 @@
-# CMS for dynamic creation of static websites made with following technologies : React + TypeScript + Vite
+# Prototype created to understand react and typescript before migrating to next.js and implementing material ui components and in-builts components from shadcn.js.
 
-CMS creation is yet not finished.
-I still have to finish following tasks :
-
-- responsive dropdowns for social medias and links
-- cleaning the code and renaming some of the files.
-- puting global and security variables in a .env file
-- available features for the moment only cover backoffice elements.
-- I still have to do the front office eventhough it is going to pick up the allready available components in the backoffice FO.
-- managing videos on the website
-- securing the site, for the moment there is no security.
-- I want to protect backoffice authomatized routes with secured access (very important)
-- full screen responsiveness has still not been fully implemented
+In this prototyped version, all components and design are made from scratch. This is a testing project.
 
 ## What the CMS can actually do for the moment
 
 You can create pages and blocs with simultaneous visualization of user content.
-backoffice is automatized. This means that you nearly don't have anything to do to implement new backoffice routes.
+backoffice is automatized. This means that you nearly don't have anything to do to implement new backoffice components.
 
 ## If you want to have a hint of what the CMS can do, please go to following links :
 
