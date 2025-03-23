@@ -13,4 +13,4 @@ Some improvements were made since the videos were down.
 
 [https://www.dropbox.com/scl/fi/gfbevlu6lj9zz64rn2g6q/BO.mp4?rlkey=6il7upb4i24t50yw26m4xxjyq&st=3kcjkrwn&dl=0](https://www.dropbox.com/scl/fi/gfbevlu6lj9zz64rn2g6q/BO.mp4?rlkey=6il7upb4i24t50yw26m4xxjyq&st=3kcjkrwn&dl=0)
 
-[https://www.dropbox.com/scl/fi/4hyn3yf2oc2ugl0i54l51/avancement_1.mp4?rlkey=me1mmddaab4cswg912kokhhzp&st=op5i8w7s&dl=0]([possibility](https://www.dropbox.com/scl/fi/4hyn3yf2oc2ugl0i54l51/avancement_1.mp4?rlkey=me1mmddaab4cswg912kokhhzp&st=op5i8w7s&dl=0)
+[https://www.dropbox.com/scl/fi/4hyn3yf2oc2ugl0i54l51/avancement_1.mp4?rlkey=me1mmddaab4cswg912kokhhzp&st=op5i8w7s&dl=0](https://www.dropbox.com/scl/fi/4hyn3yf2oc2ugl0i54l51/avancement_1.mp4?rlkey=me1mmddaab4cswg912kokhhzp&st=op5i8w7s&dl=0)
