@@ -1,6 +1,6 @@
 # Prototype created to understand react and typescript before migrating to next.js and implementing material/ui components and in-builts components from shadcn/ui.
 
-In this prototyped version, all components and design are made from scratch. This is a testing project.
+In this prototyped version, all components and design are made from scratch. This is a testing project. Typescript types still have to be completed. 
 
 ## What the CMS can actually do for the moment
 
